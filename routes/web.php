@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/welcome', 'ProfilesController@index')->name('welcome');
+Route::get('/profiles', 'ProfilesController@index')->name('profiles');
+// Route::get('/profile', [ProfilesController::class,'index']);
