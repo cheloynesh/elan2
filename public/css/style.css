@@ -59,7 +59,7 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #001466; 
+    background: #001466;
     color: #fff;
     transition: all 0.3s;
 }
@@ -162,8 +162,9 @@ a.article:hover {
     #sidebar.active {
         margin-left: 0;
     }
-    #sidebarCollapse span {
+    #sidebarCollapse {
         display: none;
+        padding-right: 20px;
     }
 }
 

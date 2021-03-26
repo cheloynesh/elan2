@@ -8,7 +8,9 @@
     <nav id="sidebar">
         <div class="sidebar-header">
             <p class="centrado">
-                <img src="{{ URL::asset('img/logo.png') }}" alt="logo" class="logo">
+                <a href="{{ route('home') }}">
+                    <img src="{{ URL::asset('img/logo.png') }}" alt="logo" class="logo">
+                </a>
             </p>
         </div>
 
@@ -52,8 +54,8 @@
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
