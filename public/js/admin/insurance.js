@@ -1,7 +1,7 @@
 var ruta = window.location;
 var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
-function guardarperfil()
+function guardarAseguradora()
 {
     var name = $("#name").val();
     var route = "insurances";
@@ -22,7 +22,7 @@ function guardarperfil()
     })
 }
 var idupdate = 0;
-function editarperfil(id)
+function editarAseguradora(id)
 {
     idupdate=id;
 
@@ -39,12 +39,12 @@ function editarperfil(id)
         }
     })
 }
-function cancelareditar()
+function cancelarEditar()
 {
     $("#name1").val("");
     $("#myModaledit").modal('hide');
 }
-function actualizarperfil()
+function actualizarAseguradora()
 {
     var name = $("#name1").val();
     var route = "insurances/"+idupdate;
@@ -66,9 +66,9 @@ function actualizarperfil()
     })
 }
 
-function eliminarperfil(id)
+function eliminarAseguradora(id)
 {
-    var route = "insurance/"+id;
+    var route = "insurances/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),

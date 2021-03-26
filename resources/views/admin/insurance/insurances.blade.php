@@ -28,7 +28,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="guardarperfil()" class="btn btn-primary">Guardar</button>
+                        <button type="button" onclick="guardarAseguradora()" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -52,8 +52,8 @@
                         <tr id="{{$insurance->id}}">
                             <td>{{$insurance->name}}</td>
                             <td>
-                                <a href="#|" class="btn btn-warning" onclick="editarperfil({{$insurance->id}})" >Editar</a>
-                                <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$insurance->id}})">Eliminar</a>
+                                <a href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" >Editar</a>
+                                <a href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})">Eliminar</a>
                             </td>
                         </tr>
                     @endforeach
