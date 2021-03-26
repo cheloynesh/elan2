@@ -1,7 +1,6 @@
 @extends('home')
-{{-- @section('title','Perfiles') --}}
 @section('content')
-    <div class="text-center"><h1>Catálogo de Perfiles</h1></div>
+    <div class="text-center"><h1>Catálogo de Aseguradoras</h1></div>
     <div style="max-width: 900px; margin: auto;">
         {{-- modal| --}}
         <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
@@ -9,7 +8,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title" id="gridModalLabek">Registro de Perfiles</h4>
+                        <h4 class="modal-title" id="gridModalLabek">Registro de Aseguradoras</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
 
@@ -35,7 +34,7 @@
             </div>
         </div>
         {{-- fin modal| --}}
-        @include('admin.profile.profileedit')
+        @include('admin.insurance.insuranceedit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
@@ -49,12 +48,12 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($profiles as $profile)
-                        <tr id="{{$profile->id}}">
-                            <td>{{$profile->name}}</td>
+                    @foreach ($insurances as $insurance)
+                        <tr id="{{$insurance->id}}">
+                            <td>{{$insurance->name}}</td>
                             <td>
-                                <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
-                                <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                                <a href="#|" class="btn btn-warning" onclick="editarperfil({{$insurance->id}})" >Editar</a>
+                                <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$insurance->id}})">Eliminar</a>
                             </td>
                         </tr>
                     @endforeach
@@ -64,5 +63,5 @@
     </div>
 @endsection
 @push('head')
-    <script src="{{URL::asset('js/admin/profile.js')}}"></script>
+    <script src="{{URL::asset('js/admin/insurance.js')}}"></script>
 @endpush

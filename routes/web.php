@@ -20,10 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/welcome', 'ProfilesController@index')->name('welcome');
+
 // perfiles
 Route::get('admin/profile/profiles/GetInfo/{id}','ProfilesController@GetInfo')->name('profiles.GetInfo');
 Route::resource('admin/profile/profiles', 'ProfilesController');
-// Route::get('admin/profile/profiles', 'ProfilesController@index')->name('profiles');
-// Route::post('admin/profile/profiles', 'ProfilesController@store')->name('profiles.store');
-// Route::get('/profile', [ProfilesController::class,'index']);
+
+// aseguradoras
+Route::get('admin/insurance/insurances/GetInfo/{id}','InsuranceController@GetInfo')->name('insurance.GetInfo');
+Route::resource('admin/insurance/insurances', 'InsuranceController');

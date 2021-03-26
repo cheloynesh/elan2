@@ -4,7 +4,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 function guardarperfil()
 {
     var name = $("#name").val();
-    var route = "profiles";
+    var route = "insurances";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'name':name
@@ -47,7 +47,7 @@ function cancelareditar()
 function actualizarperfil()
 {
     var name = $("#name1").val();
-    var route = "profiles/"+idupdate;
+    var route = "insurances/"+idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -68,7 +68,7 @@ function actualizarperfil()
 
 function eliminarperfil(id)
 {
-    var route = "profiles/"+id;
+    var route = "insurance/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),

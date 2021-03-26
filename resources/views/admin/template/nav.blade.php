@@ -16,13 +16,13 @@
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Catálogos</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="{{ route('profiles.index') }}">Home 1</a>
+                        <a href="{{ route('profiles.index') }}">Perfiles</a>
                     </li>
                     <li>
-                        <a href="#">Home 2</a>
+                        <a href="{{ route('insurances.index') }}">Aseguradoras</a>
                     </li>
                     <li>
                         <a href="#">Home 3</a>
