@@ -21,5 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/welcome', 'ProfilesController@index')->name('welcome');
-Route::get('admin/profile/profiles', 'ProfilesController@index')->name('profiles');
+// perfiles
+Route::get('admin/profile/profiles/GetInfo/{id}','ProfilesController@GetInfo')->name('profiles.GetInfo');
+Route::resource('admin/profile/profiles', 'ProfilesController');
+// Route::get('admin/profile/profiles', 'ProfilesController@index')->name('profiles');
+// Route::post('admin/profile/profiles', 'ProfilesController@store')->name('profiles.store');
 // Route::get('/profile', [ProfilesController::class,'index']);

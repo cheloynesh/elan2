@@ -19,7 +19,7 @@
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="{{ route('profiles') }}">Home 1</a>
+                        <a href="{{ route('profiles.index') }}">Home 1</a>
                     </li>
                     <li>
                         <a href="#">Home 2</a>
