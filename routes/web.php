@@ -21,5 +21,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/welcome', 'ProfilesController@index')->name('welcome');
-Route::get('/profiles', 'ProfilesController@index')->name('profiles');
+Route::get('admin/profile/profiles', 'ProfilesController@index')->name('profiles');
 // Route::get('/profile', [ProfilesController::class,'index']);

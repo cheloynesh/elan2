@@ -1,6 +1,6 @@
 {{-- @extends('layouts.app') --}}
-<link rel="stylesheet" href="css/login.css">
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="{{ URL::asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="wrapper">
@@ -8,10 +8,10 @@
     <nav id="sidebar">
         <div class="sidebar-header">
             <p class="centrado">
-                <img src="img/logo.png" alt="logo" class="logo">
+                <img src="{{ URL::asset('img/logo.png') }}" alt="logo" class="logo">
             </p>
         </div>
-    
+
         <ul class="list-unstyled components">
             <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
@@ -43,23 +43,24 @@
                 </ul>
             </li>
         </ul>
-        
+
     </nav>
+    {{-- header bar --}}
     <div id="content">
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                    </a>            
+                    </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-            
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
                         </ul>
-            
+
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
@@ -76,14 +77,14 @@
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
-                                    </a>            
+                                    </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-            
+
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
