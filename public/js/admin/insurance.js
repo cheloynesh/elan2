@@ -73,14 +73,22 @@ function eliminarAseguradora(id)
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    jQuery.ajax({
-        url:route,
-        data: data,
-        type:'delete',
-        dataType:'json',
-        success:function(result)
-        {
-            window.location.reload(true);
-        }
-    })
+    alertify.confirm("Desea borrar a la aseguradora?.",
+        function(){
+            jQuery.ajax({
+                url:route,
+                data: data,
+                type:'delete',
+                dataType:'json',
+                success:function(result)
+                {
+                    window.location.reload(true);
+                }
+            })
+            alertify.success('Eliminado');
+        },
+        function(){
+            alertify.error('Cancelado');
+    });
+
 }

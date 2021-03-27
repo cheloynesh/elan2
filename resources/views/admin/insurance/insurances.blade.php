@@ -22,6 +22,15 @@
                                             <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select name="profiles" id="selectProfile">
+                                                @foreach ($prof as $id => $prf)
+                                                    <option value='{{ $id }}'>{{ $prf }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

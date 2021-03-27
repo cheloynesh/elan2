@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Insurance;
+use App\Profile;
 
 class InsuranceController extends Controller
 {
     public function index(){
         $insurances = Insurance::get();
-        return view('admin.insurance.insurances', compact('insurances'));
+        $prof = Profile::pluck('name','id');
+        // dd($prof);
+        return view('admin.insurance.insurances', compact('insurances','prof'));
     }
 
     public function GetInfo($id)
