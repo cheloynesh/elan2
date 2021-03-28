@@ -73,7 +73,7 @@ function eliminarAseguradora(id)
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Desea borrar a la aseguradora?.",
+    alertify.confirm("Eliminar Aseguradora","¿Desea borrar a la aseguradora?",
         function(){
             jQuery.ajax({
                 url:route,

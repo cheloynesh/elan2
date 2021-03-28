@@ -28,3 +28,12 @@ Route::resource('admin/profile/profiles', 'ProfilesController');
 // aseguradoras
 Route::get('admin/insurance/insurances/GetInfo/{id}','InsuranceController@GetInfo')->name('insurance.GetInfo');
 Route::resource('admin/insurance/insurances', 'InsuranceController');
+
+// prueba
+Route::get('admin/pruebas/prueba/GetInfo/{id}','PruebasController@GetInfo')->name('prueba.GetInfo');
+Route::resource('admin/pruebas/prueba', 'PruebasController');
+
+// usuarios
+Route::resource('admin/users/user', 'UsersController');
+Route::get('admin/users/user/GetInfo/{id}','UsersController@GetInfo')->name('user.GetInfo');
+

@@ -10,9 +10,8 @@ class InsuranceController extends Controller
 {
     public function index(){
         $insurances = Insurance::get();
-        $prof = Profile::pluck('name','id');
         // dd($prof);
-        return view('admin.insurance.insurances', compact('insurances','prof'));
+        return view('admin.insurance.insurances', compact('insurances'));
     }
 
     public function GetInfo($id)

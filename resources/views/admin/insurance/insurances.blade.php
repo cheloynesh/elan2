@@ -22,15 +22,6 @@
                                             <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <select name="profiles" id="selectProfile">
-                                                @foreach ($prof as $id => $prf)
-                                                    <option value='{{ $id }}'>{{ $prf }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +40,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
         </div>
         <br><br>
-        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+          <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbProf">
                 <thead>
                     <th class="text-center">Nombre</th>

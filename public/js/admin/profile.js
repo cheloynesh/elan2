@@ -73,14 +73,21 @@ function eliminarperfil(id)
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    jQuery.ajax({
-        url:route,
-        data: data,
-        type:'delete',
-        dataType:'json',
-        success:function(result)
-        {
-            window.location.reload(true);
-        }
-    })
+    alertify.confirm("Eliminar Perfil","¿Desea borrar el perfil?",
+        function(){
+            jQuery.ajax({
+                url:route,
+                data: data,
+                type:'delete',
+                dataType:'json',
+                success:function(result)
+                {
+                    window.location.reload(true);
+                }
+            })
+            alertify.success('Eliminado');
+        },
+        function(){
+            alertify.error('Cancelado');
+    });
 }
