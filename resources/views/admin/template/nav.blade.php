@@ -22,6 +22,9 @@
                         <a href="{{ route('user.index') }}">Usuarios</a>
                     </li>
                     <li>
+                        <a href="{{ route('client.index') }}">Clientes</a>
+                    </li>
+                    <li>
                         <a href="{{ route('profiles.index') }}">Perfiles</a>
                     </li>
                     <li>

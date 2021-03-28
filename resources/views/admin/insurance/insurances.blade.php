@@ -1,7 +1,7 @@
 @extends('home')
 @section('content')
     <div class="text-center"><h1>Catálogo de Aseguradoras</h1></div>
-    <div style="max-width: 900px; margin: auto;">
+    <div style="max-width: 1200px; margin: auto;">
         {{-- modal| --}}
         <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

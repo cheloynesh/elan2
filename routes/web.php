@@ -37,3 +37,7 @@ Route::resource('admin/pruebas/prueba', 'PruebasController');
 Route::resource('admin/users/user', 'UsersController');
 Route::get('admin/users/user/GetInfo/{id}','UsersController@GetInfo')->name('user.GetInfo');
 
+// clientes
+Route::resource('admin/client/client', 'ClientsController');
+Route::get('admin/client/client/GetInfo/{id}','ClientsController@GetInfo')->name('client.GetInfo');
+
