@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Perfil:</label>
-                                    <select name="selectProfile1" id="selectProfile1" class="form-control">
+                                    <select name="selectProfile1" id="selectProfile1" class="form-control" onchange="showimpEdit()">
                                         <option hidden selected>Selecciona una opción</option>
                                         @foreach ($profiles as $id => $profile)
                                             <option value='{{ $id }}'>{{ $profile }}</option>
@@ -59,8 +59,29 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="" style="display: none" id="etiqueta1">Código</label>
+                                        <input type="text" id="code1" name="code1" class="form-control" style="display: none;">
+                                        <br>
+                                        <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- inicio tabla --}}
+                            <div class="table-responsive">
+                                <table class="table table-stripped table-hover text-center" id="tbcodes1" style="display: none">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Código</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-codigo1"></tbody>
+                                </table>
+                            </div>
                         </div>
-
+                        
                     </div>
                 </div>
             </div>

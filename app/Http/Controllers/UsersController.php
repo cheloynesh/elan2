@@ -18,7 +18,7 @@ class UsersController extends Controller
 
     public function GetInfo($id)
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',$id)->with('agent_codes')->first();
         // dd($user);
         return response()->json(['status'=>true, "data"=>$user]);
 
@@ -50,10 +50,27 @@ class UsersController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $user = User::where('id',$request->id)
         ->update(['email'=>$request->email,'name'=>$request->name,
         'firstname'=>$request->firstname,'lastname'=>$request->lastname,
         'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile]);
+        $codes_edit = AgentCode::where('fk_user', $request->id)->get();
+        // dd($codes_edit);
+        foreach($codes_edit as $codes)
+        {
+            $codes->delete();
+        }
+        if($request->codigoseditar != null)
+        {
+            foreach($request->codigoseditar as $codigos)
+            {
+                $agentCode = new AgentCode;
+                $agentCode->fk_user = $request->id;
+                $agentCode->code = $codigos["code"];
+                $agentCode->save();
+            }
+        }
         return response()->json(['status'=>true, 'message'=>"Usuario Actualizado"]);
 
     }

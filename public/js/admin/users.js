@@ -37,6 +37,7 @@ function guardarUsuario()
             window.location.reload(true);
         }
     })
+    codigos=[];
 }
 var idupdate = 0;
 function editarUsuario(id)
@@ -57,6 +58,16 @@ function editarUsuario(id)
             $("#lastname1").val(result.data.lastname);
             $("#cellphone1").val(result.data.cellphone);
             $("#selectProfile1").val(result.data.fk_profile);
+            // codigos
+            
+            // codigoseditar=[];
+            var tableEdit = $("#tbody-codigo1");
+            tableEdit.empty();
+            for( var i=0; i<result.data.agent_codes.length; i++)
+            {
+                agregarcodigo1(result.data.agent_codes[i].code)
+            }
+            showimpEdit();
             $("#myModaledit").modal('show');
         }
     })
@@ -64,6 +75,8 @@ function editarUsuario(id)
 
 function cancelarUsuario()
 {
+    // $("#tbody-codigo1").empty();
+    codigoseditar=[];
     $("#myModaledit").modal('hide');
 
 }
@@ -87,7 +100,9 @@ function actualizarUsuario()
         'lastname':lastname,
         'cellphone':cellphone,
         'fk_profile':fk_profile,
+        'codigoseditar':codigoseditar
     };
+    console.log(codigoseditar);
     jQuery.ajax({
         url:route,
         type:'put',
@@ -95,10 +110,12 @@ function actualizarUsuario()
         dataType:'json',
         success:function(result)
         {
+            // $("#tbody-codigo1").empty();
             $("#myModaledit").modal('hide');
             window.location.reload(true);
         }
     })
+    codigoseditar=[];
 }
 function eliminarUsuario(id)
 {
@@ -160,6 +177,7 @@ function showimp()
 }
 var array = [];
 var codigos=[];
+var codigoseditar=[];
 function agregarcodigo()
 {
     var codigo = $("#code").val();
@@ -168,6 +186,19 @@ function agregarcodigo()
     table.append(str_row);
     $("#code").val("");
     codigos.push({
+        'id':array.length+1,
+        'code':codigo
+    });
+}
+function agregarcodigo1(codigo)
+{
+    if(codigo == undefined)    
+        codigo = $("#code1").val();
+    var table = $("#tbody-codigo1");
+    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger" onclick="delete_code_edit(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
+    table.append(str_row);
+    $("#code1").val("");
+    codigoseditar.push({
         'id':array.length+1,
         'code':codigo
     });
@@ -185,5 +216,48 @@ function delete_code(row)
         }
     }
     codigos.splice(index,1);
+}
+function delete_code_edit(row)
+{
+    var index = 0;
+    var id = $(row).parent().parent().attr('id');
+    $(row).parent().parent().remove();
+    for(var i = 0; i<codigoseditar.length; ++i)
+    {
+        if(codigoseditar[i].id == id)
+        {
+            index=0;
+        }
+    }
+    codigoseditar.splice(index,1);
+}
+// editar codigos agentes
+function showimpEdit()
+{
+   var get_value = document.getElementById("selectProfile1");
+   var valor = get_value.value;
+    if(valor == "12")
+    {
+        document.getElementById("etiqueta1").hidden = false;
+        document.getElementById("etiqueta1").style.display = "block";
+        document.getElementById("code1").hidden = false;
+        document.getElementById("code1").style.display = "block";
+        document.getElementById("agregarcol1").hidden = false;
+        document.getElementById("agregarcol1").style.display = "block";
+        document.getElementById("tbcodes1").hidden = false;
+        document.getElementById("tbcodes1").style.display = "block";
+        document.getElementById("tbody-codigo1").hidden = false;
+        document.getElementById("tbody-codigo1").style.display = "block";
+
+    }
+    else
+    {
+        document.getElementById("etiqueta1").hidden = true;
+        document.getElementById("code1").hidden = true;
+        document.getElementById("agregarcol1").hidden = true;
+        document.getElementById("tbcodes1").hidden = true;
+        document.getElementById("tbody-codigo1").hidden = true;
+
+    }
 }
 

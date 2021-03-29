@@ -5,20 +5,21 @@
         @include('admin.client.clientnew')
         @include('admin.client.clientedit')
         @include('admin.client.enterprisenew')
+        @include('admin.client.enterpriseedit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewClient">Persona Moral</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewEnterprise">Persona Física</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewClient">Persona Física</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewEnterprise">Persona Moral</button>
         </div>
         <br><br>
         <ul class="nav nav-tabs" id="mytab" role="tablist">
             <li class="nav-item">
                 <a class="active nav-link active" id="prueba1-tab" data-toggle="tab" href="#prueba1" role="tab" aria-controls="prueba1"
-                 aria-selected="true">Persona Moral</a>
+                 aria-selected="true">Persona Física</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="prueba2" data-toggle="tab" href="#pruebas2" role="tab" aria-controls="pruebas2"
-                 aria-selected="false">Persona Física</a>
+                 aria-selected="false">Persona Moral</a>
             </li>
         </ul>
         <div class="tab-content" id="mytabcontent">
@@ -50,7 +51,24 @@
             <div class="tab-pane " id="pruebas2" role="tabpanel" aria-labelledby="prueba2">
                 <div class="container-fluid">
                     <div class="table-responsive" style="margin-bottom: 10px">
+                        <table class="table table-striped table-hover text-center" id="tbProf">
+                            <thead>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Opciones</th>
+                            </thead>
 
+                            <tbody>
+                                @foreach ($enterprises as $enterprise)
+                                    <tr id="{{$enterprise->id}}">
+                                        <td>{{$enterprise->business_name}}</td>
+                                        <td>
+                                            <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$enterprise->id}})" >Editar</a>
+                                            <a href="#|" class="btn btn-danger" onclick="eliminarEmpresa({{$enterprise->id}})">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
+use App\Enterprise;
 
 class ClientsController extends Controller
 {
     public function index(){
         $clients = Client::get();
-        return view('admin.client.clients', compact('clients'));
+        $enterprises = Enterprise::get();
+        return view('admin.client.clients', compact('clients','enterprises'));
     }
 
     public function GetInfo($id)
@@ -17,6 +19,13 @@ class ClientsController extends Controller
         $client = Client::where('id',$id)->first();
         // dd($user);
         return response()->json(['status'=>true, "data"=>$client]);
+
+    }
+    public function GetInfoE($id)
+    {
+        $enterprise = Enterprise::where('id',$id)->first();
+        // dd($user);
+        return response()->json(['status'=>true, "data"=>$enterprise]);
 
     }
 
@@ -43,7 +52,7 @@ class ClientsController extends Controller
         $client->cellphone = $request->cellphone;
         $client->email = $request->email;
         $client->save();
-        return response()->json(["status"=>true, "message"=>"Cliente Creado"]);
+        return response()->json(["status"=>true, "message"=>"Persona Física Creada"]);
     }
 
     public function update(Request $request)
@@ -65,5 +74,70 @@ class ClientsController extends Controller
         $client->delete();
         return response()->json(['status'=>true, "message"=>"cliente eliminado"]);
 
+    }
+
+    public function saveEnterprise(Request $request)
+    {
+        // dd($request->all());
+        $enterprise = new Enterprise();
+        $enterprise->business_name = $request->business_name;
+        $enterprise->date = $request->date;
+        $enterprise->rfc = $request->rfc;
+        $enterprise->street = $request->street;
+        $enterprise->e_num = $request->e_num;
+        $enterprise->i_num = $request->i_num;
+        $enterprise->pc = $request->pc;
+        $enterprise->suburb = $request->suburb;
+        $enterprise->country = $request->country;
+        $enterprise->state = $request->state;
+        $enterprise->city = $request->city;
+        $enterprise->cellphone = $request->cellphone;
+        $enterprise->email = $request->email;
+        $enterprise->name_contact = $request->name_contact;
+        $enterprise->phone_contact = $request->phone_contact;
+        $enterprise->save();
+        return response()->json(["status"=>true, "message"=>"Persona Moral Creada"]);
+
+
+    }
+
+    public function updateEnterprise(Request $request)
+    {
+        // dd("entre0");
+        // $enterprise = Enterprise::where('id',$request->id)
+        // ->update(['business_name'=>$request->business_name,
+        //     'date'=>$request->date, 'rfc'=>$request->rfc,'street'=>$request->street,
+        //     'e_num'=>$request->e_num, 'i_num'=>$request->i_num,'pc'=>$request->pc,
+        //     'suburb'=>$request->suburb, 'country'=>$request->country,'state'=>$request->state,
+        //     'city'=>$request->city, 'cellphone'=>$request->cellphone,'email'=>$request->email,
+        //     'name_contact'=>$request->name_contact,'phone_contact'=>$request->phone_contact]);
+        // return response()->json(['status'=>true, 'message'=>"Empresa Actualizada"]);
+        $enterprise = Enterprise::where('id',$request->id)->first();
+        $enterprise->business_name = $request->business_name;
+        $enterprise->date = $request->date;
+        $enterprise->rfc = $request->rfc;
+        $enterprise->street = $request->street;
+        $enterprise->e_num = $request->e_num;
+        $enterprise->i_num = $request->i_num;
+        $enterprise->pc = $request->pc;
+        $enterprise->suburb = $request->suburb;
+        $enterprise->country = $request->country;
+        $enterprise->state = $request->state;
+        $enterprise->city = $request->city;
+        $enterprise->cellphone = $request->cellphone;
+        $enterprise->email = $request->email;
+        $enterprise->name_contact = $request->name_contact;
+        $enterprise->phone_contact = $request->phone_contact;
+        $enterprise->save();
+        return response()->json(['status'=>true, 'message'=>"Empresa Actualizada"]);
+
+    }
+
+    public function destroyEnterprise($id)
+    {
+        $enterprise = Enterprise::find($id);
+        // dd($enterprise);
+        $enterprise->delete();
+        return response()->json(['status'=>true, "message"=>"Empresa eliminada"]);
     }
 }

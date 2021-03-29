@@ -3,7 +3,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabek">Registro de Aseguradoras</h4>
+                <h4 class="modal-title" id="gridModalLabek">Actualizar Persona Física</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 

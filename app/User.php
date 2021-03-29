@@ -40,4 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function agent_codes()
+    {
+        return $this->hasMany('App\AgentCode','fk_user','id');
+    }
 }
