@@ -45,4 +45,22 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\AgentCode','fk_user','id');
     }
+
+    public static function user_id(){
+        return \Auth::user()->id;
+    }
+    public static function findUser(){
+        $id = self::user_id();
+        $user = User::find($id);
+        return $user;
+    }
+    public static function findProfile(){
+        $user = self::findUser();
+        $fk_profile = $user->fk_profile;
+        return $fk_profile;
+    }
+
+    public function profile(){
+        return $this->hasOne('App/Profile', 'id','fk_profile');
+    }
 }

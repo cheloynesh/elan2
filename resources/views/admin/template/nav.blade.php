@@ -30,6 +30,9 @@
                     <li>
                         <a href="{{ route('insurances.index') }}">Aseguradoras</a>
                     </li>
+                    <li>
+                        <a href="{{ route('permissions.index') }}">Permisos</a>
+                    </li>
                 </ul>
             </li>
             <li>
