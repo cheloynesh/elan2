@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Profile;
 use App\Permission;
 use App\Section;
+use App\User;
+use DB;
 
 class PermissionsController extends Controller
 {
     public function index(){
         $profiles = Profile::pluck('name','id');
         $profile = User::findProfile();
-        $perm = Permission::permView($profile,9);
-        $perm_btn =Permission::permBtns($profile,9);
+        $perm = Permission::permView($profile,7);
+        $perm_btn =Permission::permBtns($profile,7);
         $padre =Section::whereRaw('id = reference')->orderBy('order','ASC')->get();
         // dd($padre);
         $hijos = Section::whereRaw('id!=reference')->orderBy('order','ASC')->get();

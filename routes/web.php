@@ -48,3 +48,4 @@ Route::delete('admin/client/client/destroyEnterprise/{id}','ClientsController@de
 // permisos
 Route::resource('admin/permission/permissions', 'PermissionsController');
 Route::get('admin/permission/permissions/{id}/{id_seccion?}/{btn?}/{reference?}',[ 'uses' => 'PermissionsController@update_store', 'as' => 'admin.permission.update_store']);
+// Route::post('admin/permission/permissions/update_store','PermissionsController@');

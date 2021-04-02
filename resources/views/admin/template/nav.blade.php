@@ -14,42 +14,58 @@
             </p>
         </div>
 
-        <ul class="list-unstyled components">
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Configuración</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="{{ route('user.index') }}">Usuarios</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('client.index') }}">Clientes</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('profiles.index') }}">Perfiles</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('insurances.index') }}">Aseguradoras</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('permissions.index') }}">Permisos</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-            <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
-            </li>
+        <ul class="navbar-nav left-side-nav" id="accordion">
+            @foreach ($secciones as $seccion)
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{$seccion->description}}">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu{{$seccion->section}}">
+                        <i class="{{$seccion->icon}}" ></i>
+                            <span class="nav-link-text">{{$seccion->section}}</span>
+                        </a>
+                        <ul class="sidenav-second-level collapse" id="multi_menu{{$seccion->section}}" data-parent="#accordion">
+                        @if(count($subsections->where('padre_id',$seccion->id))>0)
+                            @foreach ($subsections as $sub)
+                                @if ($seccion->id == $sub->padre_id)
+                                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu_sub{{$sub->subsection}}">
+                                            <span class="nav-link-text">{{$sub->subsection}}</span>
+                                        </a>
+                                        <ul class="sidenav-third-level collapse" id="multi_menu_sub{{$sub->subsection}}" data-parent="multi_menu_{{$seccion->section}}">
+                                        @foreach ($user_permissions as $module)
+                                        @if ($module->reference == $sub->sub_section_id )
+                                            <li>
+
+                                            @if($module->url!=null)
+                                                <a class="permisions_id " href="{{ route($module->url) }}">{{$module->module}}</a>
+                                            @else
+                                                <a href="#">{{$module->module}}</a>
+                                            @endif
+                                            </li>
+                                        @endif
+                                        @endforeach
+
+                                    </ul>
+                                    </li>
+                                @endif
+                            @endforeach
+                        @else
+                            @foreach ($user_permissions as $module)
+                                @if ($module->reference == $seccion->id )
+
+                                    <li>
+
+                                    @if($module->url!=null)
+                                        <a class="permisions_id " href="{{ route($module->url) }}">{{$module->module}}</a>
+                                    @else
+                                        <a href="#">{{$module->module}}</a>
+                                    @endif
+                                    </li>
+                                @endif
+                            @endforeach
+                        @endif
+                    </ul>
+                </li>
+            @endforeach
         </ul>
 
     </nav>

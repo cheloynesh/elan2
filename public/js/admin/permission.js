@@ -1,19 +1,21 @@
-var hash = window.location.hash;
-// alert(hash);
-if(hash==""){
-    $('.nav-tabs a[href="#profile"]').tab('show');
-}else{
-    $('.nav-tabs a[href="#users"]').tab('show');
-}
+// var hash = window.location.hash;
+// // alert(hash);
+// if(hash==""){
+//     $('.nav-tabs a[href="#profile"]').tab('show');
+// }else{
+//     $('.nav-tabs a[href="#users"]').tab('show');
+// }
 // $.fn.editable.defaults.mode = 'inline';
 // $.fn.editable.defaults.ajaxOptions = {type:'PUT'};
 
 //******************************************************************************************* PERFILES TAB---------------------------------------------------------------------------------------------------
+var ruta = window.location;
+var getUrl = window.location;
+var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 
-
-$('#nameProfileClik').change(function () {
+function permprofile() {
     // alert("entre");
-    var id = $("#nameProfileClik").val();
+    var id = $("#selectProfile").val();
     // alert(id);
     if(id == ""){
         $('input:checkbox').prop('disabled', true);//bloquear
@@ -22,7 +24,8 @@ $('#nameProfileClik').change(function () {
         $('input:checkbox').prop('disabled', false);//desbloquear
         $('input:checkbox').prop("checked", false);//quitar marcas
 
-        var route = "{{url('admin/permission/')}}/"+id+"/edit";
+        // var route = "{{url('admin/permission/')}}/"+id+"/edit";
+        var route = baseUrl + "/" + id + "/edit";
         $.get(route, function(data){
             if(data.length>0){
                 $.each( data, function( index, data ){
@@ -61,15 +64,15 @@ $('#nameProfileClik').change(function () {
     $.ajax({
 
     })
-});
+};
 //ULTIMO VALOR DE LAS RUTAS
 // VER = 0
 // AGREGAR = 1
 // EDITAR = 2
 // ELIMINAR = 3
 
-$(".view_id").click(function () {
-    var id = $("#nameProfileClik").val();
+function clickView() {
+    var id = $("#selectProfile").val();
     var row = $(this).parents('tr');
     var section = $(row).attr('data-hijo');
     var form = $('#form-update_store');
@@ -87,11 +90,11 @@ $(".view_id").click(function () {
             alert("Advertencia No se pudo procesar el permiso de  Ver.");
         });
     }
-});
+};
 
 
-$(".add_id").click(function () {
-    var id = $("#nameProfileClik").val();
+function clickAdd() {
+    var id = $("#selectProfile").val();
     var row = $(this).parents('tr');
     // console.log(row);
     var section = $(row).attr('data-hijo');
@@ -113,10 +116,10 @@ $(".add_id").click(function () {
             alert("Advertencia No se pudo procesar el permiso de Agregar.");
         });
     }
-});
+};
 
-$(".update_id").click(function () {
-    var id = $("#nameProfileClik").val();
+function clickUpdate() {
+    var id = $("#selectProfile").val();
     var row = $(this).parents('tr');
     var section = row.data('hijo');
     var form = $('#form-update_store');
@@ -136,11 +139,11 @@ $(".update_id").click(function () {
         });
     }
 
-});
+};
 
 
-$(".delete_id").click(function () {
-    var id = $("#nameProfileClik").val();
+function clickDelete() {
+    var id = $("#selectProfile").val();
     var row = $(this).parents('tr');
     var section = row.data('hijo');
     var form = $('#form-update_store');
@@ -160,4 +163,4 @@ $(".delete_id").click(function () {
         });
     }
 
-});
+};
