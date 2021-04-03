@@ -26,33 +26,35 @@ function permprofile() {
 
         // var route = "{{url('admin/permission/')}}/"+id+"/edit";
         var route = baseUrl + "/" + id + "/edit";
+        console.log(route);
         $.get(route, function(data){
+            console.log("entre",data);
             if(data.length>0){
                 $.each( data, function( index, data ){
-                    if(data.view == 0){//quitar marcas y bloquear add,update,delete
-                        $("#add_"+data.section_id).prop("checked", false);
-                        if (data.add == 1) {
-                            $("#add_" + data.section_id).prop("checked", true);
-                        }else{$("#add_" + data.section_id).prop("checked", false);}
-                        if (data.update == 1) {
-                            $("#update_" + data.section_id).prop("checked", true);
-                        }else{ $("#update_" + data.section_id).prop("checked", false);}
+                    if(data.view == 0){//quitar marcas y bloquear addition,modify,erase
+                        $("#add_"+data.fk_section).prop("checked", false);
+                        if (data.addition == 1) {
+                            $("#add_" + data.fk_section).prop("checked", true);
+                        }else{$("#add_" + data.fk_section).prop("checked", false);}
+                        if (data.modify == 1) {
+                            $("#update_" + data.fk_section).prop("checked", true);
+                        }else{ $("#update_" + data.fk_section).prop("checked", false);}
 
-                        if (data.delete == 1) {
-                            $("#delete_" + data.section_id).prop("checked", true);
-                        }else{ $("#delete_" + data.section_id).prop("checked", false);}
+                        if (data.erase == 1) {
+                            $("#delete_" + data.fk_section).prop("checked", true);
+                        }else{ $("#delete_" + data.fk_section).prop("checked", false);}
                     } else {
-                        $("#view_" + data.section_id).prop("checked", true);//poner su marca
-                        if (data.add == 1) {
-                            $("#add_" + data.section_id).prop("checked", true);
-                        }else{$("#add_" + data.section_id).prop("checked", false);}
-                        if (data.update == 1) {
-                            $("#update_" + data.section_id).prop("checked", true);
-                        }else{ $("#update_" + data.section_id).prop("checked", false);}
+                        $("#view_" + data.fk_section).prop("checked", true);//poner su marca
+                        if (data.addition == 1) {
+                            $("#add_" + data.fk_section).prop("checked", true);
+                        }else{$("#add_" + data.fk_section).prop("checked", false);}
+                        if (data.modify == 1) {
+                            $("#update_" + data.fk_section).prop("checked", true);
+                        }else{ $("#update_" + data.fk_section).prop("checked", false);}
 
-                        if (data.delete == 1) {
-                            $("#delete_" + data.section_id).prop("checked", true);
-                        }else{ $("#delete_" + data.section_id).prop("checked", false);}
+                        if (data.erase == 1) {
+                            $("#delete_" + data.fk_section).prop("checked", true);
+                        }else{ $("#delete_" + data.fk_section).prop("checked", false);}
 
                     }//fin else de vista es 1
                 });//fin each recorrido
@@ -71,96 +73,124 @@ function permprofile() {
 // EDITAR = 2
 // ELIMINAR = 3
 
-function clickView() {
+function clickView(section, reference) {
     var id = $("#selectProfile").val();
-    var row = $(this).parents('tr');
-    var section = $(row).attr('data-hijo');
-    var form = $('#form-update_store');
-    var row_ = $(this).parents('tr');
-    var id_reference = $(row_).attr('data-reference');
-    console.log(id_reference);
-    if(id_reference==undefined){
-            id_reference=0;
+    if(reference==undefined){
+        reference=0;
     }
-    var route = form.attr('action').replace(':USER_ID',id+"/"+section+"/"+0+"/"+id_reference);
-    // aler(route);
-    if(id == ""){}else{
-        $.get(route, function(result){
-        }).fail(function() {
-            alert("Advertencia No se pudo procesar el permiso de  Ver.");
-        });
-    }
-};
+    var btn = 0;
+    var data = {'id':id,
+                'section':section,
+                'btn':btn,
+                'reference':reference,
+        "_token": $("meta[name='csrf-token']").attr("content")
+    };
+    // var route = baseUrl + "/" + id + "/"+section+"/"+ 0 +"/"+ reference;
+    var route = baseUrl + "/update_store";
+    console.log(route);
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
 
-
-function clickAdd() {
-    var id = $("#selectProfile").val();
-    var row = $(this).parents('tr');
-    // console.log(row);
-    var section = $(row).attr('data-hijo');
-    console.log(section);
-    var form = $('#form-update_store');
-    var row_ = $(this).parents('tr');
-    var id_reference = $(row_).attr('data-reference');
-    console.log(id_reference);
-    if(id_reference== undefined){
-            id_reference=0;
-    }
-    var route = form.attr('action').replace(':USER_ID',id+"/"+section+"/"+1+"/"+id_reference);
-    if(id == ""){}else{
-        $.get(route, function(data){
-            if(data.length>0){
-                $("#view_" + data[0]).prop("checked", true);//poner su marca
-            }
-        }).fail(function() {
-            alert("Advertencia No se pudo procesar el permiso de Agregar.");
-        });
-    }
-};
-
-function clickUpdate() {
-    var id = $("#selectProfile").val();
-    var row = $(this).parents('tr');
-    var section = row.data('hijo');
-    var form = $('#form-update_store');
-    var row_ = $(this).parents('tr');
-    var id_reference = row_.data('reference');
-    if(id_reference==undefined){
-            id_reference=0;
-    }
-    var route = form.attr('action').replace(':USER_ID',id+"/"+section+"/"+2+"/"+id_reference);
-    if(id == ""){}else{
-        $.get(route, function(data){
-            if(data.length>0){
-                $("#view_" + data[0]).prop("checked", true);//poner su marca
-            }
-        }).fail(function() {
-            alert("Advertencia No se pudo procesar el permiso de Editar.");
-        });
-    }
+        }
+    })
 
 };
 
 
-function clickDelete() {
+function clickAdd(section, reference) {
     var id = $("#selectProfile").val();
-    var row = $(this).parents('tr');
-    var section = row.data('hijo');
-    var form = $('#form-update_store');
-    var row_ = $(this).parents('tr');
-    var id_reference = row_.data('reference');
-    if(id_reference==undefined){
-            id_reference=0;
+    if(reference==undefined){
+        reference=0;
     }
-    var route = form.attr('action').replace(':USER_ID',id+"/"+section+"/"+3+"/"+id_reference);
-    if(id == ""){ console.log("perfil vacio");}else{
-        $.get(route, function(data){
-            if(data.length>0){
-                $("#view_" + data[0]).prop("checked", true);//poner su marca
-            }
-        }).fail(function() {
-            alert("Advertencia No se pudo procesar el permiso de Editar.");
-        });
+    var btn = 1;
+    var data = {'id':id,
+                'section':section,
+                'btn':btn,
+                'reference':reference,
+        "_token": $("meta[name='csrf-token']").attr("content")
+    };
+    // var route = baseUrl + "/" + id + "/"+section+"/"+ 0 +"/"+ reference;
+    var route = baseUrl + "/update_store";
+    console.log(route);
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+
+        }
+    })
+    // if(id == ""){}else{
+    //     $.get(route, function(data){
+    //         if(data.length>0){
+    //             $("#view_" + data[0]).prop("checked", true);//poner su marca
+    //         }
+    //     }).fail(function() {
+    //         alert("Advertencia No se pudo procesar el permiso de Agregar.");
+    //     });
+    // }
+};
+
+function clickUpdate(section, reference) {
+    var id = $("#selectProfile").val();
+    if(reference==undefined){
+        reference=0;
     }
+    var btn = 2;
+    var data = {'id':id,
+                'section':section,
+                'btn':btn,
+                'reference':reference,
+        "_token": $("meta[name='csrf-token']").attr("content")
+    };
+    // var route = baseUrl + "/" + id + "/"+section+"/"+ 0 +"/"+ reference;
+    var route = baseUrl + "/update_store";
+    console.log(route);
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+
+        }
+    })
+
+};
+
+
+function clickDelete(section, reference) {
+    var id = $("#selectProfile").val();
+    if(reference==undefined){
+        reference=0;
+    }
+    var btn = 3;
+    var data = {'id':id,
+                'section':section,
+                'btn':btn,
+                'reference':reference,
+        "_token": $("meta[name='csrf-token']").attr("content")
+    };
+    // var route = baseUrl + "/" + id + "/"+section+"/"+ 0 +"/"+ reference;
+    var route = baseUrl + "/update_store";
+    console.log(route);
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+
+        }
+    })
 
 };

@@ -21,6 +21,8 @@
             </div>
         </div>
         {{-- inicia panel de permisos  --}}
+{{-- {!! Form::open(['route'=> ['admin.permission.update_store',':USER_ID'],'method'=>'POST', 'id'=>'form-update_store']) !!} --}}
+
         <div class="panel-group" id="accordion">
             @foreach($padre as $padres )
 
@@ -33,7 +35,7 @@
                     <div id="collapse{{$padres->id}}" class="panel-collapse collapse ">
                         <div class="panel-body">
 
-                            <div class="table-responsive" style="margin: 10px auto; max-width: 950px">
+                            <div class="table-responsive" style="margin: 10px auto; max-width: 1200px">
                                 <table class="table table-striped table-hover text-center">
                                     <thead >
                                     <th class="text-center">Modulo</th>
@@ -56,21 +58,21 @@
                                                 <!--VALIDAR-->
                                                 @if($hijo->hijo==0)
                                                     <td>
-                                                        <input type="checkbox"   id="view_{{$hijo->id}}" disabled="disabled" class="view_id" onclick="clickView()">
+                                                        <input type="checkbox"   id="view_{{$hijo->id}}" disabled="disabled" class="view_id" onclick="clickView({{$hijo->id}},{{$hijo->reference}})">
                                                     </td>
                                                     <td>
                                                         @if($hijo->haveAdd==1)
-                                                            <input type="checkbox" id="add_{{$hijo->id}}" disabled="disabled" class="add_id" onclick="clickAdd()">
+                                                            <input type="checkbox" id="add_{{$hijo->id}}" disabled="disabled" class="add_id" onclick="clickAdd({{$hijo->id}},{{$hijo->reference}})">
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if($hijo->haveUpdate==1)
-                                                            <input type="checkbox" id="update_{{$hijo->id}}" disabled="disabled" class="update_id" onclick="clickUpdate()">
+                                                            <input type="checkbox" id="update_{{$hijo->id}}" disabled="disabled" class="update_id" onclick="clickUpdate({{$hijo->id}},{{$hijo->reference}})">
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if($hijo->haveDelete==1)
-                                                            <input type="checkbox" id="delete_{{$hijo->id}}" disabled="disabled" class="delete_id" onclick="clickDelete()">
+                                                            <input type="checkbox" id="delete_{{$hijo->id}}" disabled="disabled" class="delete_id" onclick="clickDelete({{$hijo->id}},{{$hijo->reference}})">
                                                         @endif
                                                     </td>
                                                 @else
@@ -82,7 +84,7 @@
                                             @endif
                                             <!--/VALIDAR-->
 
-                                            @foreach($hijos as $hijo2 )
+                                            {{-- @foreach($hijos as $hijo2 )
 
                                                 @if($hijo2->reference == $hijo->id)
                                                     <tr data-hijo="{{$hijo2->id}}" data-reference="{{$hijo2->reference}}">
@@ -92,27 +94,27 @@
                                                                    </span>
                                                         </td>
                                                         <td >
-                                                            <input type="checkbox" id="view_{{$hijo2->id}}" disabled="disabled" class="view_id" onclick="clickView()">
+                                                            <input type="checkbox" id="view_{{$hijo2->id}}" disabled="disabled" class="view_id" onclick="clickView({{$hijo2->id}},{{$hijo->reference}})">
                                                         </td>
                                                         <td>
                                                             @if($hijo2->haveAdd==1)
-                                                                <input type="checkbox" id="add_{{$hijo2->id}}" disabled="disabled"  class="add_id" onclick="clickAdd()">
+                                                                <input type="checkbox" id="add_{{$hijo2->id}}" disabled="disabled"  class="add_id" onclick="clickAdd({{$hijo2->id}},{{$hijo->reference}})">
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($hijo2->haveUpdate==1)
-                                                                <input type="checkbox" id="update_{{$hijo2->id}}" disabled="disabled" class="update_id" onclick="clickUpdate()">
+                                                                <input type="checkbox" id="update_{{$hijo2->id}}" disabled="disabled" class="update_id" onclick="clickUpdate({{$hijo2->id}},{{$hijo->reference}})">
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($hijo2->haveDelete==1)
-                                                                <input type="checkbox" id="delete_{{$hijo2->id}}" disabled="disabled" class="delete_id" onclick="clickDelete()">
+                                                                <input type="checkbox" id="delete_{{$hijo2->id}}" disabled="disabled" class="delete_id" onclick="clickDelete({{$hijo2->id}},{{$hijo->reference}})">
                                                             @endif
                                                         </td>
                                                     </tr>
                                                 @endif
 
-                                            @endforeach
+                                            @endforeach --}}
 
                                         @endif
 
@@ -120,7 +122,6 @@
 
                                     </tbody>
                                 </table>
-                                {{-- {!! Form::open(['route'=> ['admin.permission.update_store',':USER_ID'],'method'=>'POST', 'id'=>'form-update_store']) !!} --}}
 
                                 {{-- {!! Form::close() !!} --}}
 
