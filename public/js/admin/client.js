@@ -165,6 +165,7 @@ function actualizarCliente()
         dataType:'json',
         success:function(result)
         {
+            alertify.success(result.message);
             $("#modalEditClient").modal('hide');
             window.location.reload(true);
         }

@@ -16,6 +16,7 @@ function guardarperfil()
         dataType: 'json',
         success:function(result)
         {
+            alertify.success(result.message);
             $("#myModal").modal('hide');
             window.location.reload(true);
         }
@@ -60,6 +61,7 @@ function actualizarperfil()
         dataType:'json',
         success:function(result)
         {
+            alertify.success(result.message);
             $("#myModaledit").modal('hide');
             window.location.reload(true);
         }
