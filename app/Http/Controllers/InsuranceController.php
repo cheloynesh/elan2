@@ -4,14 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Insurance;
+use App\User;
+use App\Permission;
 use App\Profile;
 
 class InsuranceController extends Controller
 {
     public function index(){
         $insurances = Insurance::get();
-        // dd($prof);
-        return view('admin.insurance.insurances', compact('insurances'));
+        $profile = User::findProfile();
+        $perm = Permission::permView($profile,6);
+        $perm_btn =Permission::permBtns($profile,6);
+        // dd($perm_btn);
+        if($perm==0)
+        {
+            return redirect()->route('home');
+        }
+        else
+        {
+            return view('admin.insurance.insurances', compact('insurances','perm_btn'));
+        }
     }
 
     public function GetInfo($id)

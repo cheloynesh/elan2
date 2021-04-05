@@ -38,24 +38,34 @@
         @include('admin.profile.profileedit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
+            @if ($perm_btn['addition']==1)
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
+            @endif
         </div>
         <br><br>
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbProf">
                 <thead>
                     <th class="text-center">Nombre</th>
-                    <th class="text-center">Opciones</th>
+                    @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
+                        <th class="text-center">Opciones</th>
+                    @endif
                 </thead>
 
                 <tbody>
                     @foreach ($profiles as $profile)
                         <tr id="{{$profile->id}}">
                             <td>{{$profile->name}}</td>
-                            <td>
-                                <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
-                                <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
-                            </td>
+                            @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
+                                <td>
+                                    @if ($perm_btn['modify']==1)
+                                        <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
+                                    @endif
+                                    @if ($perm_btn['erase']==1)
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                                    @endif
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

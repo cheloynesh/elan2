@@ -8,8 +8,10 @@
         @include('admin.client.enterpriseedit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewClient">Persona Física</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewEnterprise">Persona Moral</button>
+            @if ($perm_btn['addition']==1)
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewClient">Persona Física</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalNewEnterprise">Persona Moral</button>
+            @endif
         </div>
         <br><br>
         <ul class="nav nav-tabs" id="mytab" role="tablist">
@@ -30,17 +32,25 @@
                         <table class="table table-striped table-hover text-center" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
-                                <th class="text-center">Opciones</th>
+                                @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
+                                    <th class="text-center">Opciones</th>
+                                @endif
                             </thead>
 
                             <tbody>
                                 @foreach ($clients as $client)
                                     <tr id="{{$client->id}}">
                                         <td>{{$client->name}}</td>
-                                        <td>
-                                            <a href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" >Editar</a>
-                                            <a href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})">Eliminar</a>
-                                        </td>
+                                        @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
+                                            <td>
+                                                @if ($perm_btn['modify']==1)
+                                                    <a href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" >Editar</a>
+                                                @endif
+                                                @if ($perm_btn['erase']==1)
+                                                    <a href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})">Eliminar</a>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

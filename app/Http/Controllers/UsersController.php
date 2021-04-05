@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
+use App\Permission;
 use App\AgentCode;
 
 class UsersController extends Controller
@@ -12,7 +13,18 @@ class UsersController extends Controller
     public function index(){
         $users = User::get();
         $profiles = Profile::pluck('name','id');
-        return view('admin.users.user', compact('profiles','users'));
+        $profile = User::findProfile();
+        $perm = Permission::permView($profile,3);
+        $perm_btn =Permission::permBtns($profile,3);
+        // dd($perm_btn);
+        if($perm==0)
+        {
+            return redirect()->route('home');
+        }
+        else
+        {
+            return view('admin.users.user', compact('profiles','users','perm_btn'));
+        }
 
     }
 

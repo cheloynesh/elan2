@@ -5,13 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 use App\Enterprise;
+use App\Permission;
+use App\User;
 
 class ClientsController extends Controller
 {
     public function index(){
         $clients = Client::get();
         $enterprises = Enterprise::get();
-        return view('admin.client.clients', compact('clients','enterprises'));
+        $profile = User::findProfile();
+        $perm = Permission::permView($profile,5);
+        $perm_btn =Permission::permBtns($profile,5);
+        // dd($perm_btn);
+        if($perm==0)
+        {
+            return redirect()->route('home');
+        }
+        else
+        {
+            return view('admin.client.clients', compact('clients','enterprises','perm_btn'));
+        }
     }
 
     public function GetInfo($id)

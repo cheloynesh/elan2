@@ -4,11 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Profile;
+use App\User;
+use App\Permission;
+
 class ProfilesController extends Controller
 {
     public function index(){
         $profiles = Profile::get();
-        return view('admin.profile.profiles', compact('profiles'));
+        $profile = User::findProfile();
+        $perm = Permission::permView($profile,6);
+        $perm_btn =Permission::permBtns($profile,6);
+        // dd($perm_btn);
+        if($perm==0)
+        {
+            return redirect()->route('home');
+        }
+        else
+        {
+            return view('admin.profile.profiles', compact('profiles','perm_btn'));
+        }
     }
 
     public function GetInfo($id)
