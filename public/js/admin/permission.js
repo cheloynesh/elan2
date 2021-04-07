@@ -93,12 +93,11 @@ function clickView(section, reference) {
         type:'post',
         data:data,
         dataType:'json',
-        success:function(result)
+        success:function()
         {
 
         }
     })
-
 };
 
 

@@ -84,7 +84,7 @@
                                             @endif
                                             <!--/VALIDAR-->
 
-                                            {{-- @foreach($hijos as $hijo2 )
+                                            @foreach($hijos as $hijo2 )
 
                                                 @if($hijo2->reference == $hijo->id)
                                                     <tr data-hijo="{{$hijo2->id}}" data-reference="{{$hijo2->reference}}">
@@ -114,7 +114,7 @@
                                                     </tr>
                                                 @endif
 
-                                            @endforeach --}}
+                                            @endforeach
 
                                         @endif
 

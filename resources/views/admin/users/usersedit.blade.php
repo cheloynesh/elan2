@@ -12,10 +12,16 @@
                     <div class="col-md-12">
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Email</label>
                                     <input type="text" id="email1" name="email1" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Contraseña</label>
+                                    <input type="text" id="password1" name="password1" class="form-control" placeholder="Contraseña">
                                 </div>
                             </div>
                         </div>

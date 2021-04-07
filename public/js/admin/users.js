@@ -53,6 +53,7 @@ function editarUsuario(id)
         success:function(result)
         {
             $("#email1").val(result.data.email);
+            $("#password1").val(result.data.password);
             $("#name1").val(result.data.name);
             $("#firstname1").val(result.data.firstname);
             $("#lastname1").val(result.data.lastname);
@@ -83,6 +84,7 @@ function cancelarUsuario()
 function actualizarUsuario()
 {
     var email = $("#email1").val();
+    var password = $("#password1").val();
 
     var name = $("#name1").val();
     var firstname = $("#firstname1").val();
@@ -95,6 +97,7 @@ function actualizarUsuario()
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
         'email':email,
+        'password':password,
         'name':name,
         'firstname':firstname,
         'lastname':lastname,

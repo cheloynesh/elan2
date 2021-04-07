@@ -33,11 +33,11 @@ class PermissionsController extends Controller
     }
     public function update_store(Request $request){
         // dd($request->all());
-        // , $fk_profile, $fk_section,$btn,$reference
         // dd($fk_section);
         $perm = Permission::where('fk_profile','=',$request->id)->where('fk_section','=',$request->section)->count();
         // dd($perm);
         if($perm>0){
+            // dd($request->all());
             // dd($fk_profile, $fk_section,$btn,$reference);
             Permission::updatePermission($request->id, $request->section, $request->btn, $request->reference);
         }else{//no existe-crear permiso
@@ -53,11 +53,11 @@ class PermissionsController extends Controller
                         ->where(['Sections.reference'=>$request->reference,'view'=>1,'fk_profile'=>$request->id])
                         ->count();
                     if($permisions>0){
-                        $findPermisions = Permission::where('fk_section','=',$request->section)->where('fk_profile','=',$request->id)->get();
+                        $findPermisions = Permission::where('fk_section','=',$request->reference)->where('fk_profile','=',$request->id)->get();
                         if($findPermisions->count() == 0){
                             $createPermision = new Permission();
                             $createPermision->fk_profile=$request->id;
-                            $createPermision->fk_section=$request->section;
+                            $createPermision->fk_section=$request->reference;
                             $createPermision->view=1;
                             $createPermision->save();
                         }
@@ -79,16 +79,16 @@ class PermissionsController extends Controller
                         ->where(['Sections.reference'=>$request->reference,'view'=>1,'fk_profile'=>$request->id])
                         ->count();
                     if($permisions>0){
-                        $findPermisions = Permission::where('fk_section','=',$request->section)->where('fk_profile','=',$request->id)->get();
+                        $findPermisions = Permission::where('fk_section','=',$request->reference)->where('fk_profile','=',$request->id)->get();
                         if($findPermisions->count() == 0){
                             $createPermision = new Permission();
                             $createPermision->fk_profile=$request->id;
-                            $createPermision->fk_section=$request->section;
+                            $createPermision->fk_section=$request->reference;
                             $createPermision->view=1;
                             $createPermision->save();
                         }
                     }
-                    return response()->json($perms);
+                    return response()->json(['data'=>$perms]);
                     break;
                 case 2://EDITAR
                     // dd($btn);
@@ -105,17 +105,17 @@ class PermissionsController extends Controller
                         ->where(['Sections.reference'=>$request->reference,'view'=>1,'fk_profile'=>$request->id])
                         ->count();
                     if($permisions>0){
-                        $findPermisions = Permission::where('fk_section','=',$request->section)->where('fk_profile','=',$request->id)->get();
+                        $findPermisions = Permission::where('fk_section','=',$request->reference)->where('fk_profile','=',$request->id)->get();
                         if($findPermisions->count() == 0){
                             $createPermision = new Permission();
                             $createPermision->fk_profile=$request->id;
-                            $createPermision->fk_section=$request->section;
+                            $createPermision->fk_section=$request->reference;
                             $createPermision->view=1;
                             $createPermision->save();
                         }
                     }
 
-                    return response()->json($perms);
+                    return response()->json(['data'=>$perms]);
                     break;
                 case 3://ELIMINAR
                     $per_ = new Permission();
@@ -131,16 +131,16 @@ class PermissionsController extends Controller
                         ->where(['Sections.reference'=>$request->reference,'view'=>1,'fk_profile'=>$request->id])
                         ->count();
                     if($permisions>0){
-                        $findPermisions = Permission::where('fk_section','=',$request->section)->where('fk_profile','=',$request->id)->get();
+                        $findPermisions = Permission::where('fk_section','=',$request->reference)->where('fk_profile','=',$request->id)->get();
                         if($findPermisions->count() == 0){
                             $createPermision = new Permission();
                             $createPermision->fk_profile=$request->id;
-                            $createPermision->fk_section=$request->section;
+                            $createPermision->fk_section=$request->reference;
                             $createPermision->view=1;
                             $createPermision->save();
                         }
                     }
-                    return response()->json($perms);
+                    return response()->json(['data'=>$perms]);
                     break;
             }
         }

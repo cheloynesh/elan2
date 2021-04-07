@@ -64,8 +64,8 @@ class UsersController extends Controller
     {
         // dd($request->all());
         $user = User::where('id',$request->id)
-        ->update(['email'=>$request->email,'name'=>$request->name,
-        'firstname'=>$request->firstname,'lastname'=>$request->lastname,
+        ->update(['email'=>$request->email,'password'=>bcrypt($request->password),
+        'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
         'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile]);
         $codes_edit = AgentCode::where('fk_user', $request->id)->get();
         // dd($codes_edit);

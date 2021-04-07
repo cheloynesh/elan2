@@ -34,7 +34,9 @@ class Permission extends Model
     }
 
     public static function  updatePermission($fk_profile,$fk_section,$btn,$reference){
+        // dd($fk_profile,$fk_section,$btn,$reference);
         $perm = Permission::where('fk_profile','=',$fk_profile)->where('fk_section','=',$fk_section)->count();
+        // dd($perm);
         //existe-editar permiso
         if($perm>0){
               $per = Permission::where('fk_profile','=',$fk_profile)->where('fk_section','=',$fk_section)->pluck('id');
@@ -42,10 +44,14 @@ class Permission extends Model
             switch ($btn) {
                 case 0://VER
                     $search_id = Permission::find($per[0]);
+                    // dd($search_id);
                     if($search_id->view==0){
                         $search_id->view=1;
+                        // dd($search_id->view);
+
                     }else if($search_id->view==1){
                         $search_id->view=0;
+                        // dd($search_id->view);
                     }
                     $search_id->save();
                     if($reference!="undefined"){
@@ -53,14 +59,16 @@ class Permission extends Model
                             ->join('Sections','Sections.id','=','perm.fk_section')
                             ->where(['Sections.reference'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
                             ->count();
-                        if($permisions>0){
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            // dd($permisions);
+                        if($permisions>1){
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            // dd($findPermisions);
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
                         }
                         else{
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=0;
                             $update->save();
@@ -84,20 +92,20 @@ class Permission extends Model
                             ->join('Sections','Sections.id','=','perm.fk_section')
                             ->where(['Sections.reference'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
                             ->count();
-                        if($permisions>0){
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                        if($permisions>1){
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
                         }
                         else{
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=0;
                             $update->save();
                         }
                     }
-
+                    
                     break;
                 case 2://EDITAR
                     $search_id = Permission::find($per[0]);
@@ -113,15 +121,15 @@ class Permission extends Model
                             ->join('Sections','Sections.id','=','perm.fk_section')
                             ->where(['Sections.reference'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
                             ->count();
-                        if($permisions>0){
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                        if($permisions>1){
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
                         }
                         else{
                             // dd($reference, $fk_profile);
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             // dd($findPermisions);
                             $update = Permission::find($findPermisions[0]);
                             // dd($update);
@@ -144,14 +152,14 @@ class Permission extends Model
                             ->join('Sections','Sections.id','=','perm.fk_section')
                             ->where(['Sections.reference'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
                             ->count();
-                        if($permisions>0){
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                        if($permisions>1){
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
                         }
                         else{
-                            $findPermisions = Permission::where('fk_section','=',$fk_section)->where('fk_profile','=',$fk_profile)->pluck('id');
+                            $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=0;
                             $update->save();
