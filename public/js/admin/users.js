@@ -60,7 +60,7 @@ function editarUsuario(id)
             $("#cellphone1").val(result.data.cellphone);
             $("#selectProfile1").val(result.data.fk_profile);
             // codigos
-            
+
             // codigoseditar=[];
             var tableEdit = $("#tbody-codigo1");
             tableEdit.empty();
@@ -114,6 +114,7 @@ function actualizarUsuario()
         success:function(result)
         {
             // $("#tbody-codigo1").empty();
+            alertify.success(result.message);
             $("#myModaledit").modal('hide');
             window.location.reload(true);
         }
@@ -195,7 +196,7 @@ function agregarcodigo()
 }
 function agregarcodigo1(codigo)
 {
-    if(codigo == undefined)    
+    if(codigo == undefined)
         codigo = $("#code1").val();
     var table = $("#tbody-codigo1");
     var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger" onclick="delete_code_edit(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';

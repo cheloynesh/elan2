@@ -71,10 +71,16 @@
                                 @foreach ($enterprises as $enterprise)
                                     <tr id="{{$enterprise->id}}">
                                         <td>{{$enterprise->business_name}}</td>
-                                        <td>
-                                            <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$enterprise->id}})" >Editar</a>
-                                            <a href="#|" class="btn btn-danger" onclick="eliminarEmpresa({{$enterprise->id}})">Eliminar</a>
-                                        </td>
+                                        @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
+                                            <td>
+                                                @if ($perm_btn['modify']==1)
+                                                    <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$enterprise->id}})" >Editar</a>
+                                                @endif
+                                                @if ($perm_btn['erase']==1)
+                                                    <a href="#|" class="btn btn-danger" onclick="eliminarEmpresa({{$enterprise->id}})">Eliminar</a>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
