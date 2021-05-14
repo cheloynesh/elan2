@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/1.0.0/css/dataTables.responsive.css">
 
     {{-- alertify --}}
-    <!-- JavaScript -->
+    {{-- <!-- JavaScript -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
     <!-- CSS -->
@@ -48,7 +48,15 @@
     <!-- Semantic UI theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/> --}}
+
+    <!-- include the script -->
+    <script src="{{URL::asset('js/plugins/alertify.min.js')}}"></script>
+
+    <!-- include the style -->
+    <link rel="stylesheet" href="{{URL::asset('css/plugins/alertify.min.css')}}"/>
+    <!-- include a theme -->
+    <link rel="stylesheet" href="{{URL::asset('css/plugins/themes/default.min.css')}}"/>
 
     @stack('head')
     {{-- @include('alertify::alertify') --}}
