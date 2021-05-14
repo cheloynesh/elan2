@@ -49,3 +49,11 @@ Route::delete('admin/client/client/destroyEnterprise/{id}','ClientsController@de
 Route::resource('admin/permission/permissions', 'PermissionsController');
 Route::get('admin/permission/permissions/{id}/{id_seccion?}/{btn?}/{reference?}',[ 'uses' => 'PermissionsController@update_store', 'as' => 'admin.permission.update_store']);
 Route::post('admin/permission/permissions/update_store','PermissionsController@update_store')->name('permissions.update_store');
+
+//Tipo de solicitud
+Route::resource('admin/applications/application', 'ApplicationsController');
+Route::get('admin/applications/application/GetInfo/{id}','ApplicationsController@GetInfo')->name('application.GetInfo');
+
+// moneda
+Route::resource('admin/currency/currencies', 'ApplicationsController');
+Route::get('admin/currency/currencies/GetInfo/{id}','ApplicationsController@GetInfo')->name('currencies.GetInfo');
