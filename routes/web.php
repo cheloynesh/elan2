@@ -55,5 +55,13 @@ Route::resource('admin/applications/application', 'ApplicationsController');
 Route::get('admin/applications/application/GetInfo/{id}','ApplicationsController@GetInfo')->name('application.GetInfo');
 
 // moneda
-Route::resource('admin/currency/currencies', 'ApplicationsController');
-Route::get('admin/currency/currencies/GetInfo/{id}','ApplicationsController@GetInfo')->name('currencies.GetInfo');
+Route::resource('admin/currency/currencies', 'CurrencyController');
+Route::get('admin/currency/currencies/GetInfo/{id}','CurrencyController@GetInfo')->name('currencies.GetInfo');
+
+// Ramo
+Route::resource('admin/branch/branches', 'BranchController');
+Route::get('admin/branch/branches/GetInfo/{id}','BranchController@GetInfo')->name('branches.GetInfo');
+
+// Cálculo de Cobro
+Route::resource('admin/charge/charges', 'ChargeController');
+Route::get('admin/charge/charges/GetInfo/{id}','ChargeController@GetInfo')->name('charges.GetInfo');
