@@ -65,3 +65,7 @@ Route::get('admin/branch/branches/GetInfo/{id}','BranchController@GetInfo')->nam
 // Cálculo de Cobro
 Route::resource('admin/charge/charges', 'ChargeController');
 Route::get('admin/charge/charges/GetInfo/{id}','ChargeController@GetInfo')->name('charges.GetInfo');
+
+// Formas de pago
+Route::resource('admin/payment_forms/payment_form', 'PaymentFormsController');
+Route::get('admin/payment_forms/payment_form/GetInfo/{id}','PaymentFormsController@GetInfo')->name('payment_form.GetInfo');

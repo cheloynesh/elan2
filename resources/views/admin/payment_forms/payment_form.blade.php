@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-    <div class="text-center"><h1>Catálogo de Monedas</h1></div>
+    <div class="text-center"><h1>Catálogo de Formas de pago</h1></div>
     <div style="max-width: 1200px; margin: auto;">
         {{-- modal| --}}
         <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
@@ -8,7 +8,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title" id="gridModalLabek">Registro de Monedas</h4>
+                        <h4 class="modal-title" id="gridModalLabek">Registro de Formas de pago</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
 
@@ -28,13 +28,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="guardarMoneda()" class="btn btn-primary">Guardar</button>
+                        <button type="button" onclick="guardarforma()" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
         {{-- fin modal| --}}
-        @include('admin.currency.currenciesEdit')
+        @include('admin.payment_forms.payment_formEdit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
             @if ($perm_btn['addition']==1)
@@ -52,16 +52,16 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($applications as $application)
-                        <tr id="{{$application->id}}">
-                            <td>{{$application->name}}</td>
+                    @foreach ($paymentform as $paymentforms)
+                        <tr id="{{$paymentforms->id}}">
+                            <td>{{$paymentforms->name}}</td>
                             @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                 <td>
                                     @if ($perm_btn['modify']==1)
-                                        <a href="#|" class="btn btn-warning" onclick="editarMoneda({{$application->id}})" >Editar</a>
+                                        <a href="#|" class="btn btn-warning" onclick="editarforma({{$paymentforms->id}})" >Editar</a>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarMoneda({{$application->id}})">Eliminar</a>
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarforma({{$paymentforms->id}})">Eliminar</a>
                                     @endif
                                 </td>
                             @endif
@@ -73,5 +73,5 @@
     </div>
 @endsection
 @push('head')
-    <script src="{{URL::asset('js/admin/currency.js')}}"></script>
+    <script src="{{URL::asset('js/admin/paymentforms.js')}}"></script>
 @endpush

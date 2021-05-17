@@ -1,10 +1,10 @@
 var ruta = window.location;
 var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
-function guardarMoneda()
+function guardarforma()
 {
     var name = $("#name").val();
-    var route = "currencies";
+    var route = "payment_form";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'name':name
@@ -23,7 +23,7 @@ function guardarMoneda()
     })
 }
 var idupdate = 0;
-function editarMoneda(id)
+function editarforma(id)
 {
     idupdate=id;
 
@@ -45,10 +45,10 @@ function cancelarEditar()
     $("#name1").val("");
     $("#myModaledit").modal('hide');
 }
-function actualizarMoneda(id)
+function actualizarforma(id)
 {
     var name = $("#name1").val();
-    var route = "currencies/"+idupdate;
+    var route = "payment_form/"+idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -67,14 +67,14 @@ function actualizarMoneda(id)
         }
     })
 }
-function eliminarMoneda(id)
+function eliminarforma(id)
 {
-    var route = "currencies/"+id;
+    var route = "payment_form/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Eliminar Moneda","¿Desea borrar a la moneda?",
+    alertify.confirm("Eliminar Forma","¿Desea borrar a la forma?",
         function(){
             jQuery.ajax({
                 url:route,

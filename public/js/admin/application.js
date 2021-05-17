@@ -45,14 +45,36 @@ function cancelarEditar()
     $("#name1").val("");
     $("#myModaledit").modal('hide');
 }
-function actualizarSolicitud(id)
+function actualizarSolicitud()
+{
+    var name = $("#name1").val();
+    var route = "application/"+idupdate;
+    var data = {
+        'id':idupdate,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'name':name
+    };
+    jQuery.ajax({
+        url:route,
+        type:'put',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#myModaledit").modal('hide');
+            window.location.reload(true);
+        }
+    })
+}
+function eliminarSolicitud(id)
 {
     var route = "application/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Eliminar Aseguradora","¿Desea borrar a la aseguradora?",
+    alertify.confirm("Eliminar Solicitud","¿Desea borrar a la solicitud?",
         function(){
             jQuery.ajax({
                 url:route,
