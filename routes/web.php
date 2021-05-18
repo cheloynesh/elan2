@@ -69,3 +69,8 @@ Route::get('admin/charge/charges/GetInfo/{id}','ChargeController@GetInfo')->name
 // Formas de pago
 Route::resource('admin/payment_forms/payment_form', 'PaymentFormsController');
 Route::get('admin/payment_forms/payment_form/GetInfo/{id}','PaymentFormsController@GetInfo')->name('payment_form.GetInfo');
+
+// ------------------------------------Proceso OT--------------------------------------------------
+// Proceso Iniciales
+Route::resource('processes/OT/Initials/initial', 'InitialController');
+Route::get('processes/OT/Initials/initial/GetInfo/{id}','InitialController@GetInfo')->name('initial.GetInfo');
