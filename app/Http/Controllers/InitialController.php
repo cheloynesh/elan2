@@ -13,7 +13,7 @@ use App\Charge;
 use App\Branch;
 use App\Application;
 use DB;
-
+use Carbon\Carbon;
 
 class InitialController extends Controller
 {
@@ -44,26 +44,27 @@ class InitialController extends Controller
     public function GetInfo($id)
     {
         $initial = Initial::where('id',$id)->first();
+        // dd($initial);
         return response()->json(['status'=>true, "data"=>$initial]);
     }
 
     public function store(Request $request)
     {
         $initial = new Initial;
-        $initial->fk_agent = $request->fk_agent;
+        $initial->fk_agent = $request->agent;
         $initial->client = $request->client;
         $initial->rfc = $request->rfc;
-        $initial->promoter_date = $request->promoter_date;
-        $initial->system_date = $request->system_date;
+        $initial->promoter_date = $request->promoter;
+        $initial->system_date = Carbon::now()->format('Y-m-d');
         $initial->folio = $request->folio;
-        $initial->fk_insurance = $request->fk_insurance;
-        $initial->fk_branch = $request->fk_branch;
-        $initial->fk_application = $request->fk_application;
+        $initial->fk_insurance = $request->insurance;
+        $initial->fk_branch = $request->branch;
+        $initial->fk_application = $request->application;
         $initial->month = $request->month;
         $initial->pna = $request->pna;
-        $initial->fk_payment_form = $request->fk_payment_form;
-        $initial->fk_currency = $request->fk_currency;
-        $initial->fk_charge = $request->fk_charge;
+        $initial->fk_payment_form = $request->paymentForm;
+        $initial->fk_currency = $request->currency;
+        $initial->fk_charge = $request->charge;
         $initial->save();
         return response()->json(["status"=>true, "message"=>"Inicial creada"]);
     }
@@ -71,20 +72,20 @@ class InitialController extends Controller
     public function update(Request $request, $id)
     {
         $initial = Initial::where('id',$request->id)->
-        update(['fk_agent'=>$request->fk_agent,
+        update(['fk_agent'=>$request->agent,
         'client' => $request->client,
         'rfc' => $request->rfc,
-        'promoter_date' => $request->promoter_date,
-        'system_date' => $request->system_date,
+        'promoter_date' => $request->promoter,
+        // 'system_date' => $request->system_date,
         'folio' => $request->folio,
-        'fk_insurance' => $request->fk_insurance,
-        'fk_branch' => $request->fk_branch,
-        'fk_application' => $request->fk_application,
+        'fk_insurance' => $request->insurance,
+        'fk_branch' => $request->branch,
+        'fk_application' => $request->application,
         'month' => $request->month,
         'pna' => $request->pna,
-        'fk_payment_form' => $request->fk_payment_form,
-        'fk_currency' => $request->fk_currency,
-        'fk_charge' => $request->fk_charge]);
+        'fk_payment_form' => $request->paymentForm,
+        'fk_currency' => $request->currency,
+        'fk_charge' => $request->charge]);
         return response()->json(['status'=>true, 'message'=>"Inicial actualizada"]);
     }
 

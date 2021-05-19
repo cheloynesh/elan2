@@ -47,28 +47,25 @@ function cancelarEditar()
 }
 function actualizarCobro(id)
 {
-    var route = "branch/"+id;
+    var name = $("#name1").val();
+    var route = "charges/"+idupdate;
     var data = {
-            'id':id,
-            "_token": $("meta[name='csrf-token']").attr("content"),
+        'id':idupdate,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'name':name
     };
-    alertify.confirm("Eliminar Conducto de Cobro","¿Desea borrar el Conducto de Cobro?",
-        function(){
-            jQuery.ajax({
-                url:route,
-                data: data,
-                type:'delete',
-                dataType:'json',
-                success:function(result)
-                {
-                    window.location.reload(true);
-                }
-            })
-            alertify.success('Eliminado');
-        },
-        function(){
-            alertify.error('Cancelado');
-    });
+    jQuery.ajax({
+        url:route,
+        type:'put',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#myModaledit").modal('hide');
+            window.location.reload(true);
+        }
+    })
 }
 
 function eliminarCobro(id)
