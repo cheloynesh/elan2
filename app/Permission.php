@@ -59,19 +59,26 @@ class Permission extends Model
                             ->join('Sections','Sections.id','=','perm.fk_section')
                             ->where(['Sections.reference'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
                             ->count();
+                        $perm =   DB::table('Permissions as perm')
+                            ->join('Sections','Sections.id','=','perm.fk_section')
+                            ->where(['fk_section'=>$reference,'view'=>1,'fk_profile'=>$fk_profile])
+                            ->count();
                             // dd($permisions);
-                        if($permisions>1){
+                        if($permisions>=1 && $perm == 0){
+
                             $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             // dd($findPermisions);
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
+                            dd($permisions,"view 1");
                         }
                         else{
                             $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=0;
                             $update->save();
+                            dd($permisions,"view 0");
                         }
                     }
 
@@ -105,7 +112,7 @@ class Permission extends Model
                             $update->save();
                         }
                     }
-                    
+
                     break;
                 case 2://EDITAR
                     $search_id = Permission::find($per[0]);

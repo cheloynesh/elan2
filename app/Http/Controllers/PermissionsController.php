@@ -38,7 +38,7 @@ class PermissionsController extends Controller
         // dd($perm);
         if($perm>0){
             // dd($request->all());
-            // dd($fk_profile, $fk_section,$btn,$reference);
+            // dd($request->id, $request->section, $request->btn, $request->reference);
             Permission::updatePermission($request->id, $request->section, $request->btn, $request->reference);
         }else{//no existe-crear permiso
             switch ($request->btn) {

@@ -74,7 +74,7 @@
                                         <label for="">Ramo:</label>
                                         <select name="selectBranch" id="selectBranch" class="form-control">
                                             <option hidden selected>Selecciona una opción</option>
-                                            @foreach ($brances as $id => $branch)
+                                            @foreach ($branches as $id => $branch)
                                                 <option value='{{ $id }}'>{{ $branch }}</option>
                                             @endforeach
                                         </select>
@@ -183,16 +183,16 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($charges as $charge)
-                        <tr id="{{$charge->id}}">
-                            <td>{{$charge->name}}</td>
+                    @foreach ($initials as $initial)
+                        <tr id="{{$initial->id}}">
+                            <td>{{$initial->name}}</td>
                             @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                 <td>
                                     @if ($perm_btn['modify']==1)
-                                        <a href="#|" class="btn btn-warning" onclick="editarCobro({{$charge->id}})" >Editar</a>
+                                        <a href="#|" class="btn btn-warning" onclick="editarCobro({{$initial->id}})" >Editar</a>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarCobro({{$charge->id}})">Eliminar</a>
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarCobro({{$initial->id}})">Eliminar</a>
                                     @endif
                                 </td>
                             @endif

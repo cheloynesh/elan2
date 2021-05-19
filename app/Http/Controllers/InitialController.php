@@ -37,8 +37,8 @@ class InitialController extends Controller
         }
         else
         {
-            return view('processes.OT.initials.initial', 
-            compact('initials','agents','currencie','insurances','paymentForms','charges','branches','applications','perm_btn'));
+            return view('processes.OT.initials.initial',
+            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn'));
         }
     }
     public function GetInfo($id)
