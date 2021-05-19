@@ -18,11 +18,11 @@
             @foreach ($secciones as $seccion)
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{$seccion->description}}">
-                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu{{$seccion->section}}">
+                        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu{{$seccion->id}}">
                         <i class="{{$seccion->icon}}" ></i>
                             <span class="nav-link-text">{{$seccion->section}}</span>
                         </a>
-                        <ul class="sidenav-second-level collapse" id="multi_menu{{$seccion->section}}" data-parent="#accordion">
+                        <ul class="sidenav-second-level collapse" id="multi_menu{{$seccion->id}}" data-parent="#accordion">
                         @if(count($subsections->where('padre_id',$seccion->id))>0)
                             @foreach ($subsections as $sub)
                                 @if ($seccion->id == $sub->padre_id)

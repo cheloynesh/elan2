@@ -64,7 +64,9 @@
                         <table class="table table-striped table-hover text-center" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
-                                <th class="text-center">Opciones</th>
+                                @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
+                                    <th class="text-center">Opciones</th>
+                                @endif
                             </thead>
 
                             <tbody>
