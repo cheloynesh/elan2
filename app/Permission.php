@@ -71,14 +71,14 @@ class Permission extends Model
                             $update = Permission::find($findPermisions[0]);
                             $update->view=1;
                             $update->save();
-                            dd($permisions,"view 1");
+                            // dd($permisions,"view 1");
                         }
                         else{
                             $findPermisions = Permission::where('fk_section','=',$reference)->where('fk_profile','=',$fk_profile)->pluck('id');
                             $update = Permission::find($findPermisions[0]);
                             $update->view=0;
                             $update->save();
-                            dd($permisions,"view 0");
+                            // dd($permisions,"view 0");
                         }
                     }
 
