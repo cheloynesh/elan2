@@ -55,12 +55,11 @@ class InitialController extends Controller
         $initial->client = $request->client;
         $initial->rfc = $request->rfc;
         $initial->promoter_date = $request->promoter;
-        $initial->system_date = Carbon::now()->format('Y-m-d');
+        $initial->system_date = $request->system;
         $initial->folio = $request->folio;
         $initial->fk_insurance = $request->insurance;
         $initial->fk_branch = $request->branch;
         $initial->fk_application = $request->application;
-        $initial->month = $request->month;
         $initial->pna = $request->pna;
         $initial->fk_payment_form = $request->paymentForm;
         $initial->fk_currency = $request->currency;
@@ -76,12 +75,11 @@ class InitialController extends Controller
         'client' => $request->client,
         'rfc' => $request->rfc,
         'promoter_date' => $request->promoter,
-        // 'system_date' => $request->system_date,
+        'system_date' => $request->system,
         'folio' => $request->folio,
         'fk_insurance' => $request->insurance,
         'fk_branch' => $request->branch,
         'fk_application' => $request->application,
-        'month' => $request->month,
         'pna' => $request->pna,
         'fk_payment_form' => $request->paymentForm,
         'fk_currency' => $request->currency,

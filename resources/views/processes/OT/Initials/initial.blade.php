@@ -7,7 +7,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title" id="gridModalLabek">Registro de Cálculos de Cobro</h4>
+                    <h4 class="modal-title" id="gridModalLabek">Registro de Iniciales</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
@@ -44,13 +44,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Fecha de promotoria</label>
-                                    <input type="date" id="promoter" name="promoter" class="form-control" placeholder="Fecha de nacimiento">
+                                    <input type="date" id="promoter" name="promoter" class="form-control" placeholder="Fecha de Promotoria">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Folio</label>
-                                    <input type="text" id="folio" name="folio" class="form-control">
+                                    <label for="">Fecha de Sistema</label>
+                                    <input type="date" id="system" name="system" class="form-control" placeholder="Fecha de Sistema">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Mes ingresado:</label>
                                     <select name="selectMonth" id="selectMonth" class="form-control">
@@ -108,6 +108,12 @@
                                         <option value="Noviembre">Noviembre</option>
                                         <option value="Diciembre">Diciembre</option>
                                     </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Folio</label>
+                                    <input type="text" id="folio" name="folio" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -174,6 +180,8 @@
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
                 <th class="text-center">Nombre</th>
+                <th class="text-center">RFC</th>
+                <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>
                 @endif
@@ -183,6 +191,9 @@
                 @foreach ($initials as $initial)
                     <tr id="{{$initial->id}}">
                         <td>{{$initial->client}}</td>
+                        <td>{{$initial->rfc}}</td>
+                        <td>Pendiente</td>
+                        {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>
                                 @if ($perm_btn['modify']==1)

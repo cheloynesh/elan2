@@ -8,11 +8,11 @@ function guardarInicial()
     var client = $("#client").val();
     var rfc = $("#rfc").val();
     var promoter = $("#promoter").val();
+    var system = $("#system").val();
     var folio = $("#folio").val();
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
     var application = $("#selectAppli").val();
-    var month = $("#selectMonth").val();
     var pna = $("#pna").val();
     var paymentForm = $("#selectPaymentform").val();
     var currency = $("#selectCurrency").val();
@@ -24,11 +24,11 @@ function guardarInicial()
         'client':client,
         'rfc':rfc,
         'promoter':promoter,
+        'system':system,
         'folio':folio,
         'insurance':insurance,
         'branch':branch,
         'application':application,
-        'month':month,
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,
@@ -64,11 +64,11 @@ function editarInicial(id)
            $("#client1").val(result.data.client);
            $("#rfc1").val(result.data.rfc);
            $("#promoter1").val(result.data.promoter_date);
+           $("#system1").val(result.data.system_date);
            $("#folio1").val(result.data.folio);
            $("#selectInsurance1").val(result.data.fk_insurance);
            $("#selectBranch1").val(result.data.fk_branch);
            $("#selectAppli1").val(result.data.fk_application);
-           $("#selectMonth1").val(result.data.month);
            $("#pna1").val(result.data.pna);
            $("#selectPaymentform1").val(result.data.fk_payment_form);
            $("#selectCurrency1").val(result.data.fk_currency);
@@ -87,11 +87,11 @@ function actualizarInicial()
     var client = $("#client1").val();
     var rfc = $("#rfc1").val();
     var promoter = $("#promoter1").val();
+    var system = $("#system1").val();
     var folio = $("#folio1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
     var application = $("#selectAppli1").val();
-    var month = $("#selectMonth1").val();
     var pna = $("#pna1").val();
     var paymentForm = $("#selectPaymentform1").val();
     var currency = $("#selectCurrency1").val();
@@ -104,11 +104,11 @@ function actualizarInicial()
         'client':client,
         'rfc':rfc,
         'promoter':promoter,
+        'system':system,
         'folio':folio,
         'insurance':insurance,
         'branch':branch,
         'application':application,
-        'month':month,
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,

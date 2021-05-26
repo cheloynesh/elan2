@@ -3,7 +3,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabek">Registro de Cálculos de Cobro</h4>
+                <h4 class="modal-title" id="gridModalLabek">Actualizar Inicial</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
 
@@ -40,13 +40,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Fecha de promotoria</label>
-                                <input type="date" id="promoter1" name="promoter" class="form-control" placeholder="Fecha de nacimiento">
+                                <input type="date" id="promoter1" name="promoter" class="form-control" placeholder="Fecha de promotoria">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Folio</label>
-                                <input type="text" id="folio1" name="folio" class="form-control">
+                                <label for="">Fecha de Sistema</label>
+                                <input type="date" id="system1" name="system1" class="form-control" placeholder="Fecha de Sistema">
                             </div>
                         </div>
                     </div>
@@ -88,22 +88,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Mes ingresado:</label>
-                                <select name="selectMonth" id="selectMonth1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
-                                    <option value="Enero">Enero</option>
-                                    <option value="Febrero">Febrero</option>
-                                    <option value="Marzo">Marzo</option>
-                                    <option value="Abril">Abril</option>
-                                    <option value="Mayo">Mayo</option>
-                                    <option value="Junio">Junio</option>
-                                    <option value="Julio">Julio</option>
-                                    <option value="Agosto">Agosto</option>
-                                    <option value="Septiembre">Septiembre</option>
-                                    <option value="Octubre">Octubre</option>
-                                    <option value="Noviembre">Noviembre</option>
-                                    <option value="Diciembre">Diciembre</option>
-                                </select>
+                                <label for="">Folio</label>
+                                <input type="text" id="folio1" name="folio" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
