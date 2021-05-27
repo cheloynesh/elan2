@@ -29,7 +29,7 @@
             <div class="tab-pane active " id="prueba1" role="tabpanel" aria-labelledby="prueba1-tab">
                 <div class="container-fluid">
                     <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-                        <table class="table table-striped table-hover text-center" id="tbProf">
+                        <table class="table table-striped table-hover text-center" id="tbClient">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Apellidos</th>
@@ -65,7 +65,7 @@
             <div class="tab-pane " id="pruebas2" role="tabpanel" aria-labelledby="prueba2">
                 <div class="container-fluid">
                     <div class="table-responsive" style="margin-bottom: 10px">
-                        <table class="table table-striped table-hover text-center" id="tbProf">
+                        <table class="table table-striped table-hover text-center" id="tbEnterprise">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">RFC</th>

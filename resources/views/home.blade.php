@@ -26,6 +26,14 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/1.0.0/css/dataTables.responsive.css">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
+
+    <script src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js" defer></script>
+
+
+
     {{-- alertify --}}
     {{-- <!-- JavaScript -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -58,6 +66,11 @@
     <!-- include a theme -->
     <link rel="stylesheet" href="{{URL::asset('css/plugins/themes/default.min.css')}}"/>
 
+
+    {{-- <link rel="stylesheet" type="text/css" href="{{URL::asset('css/plugins/datatables.min.css')}}"/>
+
+    <script src="{{URL::asset('js/plugins/datatables.min.js')}}"></script> --}}
+
     @stack('head')
     {{-- @include('alertify::alertify') --}}
 
@@ -81,7 +94,7 @@
     </div>
     {{-- jquery| --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> --}}
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     @yield('js')
     {{-- <script>

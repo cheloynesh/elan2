@@ -114,7 +114,7 @@
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbProf">
+            <table class="table table-striped table-hover text-center" id="tbUsers">
                 <thead>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
@@ -148,4 +148,6 @@
 @push('head')
     <script src="{{URL::asset('js/admin/users.js')}}"></script>
 @endpush
+
+
 
