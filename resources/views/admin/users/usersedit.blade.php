@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="" style="display: none" id="etiqueta1">Código</label>
+                                        <label for="" style="display: none" id="etiqueta1">Clave de agente</label>
                                         <input type="text" id="code1" name="code1" class="form-control" style="display: none;">
                                         <br>
                                         <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
@@ -80,14 +80,14 @@
                                 <table class="table table-stripped table-hover text-center" id="tbcodes1" style="display: none">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">Código</th>
+                                            <th class="text-center">Clave de agente</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody-codigo1"></tbody>
                                 </table>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

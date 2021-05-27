@@ -69,11 +69,11 @@
                                     <label for="">Estado Civil</label>
                                     <select name="marital_status" id="marital_status" class="form-control">
                                         <option hidden selected>Selecciona una opción</option>
-                                        <option value="1">Soltero</option>
-                                        <option value="2">Casado</option>
-                                        <option value="3">Divorciado</option>
-                                        <option value="4">Viudo</option>
-                                        <option value="5">Concubinato</option>
+                                        <option value="1">Soltero(a)</option>
+                                        <option value="2">Casado(a)</option>
+                                        <option value="3">Divorciado(a)</option>
+                                        <option value="4">Viudo(a)</option>
+                                        <option value="5">Unión Libre</option>
                                     </select>
                                 </div>
                             </div>
@@ -115,8 +115,8 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label for="">País</label>
-                                    <input type="text" id="country" name="country" class="form-control" placeholder="País">
+                                    <label for="">Municipio</label>
+                                    <input type="text" id="city" name="city" class="form-control" placeholder="Municipio">
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -127,8 +127,8 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label for="">Municipio</label>
-                                    <input type="text" id="city" name="city" class="form-control" placeholder="Municipio">
+                                    <label for="">País</label>
+                                    <input type="text" id="country" name="country" class="form-control" placeholder="País">
                                 </div>
                             </div>
                         </div>

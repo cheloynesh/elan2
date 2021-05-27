@@ -74,7 +74,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label for="" style="display: none" id="etiqueta">Código</label>
+                                                <label for="" style="display: none" id="etiqueta">Clave de Agente</label>
                                                 <input type="text" id="code" name="code" class="form-control" style="display: none;">
                                                 <br>
                                                 <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
@@ -86,7 +86,7 @@
                                         <table class="table table-stripped table-hover text-center" id="tbcodes" style="display: none">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">Código</th>
+                                                    <th class="text-center">Clave de agente</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tbody-codigo"></tbody>
@@ -117,6 +117,7 @@
             <table class="table table-striped table-hover text-center" id="tbProf">
                 <thead>
                     <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
                     @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                         <th class="text-center">Opciones</th>
                     @endif
@@ -126,6 +127,7 @@
                     @foreach ($users as $user)
                         <tr id="{{$user->id}}">
                             <td>{{$user->name}}</td>
+                            <td>{{$user->firstname}}</td>
                             @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                                 <td>
                                     @if ($perm_btn['modify']==1)

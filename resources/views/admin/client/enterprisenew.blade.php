@@ -71,8 +71,8 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label for="">País</label>
-                                    <input type="text" id="ecountry" name="ecountry" class="form-control" placeholder="País">
+                                    <label for="">Municipio</label>
+                                    <input type="text" id="ecity" name="ecity" class="form-control" placeholder="Municipio">
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -83,8 +83,8 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label for="">Municipio</label>
-                                    <input type="text" id="ecity" name="ecity" class="form-control" placeholder="Municipio">
+                                    <label for="">País</label>
+                                    <input type="text" id="ecountry" name="ecountry" class="form-control" placeholder="País">
                                 </div>
                             </div>
                         </div>

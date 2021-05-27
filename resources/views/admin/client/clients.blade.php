@@ -32,6 +32,8 @@
                         <table class="table table-striped table-hover text-center" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
+                                <th class="text-center">Apellidos</th>
+                                <th class="text-center">RFC</th>
                                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                     <th class="text-center">Opciones</th>
                                 @endif
@@ -41,6 +43,8 @@
                                 @foreach ($clients as $client)
                                     <tr id="{{$client->id}}">
                                         <td>{{$client->name}}</td>
+                                        <td>{{$client->firstname}} {{$client->lastname}}</td>
+                                        <td>{{$client->rfc}}</td>
                                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                             <td>
                                                 @if ($perm_btn['modify']==1)
@@ -64,6 +68,7 @@
                         <table class="table table-striped table-hover text-center" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
+                                <th class="text-center">RFC</th>
                                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                     <th class="text-center">Opciones</th>
                                 @endif
@@ -73,6 +78,7 @@
                                 @foreach ($enterprises as $enterprise)
                                     <tr id="{{$enterprise->id}}">
                                         <td>{{$enterprise->business_name}}</td>
+                                        <td>{{$enterprise->rfc}}</td>
                                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                                             <td>
                                                 @if ($perm_btn['modify']==1)
