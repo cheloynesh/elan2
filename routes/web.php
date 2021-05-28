@@ -74,3 +74,4 @@ Route::get('admin/payment_forms/payment_form/GetInfo/{id}','PaymentFormsControll
 // Proceso Iniciales
 Route::resource('processes/OT/Initials/initial', 'InitialController');
 Route::get('processes/OT/Initials/initial/GetInfo/{id}','InitialController@GetInfo')->name('initial.GetInfo');
+Route::post('processes/OT/Initials/initial/updateStatus', 'InitialController@updateStatus')->name('initial.updateStatus');

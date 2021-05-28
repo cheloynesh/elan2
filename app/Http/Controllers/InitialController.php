@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Status;
 use App\Permission;
 use App\Initial;
 use App\Currency;
@@ -20,6 +21,7 @@ class InitialController extends Controller
     public function index()
     {
         $initials = Initial::get();
+        // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
         $insurances = Insurance::pluck('name','id');
@@ -27,7 +29,13 @@ class InitialController extends Controller
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
         $applications = Application::pluck('name','id');
-
+        $cmbStatus = Status::select('id','name')
+        ->where("fk_section","14")
+        ->pluck('name','id');
+        $status = DB::table("Status")
+            ->select('Status.id as id','Status.name as name')
+            ->join('Initials','Initials.fk_status','=','Status.id')
+            ->first();
         $profile = User::findProfile();
         $perm = Permission::permView($profile,14);
         $perm_btn =Permission::permBtns($profile,14);
@@ -38,7 +46,7 @@ class InitialController extends Controller
         else
         {
             return view('processes.OT.initials.initial',
-            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn'));
+            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','status','cmbStatus'));
         }
     }
     public function GetInfo($id)
@@ -92,5 +100,14 @@ class InitialController extends Controller
         $initial = Initial::find($id);
         $initial->delete();
         return response()->json(['status'=>true, "message"=>"Inicial eliminado"]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $status = Initial::where('id',$request->id)->first();
+        // dd($status);
+        $status->fk_status = $request->status;
+        $status->save();
+        return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 }

@@ -183,3 +183,41 @@ function eliminarInicial(id)
     });
 
 }
+var id_initial = 0;
+function opcionesEstatus(initialId,statusId)
+{
+    id_initial=initialId;
+    $("#selectStatus").val(statusId);
+    $("#myEstatusModal").modal('show');
+
+}
+
+function actualizarEstatus()
+{
+    var status = $("#selectStatus").val();
+    var route = baseUrl+"/updateStatus";
+    console.log(route);
+    var data = {
+        'id':id_initial,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'status':status  
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#myEstatusModal").modal('hide');
+            window.location.reload(true);
+        }
+    })
+}
+function cerrarmodal()
+{
+    $("#myEstatusModal").modal('hide');
+    $("#comentary").val("");
+
+}
