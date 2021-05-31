@@ -3,7 +3,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabek">Estatus: {{$status->name}}</h4>
+                <h4 class="modal-title" id="gridModalLabek">Estatus:</h4>
                 <button type="button" onclick="cerrarmodal()" class="close" aria-label="Close">&times;</button>
             </div>
 
@@ -25,7 +25,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="">Comentario: </label>
-                                    <textarea name="comentary" id="comentary" cols="50" rows="10"></textarea>
+                                    <textarea name="comentary" id="comentary" cols="53" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>

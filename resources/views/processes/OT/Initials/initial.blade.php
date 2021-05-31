@@ -169,7 +169,7 @@
     </div>
     {{-- fin modal| --}}
     @include('processes.OT.Initials.initialEdit')
-    @include('processes.OT.Initials.status')
+    @include('processes.OT.status.status')
     {{-- Inicia pantalla de inicio --}}
     <div class="bd-example bd-example-padded-bottom">
         @if ($perm_btn['addition']==1)
@@ -194,7 +194,7 @@
                         <td>{{$initial->client}}</td>
                         <td>{{$initial->rfc}}</td>
                         <td>
-                            <button class="btn btn-info" onclick="opcionesEstatus({{$initial->id}},{{$status->id}})">{{$status->name}}</button>
+                            <button class="btn btn-info" style="background-color: #{{$initial->color}}" onclick="opcionesEstatus({{$initial->id}},{{$initial->statId}})">{{$initial->name}}</button>
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

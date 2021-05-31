@@ -20,7 +20,11 @@ class InitialController extends Controller
 {
     public function index()
     {
-        $initials = Initial::get();
+        // $initials = Initial::get();
+        $initials = DB::table("Status")
+        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc','client','color')
+        ->join('Initials','Initials.fk_status','=','Status.id')
+        ->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
@@ -32,10 +36,11 @@ class InitialController extends Controller
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","14")
         ->pluck('name','id');
-        $status = DB::table("Status")
-            ->select('Status.id as id','Status.name as name')
-            ->join('Initials','Initials.fk_status','=','Status.id')
-            ->first();
+        // $status = DB::table("Status")
+        //     ->select('Status.id as id','Status.name as name')
+        //     ->join('Initials','Initials.fk_status','=','Status.id')
+        //     ->get();
+            // dd($status);
         $profile = User::findProfile();
         $perm = Permission::permView($profile,14);
         $perm_btn =Permission::permBtns($profile,14);
@@ -46,7 +51,7 @@ class InitialController extends Controller
         else
         {
             return view('processes.OT.initials.initial',
-            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','status','cmbStatus'));
+            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus'));
         }
     }
     public function GetInfo($id)

@@ -31,37 +31,33 @@ $(document).ready( function () {
     });
 } );
 
-function guardarInicial()
+function guardarServicio()
 {
     var agent = $("#selectAgent").val();
-    var client = $("#client").val();
-    var rfc = $("#rfc").val();
-    var promoter = $("#promoter").val();
-    var system = $("#system").val();
+    var entry_date = $("#entry_date").val();
+    var policy = $("#policy").val();
+    var response_date = $("#response_date").val();
+    var download = $("#selectDownload").val();
+    var type = $("#type").val();
     var folio = $("#folio").val();
+    var name = $("#name").val();
+    var record = $("#selectRecord").val();
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
-    var application = $("#selectAppli").val();
-    var pna = $("#pna").val();
-    var paymentForm = $("#selectPaymentform").val();
-    var currency = $("#selectCurrency").val();
-    var charge = $("#selectCharge").val();
-    var route = "initial";
+    var route = "service";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'agent':agent,
-        'client':client,
-        'rfc':rfc,
-        'promoter':promoter,
-        'system':system,
+        'entry_date':entry_date,
+        'policy':policy,
+        'response_date':response_date,
+        'download':download,
+        'type':type,
         'folio':folio,
+        'name':name,
+        'record':record,
         'insurance':insurance,
-        'branch':branch,
-        'application':application,
-        'pna':pna,
-        'paymentForm':paymentForm,
-        'currency':currency,
-        'charge':charge
+        'branch':branch
     };
     jQuery.ajax({
         url:route,
@@ -77,7 +73,7 @@ function guardarInicial()
     })
 }
 var idupdate = 0;
-function editarInicial(id)
+function editarServicio(id)
 {
     idupdate=id;
 
@@ -90,18 +86,16 @@ function editarInicial(id)
         success:function(result)
         {
            $("#selectAgent1").val(result.data.fk_agent);
-           $("#client1").val(result.data.client);
-           $("#rfc1").val(result.data.rfc);
-           $("#promoter1").val(result.data.promoter_date);
-           $("#system1").val(result.data.system_date);
+           $("#entry_date1").val(result.data.entry_date);
+           $("#policy1").val(result.data.policy);
+           $("#response_date1").val(result.data.response_date);
+           $("#selectDownload1").val(result.data.download);
+           $("#type1").val(result.data.type);
            $("#folio1").val(result.data.folio);
+           $("#name1").val(result.data.name);
+           $("#selectRecord1").val(result.data.record);
            $("#selectInsurance1").val(result.data.fk_insurance);
            $("#selectBranch1").val(result.data.fk_branch);
-           $("#selectAppli1").val(result.data.fk_application);
-           $("#pna1").val(result.data.pna);
-           $("#selectPaymentform1").val(result.data.fk_payment_form);
-           $("#selectCurrency1").val(result.data.fk_currency);
-           $("#selectCharge1").val(result.data.fk_charge);
            $("#myModaledit").modal('show');
         }
     })
@@ -110,38 +104,34 @@ function cancelarEditar()
 {
     $("#myModaledit").modal('hide');
 }
-function actualizarInicial()
+function actualizarServicio()
 {
     var agent = $("#selectAgent1").val();
-    var client = $("#client1").val();
-    var rfc = $("#rfc1").val();
-    var promoter = $("#promoter1").val();
-    var system = $("#system1").val();
+    var entry_date = $("#entry_date1").val();
+    var policy = $("#policy1").val();
+    var response_date = $("#response_date1").val();
+    var download = $("#selectDownload1").val();
+    var type = $("#type1").val();
     var folio = $("#folio1").val();
+    var name = $("#name1").val();
+    var record = $("#selectRecord1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
-    var application = $("#selectAppli1").val();
-    var pna = $("#pna1").val();
-    var paymentForm = $("#selectPaymentform1").val();
-    var currency = $("#selectCurrency1").val();
-    var charge = $("#selectCharge1").val();
-    var route = "initial/"+idupdate;
+    var route = "service/"+idupdate;
     var data = {
-        "_token": $("meta[name='csrf-token']").attr("content"),
         'id':idupdate,
+        "_token": $("meta[name='csrf-token']").attr("content"),
         'agent':agent,
-        'client':client,
-        'rfc':rfc,
-        'promoter':promoter,
-        'system':system,
+        'entry_date':entry_date,
+        'policy':policy,
+        'response_date':response_date,
+        'download':download,
+        'type':type,
         'folio':folio,
+        'name':name,
+        'record':record,
         'insurance':insurance,
-        'branch':branch,
-        'application':application,
-        'pna':pna,
-        'paymentForm':paymentForm,
-        'currency':currency,
-        'charge':charge
+        'branch':branch
     };
     jQuery.ajax({
         url:route,
@@ -157,14 +147,14 @@ function actualizarInicial()
     })
 }
 
-function eliminarInicial(id)
+function eliminarServicio(id)
 {
-    var route = "initial/"+id;
+    var route = "service/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Eliminar Inicial","¿Desea borrar el Inicial?",
+    alertify.confirm("Eliminar Servicio","¿Desea borrar el Servicio?",
         function(){
             jQuery.ajax({
                 url:route,
@@ -183,11 +173,11 @@ function eliminarInicial(id)
     });
 
 }
-var id_initial = 0;
+var id_service = 0;
 
-function opcionesEstatus(initialId,statusId)
+function opcionesEstatus(serviceId,statusId)
 {
-    id_initial=initialId;
+    id_service=serviceId;
     $("#selectStatus").val(statusId);
     $("#myEstatusModal").modal('show');
 }
@@ -198,7 +188,7 @@ function actualizarEstatus()
     var route = baseUrl+"/updateStatus";
     console.log(route);
     var data = {
-        'id':id_initial,
+        'id':id_service,
         "_token": $("meta[name='csrf-token']").attr("content"),
         'status':status
     };
