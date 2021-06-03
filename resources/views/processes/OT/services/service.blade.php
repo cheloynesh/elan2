@@ -43,24 +43,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Fecha de Respuesta</label>
-                                    <input type="date" id="response_date" name="response_date" class="form-control" placeholder="Fecha de Promotoria">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Descargado</label>
-                                    <select name="selectDownload" id="selectDownload" class="form-control">
-                                        <option hidden selected>Selecciona una opción</option>
-                                        <option value="0">No</option>
-                                        <option value="1">Si</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="">Tipo de Servicio</label>
                                     <input type="text" id="type" name="type" class="form-control">
                                 </div>
@@ -114,6 +96,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Fecha de Respuesta</label>
+                                    <input type="date" id="response_date" name="response_date" class="form-control" placeholder="Fecha de Promotoria">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Descargado</label>
+                                    <select name="selectDownload" id="selectDownload" class="form-control">
+                                        <option hidden selected>Selecciona una opción</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Si</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -137,6 +137,8 @@
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
                 <th class="text-center">Nombre</th>
+                <th class="text-center">Folio</th>
+                <th class="text-center">Tipo de Servicio</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>
@@ -147,8 +149,10 @@
                 @foreach ($services as $service)
                     <tr id="{{$service->id}}">
                         <td>{{$service->name}}</td>
+                        <td>{{$service->folio}}</td>
+                        <td>{{$service->type}}</td>
                         <td>
-                            <button class="btn btn-info" style="background-color: #{{$service->color}}" onclick="opcionesEstatus({{$service->id}},{{$service->statId}})">{{$service->statName}}</button>
+                            <button class="btn btn-info" style="background-color: #{{$service->color}}; border-color: #{{$service->color}}" onclick="opcionesEstatus({{$service->id}},{{$service->statId}})">{{$service->statName}}</button>
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

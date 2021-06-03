@@ -194,7 +194,7 @@
                         <td>{{$initial->client}}</td>
                         <td>{{$initial->rfc}}</td>
                         <td>
-                            <button class="btn btn-info" style="background-color: #{{$initial->color}}" onclick="opcionesEstatus({{$initial->id}},{{$initial->statId}})">{{$initial->name}}</button>
+                            <button class="btn btn-info" style="background-color: #{{$initial->color}}; border-color: #{{$initial->color}}" onclick="opcionesEstatus({{$initial->id}},{{$initial->statId}})">{{$initial->name}}</button>
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

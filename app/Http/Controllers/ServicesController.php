@@ -16,7 +16,7 @@ class ServicesController extends Controller
     public function index()
     {
         $services = DB::table("Status")
-        ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','color')
+        ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','folio','type','color')
         ->join('Services','Services.fk_status','=','Status.id')
         ->get();
         // dd($initials);
