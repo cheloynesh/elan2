@@ -83,8 +83,8 @@ class ServicesController extends Controller
 
     public function destroy($id)
     {
-        $initial = Service::find($id);
-        $initial->delete();
+        $service = Service::find($id);
+        $service->delete();
         return response()->json(['status'=>true, "message"=>"Servicio eliminado"]);
     }
 

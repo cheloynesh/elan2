@@ -80,3 +80,8 @@ Route::post('processes/OT/Initials/initial/updateStatus', 'InitialController@upd
 Route::resource('processes/OT/services/service', 'ServicesController');
 Route::get('processes/OT/services/service/GetInfo/{id}','ServicesController@GetInfo')->name('service.GetInfo');
 Route::post('processes/OT/services/service/updateStatus', 'ServicesController@updateStatus')->name('service.updateStatus');
+
+// Proceso Reembolsos
+Route::resource('processes/OT/refunds/refunds', 'RefundsController');
+Route::get('processes/OT/refunds/refunds/GetInfo/{id}','RefundsController@GetInfo')->name('refunds.GetInfo');
+Route::post('processes/OT/refunds/refunds/updateStatus', 'RefundsController@updateStatus')->name('refunds.updateStatus');
