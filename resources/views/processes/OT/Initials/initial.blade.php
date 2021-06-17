@@ -180,8 +180,12 @@
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
-                <th class="text-center">Nombre</th>
+                {{-- <th class="text-center">Fecha</th> --}}
+                <th class="text-center">Agente</th>
+                <th class="text-center">Cliente</th>
                 <th class="text-center">RFC</th>
+                <th class="text-center">Aseguradora</th>
+                <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>
@@ -191,11 +195,15 @@
             <tbody>
                 @foreach ($initials as $initial)
                     <tr id="{{$initial->id}}">
+                        {{-- <td>{{$initial->date}}</td> --}}
+                        <td>{{$initial->agent}}</td>
                         <td>{{$initial->client}}</td>
                         <td>{{$initial->rfc}}</td>
+                        <td>{{$initial->insurance}}</td>
+                        <td>{{$initial->branch}}</td>
                         <td>
                             <button class="btn btn-info" style="background-color: #{{$initial->color}}; border-color: #{{$initial->color}}" onclick="opcionesEstatus({{$initial->id}},{{$initial->statId}})">{{$initial->name}}</button>
-                        </td>
+                        </td>                            
                         {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>

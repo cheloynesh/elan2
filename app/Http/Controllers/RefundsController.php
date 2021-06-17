@@ -15,8 +15,11 @@ class RefundsController extends Controller
     public function index()
     {
         $refunds = DB::table("Status")
-        ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color')
+        ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
+        'Insurance.name as insurance','users.name as agent')
         ->join('Refunds','Refunds.fk_status','=','Status.id')
+        ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
+        ->join('users','users.id','=','Refunds.fk_agent')
         ->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');

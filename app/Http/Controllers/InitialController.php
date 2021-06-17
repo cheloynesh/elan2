@@ -22,8 +22,13 @@ class InitialController extends Controller
     {
         // $initials = Initial::get();
         $initials = DB::table("Status")
-        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc','client','color')
+        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc','client','color',
+        'Insurance.name as insurance','Branch.name as branch', 'users.name as agent','Initials.created_at as date')
         ->join('Initials','Initials.fk_status','=','Status.id')
+        ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
+        ->join('Branch','Branch.id','=','Initials.fk_branch')
+        ->join('users','users.id','=','Initials.fk_agent')
+        ->where('Status.id','<>','4')
         ->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');

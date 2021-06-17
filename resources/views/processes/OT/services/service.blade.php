@@ -136,9 +136,12 @@
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
-                <th class="text-center">Nombre</th>
+                <th class="text-center">Agente</th>
+                <th class="text-center">Cliente</th>
                 <th class="text-center">Folio</th>
                 <th class="text-center">Tipo de Servicio</th>
+                <th class="text-center">Aseguradora</th>
+                <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>
@@ -148,9 +151,12 @@
             <tbody>
                 @foreach ($services as $service)
                     <tr id="{{$service->id}}">
+                        <td>{{$service->agent}}</td>
                         <td>{{$service->name}}</td>
                         <td>{{$service->folio}}</td>
                         <td>{{$service->type}}</td>
+                        <td>{{$service->insurance}}</td>
+                        <td>{{$service->branch}}</td>
                         <td>
                             <button class="btn btn-info" style="background-color: #{{$service->color}}; border-color: #{{$service->color}}" onclick="opcionesEstatus({{$service->id}},{{$service->statId}})">{{$service->statName}}</button>
                         </td>

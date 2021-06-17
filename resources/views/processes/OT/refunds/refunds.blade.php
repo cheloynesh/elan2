@@ -125,7 +125,9 @@
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
+                <th class="text-center">Agente</th>
                 <th class="text-center">Folio</th>
+                <th class="text-center">Aseguradora</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>
@@ -135,7 +137,9 @@
             <tbody>
                 @foreach ($refunds as $refund)
                     <tr id="{{$refund->id}}">
+                        <td>{{$refund->agent}}</td>
                         <td>{{$refund->folio}}</td>
+                        <td>{{$refund->insurance}}</td>
                         <td>
                             <button class="btn btn-info" style="background-color: #{{$refund->color}}; border-color: #{{$refund->color}}" onclick="opcionesEstatus({{$refund->id}},{{$refund->statId}})">{{$refund->statName}}</button>
                         </td>
