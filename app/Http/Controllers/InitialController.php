@@ -55,7 +55,7 @@ class InitialController extends Controller
         }
         else
         {
-            return view('processes.OT.initials.initial',
+            return view('processes.OT.Initials.initial',
             compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus'));
         }
     }
