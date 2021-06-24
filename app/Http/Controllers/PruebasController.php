@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prueba;
 use App\Insurance;
-use App\Http\Controllers\PruebasController;
 
 class PruebasController extends Controller
 {

@@ -55,3 +55,55 @@ function delete_code(row)
     }
     codigos.splice(index,1);
 }
+
+function mostrarDiv()
+{
+    var onoff = document.getElementById("onoff");
+    var checked = onoff.checked;
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+    if(checked)
+    {
+        fisica.style.display = ""
+        moral.style.display = "none"
+    }
+    else
+    {
+        
+        fisica.style.display = "none"
+        moral.style.display = "block"
+    }
+}
+function mostrarAsegurado()
+{
+    var onoff = document.getElementById("onoffAseg");
+    var checked = onoff.checked;
+    var fisica = document.getElementById("fisicaAsegurado");
+    var moral = document.getElementById("moralAsegurado");
+    if(checked)
+    {
+        fisica.style.display = ""
+        moral.style.display = "none"
+    }
+    else
+    {
+        
+        fisica.style.display = "none"
+        moral.style.display = "block"
+    }
+}
+function mostrarDivAsegurado()
+{
+    var onoff = document.getElementById("onoffAsegurado");
+    var checked = onoff.checked;
+    var asegurado = document.getElementById("asegurado");
+    if(checked)
+    {
+        asegurado.style.display = ""
+    }
+    else
+    {
+        
+        asegurado.style.display = "none"
+    }
+}

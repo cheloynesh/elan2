@@ -6,7 +6,7 @@
     {{-- <div style="max-width: 1200px; margin: auto;"> --}}
         {{-- modal| --}}
         <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header">
@@ -37,7 +37,88 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Tipo de contratante</label><br>
+                                            <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "fisica" data-off="moral" onchange="mostrarDiv()" data-width="80" data-offstyle="secondary">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">¿El contratante es igual al asegurado?</label>
+                                            &nbsp;
+                                            <input id = "onoffAsegurado" type="checkbox" data-toggle="toggle" data-on = "si" data-off="no" onchange="mostrarDivAsegurado()" data-width="80" data-offstyle="secondary">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class = "row" id = "fisica">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Nombre</label>
+                                            <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Apellido paterno</label>
+                                            <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Apellido materno</label>
+                                            <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class = "row" id = "moral" style = "display: none;">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="">Razón Social</label>
+                                            <input type="text" id="business_name" name="business_name" class="form-control" placeholder="Razón Social">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id = "asegurado" style = "display: none;">
+                                    <div class="row" id = "onoffAsegurado">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Tipo de asegurado</label>
+                                                <input id = "onoffAseg" type="checkbox" checked data-toggle="toggle" data-on = "fisica" data-off="moral" onchange="mostrarAsegurado()" data-width="80" data-offstyle="secondary">
+                                            </div>
+                                        </div>
+                                        {{-- <input id="invoice_checkExp" type="checkbox" class="form-control" data-toggle="toggle" data-width="100" data-on="Si" data-off="No" checked="true"> --}}
+                                    </div>
+                                    <div class = "row" id = "fisicaAsegurado">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Nombre</label>
+                                                <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Apellido paterno</label>
+                                                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Apellido materno</label>
+                                                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class = "row" id = "moralAsegurado" style = "display: none;">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="">Razón Social</label>
+                                                <input type="text" id="business_name" name="business_name" class="form-control" placeholder="Razón Social">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
