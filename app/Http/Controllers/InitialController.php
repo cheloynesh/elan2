@@ -13,6 +13,7 @@ use App\Paymentform;
 use App\Charge;
 use App\Branch;
 use App\Application;
+use App\Client;
 use DB;
 use Carbon\Carbon;
 
@@ -22,8 +23,9 @@ class InitialController extends Controller
     {
         // $initials = Initial::get();
         $initials = DB::table("Status")
-        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc','client','color',
-        'Insurance.name as insurance','Branch.name as branch', 'users.name as agent','Initials.created_at as date')
+        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
+        'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
+        'users.name as agent','Initials.created_at as date')
         ->join('Initials','Initials.fk_status','=','Status.id')
         ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
         ->join('Branch','Branch.id','=','Initials.fk_branch')
@@ -45,7 +47,7 @@ class InitialController extends Controller
         //     ->select('Status.id as id','Status.name as name')
         //     ->join('Initials','Initials.fk_status','=','Status.id')
         //     ->get();
-            // dd($status);
+        // dd($status);
         $profile = User::findProfile();
         $perm = Permission::permView($profile,14);
         $perm_btn =Permission::permBtns($profile,14);
@@ -70,8 +72,12 @@ class InitialController extends Controller
     {
         $initial = new Initial;
         $initial->fk_agent = $request->agent;
-        $initial->client = $request->client;
+        $initial->name = $request->name;
+        $initial->firstname = $request->firstname;
+        $initial->lastname = $request->lastname;
         $initial->rfc = $request->rfc;
+        $initial->insured = $request->insured;
+        $initial->type = $request->type;
         $initial->promoter_date = $request->promoter;
         $initial->system_date = $request->system;
         $initial->folio = $request->folio;

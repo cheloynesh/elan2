@@ -29,14 +29,66 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Cliente</label>
-                                    <input type="text" id="client" name="client" class="form-control">
+                                    <label for="">Tipo de contratante</label>
+                                    &nbsp;
+                                    <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "fisica" data-off="moral" onchange="mostrarDiv()" data-width="80" data-offstyle="secondary">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="">¿El contratante es igual al asegurado?</label>
+                                    &nbsp;
+                                    <input id = "onoffAsegurado" type="checkbox" checked data-toggle="toggle" data-on = "si" data-off="no" onchange="mostrarDivAsegurado()" data-width="80" data-offstyle="secondary">
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "row" id = "fisica">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Nombre</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Apellido paterno</label>
+                                    <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Apellido materno</label>
+                                    <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="">RFC</label>
-                                    <input type="text" id="rfc" name="rfc" class="form-control">
+                                    <input type="text" id="rfc" name="rfc" class="form-control" placeholder="RFC">
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "row" id = "moral" style = "display: none;">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="">Razón Social</label>
+                                    <input type="text" id="business_name" name="business_name" class="form-control" placeholder="Razón Social">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">RFC</label>
+                                    <input type="text" id="business_rfc" name="business_rfc" class="form-control" placeholder="RFC">
+                                </div>
+                            </div>
+                        </div>
+                        <div id = "asegurado" style = "display: none;">
+                            <div class = "row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Nombre del Asegurado</label>
+                                        <input type="text" id="insured" name="insured" class="form-control" placeholder="Nombre">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -197,13 +249,13 @@
                     <tr id="{{$initial->id}}">
                         {{-- <td>{{$initial->date}}</td> --}}
                         <td>{{$initial->agent}}</td>
-                        <td>{{$initial->client}}</td>
+                        <td>{{$initial->client}} {{$initial->firstname}} {{$initial->lastname}}</td>
                         <td>{{$initial->rfc}}</td>
                         <td>{{$initial->insurance}}</td>
                         <td>{{$initial->branch}}</td>
                         <td>
                             <button class="btn btn-info" style="background-color: #{{$initial->color}}; border-color: #{{$initial->color}}" onclick="opcionesEstatus({{$initial->id}},{{$initial->statId}})">{{$initial->name}}</button>
-                        </td>                            
+                        </td>
                         {{-- <td>{{$initial->client}}</td> --}}
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>

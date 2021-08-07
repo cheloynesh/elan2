@@ -33,9 +33,54 @@ $(document).ready( function () {
 
 function guardarInicial()
 {
+    var onoff = document.getElementById("onoff");
+    var checked = onoff.checked;
+    var onoffAsegurado = document.getElementById("onoffAsegurado");
+    var checkedAsegurado = onoffAsegurado.checked;
+
     var agent = $("#selectAgent").val();
-    var client = $("#client").val();
-    var rfc = $("#rfc").val();
+    var name = null;
+    var firstname = null;
+    var lastname = null;
+    var rfc = null;
+    var type = null;
+    var insured = null;
+    if(checked)
+    {
+        alert("entre a persona fisica");
+        alert(checkedAsegurado);
+        name = $("#name").val();
+        firstname = $("#firstname").val();
+        lastname = $("#lastname").val();
+        rfc = $("#rfc").val();
+        type = 0;
+        if(!checkedAsegurado)
+        {
+            alert("entre a no igual al contratante");
+            insured = $("#insured").val();
+        }
+        else
+        {
+            alert("entre a igual al contratante");
+            insured = name + " " + firstname + " " + lastname;
+        }
+    }
+    else
+    {
+        alert("entre a persona moral");
+        name = $("#business_name").val();
+        rfc = $("#business_rfc").val();
+        type = 1;
+        if(!checkedAsegurado)
+        {
+            insured = $("#insured").val();
+        }
+        else
+        {
+            insured = name;
+        }
+    }
+
     var promoter = $("#promoter").val();
     var system = $("#system").val();
     var folio = $("#folio").val();
@@ -50,8 +95,12 @@ function guardarInicial()
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'agent':agent,
-        'client':client,
+        'name':name,
+        'firstname':firstname,
+        'lastname':lastname,
         'rfc':rfc,
+        'type':type,
+        'insured':insured,
         'promoter':promoter,
         'system':system,
         'folio':folio,
@@ -61,8 +110,9 @@ function guardarInicial()
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,
-        'charge':charge
+        'charge':charge,
     };
+    console.log(data);
     jQuery.ajax({
         url:route,
         type:"post",
@@ -220,4 +270,38 @@ function cerrarmodal()
     $("#myEstatusModal").modal('hide');
     $("#comentary").val("");
 
+}
+function mostrarDiv()
+{
+    var onoff = document.getElementById("onoff");
+    var checked = onoff.checked;
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+    if(checked)
+    {
+        fisica.style.display = ""
+        moral.style.display = "none"
+    }
+    else
+    {
+
+        fisica.style.display = "none"
+        moral.style.display = ""
+    }
+}
+function mostrarDivAsegurado()
+{
+    var onoff = document.getElementById("onoffAsegurado");
+    var checked = onoff.checked;
+    var asegurado = document.getElementById("asegurado");
+    alert(checked);
+    if(!checked)
+    {
+        asegurado.style.display = ""
+    }
+    else
+    {
+
+        asegurado.style.display = "none"
+    }
 }

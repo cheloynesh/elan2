@@ -109,6 +109,9 @@ function guardarCliente()
         'city':city,
         'cellphone':cellphone,
         'email':email,
+        'name_contact':"",
+        'phone_contact':"",
+        'status':0,
     };
 
     jQuery.ajax({
@@ -215,6 +218,8 @@ function actualizarCliente()
         'city':city,
         'cellphone':cellphone,
         'email':email,
+        'name_contact':"",
+        'phone_contact':"",
     };
     jQuery.ajax({
         url:route,
@@ -258,7 +263,7 @@ function eliminarCliente(id)
 // persona moral
 function guardarEmpresa()
 {
-    var business_name = $("#business_name").val();
+    var name = $("#business_name").val();
 
     var date = $("#date").val();
     var rfc = $("#erfc").val();
@@ -279,13 +284,18 @@ function guardarEmpresa()
     var name_contact = $("#name_contact").val();
     var phone_contact = $("#phone_contact").val();
 
-    var route =baseUrl+ "/saveEnterprise";
+    var route = "client";
     // console.log(route);
     var dataE = {
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'business_name':business_name,
-        'date':date,
+        'name':name,
+        'fistname':null,
+        'lastname':null,
+        'birth_date':date,
         'rfc':rfc,
+        'curp':null,
+        'gender':null,
+        'marital_status':null,
         'street':street,
         'e_num':e_num,
         'i_num':i_num,
@@ -297,7 +307,8 @@ function guardarEmpresa()
         'cellphone':cellphone,
         'email':email,
         'name_contact':name_contact,
-        'phone_contact':phone_contact
+        'phone_contact':phone_contact,
+        'status':1
     };
     console.log(dataE);
     jQuery.ajax({
@@ -308,7 +319,7 @@ function guardarEmpresa()
         success:function(result)
         {
             alertify.success(result.message);
-            $("#modalNewEnterprise").modal('hide');
+            $("#modalNewClient").modal('hide');
             window.location.reload(true);
         }
     })
@@ -318,16 +329,17 @@ function editarEmpresa(id)
 {
     idupdateE=id;
 
-    var route = baseUrl + '/GetInfoE/'+id;
-    // alert(route);
+    // var route = baseUrl + '/GetInfoE/'+id;
+    var route = baseUrl + '/GetInfo/'+id;
+    // alert(idupdateE);
     jQuery.ajax({
         url:route,
         type:'get',
         dataType:'json',
         success:function(result)
         {
-            $("#business_name1").val(result.data.business_name);
-            $("#date1").val(result.data.date);
+            $("#business_name1").val(result.data.name);
+            $("#date1").val(result.data.birth_date);
             $("#erfc1").val(result.data.rfc);
             $("#estreet1").val(result.data.street);
             $("#ee_num1").val(result.data.e_num);
@@ -375,14 +387,20 @@ function actualizarEmpresa()
     var name_contact = $("#name_contact1").val();
     var phone_contact = $("#phone_contact1").val();
 
-    var routeE =baseUrl+ "/updateEnterprise";
+    // var routeE =baseUrl+ "/updateEnterprise";
+    var route = "client/"+idupdate;
     // console.log(routeE);
     var dataE = {
         'id':idupdateE,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'business_name':business_name,
-        'date':date,
+        'name':business_name,
+        'fistname':null,
+        'lastname':null,
+        'birth_date':date,
         'rfc':rfc,
+        'curp':null,
+        'gender':null,
+        'marital_status':null,
         'street':street,
         'e_num':e_num,
         'i_num':i_num,
@@ -394,42 +412,49 @@ function actualizarEmpresa()
         'cellphone':cellphone,
         'email':email,
         'name_contact':name_contact,
-        'phone_contact':phone_contact
+        'phone_contact':phone_contact,
     };
     jQuery.ajax({
-        url:routeE,
-        type:'post',
+        url:route,
+        type:'put',
         data:dataE,
         dataType:'json',
         success:function(result)
         {
+            alertify.success(result.message);
             $("#modalEditEnterprise").modal('hide');
             window.location.reload(true);
         }
     })
 }
-function eliminarEmpresa(id)
+function mostrarDiv()
 {
-    var route =baseUrl+ "/destroyEnterprise/"+id;
-    var data = {
-        'id':id,
-        "_token": $("meta[name='csrf-token']").attr("content"),
-    };
-    alertify.confirm("Eliminar Empresa","¿Desea borrar la Empresa?",
-        function(){
-            jQuery.ajax({
-                url:route,
-                data: data,
-                type:'delete',
-                dataType:'json',
-                success:function(result)
-                {
-                    alertify.success('Eliminada');
-                    window.location.reload(true);
-                }
-            })
-        },
-        function(){
-            alertify.error('Cancelada');
-    });
+    var onoff = document.getElementById("onoff");
+    var checked = onoff.checked;
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+    if(checked)
+    {
+        fisica.style.display = ""
+        moral.style.display = "none"
+    }
+    else
+    {
+
+        fisica.style.display = "none"
+        moral.style.display = "block"
+    }
+}
+function guardar()
+{
+    var onoff = document.getElementById("onoff");
+    var checked = onoff.checked;
+    if(checked)
+    {
+        guardarCliente();
+    }
+    else
+    {
+        guardarEmpresa();
+    }
 }

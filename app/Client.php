@@ -12,6 +12,6 @@ class Client extends Model
     protected $table = "Client";
     protected $fillable =[
         'name','firstname','lastname','birth_date','rfc','curp','gender','marital_status','street','e_num','i_num','suburb','pc',
-        'country','state','city','cellphone','email'];
+        'country','state','city','cellphone','email','name_contact','phone_contact','status','inicial'];
     protected $dates = ["deleted_at"];
 }

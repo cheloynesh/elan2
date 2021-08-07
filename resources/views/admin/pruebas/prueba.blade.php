@@ -17,7 +17,7 @@
                     <div class="modal-body">
                         <div class="container-fluid bd-example-row">
                             <div class="col-lg-12">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="">Nombre</label>
@@ -36,11 +36,12 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Tipo de contratante</label><br>
+                                            <label for="">Tipo de contratante</label>
+                                            &nbsp;
                                             <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "fisica" data-off="moral" onchange="mostrarDiv()" data-width="80" data-offstyle="secondary">
                                         </div>
                                     </div>
@@ -48,73 +49,56 @@
                                         <div class="form-group">
                                             <label for="">¿El contratante es igual al asegurado?</label>
                                             &nbsp;
-                                            <input id = "onoffAsegurado" type="checkbox" data-toggle="toggle" data-on = "si" data-off="no" onchange="mostrarDivAsegurado()" data-width="80" data-offstyle="secondary">
+                                            <input id = "onoffAsegurado" type="checkbox" checked data-toggle="toggle" data-on = "si" data-off="no" onchange="mostrarDivAsegurado()" data-width="80" data-offstyle="secondary">
                                         </div>
                                     </div>
                                 </div>
                                 <div class = "row" id = "fisica">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Nombre</label>
                                             <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Apellido paterno</label>
                                             <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Apellido materno</label>
                                             <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">RFC</label>
+                                            <input type="text" id="rfc" name="rfc" class="form-control" placeholder="RFC">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class = "row" id = "moral" style = "display: none;">
-                                    <div class="col-lg-12">
+                                    <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="">Razón Social</label>
                                             <input type="text" id="business_name" name="business_name" class="form-control" placeholder="Razón Social">
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">RFC</label>
+                                            <input type="text" id="rfc" name="rfc" class="form-control" placeholder="RFC">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id = "asegurado" style = "display: none;">
-                                    <div class="row" id = "onoffAsegurado">
-                                        <div class="col-md-4">
+                                    <div class = "row">
+                                        <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="">Tipo de asegurado</label>
-                                                <input id = "onoffAseg" type="checkbox" checked data-toggle="toggle" data-on = "fisica" data-off="moral" onchange="mostrarAsegurado()" data-width="80" data-offstyle="secondary">
-                                            </div>
-                                        </div>
-                                        {{-- <input id="invoice_checkExp" type="checkbox" class="form-control" data-toggle="toggle" data-width="100" data-on="Si" data-off="No" checked="true"> --}}
-                                    </div>
-                                    <div class = "row" id = "fisicaAsegurado">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Nombre</label>
-                                                <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Apellido paterno</label>
-                                                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Apellido materno</label>
-                                                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class = "row" id = "moralAsegurado" style = "display: none;">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label for="">Razón Social</label>
-                                                <input type="text" id="business_name" name="business_name" class="form-control" placeholder="Razón Social">
+                                                <label for="">Nombre del Asegurado</label>
+                                                <input type="text" id="nameA" name="name" class="form-control" placeholder="Nombre">
                                             </div>
                                         </div>
                                     </div>
@@ -150,10 +134,59 @@
                 </div>
             </div>
         </div>
+
+
+
+
+        <div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="gridModalLabek">Registro de Perfiles</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                            <table class="table table-striped table-hover text-center" id="tbProf">
+                                <thead>
+                                    <th class="text-center">Nombre</th>
+                                        <th class="text-center">Opciones</th>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($profiles as $profile)
+                                        <tr id="{{$profile->id}}">
+                                            <td>{{$profile->name}}</td>
+                                                <td>
+                                                        <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
+                                                        <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                                                </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="guardarperfil()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         {{-- fin modal| --}}
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
+        </div>
+        <div class="bd-example bd-example-padded-bottom">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Prueba tabla</button>
         </div>
         <br><br>
 
