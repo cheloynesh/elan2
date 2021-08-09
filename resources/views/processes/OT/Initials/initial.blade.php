@@ -13,6 +13,7 @@
 
                 <div class="modal-body">
                     <div class="container-fluid bd-example-row">
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -26,6 +27,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -42,6 +44,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class = "row" id = "fisica">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -68,6 +71,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class = "row" id = "moral" style = "display: none;">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -82,6 +86,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div id = "asegurado" style = "display: none;">
                             <div class = "row">
                                 <div class="col-md-12">
@@ -92,6 +97,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -106,6 +112,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -141,27 +148,8 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
-                            {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Mes ingresado:</label>
-                                    <select name="selectMonth" id="selectMonth" class="form-control">
-                                        <option hidden selected>Selecciona una opción</option>
-                                        <option value="Enero">Enero</option>
-                                        <option value="Febrero">Febrero</option>
-                                        <option value="Marzo">Marzo</option>
-                                        <option value="Abril">Abril</option>
-                                        <option value="Mayo">Mayo</option>
-                                        <option value="Junio">Junio</option>
-                                        <option value="Julio">Julio</option>
-                                        <option value="Agosto">Agosto</option>
-                                        <option value="Septiembre">Septiembre</option>
-                                        <option value="Octubre">Octubre</option>
-                                        <option value="Noviembre">Noviembre</option>
-                                        <option value="Diciembre">Diciembre</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Folio</label>
@@ -175,6 +163,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -210,6 +199,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">

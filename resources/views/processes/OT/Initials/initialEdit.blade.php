@@ -9,6 +9,7 @@
 
             <div class="modal-body">
                 <div class="container-fluid bd-example-row">
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -22,20 +23,60 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
+
+                    <div class = "row" id = "fisicaedit" style="display: none">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="">Cliente</label>
-                                <input type="text" id="client1" name="client" class="form-control">
+                                <label for="">Nombre</label>
+                                <input type="text" id="name1" name="name1" class="form-control" placeholder="Nombre">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Apellido paterno</label>
+                                <input type="text" id="firstname1" name="firstname1" class="form-control" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">Apellido materno</label>
+                                <input type="text" id="lastname1" name="lastname1" class="form-control" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">RFC</label>
-                                <input type="text" id="rfc1" name="rfc" class="form-control">
+                                <input type="text" id="rfc1" name="rfc1" class="form-control" placeholder="RFC">
                             </div>
                         </div>
                     </div>
+
+                    <div class = "row" id = "moraledit" style = "display: none;">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="">Razón Social</label>
+                                <input type="text" id="business_name1" name="business_name1" class="form-control" placeholder="Razón Social">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">RFC</label>
+                                <input type="text" id="business_rfc1" name="business_rfc1" class="form-control" placeholder="RFC">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id = "aseguradoedit" style = "display: none;">
+                        <div class = "row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Nombre del Asegurado</label>
+                                    <input type="text" id="insured1" name="insured1" class="form-control" placeholder="Nombre">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -50,6 +91,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -85,6 +127,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -99,6 +142,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -134,6 +178,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">

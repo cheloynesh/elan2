@@ -96,7 +96,9 @@ class InitialController extends Controller
     {
         $initial = Initial::where('id',$request->id)->
         update(['fk_agent'=>$request->agent,
-        'client' => $request->client,
+        'name'=>$request->name,
+        'firstname'=>$request->firstname,
+        'lastname'=>$request->lastname,
         'rfc' => $request->rfc,
         'promoter_date' => $request->promoter,
         'system_date' => $request->system,
