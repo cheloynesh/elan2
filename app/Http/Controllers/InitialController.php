@@ -126,6 +126,34 @@ class InitialController extends Controller
         // dd($status);
         $status->fk_status = $request->status;
         $status->save();
+        if($request->status == 4)
+        {
+            $client = new Client;
+            $client->name = $status->name;
+            $client->firstname = $status->firstname;
+            $client->lastname = $status->lastname;
+            $client->birth_date = null;
+            $client->rfc = $status->rfc;
+            $client->curp = null;
+            $client->gender = null;
+            $client->marital_status = null;
+            $client->street = null;
+            $client->e_num = null;
+            $client->i_num = null;
+            $client->pc = null;
+            $client->suburb = null;
+            $client->country = null;
+            $client->state = null;
+            $client->city = null;
+            $client->cellphone = null;
+            $client->email = null;
+            $client->name_contact = null;
+            $client->phone_contact = null;
+            $client->status = $status->type;
+            $client->inicial = $request->id;
+            $client->save();
+            return response()->json(["status"=>true, "message"=>"Cliente Emitido"]);
+        }
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 }

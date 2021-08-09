@@ -147,7 +147,7 @@ function editarInicial(id)
             $("#selectAgent1").val(result.data.fk_agent);
             // type = 0 es física y type=1 moral
             if(result.data.type==0)
-            {   
+            {
                 fisica.style.display="";
                 $("#name1").val(result.data.name);
                 $("#firstname1").val(result.data.firstname);
@@ -190,7 +190,7 @@ function cancelarEditar()
         $("#business_name1").val("")
         $("#business_rfc1").val("");
         moral.style.display="none";
-        
+
     }
         $("#myModaledit").modal('hide');
 
@@ -285,7 +285,7 @@ function eliminarInicial(id)
 }
 var id_initial = 0;
 
-function opcionesEstatus(initialId,statusId)
+function opcionesEstatus(initialId,statusId,)
 {
     id_initial=initialId;
     $("#selectStatus").val(statusId);

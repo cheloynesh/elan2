@@ -10,7 +10,7 @@ use App\User;
 class ClientsController extends Controller
 {
     public function index(){
-        $clients = Client::where('inicial',1)->get();
+        $clients = Client::get();
         $profile = User::findProfile();
         $perm = Permission::permView($profile,5);
         $perm_btn =Permission::permBtns($profile,5);
