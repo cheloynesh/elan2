@@ -85,3 +85,6 @@ Route::post('processes/OT/services/service/updateStatus', 'ServicesController@up
 Route::resource('processes/OT/refunds/refunds', 'RefundsController');
 Route::get('processes/OT/refunds/refunds/GetInfo/{id}','RefundsController@GetInfo')->name('refunds.GetInfo');
 Route::post('processes/OT/refunds/refunds/updateStatus', 'RefundsController@updateStatus')->name('refunds.updateStatus');
+
+// polizas
+Route::resource('policies/policy','PoliciesController');
