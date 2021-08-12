@@ -3,6 +3,11 @@ body {
   background-color: #d6d6d6;
   min-height: 100vh; }
 
+.card-header{
+text-align: center;
+background: #4a7198 !important;
+}
+
 .brand-wrapper {
   margin-bottom: 19px; }
   .brand-wrapper  {
@@ -10,11 +15,6 @@ body {
   }
   .logo{
     width: 150px;
-  }
-  .centradoLogin{
-    text-align: center;
-    /* background: #001466; */
-
   }
   .izquierda{
     text-align: left;
@@ -96,4 +96,24 @@ body {
     margin-right: auto;
     width: 50%;
 }
+
+.btn-login {
+    color: #fff;
+    background-color: #4a7198;
+    border-color: #4a7198;
+  }
+
+  .btn-login:hover {
+    color: #fff;
+    background-color: #275079;
+    border-color: #275079;
+  }
+
+  .btn-login:focus,
+  .btn-login.focus {
+    color: #fff;
+    background-color: #275079;
+    border-color: #275079;
+    box-shadow: 0 0 0 0.2rem rgba(82, 161, 225, 0.5);
+  }
 /*# sourceMappingURL=login.css.map */
