@@ -6,14 +6,14 @@ body {
 .brand-wrapper {
   margin-bottom: 19px; }
   .brand-wrapper  {
-    height: 37px; 
+    height: 37px;
   }
   .logo{
     width: 150px;
   }
-  .centrado{
+  .centradoLogin{
     text-align: center;
-    background: #001466;
+    /* background: #001466; */
 
   }
   .izquierda{
