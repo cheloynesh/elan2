@@ -158,6 +158,8 @@
                         </div>
 
                     </div>
+
+
                     <div class="col-lg-12" id = "moral" style = "display: none;">
 
                         <div class="row">
@@ -269,6 +271,7 @@
 
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">
