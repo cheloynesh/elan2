@@ -16,6 +16,7 @@ use App\Application;
 use App\Client;
 use DB;
 use Carbon\Carbon;
+use App\Policy;
 
 class InitialController extends Controller
 {

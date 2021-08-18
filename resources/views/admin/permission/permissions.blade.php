@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-4">
                 <label for="idPerfil">Perfil: </label>
-                <select name="selectProfile" id="selectProfile" class="form-control" onchange="permprofile()">
-                    <option hidden selected>Selecciona una opción</option>
+                <select name="selectProfile" id="selectProfile" class="form-select" onchange="permprofile()">
+                    <option hidden selected value="">Selecciona una opción</option>
                     @foreach ($profiles as $id => $profile)
                         <option value='{{ $id }}'>{{ $profile }}</option>
                     @endforeach

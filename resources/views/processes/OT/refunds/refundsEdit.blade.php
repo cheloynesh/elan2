@@ -13,8 +13,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Agente:</label>
-                                <select name="selectAgent1" id="selectAgent1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectAgent1" id="selectAgent1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($agents as $id => $agent)
                                         <option value='{{ $id }}'>{{ $agent }}</option>
                                     @endforeach
@@ -40,8 +40,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Aseguradora:</label>
-                                <select name="selectInsurance1" id="selectInsurance1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectInsurance1" id="selectInsurance1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
                                         <option value='{{ $id }}'>{{ $insurance }}</option>
                                     @endforeach
@@ -90,8 +90,8 @@
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Forma de Pago</label>
-                                    <select name="selectPayment1" id="selectPayment1" class="form-control">
-                                        <option hidden selected>Selecciona una opción</option>
+                                    <select name="selectPayment1" id="selectPayment1" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
                                         <option value="Transferencia">Transferencia</option>
                                         <option value="Cheque">Cheque</option>
                                     </select>

@@ -62,8 +62,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Perfil:</label>
-                                            <select name="selectProfile" id="selectProfile" class="form-control" onchange="showimp()">
-                                                <option hidden selected>Selecciona una opción</option>
+                                            <select name="selectProfile" id="selectProfile" class="form-select" onchange="showimp()">
+                                                <option hidden selected value="">Selecciona una opción</option>
                                                 @foreach ($profiles as $id => $profile)
                                                     <option value='{{ $id }}'>{{ $profile }}</option>
                                                 @endforeach

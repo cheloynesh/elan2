@@ -1,6 +1,6 @@
 var ruta = window.location;
 var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
+var baseUrl = getUrl .protocol + "//" + getUrl.host + "/admin/client/client";
 
 $(document).ready( function () {
     $('#tbClient').DataTable({
@@ -131,7 +131,6 @@ var idupdate = 0;
 function editarCliente(id)
 {
     idupdate=id;
-
     var route = baseUrl + '/GetInfo/'+id;
     // alert(route);
     jQuery.ajax({

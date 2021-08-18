@@ -14,8 +14,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Agente:</label>
-                                <select name="selectAgent" id="selectAgent1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectAgent" id="selectAgent1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($agents as $id => $agent)
                                         <option value='{{ $id }}'>{{ $agent }}</option>
                                     @endforeach
@@ -96,8 +96,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Aseguradora:</label>
-                                <select name="selectInsurance" id="selectInsurance1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectInsurance" id="selectInsurance1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
                                         <option value='{{ $id }}'>{{ $insurance }}</option>
                                     @endforeach
@@ -107,8 +107,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Ramo:</label>
-                                <select name="selectBranch" id="selectBranch1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectBranch" id="selectBranch1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($branches as $id => $branch)
                                         <option value='{{ $id }}'>{{ $branch }}</option>
                                     @endforeach
@@ -118,8 +118,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Tipo Solicitud:</label>
-                                <select name="selectAppli" id="selectAppli1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectAppli" id="selectAppli1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($applications as $id => $appli)
                                         <option value='{{ $id }}'>{{ $appli }}</option>
                                     @endforeach
@@ -147,8 +147,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Forma de Pago:</label>
-                                <select name="selectPaymentform" id="selectPaymentform1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectPaymentform" id="selectPaymentform1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($paymentForms as $id => $payment_form)
                                         <option value='{{ $id }}'>{{ $payment_form }}</option>
                                     @endforeach
@@ -158,8 +158,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Moneda:</label>
-                                <select name="selectCurrency" id="selectCurrency1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectCurrency" id="selectCurrency1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($currencies as $id => $currency)
                                         <option value='{{ $id }}'>{{ $currency }}</option>
                                     @endforeach
@@ -169,8 +169,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Conducto de cobro:</label>
-                                <select name="selectCharge" id="selectCharge1" class="form-control">
-                                    <option hidden selected>Selecciona una opción</option>
+                                <select name="selectCharge" id="selectCharge1" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($charges as $id => $charge)
                                         <option value='{{ $id }}'>{{ $charge }}</option>
                                     @endforeach

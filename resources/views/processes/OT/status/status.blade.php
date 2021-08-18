@@ -14,8 +14,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="">Estatus:</label>
-                                    <select name="selectStatus" id="selectStatus" class="form-control">
-                                        <option hidden selected>Selecciona una opción</option>
+                                    <select name="selectStatus" id="selectStatus" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($cmbStatus as $id => $status)
                                             <option value='{{ $id }}'>{{ $status }}</option>
                                         @endforeach
