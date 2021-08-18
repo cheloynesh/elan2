@@ -194,7 +194,8 @@ function actualizarCliente()
     var cellphone = $("#cellphone1").val();
     var email = $("#email1").val();
 
-    var route = "client/"+idupdate;
+    // var route = "client/"+idupdate;
+    var route = baseUrl + "/" + idupdate;
 
     var data = {
         'id':idupdate,
@@ -387,8 +388,9 @@ function actualizarEmpresa()
     var phone_contact = $("#phone_contact1").val();
 
     // var routeE =baseUrl+ "/updateEnterprise";
-    var route = "client/"+idupdate;
-    // console.log(routeE);
+    // var route = "client/"+idupdate;
+    var route = baseUrl + "/" + idupdate;
+    alert("entre a empresa");
     var dataE = {
         'id':idupdateE,
         "_token": $("meta[name='csrf-token']").attr("content"),

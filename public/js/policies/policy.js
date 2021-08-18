@@ -148,7 +148,7 @@ function checkPolicy(){
 
 function guardarPoliza()
 {
-    if(clientType)
+    if(clientType == 0)
     {
         actualizarCliente();
     }

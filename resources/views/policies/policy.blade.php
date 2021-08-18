@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="col-lg-12" id = "fisica">
+                    <div class="col-lg-12" id = "fisica" style = "display: none;">
 
                         <div class="row">
                             <div class="col-lg-4">
@@ -424,16 +424,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
-            {{-- Terminacard de llenado de poliza --}}
-
-            {{-- card de la tabla y sus tipos de pago --}}
-            <div class="card">
-                <div class="card-header" style="color: white">
-                    Póliza
-                </div>
-                <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -479,6 +469,17 @@
                     </div>
                 </div>
             </div>
+            {{-- Terminacard de llenado de poliza --}}
+
+            {{-- card de la tabla y sus tipos de pago --}}
+            {{-- <div class="card">
+                <div class="card-header" style="color: white">
+                    Póliza
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div> --}}
             {{--Termina card de la tabla y sus tipos de pago --}}
 
             {{-- tabla  --}}
