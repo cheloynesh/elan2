@@ -43,7 +43,7 @@ class PoliciesController extends Controller
     public function GetInfo($id)
     {
         $client = DB::table("Client")
-        ->select('Client.name', 'Client.firstname', 'Client.lastname', 'Client.rfc', 'Client.status', 'fk_agent', 'fk_insurance', 'fk_branch', 'pna',
+        ->select('Client.inicial','Client.status', 'fk_agent', 'fk_insurance', 'fk_branch', 'pna',
         'fk_currency', 'fk_payment_form', 'fk_charge')
         ->leftJoin('Initials','Initials.id','=','inicial')
         ->where('Client.id',$id)
@@ -53,7 +53,7 @@ class PoliciesController extends Controller
     }
     public function CheckPolicy($policy)
     {
-        $policy = Policy::where('id',$policy)->first();
+        $policy = Policy::where('policy',$policy)->first();
         if($policy == null)
         {
             return 0;

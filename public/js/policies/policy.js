@@ -74,6 +74,7 @@ function ocultar(){
 // }
 
 var idClient = 0;
+var initialId = 0;
 var clientType = 0;
 
 function obtenerid(id){
@@ -89,6 +90,7 @@ function obtenerid(id){
         success:function(result)
         {
             clientType = result.data.status;
+            initialId = result.data.inicial;
             if(clientType == 0)
             {
                 fisica.style.display = ""
@@ -138,7 +140,7 @@ function checkPolicy(){
             }
             else
             {
-                divClientes.style.display = ""
+                divClientes.style.display = "none"
                 disponible.style.display = "none"
                 noDisponible.style.display = ""
             }
@@ -156,4 +158,7 @@ function guardarPoliza()
     {
         actualizarEmpresa();
     }
+    // guardar todos los datos de la póliza
+    // en inicial se guarda fk_agent, fk_insurance, fk_branch, pna, fk_currency, fk_payment_form y fk_charge
+    // lo demás se guarda en la tabla de la póliza
 }
