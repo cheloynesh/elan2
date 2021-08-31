@@ -99,7 +99,8 @@ function obtenerid(id){
                 editarEmpresa(id);
             }
             $("#pna").val(result.data.pna);
-            prima();
+            // prima();
+            calculo();
             $("#selectInsurance").val(result.data.fk_insurance);
             $("#selectCurrency").val(result.data.fk_currency);
             $("#selectCharge").val(result.data.fk_charge);
@@ -108,7 +109,7 @@ function obtenerid(id){
             $("#selectBranch").val(result.data.fk_branch);
         }
     });
-    
+
     if(info.style.display=='none'){
         info.style.display="";
     }
@@ -238,50 +239,44 @@ function guardardatosClienteInicial(){
 
     }
 }
-function prima(){
-    var prima = parseFloat($("#pna").val());
 
-
-    $("#prima_t").val(parseFloat(prima).toFixed(2));
-
-}
-function exp(){
-    var prima = parseFloat($("#pna").val());
-    var exp = parseFloat($("#expedition").val());
-
-    var temp = prima + exp;
-    $("#prima_t").val(parseFloat(temp).toFixed(2));
-    
-}
-
-function financ(){
-    var finan_exp = parseFloat($("#financ_exp").val());
-    var prima = parseFloat($("#pna").val());
-    var exp = parseFloat($("#expedition").val());
-
-    var temp = finan_exp+ prima+ exp;
-    $("#prima_t").val(parseFloat(temp).toFixed(2));
-
-
-}
-
-function other(){
-    var other = parseFloat($("#other_exp").val());
-    var finan_exp = parseFloat($("#financ_exp").val());
-    var prima = parseFloat($("#pna").val());
-    var exp = parseFloat($("#expedition").val());
-
-    var temp = other + finan_exp+ prima + exp;
-    $("#prima_t").val(parseFloat(temp).toFixed(2));
-
-}
-
-function porcentaje(){
+function calculo(){
     var ivapor = $("#ivapor").val();
-    var other = parseFloat($("#other_exp").val());
-    var finan_exp = parseFloat($("#financ_exp").val());
-    var prima = parseFloat($("#pna").val());
-    var exp = parseFloat($("#expedition").val());
+    var other = $("#other_exp").val();
+    var finan_exp = $("#financ_exp").val();
+    var prima = $("#pna").val();
+    var exp = $("#expedition").val();
+
+    if(ivapor != ""){
+        ivapor = parseFloat(ivapor);
+    }
+    else{
+        ivapor = 0;
+    }
+    if(other != ""){
+        other = parseFloat(other);
+    }
+    else{
+        other = 0;
+    }
+    if(finan_exp != ""){
+        finan_exp = parseFloat(finan_exp);
+    }
+    else{
+        finan_exp = 0;
+    }
+    if(prima != ""){
+        prima = parseFloat(prima);
+    }
+    else{
+        prima = 0;
+    }
+    if(exp != ""){
+        exp = parseFloat(exp);
+    }
+    else{
+        exp = 0;
+    }
 
     var temp = other + finan_exp+ prima + exp;
 
@@ -289,11 +284,10 @@ function porcentaje(){
     $("#iva").val(parseFloat(iva).toFixed(2));
 
     temp = temp+ iva;
-
     $("#prima_t").val(parseFloat(temp).toFixed(2));
 }
 
 function mostartabla(){
-    
+
 }
 

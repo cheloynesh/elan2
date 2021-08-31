@@ -390,7 +390,7 @@ function actualizarEmpresa()
     // var routeE =baseUrl+ "/updateEnterprise";
     // var route = "client/"+idupdate;
     var route = baseUrl + "/" + idupdate;
-    alert("entre a empresa");
+    // alert("entre a empresa");
     var dataE = {
         'id':idupdateE,
         "_token": $("meta[name='csrf-token']").attr("content"),

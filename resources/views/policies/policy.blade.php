@@ -20,8 +20,8 @@
             </div>
         </div>
         <div class="row">
-            <label for="" id = "disponible" style="color: green; display: none;">Cliente disponible</label>
-            <label for="" id = "noDisponible" style="color: red; display: none;">Cliente no disponible</label>
+            <label for="" id = "disponible" style="color: green; display: none;">Póliza disponible</label>
+            <label for="" id = "noDisponible" style="color: red; display: none;">Póliza no disponible</label>
         </div>
         <div class="bd-example bd-example-padded-bottom">
             {{-- @if ($perm_btn['addition']==1) --}}
@@ -304,11 +304,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">Prima neta</label>
-                            <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="prima()">
+                            <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="calculo()">
                         </div>
                         <div class="col-md-4">
                             <label for=""> Expedición</label>
-                            <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="exp()">
+                            <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
                         </div>
                         <div class="col-md-4">
                             <label for="">Imputar </label>
@@ -323,7 +323,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">G. Financiamiento</label>
-                            <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="financ()">
+                            <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar </label>
@@ -334,7 +334,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Otros</label>
-                            <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="other()">
+                            <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar</label>
@@ -352,7 +352,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">IVA %</label>
-                            <input type="text" name="ivapor" id="ivapor" class="form-control" placeholder="IVA %" onchange="porcentaje()">
+                            <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
                         </div>
                         <div class="col-md-4">
                             <label for="">Prima Total</label>
