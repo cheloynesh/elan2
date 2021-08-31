@@ -63,4 +63,41 @@ class PoliciesController extends Controller
             return 1;
         }
     }
+
+    public function savepolicy(Request $request)
+    {
+        // dd($request->all());
+        $initial = new Initial;
+        $initial->pna = $request->pna;
+        $initial->fk_currency = $request->currency;
+        $initial->fk_insurance = $request->insurance;
+        $initial->fk_branch = $request->branch;
+        $initial->fk_agent = $request->agent;
+        $initial->fk_charge = $request->charge;
+        $initial->fk_payment_form = $request->paymentForm;
+        $client = Client::where('id', $request->id)->first();
+        $client->inicial = 4;
+
+        dd($client);
+        // $client->save();
+        // $initial->save();
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $policy = new Policy;
+        $policy->expended_exp = $request->expended;
+        $policy->exp_impute = $request->exp_imp;
+        $policy->financ_exp = $request->financ_exp;
+        $policy->financ_impute = $request->financ_imp;
+        $policy->other_exp = $request->other_exp;
+        $policy->other_impute = $request->other_imp;
+        $policy->iva = $request->iva;
+        $policy->total = $request->pna_t;
+        $policy->renovable = $request->renovable;
+        $policy->pay_frec = $request->pay_frec;
+        // $policy->save();
+
+    }
 }

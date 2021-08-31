@@ -90,3 +90,5 @@ Route::post('processes/OT/refunds/refunds/updateStatus', 'RefundsController@upda
 Route::resource('policies/policy','PoliciesController');
 Route::get('policies/policy/GetInfo/{id}','PoliciesController@GetInfo')->name('policy.GetInfo');
 Route::get('policies/policy/CheckPolicy/{id}','PoliciesController@CheckPolicy')->name('policy.CheckPolicy');
+Route::post('policies/policy/savepolicy', 'PoliciesController@savepolicy')->name('policy.savepolicy');
+

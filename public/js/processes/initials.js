@@ -1,6 +1,6 @@
-var ruta = window.location;
-var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
+var rutaInicial = window.location;
+var getUrlInicial = window.location;
+var baseUrlInicial = getUrlInicial .protocol + "//" + getUrlInicial.host + getUrlInicial.pathname;
 
 $(document).ready( function () {
     $('#tbProf').DataTable({
@@ -31,8 +31,9 @@ $(document).ready( function () {
     });
 } );
 
-function guardarInicial()
+function guardarInicial(id)
 {
+    alert(id);
     var onoff = document.getElementById("onoff");
     var checked = onoff.checked;
     var onoffAsegurado = document.getElementById("onoffAsegurado");
@@ -135,7 +136,7 @@ function editarInicial(id)
     var fisica = document.getElementById("fisicaedit");
     var moral = document.getElementById("moraledit");
 
-    var route = baseUrl + '/GetInfo/'+ id;
+    var route = baseUrlInicial + '/GetInfo/'+ id;
 
     jQuery.ajax({
         url:route,
@@ -295,7 +296,7 @@ function opcionesEstatus(initialId,statusId,)
 function actualizarEstatus()
 {
     var status = $("#selectStatus").val();
-    var route = baseUrl+"/updateStatus";
+    var route = baseUrlInicial+"/updateStatus";
     console.log(route);
     var data = {
         'id':id_initial,

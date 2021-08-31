@@ -304,21 +304,18 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">Prima neta</label>
-                            <input type="text" id="prima" class="form-control" placeholder="Prima neta">
+                            <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="prima()">
                         </div>
                         <div class="col-md-4">
                             <label for=""> Expedición</label>
-                            <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición">
+                            <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="exp()">
                         </div>
                         <div class="col-md-4">
                             <label for="">Imputar </label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" id="exp_impute">
                                 <option value="1">Primera</option>
                                 <option value="2">Todas</option>
                             </select>
-                            {{-- <label for="">Imputar</label>
-                            <br>
-                            <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "Primero" data-off="Todos" data-width="100" data-offstyle="secondary"> --}}
                         </div>
 
                     </div>
@@ -326,46 +323,40 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">G. Financiamiento</label>
-                            <input type="text" name="Gfinan$" id="Gfinan$" class="form-control" placeholder="Gastos de Financiamiento">
+                            <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="financ()">
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar </label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" id="financ_impute">
                                 <option value="1">Primera</option>
-                                <option value="2">Toda</option>
+                                <option value="2">Todas</option>
                             </select>
-                            {{-- <label for="">Imputar</label>
-                            <br>
-                            <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "Primero" data-off="Todos" data-width="100" data-offstyle="secondary"> --}}
                         </div>
                         <div class="col-md-3">
                             <label for="">Otros</label>
-                            <input type="text" name="otros" id="otros" class="form-control" placeholder="Otros Gastos">
+                            <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="other()">
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" id="other_impute">
                                 <option value="1">Primera</option>
-                                <option value="2">Toda</option>
+                                <option value="2">Todas</option>
                             </select>
-                            {{-- <label for="">Imputar</label>
-                            <br>
-                            <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "Primero" data-off="Todos" data-width="100" data-offstyle="secondary"> --}}
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">IVA</label>
-                            <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA">
+                            <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
                         </div>
                         <div class="col-md-4">
                             <label for="">IVA %</label>
-                            <input type="text" name="ivapor" id="ivapor" class="form-control" placeholder="IVA %">
+                            <input type="text" name="ivapor" id="ivapor" class="form-control" placeholder="IVA %" onchange="porcentaje()">
                         </div>
                         <div class="col-md-4">
                             <label for="">Prima Total</label>
-                            <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total">
+                            <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
                         </div>
                     </div>
                     <br>
@@ -381,7 +372,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Renovable: </label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" id="renovable">
                                 <option value="1">Si</option>
                                 <option value="2">No</option>
                             </select>
@@ -428,7 +419,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Frecuencia de pago</label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" aria-label="Default select example" id="pay_frec">
                                     <option selected hidden value="">Selecciona una opción</option>
                                     <option value="1">Mensual</option>
                                     <option value="3">Trimestral</option>
@@ -469,20 +460,6 @@
                     </div>
                 </div>
             </div>
-            {{-- Terminacard de llenado de poliza --}}
-
-            {{-- card de la tabla y sus tipos de pago --}}
-            {{-- <div class="card">
-                <div class="card-header" style="color: white">
-                    Póliza
-                </div>
-                <div class="card-body">
-
-                </div>
-            </div> --}}
-            {{--Termina card de la tabla y sus tipos de pago --}}
-
-            {{-- tabla  --}}
 
             <div class="card">
                 <div class="card-header" style="color: white">
@@ -516,6 +493,7 @@
     </div>
 @endsection
 @push('head')
-    <script src="{{URL::asset('js/admin/client.js')}}"></script>
-    <script src="{{URL::asset('js/policies/policy.js')}}"></script>
+    <script src="{{URL::asset('js/admin/client.js')}}" ></script>
+    <script src="{{URL::asset('js/policies/policy.js')}}" ></script>
+    {{-- <script src="{{URL::asset('js/processes/initials.js')}}" defer></script> --}}
 @endpush
