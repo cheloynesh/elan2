@@ -421,10 +421,10 @@
                                 <label for="">Frecuencia de pago</label>
                                 <select class="form-select" aria-label="Default select example" id="pay_frec">
                                     <option selected hidden value="">Selecciona una opción</option>
-                                    <option value="1">Mensual</option>
-                                    <option value="3">Trimestral</option>
-                                    <option value="6">Semestral</option>
-                                    <option value="12">Anual</option>
+                                    <option value="12">Mensual</option>
+                                    <option value="4">Trimestral</option>
+                                    <option value="2">Semestral</option>
+                                    <option value="1">Anual</option>
                                 </select>
                             </div>
                         </div>
@@ -448,6 +448,20 @@
                                         <option value='{{ $id }}'>{{ $payment_form }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Fecha Inicio Vigencia</label>
+                                <input type="date" id="initial_date" name="initial_date" class="form-control" placeholder="Fecha de creación" onchange="fechafin()">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Fecha fin Vigencia</label>
+                                <input type="date" id="end_date" name="end_date" class="form-control" placeholder="Fecha de creación">
                             </div>
                         </div>
                     </div>
@@ -478,7 +492,12 @@
                                 <th class="text-center">F. Pago</th>
                                 <th class="text-center">F.Limite</th>
                             </thead>
+                            <tbody id="tbodyRecords"></tbody>
                         </table>
+                    </div>
+
+                    <div style="float: right">
+                        <button type="button" class="btn btn-primary" onclick="GuardarRecibos()">Guardar Recibos</button>
                     </div>
                 </div>
                 <div class="card-footer text-center">

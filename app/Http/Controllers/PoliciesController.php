@@ -20,6 +20,7 @@ class PoliciesController extends Controller
 {
     public function index ()
     {
+
         // $policy = Policy::get();
         $clients = Client::get();
         $profile = User::findProfile();
@@ -64,29 +65,34 @@ class PoliciesController extends Controller
         }
     }
 
-    public function savepolicy(Request $request)
-    {
-        // dd($request->all());
-        $initial = new Initial;
-        $initial->pna = $request->pna;
-        $initial->fk_currency = $request->currency;
-        $initial->fk_insurance = $request->insurance;
-        $initial->fk_branch = $request->branch;
-        $initial->fk_agent = $request->agent;
-        $initial->fk_charge = $request->charge;
-        $initial->fk_payment_form = $request->paymentForm;
-        $client = Client::where('id', $request->id)->first();
-        $client->inicial = 4;
+    // public function savepolicy(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $initial = new Initial;
+    //     $initial->firstname = $request->idClient;
+    //     $initial->pna = $request->pna;
+    //     $initial->fk_currency = $request->currency;
+    //     $initial->fk_insurance = $request->insurance;
+    //     $initial->fk_branch = $request->branch;
+    //     $initial->fk_agent = $request->agent;
+    //     $initial->fk_charge = $request->charge;
+    //     $initial->fk_payment_form = $request->paymentForm;
+    //     $initial->save();
+    //     $initial_id = DB::table('Initials')->select('id')->where('firstname', $request->idClient)->first();
+    //     // dd($initial_id);
+    //     $client = Client::where('id', $request->idClient)->first();
+    //     $client->inicial = $initial_id->id;
 
-        dd($client);
-        // $client->save();
-        // $initial->save();
-    }
+    //     // dd($client);
+    //     $client->save();
+    // }
 
     public function store(Request $request)
     {
         // dd($request->all());
         $policy = new Policy;
+        $policy->fk_client = $request->id;
+        $policy->policy = $request->policy;
         $policy->expended_exp = $request->expended;
         $policy->exp_impute = $request->exp_imp;
         $policy->financ_exp = $request->financ_exp;
@@ -97,7 +103,24 @@ class PoliciesController extends Controller
         $policy->total = $request->pna_t;
         $policy->renovable = $request->renovable;
         $policy->pay_frec = $request->pay_frec;
-        // $policy->save();
 
+        $policy->pna = $request->pna;
+        $policy->fk_currency = $request->currency;
+        $policy->fk_insurance = $request->insurance;
+        $policy->fk_branch = $request->branch;
+        $policy->fk_agent = $request->agent;
+        $policy->fk_charge = $request->charge;
+        $policy->fk_payment_form = $request->paymentForm;
+        $policy->initial_date = $request->inital_date;
+        $policy->end_date = $request->end_date;
+
+        $policy->save();
+        return response()->json(['status'=>true]);
+
+    }
+
+    public function CheckDate(Request $request)
+    {
+        
     }
 }

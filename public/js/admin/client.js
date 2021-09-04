@@ -168,8 +168,9 @@ function cancelarEditar()
     $("#modalEditClient").modal('hide');
 
 }
-function actualizarCliente()
+function actualizarCliente(policy)
 {
+    // alert(policy);
     var name = $("#name1").val();
     var firstname = $("#firstname1").val();
     var lastname = $("#lastname1").val();
@@ -228,9 +229,15 @@ function actualizarCliente()
         dataType:'json',
         success:function(result)
         {
-            alertify.success(result.message);
-            $("#modalEditClient").modal('hide');
+            if(policy == "" || policy== null)
+            {
+                alertify.success(result.message);
+                $("#modalEditClient").modal('hide');
+            }else{
+                alertify.success("Poliza Creada");
+            }
             window.location.reload(true);
+
         }
     })
 }
@@ -363,9 +370,9 @@ function cancelarEmpresa()
     $("#modalEditEnterprise").modal('hide');
 
 }
-function actualizarEmpresa()
+function actualizarEmpresa(policy_ent)
 {
-    // alert("Entre");
+    // alert(policy_ent);
     var business_name = $("#business_name1").val();
 
     var date = $("#date1").val();
@@ -422,9 +429,15 @@ function actualizarEmpresa()
         dataType:'json',
         success:function(result)
         {
-            alertify.success(result.message);
-            $("#modalEditEnterprise").modal('hide');
+            if(policy_ent == "" || policy_ent == null)
+            {
+                alertify.success(result.message);
+                $("#modalEditEnterprise").modal('hide');
+            }else{
+                alertify.success("Poliza creada");
+            }
             window.location.reload(true);
+
         }
     })
 }
