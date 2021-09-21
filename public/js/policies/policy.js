@@ -168,8 +168,33 @@ function guardarPoliza()
     var agent=$("#selectAgent").val();
     var charge=$("#selectCharge").val();
     var paymentForm=$("#selectPaymentform").val();
-    var inital_date=$("#inital_date").val();
+    var initial_date=$("#initial_date").val();
     var end_date=$("#end_date").val();
+
+    if(other_exp != ""){
+        other_exp = parseFloat(other_exp);
+    }
+    else{
+        other_exp = 0;
+    }
+    if(financ_exp != ""){
+        financ_exp = parseFloat(financ_exp);
+    }
+    else{
+        financ_exp = 0;
+    }
+    if(pna != ""){
+        pna = parseFloat(pna);
+    }
+    else{
+        pna = 0;
+    }
+    if(expended != ""){
+        expended = parseFloat(expended);
+    }
+    else{
+        expended = 0;
+    }
 
     var route = "policy";
     var data = {
@@ -194,7 +219,8 @@ function guardarPoliza()
         "charge": charge,
         "paymentForm": paymentForm,
         "initial_date":initial_date,
-        "end_date":end_date
+        "end_date":end_date,
+        "arrayValues": arrayValues
     }
     // alert("aantes de la peticion");
     jQuery.ajax({
@@ -205,6 +231,7 @@ function guardarPoliza()
         success:function(result){
             if(result.status == true)
             {
+                // GuardarRecibos();>
                 if(clientType == 0)
                 {
                     // alert("entre a cliente");
@@ -290,7 +317,8 @@ var arrayValues = [];
 
 function mostrartabla(){
     var pay_frec = parseInt($("#pay_frec").val());
-    var table = $("#tbodyRecords");
+    // var table = $("#tbodyRecords");
+    var tablerec = $('#tablerecords').DataTable();
     var expedition = $("#expedition").val();
     var exp_impute = parseInt($("#exp_impute").val());
     var financ_exp = $("#financ_exp").val();
@@ -345,7 +373,8 @@ function mostrartabla(){
     var fechaInicio;
     var arrayfill;
     arrayValues = [];
-    table.empty();  
+    // tablerec.empty();
+    tablerec.clear();  
 
     for(var x = 0 ; x<pay_frec ; x++)
     {
@@ -396,33 +425,19 @@ function mostrartabla(){
         iva = values_total * ivapor;
         values_total += iva;
 
-        var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
-        table.append(str_row);
+        // var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
+        // table.append(str_row);
+        tablerec.row.add([pna.toFixed(2),values_exp.toFixed(2),values_financ.toFixed(2),values_other.toFixed(2),iva.toFixed(2),values_total.toFixed(2),fechaInicio,fechaInicio]).draw(false); 
         arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD};
         arrayValues.push(arrayfill);
+        
     }
+    $("#btn_save").prop("disabled",false);
   
-    // $("#code").val("");
-    // codigos.push({
-    //     'id':array.length+1,
-    //     'code':codigo
-    // });
 }
 function padLeadingZeros(num, size){
     var s = num + "";
     while (s.length < size) s = "0" + s;
     return s;
 }
-function GuardarRecibos(){
-    var policy =$("#poliza").val();
-    var status = 1;
-    for(var i=0;i<arrayValues.length;i++){
-        console.log(arrayValues[i]);
-    }
-     var route= "policy";
 
-     jQuery.ajax({
-         
-     })
-    
-}

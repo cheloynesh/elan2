@@ -1,4 +1,9 @@
 @extends('home')
+<head>
+    <title>
+        Solicitudes | Elan
+    </title>
+</head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Tipos de Solicitud</h1></div>
     <div style="max-width: 1200px; margin: auto;">

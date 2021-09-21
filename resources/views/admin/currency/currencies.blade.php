@@ -1,4 +1,5 @@
 @extends('home')
+<head><title>Monedas | Elan</title></head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Monedas</h1></div>
     <div style="max-width: 1200px; margin: auto;">

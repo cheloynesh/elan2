@@ -1,4 +1,7 @@
 @extends('home')
+<head>
+    <title>Poliza | Elan</title>
+</head>
 @section('content')
     <div class="text-center"><h1>Póliza</h1></div>
     <div style="max-width: 1200px; margin: auto;">
@@ -496,12 +499,9 @@
                         </table>
                     </div>
 
-                    <div style="float: right">
-                        <button type="button" class="btn btn-primary" onclick="GuardarRecibos()">Guardar Recibos</button>
-                    </div>
                 </div>
                 <div class="card-footer text-center">
-                    <button type="button" onclick="guardarPoliza()" class="btn btn-primary float-right">Guardar</button>
+                    <button type="button" onclick="guardarPoliza()" id="btn_save" class="btn btn-primary float-right" disabled>Guardar</button>
                 </div>
             </div>
         </div>

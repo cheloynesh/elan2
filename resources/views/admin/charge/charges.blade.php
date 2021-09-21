@@ -1,4 +1,7 @@
 @extends('home')
+<head>
+    <title>Conductos | Elan</title>
+</head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Conductos de Cobro</h1></div>
     <div style="max-width: 1200px; margin: auto;">

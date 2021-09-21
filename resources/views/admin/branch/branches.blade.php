@@ -1,4 +1,7 @@
 @extends('home')
+<head>
+    <title>Ramos | Elan</title>
+</head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Ramos</h1></div>
     <div style="max-width: 1200px; margin: auto;">

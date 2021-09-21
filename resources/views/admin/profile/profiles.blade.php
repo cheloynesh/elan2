@@ -1,5 +1,8 @@
 @extends('home')
 {{-- @section('title','Perfiles') --}}
+<head>
+    <title>Perfiles | Elan</title>
+</head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Perfiles</h1></div>
     <div style="max-width: 1200px; margin: auto;">

@@ -15,6 +15,7 @@ use App\Insurance;
 use App\Paymentform;
 use App\Charge;
 use App\Branch;
+use App\Receipts;
 
 class PoliciesController extends Controller
 {
@@ -65,27 +66,6 @@ class PoliciesController extends Controller
         }
     }
 
-    // public function savepolicy(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $initial = new Initial;
-    //     $initial->firstname = $request->idClient;
-    //     $initial->pna = $request->pna;
-    //     $initial->fk_currency = $request->currency;
-    //     $initial->fk_insurance = $request->insurance;
-    //     $initial->fk_branch = $request->branch;
-    //     $initial->fk_agent = $request->agent;
-    //     $initial->fk_charge = $request->charge;
-    //     $initial->fk_payment_form = $request->paymentForm;
-    //     $initial->save();
-    //     $initial_id = DB::table('Initials')->select('id')->where('firstname', $request->idClient)->first();
-    //     // dd($initial_id);
-    //     $client = Client::where('id', $request->idClient)->first();
-    //     $client->inicial = $initial_id->id;
-
-    //     // dd($client);
-    //     $client->save();
-    // }
 
     public function store(Request $request)
     {
@@ -111,16 +91,31 @@ class PoliciesController extends Controller
         $policy->fk_agent = $request->agent;
         $policy->fk_charge = $request->charge;
         $policy->fk_payment_form = $request->paymentForm;
-        $policy->initial_date = $request->inital_date;
+        $policy->initial_date = $request->initial_date;
         $policy->end_date = $request->end_date;
+
+        if($request->arrayValues != null)
+        {
+            foreach($request->arrayValues as $values)
+            {
+                $receipts = new Receipts;
+                $receipts->fk_policy = $request->policy;
+                $receipts->pna = $values['pna'];
+                $receipts->expedition = $values['values_exp'];
+                $receipts->financ_exp = $values['values_financ'];
+                $receipts->other_exp = $values['values_other'];
+                $receipts->iva = $values['iva'];
+                $receipts->pna_t = $values['values_total'];
+                $receipts->initial_date = $values['fechaBD'];
+                $receipts->end_date = $values['fechaBD'];
+                $receipts->save();
+            }
+        }
 
         $policy->save();
         return response()->json(['status'=>true]);
-
-    }
-
-    public function CheckDate(Request $request)
-    {
         
+
     }
+
 }

@@ -1,4 +1,7 @@
 @extends('home')
+<head>
+    <title>Iniciales | Elan</title>
+</head>
 @section('content')
     <div class="text-center"><h1>Iniciales</h1></div>
         {{-- modal| --}}
