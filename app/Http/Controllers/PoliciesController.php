@@ -111,10 +111,51 @@ class PoliciesController extends Controller
                 $receipts->save();
             }
         }
-
         $policy->save();
         return response()->json(['status'=>true]);
+    }
+
+    public function update(Request $request)
+    {
+        // dd($request->all());
+        Policy::where("id",$request->id)
+        ->update(["pna"=>$request->pna,"initial_date"=>$request->initial_date,"end_date"=>$request->enda_date,
+        "fk_currency"=>$request->currency,"fk_insurance"=>$request->insurance,"fk_branch"=>$request->branch,"fk_agent"=>$request->agent,
+        "fk_charge"=>$request->charge,"fk_payment_form"=>$request->paymentForm,"expended_exp"=>$request->expended,"exp_impute"=>$request->exp_imp,
+        "financ_exp"=>$request->financ_exp,"financ_impute"=>$request->financ_imp,"other_exp"=>$request->other_exp,
+        "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"pay_frec"=>$request->pay_frec,"iva"=>$request->iva,
+        "total"=>$request->pna_t]);
+
+        $receipts_edit = Receipts::where("fk_policy",$request->id)->get();
+        foreach($receipts_edit as $receipts)
+        {
+            $receipts->delete();
+        }
+        if($request->arrayValues != null)
+        {
+            foreach($request->arrayValues as $values)
+            {
+                $receipts = new Receipts;
+                $receipts->fk_policy = $request->policy;
+                $receipts->pna = $values['pna'];
+                $receipts->expedition = $values['values_exp'];
+                $receipts->financ_exp = $values['values_financ'];
+                $receipts->other_exp = $values['values_other'];
+                $receipts->iva = $values['iva'];
+                $receipts->pna_t = $values['values_total'];
+                $receipts->initial_date = $values['fechaBD'];
+                $receipts->end_date = $values['fechaBD'];
+                $receipts->save();
+            }
+        }
         
+    }
+
+    public function destroy($id)
+    {
+        $policy = Policy::find($id);
+        $policy->delete();
+        return response()->json(['status'=>true, "message"=>"Poliza eliminada"]);
 
     }
 

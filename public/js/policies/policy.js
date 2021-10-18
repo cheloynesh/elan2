@@ -427,8 +427,9 @@ function mostrartabla(){
 
         // var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
         // table.append(str_row);
-        tablerec.row.add([pna.toFixed(2),values_exp.toFixed(2),values_financ.toFixed(2),values_other.toFixed(2),iva.toFixed(2),values_total.toFixed(2),fechaInicio,fechaInicio]).draw(false); 
-        arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD};
+        tablerec.row.add([formatter.format(pna.toFixed(2)), formatter.format(values_exp.toFixed(2)), formatter.format(values_financ.toFixed(2)), formatter.format(values_other.toFixed(2)),
+            formatter.format(iva.toFixed(2)), formatter.format(values_total.toFixed(2)),fechaBD,fechaBD]).draw(false);
+            arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD}; 
         arrayValues.push(arrayfill);
         
     }
@@ -441,3 +442,7 @@ function padLeadingZeros(num, size){
     return s;
 }
 
+var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });

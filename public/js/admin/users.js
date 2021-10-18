@@ -176,9 +176,6 @@ function eliminarUsuario(id)
             alertify.error('Cancelado');
     });
 }
-
-
-
 // codigos agentes
 function showimp()
 {
@@ -229,7 +226,8 @@ function agregarcodigo1(codigo)
     if(codigo == undefined)
         codigo = $("#code1").val();
     var table = $("#tbody-codigo1");
-    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger" onclick="delete_code_edit(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
+    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger"'+
+    'onclick="delete_code_edit(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
     table.append(str_row);
     $("#code1").val("");
     codigoseditar.push({

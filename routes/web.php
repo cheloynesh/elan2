@@ -92,4 +92,12 @@ Route::get('policies/policy/GetInfo/{id}','PoliciesController@GetInfo')->name('p
 Route::get('policies/policy/CheckPolicy/{id}','PoliciesController@CheckPolicy')->name('policy.CheckPolicy');
 Route::post('policies/policy/CheckDate',  'PoliciesController@CheckDate')->name('policy.CheckDate');
 // Route::post('policies/policy/savepolicy', 'PoliciesController@savepolicy')->name('policy.savepolicy');
+//Ver Polizas
+Route::resource('policies/viewPolicies','ViewPoliciesController');
+Route::get('policies/viewPolicies/ViewReceipts/{id}','ViewPoliciesController@ViewReceipts')->name('viewPolicies.ViewReceipts');
+Route::get('policies/viewPolicies/GetInfo/{id}','ViewPoliciesController@GetInfo')->name('viewPolicies.GetInfo');
+Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@updateStatus')->name('viewPolicies.updateStatus');
+
+
+
 
