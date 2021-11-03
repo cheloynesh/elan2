@@ -34,10 +34,12 @@ $(document).ready( function () {
 function guardarRamo()
 {
     var name = $("#name").val();
+    var days = $("#select_days").val();
     var route = "branches";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'name':name
+        'name':name,
+        'days':days,
     };
     jQuery.ajax({
         url:route,
@@ -59,6 +61,7 @@ function editarRamo(id)
 
     var route = baseUrl + '/GetInfo/'+ id;
 
+    console.log(route);
     jQuery.ajax({
         url:route,
         type:'get',
@@ -66,6 +69,7 @@ function editarRamo(id)
         success:function(result)
         {
             $("#name1").val(result.data.name);
+            $("#select_days1").val(result.data.days);
             $("#myModaledit").modal('show');
         }
     })
@@ -78,11 +82,13 @@ function cancelarEditar()
 function actualizarRamo(id)
 {
     var name = $("#name1").val();
+    var days = $("#select_days1").val();
     var route = "branches/"+idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'name':name
+        'name':name,
+        'days':days,
     };
     jQuery.ajax({
         url:route,

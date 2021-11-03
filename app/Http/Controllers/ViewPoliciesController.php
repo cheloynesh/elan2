@@ -66,7 +66,7 @@ class ViewPoliciesController extends Controller
         return response()->json(['status'=>true, "data"=>$receipts]);
 
     }
-    
+
     public function GetInfo($id)
     {
         // dd($id);
@@ -81,9 +81,21 @@ class ViewPoliciesController extends Controller
 
         $status = Receipts::where('id',$request->id)->first();
         // dd($status);
-        $status->status = 1;
+        // dd($request->all());
+        $status->status = $request->auth;
         $status->save();
-        return response()->json(['status'=>true, "message"=>"Recibo Pagada"]);
+        return response()->json(['status'=>true, "message"=>"Recibo Pagado"]);
+
+    }
+    public function cancelpaypolicy(Request $request){
+        // dd($request->all());
+
+        $status = Receipts::where('id',$request->id)->first();
+        // dd($status);
+        // dd($request->all());
+        $status->status = null;
+        $status->save();
+        return response()->json(['status'=>true, "message"=>"Recibo Cancelado"]);
 
     }
     public function updateStatus(Request $request)

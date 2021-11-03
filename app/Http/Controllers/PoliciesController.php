@@ -93,13 +93,16 @@ class PoliciesController extends Controller
         $policy->fk_payment_form = $request->paymentForm;
         $policy->initial_date = $request->initial_date;
         $policy->end_date = $request->end_date;
+        $policy->save();
+
+        $id = Policy::where('policy',$request->policy)->first();
 
         if($request->arrayValues != null)
         {
             foreach($request->arrayValues as $values)
             {
                 $receipts = new Receipts;
-                $receipts->fk_policy = $request->policy;
+                $receipts->fk_policy = $id->id;
                 $receipts->pna = $values['pna'];
                 $receipts->expedition = $values['values_exp'];
                 $receipts->financ_exp = $values['values_financ'];
@@ -107,11 +110,10 @@ class PoliciesController extends Controller
                 $receipts->iva = $values['iva'];
                 $receipts->pna_t = $values['values_total'];
                 $receipts->initial_date = $values['fechaBD'];
-                $receipts->end_date = $values['fechaBD'];
+                $receipts->end_date = $values['fechaFin'];
                 $receipts->save();
             }
         }
-        $policy->save();
         return response()->json(['status'=>true]);
     }
 
@@ -131,6 +133,7 @@ class PoliciesController extends Controller
         {
             $receipts->delete();
         }
+        // dd($request->arrayValues);
         if($request->arrayValues != null)
         {
             foreach($request->arrayValues as $values)
@@ -144,11 +147,11 @@ class PoliciesController extends Controller
                 $receipts->iva = $values['iva'];
                 $receipts->pna_t = $values['values_total'];
                 $receipts->initial_date = $values['fechaBD'];
-                $receipts->end_date = $values['fechaBD'];
+                $receipts->end_date = $values['fechaFin'];
                 $receipts->save();
             }
         }
-        
+        return response()->json(['status'=>true,"message"=>"Poliza actualizada"]);
     }
 
     public function destroy($id)

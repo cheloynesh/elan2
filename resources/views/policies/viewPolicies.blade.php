@@ -36,7 +36,37 @@
         </div>
     </div>
     {{-- termina modal de recibos --}}
+    {{-- modal auth --}}
+    <div id="authModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <h4 class="modal-title" id="gridModalLabek">Autorizar Movimiento</h4>
+                    <button type="button" class="close" onclick="cerrarAuth()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid bd-example-row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Fecha de autorización</label>
+                                        <input type="date" id="auth" name="auth" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secundary" onclick="cerrarAuth()">Cancelar</button>
+                    <button type="button" onclick="guardarAuth()" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- modal modificar poliza --}}
     <div id="myModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -215,7 +245,7 @@
                             </button>
                         </div>
                     </div>
-
+                    <br>
                     <div class="row">
                             <div class="table-responsive" >
                                 <table class="table table-striped table-hover text-center" id="tablerecords_edit">
@@ -265,7 +295,7 @@
                                 <button class="btn btn-info" style="background-color: #{{$policies->color}}; border-color: #{{$policies->color}}" onclick="opcionesEstatus({{$policies->id}},{{$policies->statId}})">{{$policies->statName}}</button>
                             </td>
                             <td>
-                                <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->policy}})">Ver Recibos</a>
+                                <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})">Ver Recibos</a>
                                 <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" >Editar</a>
                                 <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})">Eliminar</a>
                             </td>

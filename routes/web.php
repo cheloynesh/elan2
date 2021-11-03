@@ -97,6 +97,7 @@ Route::resource('policies/viewPolicies','ViewPoliciesController');
 Route::get('policies/viewPolicies/ViewReceipts/{id}','ViewPoliciesController@ViewReceipts')->name('viewPolicies.ViewReceipts');
 Route::get('policies/viewPolicies/GetInfo/{id}','ViewPoliciesController@GetInfo')->name('viewPolicies.GetInfo');
 Route::post('policies/viewPolicies/paypolicy', 'ViewPoliciesController@paypolicy')->name('viewPolicies.paypolicy');
+Route::post('policies/viewPolicies/cancelpaypolicy', 'ViewPoliciesController@cancelpaypolicy')->name('viewPolicies.cancelpaypolicy');
 Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@updateStatus')->name('viewPolicies.updateStatus');
 
 

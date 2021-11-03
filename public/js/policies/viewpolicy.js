@@ -54,7 +54,12 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        }
+        },
+        aLengthMenu: [
+            [25, 50, 100, 200, -1],
+            [25, 50, 100, 200, "All"]
+        ],
+        iDisplayLength: -1
     });
 } );
 
@@ -83,7 +88,12 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        }
+        },
+        aLengthMenu: [
+            [25, 50, 100, 200, -1],
+            [25, 50, 100, 200, "All"]
+        ],
+        iDisplayLength: -1
     });
 } );
 
@@ -106,18 +116,16 @@ function verRecibos(id){
             // var array = [];
             var table = $("#tablerecords").DataTable();
             table.clear();
-            console.log(result.data);
             // array = result.data;
             result.data.forEach( function(valor, indice, array){
-                console.log(valor.id);
-                if (valor.status == 0 ) {
-
-                    button = '<button href="#|" class="btn btn-primary" onclick="payrecord('+valor.id+')" >Pagar</button>';
+                console.log(valor.status);
+                if (valor.status == null ) {
+                    button = '<button href="#|" class="btn btn-danger" onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
                 } else {
-                    button = 'Pagado';
+                    button = '<button href="#|" class="btn btn-success btn-sm" onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
                 }
-                table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp), 
-                    formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t), 
+                table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
+                    formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
                     valor.initial_date, valor.end_date, button]).node().id = valor.id;
 
             });
@@ -132,13 +140,30 @@ function closereceipts(){
     $("#myModalReceipts").modal("hide");
 
 }
-
+var idMovimiento = 0;
 function payrecord(id)
 {
+    idMovimiento = id;
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    $("#auth").val(yyyy+"-"+mm+"-"+dd);
+    $("#authModal").modal('show');
+}
+function cerrarAuth()
+{
+    $("#authModal").modal('hide');
+}
+function guardarAuth()
+{
     var route = baseUrlPolizaView+'/paypolicy';
+    var auth = $("#auth").val();
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
-        "id":id,
+        "id":idMovimiento,
+        'auth':auth,
     }
     jQuery.ajax({
         url:route,
@@ -151,13 +176,35 @@ function payrecord(id)
             window.location.reload(true);
         }
     })
-
+}
+function cancelAuth(id)
+{
+    var route = baseUrlPolizaView+'/cancelpaypolicy';
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        "id":id,
+    }
+    alertify.confirm("Cancelar pago","¿Desea cancelar el pago?",
+        function(){
+            jQuery.ajax({
+                url:route,
+                data: data,
+                type:'post',
+                dataType:'json',
+                success:function(result){
+                    alertify.success(result.message);
+                    $("#myModalReceipts").modal('hide');
+                    window.location.reload(true);
+                }
+            })
+        },
+        function(){});
 }
 
 function editarPoliza(id)
 {
-    idPolicy=id;
     var route = baseUrlPolizaView+ '/GetInfo/' +id;
+    idPolicy=id;
     jQuery.ajax({
         url:route,
         type:'get',
@@ -172,7 +219,7 @@ function editarPoliza(id)
             $("#financ_exp_edit").val(result.data.financ_exp);
             $("#financ_impute_edit").val(result.data.financ_impute);
             $("#other_exp_edit").val(result.data.other_exp);
-            
+
             $("#other_impute_edit").val(result.data.other_impute);
             $("#iva_edit").val(result.data.iva);
             // $("#ivapor_edit").val(result.data.);
@@ -192,8 +239,9 @@ function editarPoliza(id)
 
             $("#initial_date_edit").val(result.data.initial_date);
             $("#end_date_edit").val(result.data.end_date);
-            
+
             $("#myModalEdit").modal("show");
+            mostrartabla();
         }
     })
 }
@@ -230,7 +278,7 @@ function actualizarpoliza()
     var data = {
         "id":idPolicy,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        // "policy":policy, 
+        // "policy":policy,
         "expended":expended_exp,
         "exp_imp":exp_impute,
         "financ_exp":financ_exp,
@@ -251,7 +299,7 @@ function actualizarpoliza()
         "initial_date":initial_date,
         "end_date":end_date,
         "arrayValues":arrayValues
-        
+
     }
     var route = "policy/"+idPolicy;
 
@@ -276,7 +324,7 @@ function fechafin(){
     fecha[0] = parseInt(fecha[0]) + 1;
     var fechamas = fecha[0].toString() + "-" + fecha[1] + "-" + fecha[2];
     $("#end_date_edit").val(fechamas);
-    
+
 }
 function calculo(){
     var ivapor = $("#ivapor_edit").val();
@@ -340,6 +388,8 @@ function mostrartabla(){
     var pna = parseFloat($("#pna_edit").val())/pay_frec;
     var fecha_i = $("#initial_date_edit").val();
     var fecha = fecha_i.split("-");
+    var branch =$("#selectBranch_edit").val();
+    var days = 0;
 
     fechaDiv = new Date();
     fechaDiv.setFullYear(fecha[0],parseInt(fecha[1]) - 1,fecha[2]);
@@ -375,76 +425,90 @@ function mostrartabla(){
         expedition = 0;
     }
 
-    var values_total = 0; 
-    var values_exp = 0; 
+    var values_total = 0;
+    var values_exp = 0;
     var values_financ = 0;
-    var values_other = 0; 
+    var values_other = 0;
     var iva = 0;
     var fechaBD;
     var fechaInicio;
     var arrayfill;
     arrayValues = [];
     // tablerec.empty();
-    tablerec.clear();  
+    tablerec.clear();
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfo/'+ branch;
 
-    for(var x = 0 ; x<pay_frec ; x++)
-    {
-        values_total = 0;
-        if(exp_impute == 1 && x == 0){
-            values_exp = expedition;
-            values_total +=  expedition;
-        }
-        else if(exp_impute == 2){
-            values_exp = expedition/pay_frec;
-            values_total +=  expedition/pay_frec;
-        }
-        else{
-            values_exp = 0;
-        }
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            console.log(route);
+            days = result.data.days;
+            console.log(days);
+            for(var x = 0 ; x<pay_frec ; x++)
+            {
+                values_total = 0;
+                if(exp_impute == 1 && x == 0){
+                    values_exp = expedition;
+                    values_total +=  expedition;
+                }
+                else if(exp_impute == 2){
+                    values_exp = expedition/pay_frec;
+                    values_total +=  expedition/pay_frec;
+                }
+                else{
+                    values_exp = 0;
+                }
 
-        if(financ_impute == 1 && x == 0){
-            values_financ = financ_exp;
-            values_total +=  financ_exp;
-        }
-        else if(financ_impute == 2){
-            values_financ = financ_exp/pay_frec;
-            values_total +=  financ_exp/pay_frec;
-        }
-        else{
-            values_financ = 0;
-        }
+                if(financ_impute == 1 && x == 0){
+                    values_financ = financ_exp;
+                    values_total +=  financ_exp;
+                }
+                else if(financ_impute == 2){
+                    values_financ = financ_exp/pay_frec;
+                    values_total +=  financ_exp/pay_frec;
+                }
+                else{
+                    values_financ = 0;
+                }
 
-        if(other_impute == 1 && x == 0){
-            values_other = other_exp;
-            values_total +=  other_exp;
-        }
-        else if(other_impute == 2){
-            values_other = other_exp/pay_frec;
-            values_total +=  other_exp/pay_frec;
-        }
-        else{
-            values_other = 0;
-        }
+                if(other_impute == 1 && x == 0){
+                    values_other = other_exp;
+                    values_total +=  other_exp;
+                }
+                else if(other_impute == 2){
+                    values_other = other_exp/pay_frec;
+                    values_total +=  other_exp/pay_frec;
+                }
+                else{
+                    values_other = 0;
+                }
 
-        if(x != 0){
-            fechaDiv.setMonth(fechaDiv.getMonth() + 12/pay_frec);
+                if(x != 0){
+                    fechaDiv.setMonth(fechaDiv.getMonth() + 12/pay_frec);
+                }
+                fechaBD = fechaDiv.getFullYear().toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + (padLeadingZeros(fechaDiv.getDate(),2)).toString();
+                fechaInicio = (padLeadingZeros(fechaDiv.getDate(),2)).toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + fechaDiv.getFullYear().toString();
+                fechaAux = new Date(fechaDiv);
+                fechaAux.setDate(fechaAux.getDate() + days);
+                fechaFin = fechaAux.getFullYear().toString() + "-" + (padLeadingZeros((fechaAux.getMonth() + 1),2)).toString() + "-" + (padLeadingZeros(fechaAux.getDate(),2)).toString();
+
+                values_total += pna;
+                iva = values_total * ivapor;
+                values_total += iva;
+
+                // var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
+                // table.append(str_row);
+                tablerec.row.add([formatter.format(pna.toFixed(2)), formatter.format(values_exp.toFixed(2)), formatter.format(values_financ.toFixed(2)), formatter.format(values_other.toFixed(2)),
+                    formatter.format(iva.toFixed(2)), formatter.format(values_total.toFixed(2)),fechaBD,fechaFin]).draw(false);
+                arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD, fechaFin};
+                arrayValues.push(arrayfill);
+
+            }
         }
-        fechaBD = fechaDiv.getFullYear().toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + (padLeadingZeros(fechaDiv.getDate(),2)).toString();
-        fechaInicio = (padLeadingZeros(fechaDiv.getDate(),2)).toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + fechaDiv.getFullYear().toString();
-
-        values_total += pna;
-        iva = values_total * ivapor;
-        values_total += iva;
-
-        // var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
-        // table.append(str_row);
-        tablerec.row.add([formatter.format(pna.toFixed(2)), formatter.format(values_exp.toFixed(2)), formatter.format(values_financ.toFixed(2)), formatter.format(values_other.toFixed(2)),
-            formatter.format(iva.toFixed(2)), formatter.format(values_total.toFixed(2)),fechaBD,fechaBD]).draw(false);
-        arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD};
-        arrayValues.push(arrayfill);
-        
-    }
-  
+    })
 }
 function padLeadingZeros(num, size){
     var s = num + "";

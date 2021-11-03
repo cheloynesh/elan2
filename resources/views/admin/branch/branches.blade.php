@@ -25,6 +25,15 @@
                                             <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Días de tolerancia</label>
+                                            <select id="select_days" name="select_days" class="form-select">
+                                                <option value="15">15</option>
+                                                <option value="30">30</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

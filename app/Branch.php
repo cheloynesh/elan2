@@ -11,6 +11,6 @@ class Branch extends Model
     use SoftDeletes;
 
     protected $table = "Branch";
-    protected $fillable =["name"];
+    protected $fillable =["name","days"];
     protected $dates = ["deleted_at"];
 }

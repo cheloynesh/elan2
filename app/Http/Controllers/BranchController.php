@@ -35,13 +35,14 @@ class BranchController extends Controller
     {
         $branch = new Branch;
         $branch->name = $request->name;
+        $branch->days = $request->days;
         $branch->save();
         return response()->json(["status"=>true, "message"=>"Ramo creada"]);
     }
 
     public function update(Request $request, $id)
     {
-        $branch = Branch::where('id',$request->id)->update(['name'=>$request->name]);
+        $branch = Branch::where('id',$request->id)->update(['name'=>$request->name, 'days'=>$request->days]);
         return response()->json(['status'=>true, 'message'=>"Ramo actualizada"]);
     }
 

@@ -10949,3 +10949,4 @@ a.text-dark:focus {
     color: #000;
 }
 
+.modal { overflow-y: auto !important; }
