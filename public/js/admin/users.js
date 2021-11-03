@@ -42,6 +42,7 @@ function guardarUsuario()
 
     var cellphone = $("#cellphone").val();
     var fk_profile = $("#selectProfile").val();
+    var subProfile = $("#selectSubProfile").val();
     var route = "user";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -52,6 +53,7 @@ function guardarUsuario()
         'lastname':lastname,
         'cellphone':cellphone,
         'fk_profile':fk_profile,
+        'subProfile':subProfile,
         'codes':codigos
     };
 
@@ -89,6 +91,7 @@ function editarUsuario(id)
             $("#lastname1").val(result.data.lastname);
             $("#cellphone1").val(result.data.cellphone);
             $("#selectProfile1").val(result.data.fk_profile);
+            $("#selectSubProfileedit").val(result.data.subprofile);
             // codigos
 
             // codigoseditar=[];
@@ -122,6 +125,7 @@ function actualizarUsuario()
 
     var cellphone = $("#cellphone1").val();
     var fk_profile = $("#selectProfile1").val();
+    var subProfile = $("#selectSubProfileedit").val();
     var route = "user/"+idupdate;
     var data = {
         'id':idupdate,
@@ -133,6 +137,7 @@ function actualizarUsuario()
         'lastname':lastname,
         'cellphone':cellphone,
         'fk_profile':fk_profile,
+        'subprofile':subProfile,
         'codigoseditar':codigoseditar
     };
     console.log(codigoseditar);
@@ -194,6 +199,10 @@ function showimp()
         document.getElementById("tbcodes").style.display = "block";
         document.getElementById("tbody-codigo").hidden = false;
         document.getElementById("tbody-codigo").style.display = "block";
+        document.getElementById("etiqueta2").hidden = false;
+        document.getElementById("etiqueta2").style.display = "block";
+        document.getElementById("selectSubProfile").hidden = false;
+        document.getElementById("selectSubProfile").style.display = "block";
 
     }
     else

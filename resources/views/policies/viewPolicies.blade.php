@@ -242,21 +242,28 @@
         </div>
     </div>
     {{-- termina modal modificar poliza --}}
+    @include('processes.OT.status.status')
 
     <div style="max-width: 1200px; margin: auto;">
         {{-- Inicia pantalla de inicio --}}
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbPoliza">
                 <thead>
+                    <th class="text-center">RFC</th>
                     <th class="text-center"># Póliza</th>
                     <th class="text-center">Cliente</th>
+                    <th class="text-center">Estatus</th>
                     <th class="text-center">Opciones</th>
                 </thead>
                 <tbody>
                     @foreach ($policy as $policies)
                         <tr id="{{$policies->id}}">
+                            <td>{{$policies->rfc}}</td>
                             <td>{{$policies->policy}}</td>
                             <td>{{$policies->name}}</td>
+                            <td>
+                                <button class="btn btn-info" style="background-color: #{{$policies->color}}; border-color: #{{$policies->color}}" onclick="opcionesEstatus({{$policies->id}},{{$policies->statId}})">{{$policies->statName}}</button>
+                            </td>
                             <td>
                                 <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->policy}})">Ver Recibos</a>
                                 <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" >Editar</a>

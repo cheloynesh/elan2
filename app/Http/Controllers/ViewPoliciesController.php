@@ -13,19 +13,31 @@ use App\Insurance;
 use App\Paymentform;
 use App\Charge;
 use App\Branch;
+use App\Status;
 use DB;
 
 class ViewPoliciesController extends Controller
 {
     public function index ()
     {
-        $policy = DB::table('Policy')
-        ->select('Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))
-        ->join('Client','Client.id','=','Policy.fk_client')->whereNull('Policy.deleted_at')->get();
+        // $policy = DB::table('Policy')
+        // ->select('Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc')
+        // ->join('Client','Client.id','=','Policy.fk_client')->whereNull('Policy.deleted_at')
+        // ->get();
         // dd($policy);
+        $policy = DB::table('Status')
+        ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc')
+        ->join('Policy','Policy.fk_status','=','Status.id')
+        ->join('Client','Client.id','=','Policy.fk_client')
+        ->whereNull('Policy.deleted_at')
+        ->get();
+        // dd($policy[0]->color);
+
 
         // CONCAT(isnull(`affiliate_name`,''),'-',isnull(`model`,''),'-',isnull(`ip`,'')
-
+        $cmbStatus = Status::select('id','name')
+        ->where("fk_section","20")
+        ->pluck('name','id');
         $profile = User::findProfile();
         $perm = Permission::permView($profile,11);
         $perm_btn =Permission::permBtns($profile,11);
@@ -41,7 +53,8 @@ class ViewPoliciesController extends Controller
         }
         else
         {
-            return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms','charges','branches'));
+            return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms',
+            'charges','branches','cmbStatus'));
         }
     }
 
@@ -63,7 +76,7 @@ class ViewPoliciesController extends Controller
 
     }
 
-    public function updateStatus(Request $request){
+    public function paypolicy(Request $request){
         // dd($request->all());
 
         $status = Receipts::where('id',$request->id)->first();
@@ -72,5 +85,13 @@ class ViewPoliciesController extends Controller
         $status->save();
         return response()->json(['status'=>true, "message"=>"Recibo Pagada"]);
 
+    }
+    public function updateStatus(Request $request)
+    {
+        $status = Policy::where('id',$request->id)->first();
+        // dd($status);
+        $status->fk_status = $request->status;
+        $status->save();
+        return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 }

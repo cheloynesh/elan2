@@ -75,12 +75,23 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="" style="display: none" id="etiqueta">Clave de Agente</label>
                                                 <input type="text" id="code" name="code" class="form-control" style="display: none;">
                                                 <br>
                                                 <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="" style="display: none" id="etiqueta2">SubPerfil</label>
+                                                <select name="selectSubProfile" id="selectSubProfile" class="form-select" class="form-control" style="display: none;">
+                                                    <option hidden selected value="">Selecciona una opción</option>
+                                                    <option value="1">Nuevo</option>
+                                                    <option value="2">En crecimiento</option>
+                                                    <option value="3">Consolidado</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

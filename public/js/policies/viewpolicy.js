@@ -135,7 +135,7 @@ function closereceipts(){
 
 function payrecord(id)
 {
-    var route = baseUrlPolizaView+'/updateStatus';
+    var route = baseUrlPolizaView+'/paypolicy';
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         "id":id,
@@ -477,4 +477,42 @@ function eliminarPoliza(id)
     function(){
         alertify.error('Cancelado');
 });
+}
+
+var id_policy = 0;
+
+function opcionesEstatus(policyId,statusId)
+{
+    id_policy=policyId;
+    $("#selectStatus").val(statusId);
+    $("#myEstatusModal").modal('show');
+}
+function actualizarEstatus()
+{
+    var status = $("#selectStatus").val();
+    var route = rutaPolizaView+"/updateStatus";
+    console.log(route);
+    var data = {
+        'id':id_policy,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'status':status
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#myEstatusModal").modal('hide');
+            window.location.reload(true);
+        }
+    })
+}
+function cerrarmodal()
+{
+    $("#myEstatusModal").modal('hide');
+    $("#comentary").val("");
+
 }
