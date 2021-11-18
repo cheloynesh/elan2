@@ -222,7 +222,7 @@
         @endif
     </div>
     <br><br>
-        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbProf">
             <thead>
                 {{-- <th class="text-center">Fecha</th> --}}

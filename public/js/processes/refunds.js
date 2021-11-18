@@ -3,6 +3,17 @@ var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 
 $(document).ready( function () {
+    $('#tbProf thead th').each( function () {
+        var title = $(this).text();
+        if(title=="Opciones")
+        {
+
+        }else
+        {
+            $(this).html( '<label>'+title+'</label><br><input type="text"/>' );
+
+        }
+    } );
     $('#tbProf').DataTable({
         language : {
             "sProcessing":     "Procesando...",
@@ -27,6 +38,20 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
+        },
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
         }
     });
 } );

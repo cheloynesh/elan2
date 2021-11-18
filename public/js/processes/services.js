@@ -3,6 +3,10 @@ var getUrl = window.location;
 var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 
 $(document).ready( function () {
+    $('#tbProf thead th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
     $('#tbProf').DataTable({
         language : {
             "sProcessing":     "Procesando...",
@@ -27,10 +31,50 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
+        },
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
         }
     });
 } );
 
+// $(document).ready(function() {
+//     // Setup - add a text input to each footer cell
+//     $('#example tfoot th').each( function () {
+//         var title = $(this).text();
+//         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+//     } );
+ 
+//     // DataTable
+//     var table = $('#example').DataTable({
+//         initComplete: function () {
+//             // Apply the search
+//             this.api().columns().every( function () {
+//                 var that = this;
+ 
+//                 $( 'input', this.footer() ).on( 'keyup change clear', function () {
+//                     if ( that.search() !== this.value ) {
+//                         that
+//                             .search( this.value )
+//                             .draw();
+//                     }
+//                 } );
+//             } );
+//         }
+//     });
+ 
+// } );
 function guardarServicio()
 {
     var agent = $("#selectAgent").val();

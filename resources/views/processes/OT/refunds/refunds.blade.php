@@ -2,6 +2,13 @@
 <head>
     <title>Reembolsos | Elan</title>
 </head>
+<style>
+    thead input {
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+</style>
 @section('content')
     <div class="text-center"><h1>Reembolsos</h1></div>
         {{-- modal| --}}
@@ -125,8 +132,8 @@
         @endif
     </div>
     <br><br>
-        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-        <table class="table table-striped table-hover text-center" id="tbProf">
+        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
+        <table class=" table-striped table-hover text-center" id="tbProf">
             <thead>
                 <th class="text-center">Agente</th>
                 <th class="text-center">Folio</th>

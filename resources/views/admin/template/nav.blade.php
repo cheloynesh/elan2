@@ -17,7 +17,7 @@
         <ul class="navbar-nav left-side-nav" id="accordion">
             @foreach ($secciones as $seccion)
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{$seccion->description}}">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{$seccion->description}}" style="cursor: pointer;">
                         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#multi_menu{{$seccion->id}}">
                         <i class="{{$seccion->icon}}" ></i>
                             <span class="nav-link-text">{{$seccion->section}}</span>
