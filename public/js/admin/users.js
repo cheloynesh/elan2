@@ -4,6 +4,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 
 $(document).ready( function () {
     $('#tbUsers').DataTable({
+        
         language : {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -84,6 +85,7 @@ function editarUsuario(id)
         dataType:'json',
         success:function(result)
         {
+            console.log(result);
             $("#email1").val(result.data.email);
             $("#password1").val(result.data.password);
             $("#name1").val(result.data.name);
@@ -193,6 +195,10 @@ function showimp()
         document.getElementById("etiqueta").style.display = "block";
         document.getElementById("code").hidden = false;
         document.getElementById("code").style.display = "block";
+        document.getElementById("etiqueta3").hidden = false;
+        document.getElementById("etiqueta3").style.display = "block";
+        document.getElementById("insurance").hidden = false;
+        document.getElementById("insurance").style.display = "block";
         document.getElementById("agregarcol").hidden = false;
         document.getElementById("agregarcol").style.display = "block";
         document.getElementById("tbcodes").hidden = false;
@@ -208,7 +214,11 @@ function showimp()
     else
     {
         document.getElementById("etiqueta").hidden = true;
+        document.getElementById("etiqueta2").hidden = true;
+        document.getElementById("etiqueta3").hidden = true;
         document.getElementById("code").hidden = true;
+        document.getElementById("insurance").hidden = true;
+        document.getElementById("selectSubProfile").hidden = true;
         document.getElementById("agregarcol").hidden = true;
         document.getElementById("tbcodes").hidden = true;
         document.getElementById("tbody-codigo").hidden = true;
@@ -217,25 +227,39 @@ function showimp()
 }
 var array = [];
 var codigos=[];
+var codigos=[];
 var codigoseditar=[];
 function agregarcodigo()
 {
     var codigo = $("#code").val();
-    var table = $("#tbody-codigo");
-    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger" onclick="delete_code(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
-    table.append(str_row);
-    $("#code").val("");
-    codigos.push({
-        'id':array.length+1,
-        'code':codigo
-    });
+    var aseguradora = $("#insurance").val();
+    if(codigo == null || codigo=="" || aseguradora==null || aseguradora=="")
+    {
+        alert("Los campos no deben de quedar vacios.");
+        return false;
+    }else{
+
+        var table = $("#tbody-codigo");
+        var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><input type=text name="aseguradora[]" value="'+aseguradora+'"/></td><td><button type="button" class="btn btn-danger" onclick="delete_code(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
+        table.append(str_row);
+        $("#code").val("");
+        $("#insurance").val("");
+        codigos.push({
+            'id':array.length+1,
+            'code':codigo,
+            'insurance':aseguradora
+        });
+    }
 }
 function agregarcodigo1(codigo)
 {
     if(codigo == undefined)
         codigo = $("#code1").val();
+
+    var aseguradora = $("#insurance1").val();
+
     var table = $("#tbody-codigo1");
-    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><button type="button" class="btn btn-danger"'+
+    var str_row = '<tr id = "'+parseFloat(array.length+1)+'"><td><input type=text name="codigo[]" value="'+codigo+'"/></td><td><input type=text name="aseguradora[]" value="'+aseguradora+'"/></td><td><button type="button" class="btn btn-danger"'+
     'onclick="delete_code_edit(this)"><i class="fa fa-trash mr-2"></i></button></td></tr>';
     table.append(str_row);
     $("#code1").val("");
@@ -283,6 +307,14 @@ function showimpEdit()
         document.getElementById("etiqueta1").style.display = "block";
         document.getElementById("code1").hidden = false;
         document.getElementById("code1").style.display = "block";
+        document.getElementById("etiqueta3edit").hidden = false;
+        document.getElementById("etiqueta3edit").style.display = "block";
+        document.getElementById("insurance1").hidden = false;
+        document.getElementById("insurance1").style.display = "block";
+        document.getElementById("etiqueta2edit").hidden = false;
+        document.getElementById("etiqueta2edit").style.display = "block";
+        document.getElementById("selectSubProfileedit").hidden = false;
+        document.getElementById("selectSubProfileedit").style.display = "block";
         document.getElementById("agregarcol1").hidden = false;
         document.getElementById("agregarcol1").style.display = "block";
         document.getElementById("tbcodes1").hidden = false;
@@ -294,7 +326,11 @@ function showimpEdit()
     else
     {
         document.getElementById("etiqueta1").hidden = true;
+        document.getElementById("etiqueta2edit").hidden = true;
+        document.getElementById("etiqueta3edit").hidden = true;
         document.getElementById("code1").hidden = true;
+        document.getElementById("insurance1").hidden = true;
+        document.getElementById("selectSubProfileedit").hidden = true;
         document.getElementById("agregarcol1").hidden = true;
         document.getElementById("tbcodes1").hidden = true;
         document.getElementById("tbody-codigo1").hidden = true;

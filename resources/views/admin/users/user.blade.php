@@ -2,6 +2,13 @@
 <head>
     <title>Usuarios | Elan</title>
 </head>
+<style>
+        thead input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
 @section('content')
     <div class="text-center"><h1>Catálogo de Usuarios</h1></div>
     <div style="max-width: 1200px; margin: auto;">
@@ -75,7 +82,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="" style="display: none" id="etiqueta">Clave de Agente</label>
                                                 <input type="text" id="code" name="code" class="form-control" style="display: none;">
@@ -83,7 +90,20 @@
                                                 <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="" style="display: none" id="etiqueta3">Aseguradora</label>
+                                                <select name="insurance" id="insurance" class="form-select" style="display: none;">
+                                                    <option hidden selected value="">Selecciona una opción</option>
+                                                    @foreach ($insurances as $id => $insurance)
+                                                        <option value='{{ $id }}'>{{ $insurance }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <br>
+                                                <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="" style="display: none" id="etiqueta2">SubPerfil</label>
                                                 <select name="selectSubProfile" id="selectSubProfile" class="form-select" class="form-control" style="display: none;">
@@ -101,6 +121,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Clave de agente</th>
+                                                    <th class="text-center">Aseguradora</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tbody-codigo"></tbody>
@@ -128,7 +149,7 @@
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbUsers">
+            <table class=" table-striped table-hover text-center" id="tbUsers">
                 <thead>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>

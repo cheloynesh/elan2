@@ -4,7 +4,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title" id="gridModalLabek">Registro de Usuarios</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancelarUsuario()"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="" style="display: none" id="etiqueta1">Clave de agente</label>
                                         <input type="text" id="code1" name="code1" class="form-control" style="display: none;">
@@ -74,7 +74,15 @@
                                         <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="" style="display: none" id="etiqueta3edit">Aseguradora</label>
+                                        <input type="text" id="insurance1" name="insurance1" class="form-control" style="display: none;">
+                                        <br>
+                                        <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="" style="display: none" id="etiqueta2edit">SubPerfil</label>
                                         <select name="selectSubProfile" id="selectSubProfileedit" class="form-select" class="form-control" style="display: none;">
@@ -92,6 +100,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">Clave de agente</th>
+                                            <th class="text-center">Aseguradora</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody-codigo1"></tbody>

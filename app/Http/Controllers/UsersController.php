@@ -7,12 +7,14 @@ use App\User;
 use App\Profile;
 use App\Permission;
 use App\AgentCode;
+use App\Insurance;
 
 class UsersController extends Controller
 {
     public function index(){
         $users = User::get();
         $profiles = Profile::pluck('name','id');
+        $insurances = Insurance::pluck('name','name');
         $profile = User::findProfile();
         $perm = Permission::permView($profile,3);
         $perm_btn =Permission::permBtns($profile,3);
@@ -23,7 +25,7 @@ class UsersController extends Controller
         }
         else
         {
-            return view('admin.users.user', compact('profiles','users','perm_btn'));
+            return view('admin.users.user', compact('profiles','users','perm_btn','insurances'));
         }
 
     }
@@ -50,14 +52,20 @@ class UsersController extends Controller
         $user->save();
         if($request->codes != null)
         {
-            foreach($request->codes as $code)
+            if($request->insurrance != null)
             {
-                $agentCode = new AgentCode;
-                $agentCode->fk_user = $user->id;
-                $agentCode->code = $code["code"];
-                $agentCode->save();
+                foreach($request->codes as $code)
+                {
+                    $agentCode = new AgentCode;
+                    $agentCode->fk_user = $user->id;
+                    $agentCode->code = $code["code"];
+                    $agentCode->fk_insurance = $code['insurance'];
+                    $agentCode->save();
+                }
             }
+
         }
+
         return response()->json(['status'=>true, 'message'=>'Usuario Creado']);
     }
 
