@@ -5,7 +5,7 @@ var baseUrlInicial = getUrlInicial .protocol + "//" + getUrlInicial.host + getUr
 $(document).ready( function () {
     $('#tbProf thead th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
     } );
     $('#tbProf').DataTable({
         language : {
@@ -36,8 +36,8 @@ $(document).ready( function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
                     if ( that.search() !== this.value ) {
                         that
                             .search( this.value )
