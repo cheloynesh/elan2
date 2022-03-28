@@ -51,7 +51,7 @@ $(document).ready( function () {
 
 function guardarInicial(id)
 {
-    alert(id);
+    // alert(id);
     var onoff = document.getElementById("onoff");
     var checked = onoff.checked;
     var onoffAsegurado = document.getElementById("onoffAsegurado");
@@ -66,8 +66,6 @@ function guardarInicial(id)
     var insured = null;
     if(checked)
     {
-        // alert("entre a persona fisica");
-        // alert(checkedAsegurado);
         name = $("#name").val();
         firstname = $("#firstname").val();
         lastname = $("#lastname").val();
@@ -75,18 +73,15 @@ function guardarInicial(id)
         type = 0;
         if(!checkedAsegurado)
         {
-            // alert("entre a no igual al contratante");
             insured = $("#insured").val();
         }
         else
         {
-            // alert("entre a igual al contratante");
             insured = name + " " + firstname + " " + lastname;
         }
     }
     else
     {
-        // alert("entre a persona moral");
         name = $("#business_name").val();
         rfc = $("#business_rfc").val();
         type = 1;
@@ -110,6 +105,9 @@ function guardarInicial(id)
     var paymentForm = $("#selectPaymentform").val();
     var currency = $("#selectCurrency").val();
     var charge = $("#selectCharge").val();
+    var GMP = $("#SelectGMP").val();
+    var VP = $("#SelectVP").val();
+    var PAuto = $("#SelectPAuto").val();
     var route = "initial";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -130,7 +128,11 @@ function guardarInicial(id)
         'paymentForm':paymentForm,
         'currency':currency,
         'charge':charge,
+        'GMP':GMP,
+        'VP':VP,
+        "PAuto":PAuto
     };
+    console.log(data);
     jQuery.ajax({
         url:route,
         type:"post",
@@ -179,6 +181,30 @@ function editarInicial(id)
                 $("#business_rfc1").val(result.data.rfc);
 
             }
+            if(result.data.fk_insurance == "2" && result.data.fk_branch=="1")
+            {
+                $("#SelectGMP1").val(result.data.id_GMP);
+                document.getElementById("planes_med_1").hidden=false;
+                document.getElementById("prod_vid_1").hidden=true;
+            }
+            else if(result.data.fk_insurance == "2" && result.data.fk_branch=="7")
+            {
+                $("#SelectVP1").val(result.data.id_VP);
+                document.getElementById("planes_med_1").hidden=true;
+                document.getElementById("prod_vid_1").hidden=false;
+            }else if(result.data.fk_branch=="5"){
+
+                $("#SelectPAuto1").val(result.data.id_auto);
+                document.getElementById("planes_med_1").hidden=true;
+                document.getElementById("prod_vid_1").hidden=true;
+                document.getElementById("planes_auto_1").hidden=false;
+            }
+            else{
+                document.getElementById("planes_med_1").hidden=true;
+                document.getElementById("prod_vid_1").hidden=true;
+                document.getElementById("planes_auto_1").hidden=true;
+
+            }
            $("#promoter1").val(result.data.promoter_date);
            $("#system1").val(result.data.system_date);
            $("#folio1").val(result.data.folio);
@@ -193,6 +219,7 @@ function editarInicial(id)
         }
     })
 }
+
 function cancelarEditar()
 {
     // alert(tipo);
@@ -219,14 +246,14 @@ function actualizarInicial()
     var agent = $("#selectAgent1").val();
     if(tipo==0)
     {
-        alert('entre');
+        // alert('entre');
         var name = $("#name1").val();
         var firstname = $("#firstname1").val();
         var lastname = $("#lastname1").val();
         var rfc = $("#rfc1").val();
 
     }else{
-        alert('entre');
+        // alert('entre');
         var name = $("#business_name1").val();
         var rfc = $("#business_rfc1").val();
         console.log(name,rfc);
@@ -241,6 +268,9 @@ function actualizarInicial()
     var paymentForm = $("#selectPaymentform1").val();
     var currency = $("#selectCurrency1").val();
     var charge = $("#selectCharge1").val();
+    var GMP = $("#SelectGMP1").val();
+    var VP = $("#SelectVP1").val();
+    var PAuto = $("#SelectPAuto1").val();
 
     var route = "initial/"+idupdate;
     var data = {
@@ -260,7 +290,10 @@ function actualizarInicial()
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,
-        'charge':charge
+        'charge':charge,
+        'GMP':GMP,
+        'VP':VP,
+        "PAuto":PAuto
     };
     jQuery.ajax({
         url:route,
@@ -307,19 +340,32 @@ var id_initial = 0;
 function opcionesEstatus(initialId,statusId,)
 {
     id_initial=initialId;
-    $("#selectStatus").val(statusId);
-    $("#myEstatusModal").modal('show');
+    var route = baseUrlInicial+'/GetinfoStatus/'+id_initial;
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result){
+            console.log(result);
+            $("#selectStatus").val(statusId);
+            $("#commentary").val(result.data.commentary);
+            $("#myEstatusModal").modal('show');
+        }
+    })
 }
-
 function actualizarEstatus()
 {
     var status = $("#selectStatus").val();
+    var sub_status = $("#selectSubEstatus").val();
+    var commentary = $("#commentary").val();
     var route = baseUrlInicial+"/updateStatus";
     console.log(route);
     var data = {
         'id':id_initial,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'status':status
+        'status':status,
+        "sub_status":sub_status,
+        "commentary":commentary
     };
     jQuery.ajax({
         url:route,
@@ -373,5 +419,132 @@ function mostrarDivAsegurado()
     {
 
         asegurado.style.display = "none"
+    }
+}
+function Subestatus()
+{
+    var id_status= $("#selectStatus").val();
+    if(id_status==3)
+    {
+        document.getElementById("sub_status").hidden=false;
+        document.getElementById("sub_status").style.display = "block";
+
+        // alert(id_status);
+    }else{
+        document.getElementById("sub_status").hidden=true;
+        document.getElementById("commentary").disabled=false;
+
+        // alert("todo bien");
+    }
+}
+
+function mostrartext(){
+    var id_subestatus= document.getElementById("selectSubEstatus");
+    var valor = id_subestatus.value;
+    // alert(valor);
+    
+    if(valor == "1")
+    {
+        $("#commentary").val(valor);
+        document.getElementById("commentary").disabled=false;
+    }else{
+        $("#commentary").val(valor);
+        document.getElementById("commentary").disabled=true;
+        
+    }
+}
+function mostrarinput(){
+    var id_insurance= document.getElementById("selectInsurance");
+    var id_branch= document.getElementById("selectBranch");
+    var valor1 = id_insurance.value;
+    var valor2 = id_branch.value;
+    // alert(valor1);
+    // alert(valor2);
+    if(valor1=='2' && valor2==1)
+    {
+        // alert("Gastos Medicos Mayores");
+        document.getElementById("planes_med").hidden=false;
+        document.getElementById("prod_vid").hidden=true;
+    }
+    else if(valor1=='2'&& valor2=='7')
+    {
+        // alert("Planes de vida");
+        document.getElementById("planes_med").hidden=true;
+        document.getElementById("prod_vid").hidden=false;
+    }else if(valor2==5){
+        // alert("Sin input nuevo");
+        document.getElementById("planes_med").hidden=true;
+        document.getElementById("prod_vid").hidden=true;
+        document.getElementById("planes_auto").hidden=false;
+    }else{
+        document.getElementById("planes_med").hidden=true;
+        document.getElementById("prod_vid").hidden=true;
+        document.getElementById("planes_auto").hidden=true;
+    }
+
+}
+
+function ocultarinput()
+{
+    var id_insurance= document.getElementById("selectInsurance");
+    var valor =id_insurance.value;
+
+    if(valor=="2")
+    {
+        mostrarinput();
+    }else{
+        document.getElementById("planes_med").hidden=true;
+        document.getElementById("prod_vid").hidden=true;
+        document.getElementById("planes_auto").hidden=true;
+    }
+}
+
+function mostrarinputUp(){
+    var id_insurance= document.getElementById("selectInsurance1");
+    var id_branch= document.getElementById("selectBranch1");
+    var valor1 = id_insurance.value;
+    var valor2 = id_branch.value;
+    // alert(valor1);
+    // alert(valor2);
+    if(valor1=='2' && valor2==1)
+    {
+        // alert("Gastos Medicos Mayores");
+        document.getElementById("planes_med_1").hidden=false;
+        document.getElementById("prod_vid_1").hidden=true;
+    }
+    else if(valor1=='2'&& valor2=='7')
+    {
+        // alert("Planes de vida");
+        document.getElementById("planes_med_1").hidden=true;
+        document.getElementById("prod_vid_1").hidden=false;
+    }
+    else if(valor2==5)
+    {
+        document.getElementById("planes_med_1").hidden=true;
+        document.getElementById("prod_vid_1").hidden=true;
+        document.getElementById("planes_auto_1").hidden=false;
+    }else{
+        // alert("Sin input nuevo");
+        document.getElementById("planes_med_1").hidden=true;
+        document.getElementById("prod_vid_1").hidden=true;
+        document.getElementById("planes_auto_1").hidden=true;
+        
+    }
+
+}
+
+function ocultarinputUp()
+{
+    var id_insurance= document.getElementById("selectInsurance1");
+    var valor =id_insurance.value;
+
+    if(valor=="2")
+    {
+        mostrarinputUp();
+    }else{
+        document.getElementById("planes_med_1").hidden=true;
+        document.getElementById("prod_vid_1").hidden=true;
+        document.getElementById("planes_auto_1").hidden=true;
+
     }
 }

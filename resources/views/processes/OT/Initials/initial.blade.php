@@ -120,7 +120,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Aseguradora:</label>
-                                    <select name="selectInsurance" id="selectInsurance" class="form-select">
+                                    <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="ocultarinput()">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($insurances as $id => $insurance)
                                             <option value='{{ $id }}'>{{ $insurance }}</option>
@@ -131,7 +131,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Ramo:</label>
-                                    <select name="selectBranch" id="selectBranch" class="form-select">
+                                    <select name="selectBranch" id="selectBranch" class="form-select" onchange="mostrarinput()">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($branches as $id => $branch)
                                             <option value='{{ $id }}'>{{ $branch }}</option>
@@ -139,6 +139,53 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-4" hidden id="planes_med">
+                                <div class="form-group">
+                                    <label for="">Planes Gastos Medicos</label>
+                                    <select name="SelectGMP" id="SelectGMP" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
+                                        <option value="1">Basico</option>
+                                        <option value="2">Practico</option>
+                                        <option value="3">Mas</option>
+                                        <option value="4">Ejecutivo</option>
+                                        <option value="5">Internacional</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" hidden id="prod_vid">
+                                <div class="form-group">
+                                    <label for="">Productos de Vida</label>
+                                    <select name="SelectVP" id="SelectVP" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
+                                        <option value="1">METALIFE-Retiro</option>
+                                        <option value="2">METALIFE-Mujer</option>
+                                        <option value="3">METALIFE-Educacion</option>
+                                        <option value="4">METALIFE-Futuro</option>
+                                        <option value="5">TempoLife</option>
+                                        <option value="6">Totalife</option>
+                                        <option value="7">Perfectlife</option>
+                                        <option value="8">Educalife</option>
+                                        <option value="9">Horizonte</option>
+                                        <option value="10">Flexible</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" hidden id="planes_auto">
+                                <div class="form-group">
+                                    <label for="">Planes Autos</label>
+                                    <select name="SelectPAuto" id="SelectPAuto" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
+                                        <option value="1">Flotilla</option>
+                                        <option value="2">Autos</option>
+                                        <option value="3">Motos</option>
+                                        <option value="4">Eq. Pesado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Tipo Solicitud:</label>
@@ -150,16 +197,13 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Folio</label>
                                     <input type="text" id="folio" name="folio" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">PNA</label>
                                     <input type="text" id="pna" name="pna" class="form-control">

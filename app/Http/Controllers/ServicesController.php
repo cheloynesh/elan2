@@ -95,9 +95,17 @@ class ServicesController extends Controller
     public function updateStatus(Request $request)
     {
         $status = Service::where('id',$request->id)->first();
-        // dd($status);
         $status->fk_status = $request->status;
+        // dd($status);
+        $status->commentary=$request->commentary;
         $status->save();
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+    }
+
+    public function GetinfoStatus($id)
+    {
+        $service = Service::where('id',$id)->first();
+        // dd($service);
+        return response()->json(['status'=>true, "data"=>$service]);
     }
 }

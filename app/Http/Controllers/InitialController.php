@@ -89,6 +89,9 @@ class InitialController extends Controller
         $initial->fk_payment_form = $request->paymentForm;
         $initial->fk_currency = $request->currency;
         $initial->fk_charge = $request->charge;
+        $initial->id_GMP=$request->GMP;
+        $initial->id_VP=$request->VP;
+        $initial->id_auto = $request->PAuto;
         $initial->save();
         return response()->json(["status"=>true, "message"=>"Inicial creada"]);
     }
@@ -110,7 +113,10 @@ class InitialController extends Controller
         'pna' => $request->pna,
         'fk_payment_form' => $request->paymentForm,
         'fk_currency' => $request->currency,
-        'fk_charge' => $request->charge]);
+        'fk_charge' => $request->charge,
+        'id_GMP'=>$request->GMP,
+        'id_VP'=>$request->id_VP,
+        'id_auto'=>$request->PAuto]);
         return response()->json(['status'=>true, 'message'=>"Inicial actualizada"]);
     }
 
@@ -123,10 +129,20 @@ class InitialController extends Controller
 
     public function updateStatus(Request $request)
     {
+        // dd($request->all());
         $status = Initial::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
+        if($request->sub_status==1)
+        {
+            $status->commentary=$request->commentary;
+
+        }else{
+            $status->commentary=$request->sub_status;
+
+        }
         $status->save();
+        
         if($request->status == 4)
         {
             $client = new Client;
@@ -156,5 +172,12 @@ class InitialController extends Controller
             return response()->json(["status"=>true, "message"=>"Cliente Emitido"]);
         }
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+    }
+
+    public function GetinfoStatus($id)
+    {
+        $initial = Initial::where('id',$id)->first();
+        // dd($initial->commentary);
+        return response()->json(['status'=>true, "data"=>$initial]);
     }
 }

@@ -198,19 +198,31 @@ var id_service = 0;
 function opcionesEstatus(serviceId,statusId)
 {
     id_service=serviceId;
-    $("#selectStatus").val(statusId);
-    $("#myEstatusModal").modal('show');
+    var route = baseUrl+'/GetinfoStatus/'+id_service;
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result){
+            $("#selectStatus").val(statusId);
+            $("#commentary").val(result.data.commentary);
+            $("#myEstatusModal").modal('show');
+        }
+    })
+
 }
 
 function actualizarEstatus()
 {
     var status = $("#selectStatus").val();
+    var commentary = $("#commentary").val();
     var route = baseUrl+"/updateStatus";
     console.log(route);
     var data = {
         'id':id_service,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'status':status
+        'status':status,
+        "commentary":commentary
     };
     jQuery.ajax({
         url:route,

@@ -93,7 +93,13 @@ class RefundsController extends Controller
         $status = Refund::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
+        $status->commentary=$request->commentary;
         $status->save();
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+    }
+
+    public function GetinfoStatus($id){
+        $refund=Refund::where('id',$id)->first();
+        return response()->json(['status'=>true, "data"=>$refund]);
     }
 }
