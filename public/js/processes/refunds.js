@@ -5,14 +5,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 $(document).ready( function () {
     $('#tbProf thead th').each( function () {
         var title = $(this).text();
-        if(title=="Opciones")
-        {
-
-        }else
-        {
-            $(this).html( '<label>'+title+'</label><br><input type="text"/>' );
-
-        }
+        $(this).html( '<input type="text" class="form-control" placeholder="'+title+'" />' );
     } );
     $('#tbProf').DataTable({
         language : {
@@ -43,8 +36,8 @@ $(document).ready( function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
                     if ( that.search() !== this.value ) {
                         that
                             .search( this.value )

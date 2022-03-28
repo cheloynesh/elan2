@@ -5,7 +5,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 $(document).ready( function () {
     $('#tbProf thead th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        $(this).html( '<input type="text" class="form-control" placeholder="'+title+'" />' );
     } );
     $('#tbProf').DataTable({
         language : {
@@ -36,8 +36,8 @@ $(document).ready( function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
                     if ( that.search() !== this.value ) {
                         that
                             .search( this.value )
@@ -55,14 +55,14 @@ $(document).ready( function () {
 //         var title = $(this).text();
 //         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
 //     } );
- 
+
 //     // DataTable
 //     var table = $('#example').DataTable({
 //         initComplete: function () {
 //             // Apply the search
 //             this.api().columns().every( function () {
 //                 var that = this;
- 
+
 //                 $( 'input', this.footer() ).on( 'keyup change clear', function () {
 //                     if ( that.search() !== this.value ) {
 //                         that
@@ -73,7 +73,7 @@ $(document).ready( function () {
 //             } );
 //         }
 //     });
- 
+
 // } );
 function guardarServicio()
 {
