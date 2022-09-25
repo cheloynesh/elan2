@@ -1,6 +1,6 @@
-var ruta = window.location;
-var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
+var getUrlBranch = window.location;
+var baseUrlBranch = getUrlBranch .protocol + "//" + getUrlBranch.host + "/admin/branch/branches";
+// var baseUrlBranch = getUrlBranch .protocol + "//" + getUrlBranch.host + getUrlBranch.pathname;
 
 $(document).ready( function () {
     $('#tbProf').DataTable({
@@ -35,7 +35,7 @@ function guardarRamo()
 {
     var name = $("#name").val();
     var days = $("#select_days").val();
-    var route = "branches";
+    var route = baseUrlBranch;
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'name':name,
@@ -59,7 +59,7 @@ function editarRamo(id)
 {
     idupdate=id;
 
-    var route = baseUrl + '/GetInfo/'+ id;
+    var route = baseUrlBranch + '/GetInfo/'+ id;
 
     console.log(route);
     jQuery.ajax({
@@ -83,7 +83,7 @@ function actualizarRamo(id)
 {
     var name = $("#name1").val();
     var days = $("#select_days1").val();
-    var route = "branches/"+idupdate;
+    var route = baseUrlBranch + "/" + idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -106,7 +106,7 @@ function actualizarRamo(id)
 
 function eliminarRamo(id)
 {
-    var route = "branches/"+id;
+    var route = baseUrlBranch + "/" + id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),

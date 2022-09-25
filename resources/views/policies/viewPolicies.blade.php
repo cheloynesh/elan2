@@ -282,6 +282,8 @@
                     <th class="text-center">RFC</th>
                     <th class="text-center"># Póliza</th>
                     <th class="text-center">Cliente</th>
+                    <th class="text-center">Inicio Vigencia</th>
+                    <th class="text-center">Fin Vigencia</th>
                     <th class="text-center">Estatus</th>
                     <th class="text-center">Opciones</th>
                 </thead>
@@ -291,6 +293,8 @@
                             <td>{{$policies->rfc}}</td>
                             <td>{{$policies->policy}}</td>
                             <td>{{$policies->name}}</td>
+                            <td>{{$policies->initial_date}}</td>
+                            <td>{{$policies->end_date}}</td>
                             <td>
                                 <button class="btn btn-info" style="background-color: #{{$policies->color}}; border-color: #{{$policies->color}}" onclick="opcionesEstatus({{$policies->id}},{{$policies->statId}})">{{$policies->statName}}</button>
                             </td>

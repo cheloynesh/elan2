@@ -72,10 +72,20 @@ class UsersController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
-        $user = User::where('id',$request->id)
-        ->update(['email'=>$request->email,'password'=>bcrypt($request->password),
-        'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
-        'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
+        if($request->password == null)
+        {
+            $user = User::where('id',$request->id)
+            ->update(['email'=>$request->email,
+            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
+            'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
+        }
+        else
+        {
+            $user = User::where('id',$request->id)
+            ->update(['email'=>$request->email,'password'=>bcrypt($request->password),
+            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
+            'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
+        }
         $codes_edit = AgentCode::where('fk_user', $request->id)->get();
         // dd($codes_edit);
         foreach($codes_edit as $codes)

@@ -1,5 +1,6 @@
-var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
+var getUrlPlan = window.location;
+// var baseUrlPlan = getUrlPlan .protocol + "//" + getUrlPlan.host + getUrlPlan.pathname;
+var baseUrlPlan = getUrlPlan .protocol + "//" + getUrlPlan.host + "/admin/plan/plans";
 
 $(document).ready( function () {
     $('#tbProf').DataTable({
@@ -30,10 +31,10 @@ $(document).ready( function () {
     });
 } );
 
-function guardarAseguradora()
+function guardarPlan()
 {
     var name = $("#name").val();
-    var route = "insurances";
+    var route = baseUrlPlan;
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         'name':name
@@ -52,12 +53,13 @@ function guardarAseguradora()
     })
 }
 var idupdate = 0;
-function editarAseguradora(id)
+function editarPlan(id)
 {
     idupdate=id;
 
-    var route = baseUrl + '/GetInfo/'+ id;
+    var route = baseUrlPlan + '/GetInfo/'+ id;
 
+    console.log(route);
     jQuery.ajax({
         url:route,
         type:'get',
@@ -74,14 +76,14 @@ function cancelarEditar()
     $("#name1").val("");
     $("#myModaledit").modal('hide');
 }
-function actualizarAseguradora()
+function actualizarPlan(id)
 {
     var name = $("#name1").val();
-    var route = "insurances/"+idupdate;
+    var route = baseUrlPlan + "/" + idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'name':name
+        'name':name,
     };
     jQuery.ajax({
         url:route,
@@ -97,14 +99,14 @@ function actualizarAseguradora()
     })
 }
 
-function eliminarAseguradora(id)
+function eliminarPlan(id)
 {
-    var route = "insurances/"+id;
+    var route = baseUrlPlan + "/" + id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Eliminar Aseguradora","¿Desea borrar a la aseguradora?",
+    alertify.confirm("Eliminar Plan","¿Desea borrar el plan?",
         function(){
             jQuery.ajax({
                 url:route,

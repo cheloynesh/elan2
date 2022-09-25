@@ -62,6 +62,10 @@ Route::get('admin/currency/currencies/GetInfo/{id}','CurrencyController@GetInfo'
 Route::resource('admin/branch/branches', 'BranchController');
 Route::get('admin/branch/branches/GetInfo/{id}','BranchController@GetInfo')->name('branches.GetInfo');
 
+// Plan
+Route::resource('admin/plan/plans', 'PlansController');
+Route::get('admin/plan/plans/GetInfo/{id}','PlansController@GetInfo')->name('plans.GetInfo');
+
 // Cálculo de Cobro
 Route::resource('admin/charge/charges', 'ChargeController');
 Route::get('admin/charge/charges/GetInfo/{id}','ChargeController@GetInfo')->name('charges.GetInfo');

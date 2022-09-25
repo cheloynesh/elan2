@@ -22,7 +22,7 @@ class ServicesController extends Controller
         ->join('Insurance','Insurance.id','=','Services.fk_insurance')
         ->join('Branch','Branch.id','=','Services.fk_branch')
         ->join('users','users.id','=','Services.fk_agent')
-        ->get();
+        ->whereNull('Services.deleted_at')->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $insurances = Insurance::pluck('name','id');
