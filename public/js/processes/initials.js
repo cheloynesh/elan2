@@ -112,7 +112,7 @@ function guardarInicial(id)
     var folio = $("#folio").val();
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
-    var branch = $("#selectPlan").val();
+    var plan = $("#selectPlan").val();
     var application = $("#selectAppli").val();
     var pna = $("#pna").val();
     var paymentForm = $("#selectPaymentform").val();
@@ -260,7 +260,7 @@ function actualizarInicial()
     var folio = $("#folio1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
-    var branch = $("#selectPlan1").val();
+    var plan = $("#selectPlan1").val();
     var application = $("#selectAppli1").val();
     var pna = $("#pna1").val();
     var paymentForm = $("#selectPaymentform1").val();
@@ -494,12 +494,44 @@ function llenarPlanes()
     })
 }
 
-function llenarRamos1()
-{
+function llenarRamos1(){
+    var insurance = $("#selectInsurance1").val();
 
+    var route = baseUrlInicial + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch1");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }
 
 function llenarPlanes1()
 {
+    var insurance = $("#selectInsurance1").val();
+    var branch = $("#selectBranch1").val();
 
+    var route = baseUrlInicial + '/getPlans/'+ insurance + '/' + branch;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectPlan1");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }
