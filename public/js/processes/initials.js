@@ -49,6 +49,18 @@ $(document).ready( function () {
     });
 } );
 
+function actualizarSelect(result, select)
+{
+    var assignPlan = $(select);
+
+    $(select).empty();
+    if(result.length == 0) assignPlan.append('<option selected  value="0">No hay asignaciones</option>');
+    else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
+    result.forEach( function(valor, indice, array) {
+        assignPlan.append("<option value='" + valor.id + "'>" + valor.name + "</option>");
+    });
+}
+
 function guardarInicial(id)
 {
     // alert(id);
@@ -100,6 +112,7 @@ function guardarInicial(id)
     var folio = $("#folio").val();
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
+    var branch = $("#selectPlan").val();
     var application = $("#selectAppli").val();
     var pna = $("#pna").val();
     var paymentForm = $("#selectPaymentform").val();
@@ -123,6 +136,7 @@ function guardarInicial(id)
         'folio':folio,
         'insurance':insurance,
         'branch':branch,
+        'plan':plan,
         'application':application,
         'pna':pna,
         'paymentForm':paymentForm,
@@ -181,41 +195,24 @@ function editarInicial(id)
                 $("#business_rfc1").val(result.data.rfc);
 
             }
-            if(result.data.fk_insurance == "2" && result.data.fk_branch=="1")
-            {
-                $("#SelectGMP1").val(result.data.id_GMP);
-                document.getElementById("planes_med_1").hidden=false;
-                document.getElementById("prod_vid_1").hidden=true;
-            }
-            else if(result.data.fk_insurance == "2" && result.data.fk_branch=="7")
-            {
-                $("#SelectVP1").val(result.data.id_VP);
-                document.getElementById("planes_med_1").hidden=true;
-                document.getElementById("prod_vid_1").hidden=false;
-            }else if(result.data.fk_branch=="5"){
+            console.log(result);
+            actualizarSelect(result.branches,"#selectBranch1");
+            actualizarSelect(result.plans,"#selectPlan1");
 
-                $("#SelectPAuto1").val(result.data.id_auto);
-                document.getElementById("planes_med_1").hidden=true;
-                document.getElementById("prod_vid_1").hidden=true;
-                document.getElementById("planes_auto_1").hidden=false;
-            }
-            else{
-                document.getElementById("planes_med_1").hidden=true;
-                document.getElementById("prod_vid_1").hidden=true;
-                document.getElementById("planes_auto_1").hidden=true;
+            $("#selectBranch1").val(result.data.fk_branch);
+            $("#selectPlan1").val(result.data.fk_plan);
 
-            }
-           $("#promoter1").val(result.data.promoter_date);
-           $("#system1").val(result.data.system_date);
-           $("#folio1").val(result.data.folio);
-           $("#selectInsurance1").val(result.data.fk_insurance);
-           $("#selectBranch1").val(result.data.fk_branch);
-           $("#selectAppli1").val(result.data.fk_application);
-           $("#pna1").val(result.data.pna);
-           $("#selectPaymentform1").val(result.data.fk_payment_form);
-           $("#selectCurrency1").val(result.data.fk_currency);
-           $("#selectCharge1").val(result.data.fk_charge);
-           $("#myModaledit").modal('show');
+            $("#promoter1").val(result.data.promoter_date);
+            $("#system1").val(result.data.system_date);
+            $("#folio1").val(result.data.folio);
+            $("#selectInsurance1").val(result.data.fk_insurance);
+            $("#selectBranch1").val(result.data.fk_branch);
+            $("#selectAppli1").val(result.data.fk_application);
+            $("#pna1").val(result.data.pna);
+            $("#selectPaymentform1").val(result.data.fk_payment_form);
+            $("#selectCurrency1").val(result.data.fk_currency);
+            $("#selectCharge1").val(result.data.fk_charge);
+            $("#myModaledit").modal('show');
         }
     })
 }
@@ -263,6 +260,7 @@ function actualizarInicial()
     var folio = $("#folio1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
+    var branch = $("#selectPlan1").val();
     var application = $("#selectAppli1").val();
     var pna = $("#pna1").val();
     var paymentForm = $("#selectPaymentform1").val();
@@ -286,6 +284,7 @@ function actualizarInicial()
         'folio':folio,
         'insurance':insurance,
         'branch':branch,
+        'plan':plan,
         'application':application,
         'pna':pna,
         'paymentForm':paymentForm,
@@ -442,7 +441,7 @@ function mostrartext(){
     var id_subestatus= document.getElementById("selectSubEstatus");
     var valor = id_subestatus.value;
     // alert(valor);
-    
+
     if(valor == "1")
     {
         $("#commentary").val(valor);
@@ -450,101 +449,57 @@ function mostrartext(){
     }else{
         $("#commentary").val(valor);
         document.getElementById("commentary").disabled=true;
-        
+
     }
 }
-function mostrarinput(){
-    var id_insurance= document.getElementById("selectInsurance");
-    var id_branch= document.getElementById("selectBranch");
-    var valor1 = id_insurance.value;
-    var valor2 = id_branch.value;
-    // alert(valor1);
-    // alert(valor2);
-    if(valor1=='2' && valor2==1)
-    {
-        // alert("Gastos Medicos Mayores");
-        document.getElementById("planes_med").hidden=false;
-        document.getElementById("prod_vid").hidden=true;
-    }
-    else if(valor1=='2'&& valor2=='7')
-    {
-        // alert("Planes de vida");
-        document.getElementById("planes_med").hidden=true;
-        document.getElementById("prod_vid").hidden=false;
-    }else if(valor2==5){
-        // alert("Sin input nuevo");
-        document.getElementById("planes_med").hidden=true;
-        document.getElementById("prod_vid").hidden=true;
-        document.getElementById("planes_auto").hidden=false;
-    }else{
-        document.getElementById("planes_med").hidden=true;
-        document.getElementById("prod_vid").hidden=true;
-        document.getElementById("planes_auto").hidden=true;
-    }
+function llenarRamos(){
+    var insurance = $("#selectInsurance").val();
 
+    var route = baseUrlInicial + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }
 
-function ocultarinput()
+function llenarPlanes()
 {
-    var id_insurance= document.getElementById("selectInsurance");
-    var valor =id_insurance.value;
+    var insurance = $("#selectInsurance").val();
+    var branch = $("#selectBranch").val();
 
-    if(valor=="2")
-    {
-        mostrarinput();
-    }else{
-        document.getElementById("planes_med").hidden=true;
-        document.getElementById("prod_vid").hidden=true;
-        document.getElementById("planes_auto").hidden=true;
-    }
+    var route = baseUrlInicial + '/getPlans/'+ insurance + '/' + branch;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectPlan");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }
 
-function mostrarinputUp(){
-    var id_insurance= document.getElementById("selectInsurance1");
-    var id_branch= document.getElementById("selectBranch1");
-    var valor1 = id_insurance.value;
-    var valor2 = id_branch.value;
-    // alert(valor1);
-    // alert(valor2);
-    if(valor1=='2' && valor2==1)
-    {
-        // alert("Gastos Medicos Mayores");
-        document.getElementById("planes_med_1").hidden=false;
-        document.getElementById("prod_vid_1").hidden=true;
-    }
-    else if(valor1=='2'&& valor2=='7')
-    {
-        // alert("Planes de vida");
-        document.getElementById("planes_med_1").hidden=true;
-        document.getElementById("prod_vid_1").hidden=false;
-    }
-    else if(valor2==5)
-    {
-        document.getElementById("planes_med_1").hidden=true;
-        document.getElementById("prod_vid_1").hidden=true;
-        document.getElementById("planes_auto_1").hidden=false;
-    }else{
-        // alert("Sin input nuevo");
-        document.getElementById("planes_med_1").hidden=true;
-        document.getElementById("prod_vid_1").hidden=true;
-        document.getElementById("planes_auto_1").hidden=true;
-        
-    }
-
-}
-
-function ocultarinputUp()
+function llenarRamos1()
 {
-    var id_insurance= document.getElementById("selectInsurance1");
-    var valor =id_insurance.value;
 
-    if(valor=="2")
-    {
-        mostrarinputUp();
-    }else{
-        document.getElementById("planes_med_1").hidden=true;
-        document.getElementById("prod_vid_1").hidden=true;
-        document.getElementById("planes_auto_1").hidden=true;
+}
 
-    }
+function llenarPlanes1()
+{
+
 }

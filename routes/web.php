@@ -26,8 +26,16 @@ Route::get('admin/profile/profiles/GetInfo/{id}','ProfilesController@GetInfo')->
 Route::resource('admin/profile/profiles', 'ProfilesController');
 
 // aseguradoras
-Route::get('admin/insurance/insurances/GetInfo/{id}','InsuranceController@GetInfo')->name('insurance.GetInfo');
 Route::resource('admin/insurance/insurances', 'InsuranceController');
+Route::get('admin/insurance/insurances/GetInfo/{id}','InsuranceController@GetInfo')->name('insurance.GetInfo');
+Route::get('admin/insurance/insurances/getBranches/{id}','InsuranceController@getBranches')->name('insurance.getBranches');
+Route::post('admin/insurance/insurances/saveBranch', 'InsuranceController@saveBranch')->name('insurance.saveBranch');
+Route::post('admin/insurance/insurances/deleteBranch', 'InsuranceController@deleteBranch')->name('insurance.deleteBranch');
+Route::post('admin/insurance/insurances/saveNewBranch', 'InsuranceController@saveNewBranch')->name('insurance.saveNewBranch');
+Route::get('admin/insurance/insurances/getPlans/{branch}/{insurance}','InsuranceController@getPlans')->name('insurance.getPlans');
+Route::post('admin/insurance/insurances/savePlan', 'InsuranceController@savePlan')->name('insurance.savePlan');
+Route::post('admin/insurance/insurances/deletePlan', 'InsuranceController@deletePlan')->name('insurance.deletePlan');
+Route::post('admin/insurance/insurances/saveNewPlan', 'InsuranceController@saveNewPlan')->name('insurance.saveNewPlan');
 
 // prueba
 Route::get('admin/pruebas/prueba/GetInfo/{id}','PruebasController@GetInfo')->name('prueba.GetInfo');
@@ -79,6 +87,8 @@ Route::get('admin/payment_forms/payment_form/GetInfo/{id}','PaymentFormsControll
 Route::resource('processes/OT/Initials/initial', 'InitialController');
 Route::get('processes/OT/Initials/initial/GetInfo/{id}','InitialController@GetInfo')->name('initial.GetInfo');
 Route::post('processes/OT/Initials/initial/updateStatus', 'InitialController@updateStatus')->name('initial.updateStatus');
+Route::get('processes/OT/Initials/initial/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
+Route::get('processes/OT/Initials/initial/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 
 // Proceso Servicios
 Route::resource('processes/OT/services/service', 'ServicesController');

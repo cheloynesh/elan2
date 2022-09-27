@@ -14,6 +14,7 @@ use App\Charge;
 use App\Branch;
 use App\Application;
 use App\Client;
+use App\Branch_assign;
 use DB;
 use Carbon\Carbon;
 use App\Policy;
@@ -32,6 +33,7 @@ class InitialController extends Controller
         ->join('Branch','Branch.id','=','Initials.fk_branch')
         ->join('users','users.id','=','Initials.fk_agent')
         ->where('Status.id','<>','4')
+        ->whereNull('Initials.deleted_at')
         ->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
@@ -65,8 +67,21 @@ class InitialController extends Controller
     public function GetInfo($id)
     {
         $initial = Initial::where('id',$id)->first();
-        // dd($initial);
-        return response()->json(['status'=>true, "data"=>$initial]);
+
+        $brnchAss = Branch_assign::select('id')->where('fk_insurance',$initial->fk_insurance)->where('fk_branch',$initial->fk_branch)->first();
+
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$initial->fk_insurance)
+            ->whereNull('Branch_assign.deleted_at')->get();
+
+        $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+            ->join('Plans','fk_plans','=','Plans.id')
+            ->where('fk_brnchass',$brnchAss->id)
+            ->whereNull('Plans_assign.deleted_at')->get();
+
+        // dd($assignedBranches, $assignedPlans);
+        return response()->json(['status'=>true, "data"=>$initial, "branches" => $assignedBranches, "plans" => $assignedPlans]);
     }
 
     public function store(Request $request)
@@ -84,6 +99,7 @@ class InitialController extends Controller
         $initial->folio = $request->folio;
         $initial->fk_insurance = $request->insurance;
         $initial->fk_branch = $request->branch;
+        $initial->fk_plan = $request->plan;
         $initial->fk_application = $request->application;
         $initial->pna = $request->pna;
         $initial->fk_payment_form = $request->paymentForm;
@@ -109,6 +125,7 @@ class InitialController extends Controller
         'folio' => $request->folio,
         'fk_insurance' => $request->insurance,
         'fk_branch' => $request->branch,
+        'fk_plan' => $request->plan,
         'fk_application' => $request->application,
         'pna' => $request->pna,
         'fk_payment_form' => $request->paymentForm,
@@ -142,7 +159,7 @@ class InitialController extends Controller
 
         }
         $status->save();
-        
+
         if($request->status == 4)
         {
             $client = new Client;
@@ -179,5 +196,28 @@ class InitialController extends Controller
         $initial = Initial::where('id',$id)->first();
         // dd($initial->commentary);
         return response()->json(['status'=>true, "data"=>$initial]);
+    }
+
+    public function getBranches($id)
+    {
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$id)
+            ->whereNull('Branch_assign.deleted_at')->get();
+        // dd($id);
+
+        return response()->json(['status'=>true, "branches" => $assignedBranches]);
+    }
+
+    public function getPlans($insurance, $branch)
+    {
+        $brnchAss = Branch_assign::select('id')->where('fk_insurance',$insurance)->where('fk_branch',$branch)->first();
+
+        $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+            ->join('Plans','fk_plans','=','Plans.id')
+            ->where('fk_brnchass',$brnchAss->id)
+            ->whereNull('Plans_assign.deleted_at')->get();
+
+        return response()->json(['status'=>true, "branches" => $assignedPlans]);
     }
 }

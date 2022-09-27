@@ -3,7 +3,7 @@ var baseUrlBranch = getUrlBranch .protocol + "//" + getUrlBranch.host + "/admin/
 // var baseUrlBranch = getUrlBranch .protocol + "//" + getUrlBranch.host + getUrlBranch.pathname;
 
 $(document).ready( function () {
-    $('#tbProf').DataTable({
+    $('#tbProfBranch').DataTable({
         language : {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -49,7 +49,7 @@ function guardarRamo()
         success:function(result)
         {
             alertify.success(result.message);
-            $("#myModal").modal('hide');
+            $("#myModalNewBranch").modal('hide');
             window.location.reload(true);
         }
     })
@@ -70,14 +70,14 @@ function editarRamo(id)
         {
             $("#name1").val(result.data.name);
             $("#select_days1").val(result.data.days);
-            $("#myModaledit").modal('show');
+            $("#myModaleditBranch").modal('show');
         }
     })
 }
 function cancelarEditar()
 {
     $("#name1").val("");
-    $("#myModaledit").modal('hide');
+    $("#myModaleditBranch").modal('hide');
 }
 function actualizarRamo(id)
 {
@@ -98,7 +98,7 @@ function actualizarRamo(id)
         success:function(result)
         {
             alertify.success(result.message);
-            $("#myModaledit").modal('hide');
+            $("#myModaleditBranch").modal('hide');
             window.location.reload(true);
         }
     })

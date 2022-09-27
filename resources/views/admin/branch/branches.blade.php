@@ -5,57 +5,16 @@
 @section('content')
     <div class="text-center"><h1>Catálogo de Ramos</h1></div>
     <div style="max-width: 1200px; margin: auto;">
-        {{-- modal| --}}
-        <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="gridModalLabek">Registro de Ramos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="container-fluid bd-example-row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Nombre</label>
-                                            <input type="text" id="name" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Días de tolerancia</label>
-                                            <select id="select_days" name="select_days" class="form-select">
-                                                <option value="15">15</option>
-                                                <option value="30">30</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="guardarRamo()" class="btn btn-primary">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- fin modal| --}}
         @include('admin.branch.branchesEdit')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
             @if ($perm_btn['addition']==1)
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalNewBranch">Nuevo</button>
             @endif
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbProf">
+            <table class="table table-striped table-hover text-center" id="tbProfBranch">
                 <thead>
                     <th class="text-center">Nombre</th>
                     @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

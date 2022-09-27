@@ -3,7 +3,7 @@ var getUrlPlan = window.location;
 var baseUrlPlan = getUrlPlan .protocol + "//" + getUrlPlan.host + "/admin/plan/plans";
 
 $(document).ready( function () {
-    $('#tbProf').DataTable({
+    $('#tbProfPlan').DataTable({
         language : {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
