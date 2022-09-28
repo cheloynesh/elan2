@@ -105,9 +105,6 @@ class InitialController extends Controller
         $initial->fk_payment_form = $request->paymentForm;
         $initial->fk_currency = $request->currency;
         $initial->fk_charge = $request->charge;
-        $initial->id_GMP=$request->GMP;
-        $initial->id_VP=$request->VP;
-        $initial->id_auto = $request->PAuto;
         $initial->save();
         return response()->json(["status"=>true, "message"=>"Inicial creada"]);
     }
@@ -130,10 +127,7 @@ class InitialController extends Controller
         'pna' => $request->pna,
         'fk_payment_form' => $request->paymentForm,
         'fk_currency' => $request->currency,
-        'fk_charge' => $request->charge,
-        'id_GMP'=>$request->GMP,
-        'id_VP'=>$request->id_VP,
-        'id_auto'=>$request->PAuto]);
+        'fk_charge' => $request->charge]);
         return response()->json(['status'=>true, 'message'=>"Inicial actualizada"]);
     }
 
@@ -203,6 +197,7 @@ class InitialController extends Controller
         $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
             ->join('Branch','fk_branch','=','Branch.id')
             ->where('fk_insurance',$id)
+            ->orderBy('name')
             ->whereNull('Branch_assign.deleted_at')->get();
         // dd($id);
 
@@ -211,12 +206,20 @@ class InitialController extends Controller
 
     public function getPlans($insurance, $branch)
     {
-        $brnchAss = Branch_assign::select('id')->where('fk_insurance',$insurance)->where('fk_branch',$branch)->first();
+        if($branch != 0)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$insurance)->where('fk_branch',$branch)->first();
 
-        $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
-            ->join('Plans','fk_plans','=','Plans.id')
-            ->where('fk_brnchass',$brnchAss->id)
-            ->whereNull('Plans_assign.deleted_at')->get();
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->orderBy('name')
+                ->whereNull('Plans_assign.deleted_at')->get();
+        }
+        else
+        {
+            $assignedPlans = [];
+        }
 
         return response()->json(['status'=>true, "branches" => $assignedPlans]);
     }

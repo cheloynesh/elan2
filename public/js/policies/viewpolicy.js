@@ -97,6 +97,18 @@ $(document).ready( function () {
     });
 } );
 
+function actualizarSelect(result, select)
+{
+    var assignPlan = $(select);
+
+    $(select).empty();
+    if(result.length == 0 || result == null) assignPlan.append('<option selected  value="0">Seleccione una opción</option>');
+    else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
+    result.forEach( function(valor, indice, array) {
+        assignPlan.append("<option value='" + valor.id + "'>" + valor.name + "</option>");
+    });
+}
+
 var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -230,12 +242,17 @@ function editarPoliza(id)
 
 
             $("#selectInsurance_edit").val(result.data.fk_insurance);
+
+            actualizarSelect(result.branches,"#selectBranch_edit");
+            actualizarSelect(result.plans,"#selectPlan_edit");
+
             $("#selectBranch_edit").val(result.data.fk_branch);
+            $("#selectPlan_edit").val(result.data.fk_plan);
+
             $("#selectAgent_edit").val(result.data.fk_agent);
 
-            $("#pay_frec_edit").val(result.data.pay_frec);
+            $("#pay_frec_edit").val(result.data.fk_payment_form);
             $("#selectCharge_edit").val(result.data.fk_charge);
-            $("#selectPaymentform_edit").val(result.data.fk_payment_form);
 
             $("#initial_date_edit").val(result.data.initial_date);
             $("#end_date_edit").val(result.data.end_date);
@@ -267,10 +284,10 @@ function actualizarpoliza()
     var renovable = $("#renovable_edit").val();
     var fk_insurance = $("#selectInsurance_edit").val();
     var fk_branch = $("#selectBranch_edit").val();
+    var fk_plan = $("#selectPlan_edit").val();
     var fk_agent = $("#selectAgent_edit").val();
-    var pay_frec = $("#pay_frec_edit").val();
     var fk_charge = $("#selectCharge_edit").val();
-    var fk_payment_form = $("#selectPaymentform_edit").val();
+    var fk_payment_form = $("#pay_frec_edit").val();
 
     var initial_date = $("#initial_date_edit").val();
     var end_date = $("#end_date_edit").val();
@@ -288,11 +305,11 @@ function actualizarpoliza()
         "iva":iva,
         "pna_t":prima_t,
         "renovable":renovable,
-        "pay_frec":pay_frec,
         "pna": pna,
         "currency": fk_currency,
         "insurance": fk_insurance,
         "branch": fk_branch,
+        "plan": fk_plan,
         "agent": fk_agent,
         "charge": fk_charge,
         "paymentForm": fk_payment_form,
@@ -301,6 +318,7 @@ function actualizarpoliza()
         "arrayValues":arrayValues
 
     }
+    console.log(data);
     var route = "policy/"+idPolicy;
 
     jQuery.ajax({
@@ -579,4 +597,47 @@ function cerrarmodal()
     $("#myEstatusModal").modal('hide');
     $("#comentary").val("");
 
+}
+
+function llenarRamos(){
+    var insurance = $("#selectInsurance_edit").val();
+
+    var route = baseUrlPolizaView + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch_edit");
+            llenarPlanes();
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function llenarPlanes()
+{
+    var insurance = $("#selectInsurance_edit").val();
+    var branch = $("#selectBranch_edit").val();
+
+    var route = baseUrlPolizaView + '/getPlans/'+ insurance + '/' + branch;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectPlan_edit");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }

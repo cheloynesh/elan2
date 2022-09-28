@@ -54,7 +54,7 @@ function actualizarSelect(result, select)
     var assignPlan = $(select);
 
     $(select).empty();
-    if(result.length == 0) assignPlan.append('<option selected  value="0">No hay asignaciones</option>');
+    if(result.length == 0 || result == null) assignPlan.append('<option selected  value="0">Seleccione una opción</option>');
     else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
     result.forEach( function(valor, indice, array) {
         assignPlan.append("<option value='" + valor.id + "'>" + valor.name + "</option>");
@@ -118,9 +118,6 @@ function guardarInicial(id)
     var paymentForm = $("#selectPaymentform").val();
     var currency = $("#selectCurrency").val();
     var charge = $("#selectCharge").val();
-    var GMP = $("#SelectGMP").val();
-    var VP = $("#SelectVP").val();
-    var PAuto = $("#SelectPAuto").val();
     var route = "initial";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -141,10 +138,7 @@ function guardarInicial(id)
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,
-        'charge':charge,
-        'GMP':GMP,
-        'VP':VP,
-        "PAuto":PAuto
+        'charge':charge
     };
     console.log(data);
     jQuery.ajax({
@@ -195,7 +189,7 @@ function editarInicial(id)
                 $("#business_rfc1").val(result.data.rfc);
 
             }
-            console.log(result);
+
             actualizarSelect(result.branches,"#selectBranch1");
             actualizarSelect(result.plans,"#selectPlan1");
 
@@ -266,9 +260,6 @@ function actualizarInicial()
     var paymentForm = $("#selectPaymentform1").val();
     var currency = $("#selectCurrency1").val();
     var charge = $("#selectCharge1").val();
-    var GMP = $("#SelectGMP1").val();
-    var VP = $("#SelectVP1").val();
-    var PAuto = $("#SelectPAuto1").val();
 
     var route = "initial/"+idupdate;
     var data = {
@@ -290,9 +281,6 @@ function actualizarInicial()
         'paymentForm':paymentForm,
         'currency':currency,
         'charge':charge,
-        'GMP':GMP,
-        'VP':VP,
-        "PAuto":PAuto
     };
     jQuery.ajax({
         url:route,
@@ -464,6 +452,7 @@ function llenarRamos(){
         success:function(result)
         {
             actualizarSelect(result.branches,"#selectBranch");
+            llenarPlanes();
         },
         error:function(result,error,errorTrown)
         {
@@ -506,6 +495,7 @@ function llenarRamos1(){
         success:function(result)
         {
             actualizarSelect(result.branches,"#selectBranch1");
+            llenarPlanes1();
         },
         error:function(result,error,errorTrown)
         {

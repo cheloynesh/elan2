@@ -14,6 +14,7 @@ use App\Paymentform;
 use App\Charge;
 use App\Branch;
 use App\Status;
+use App\Branch_assign;
 use DB;
 
 class ViewPoliciesController extends Controller
@@ -71,8 +72,30 @@ class ViewPoliciesController extends Controller
     {
         // dd($id);
         $policy = Policy::where('id',$id)->first();
-        // dd($policy);
-        return response()->json(['status'=>true, "data"=>$policy]);
+
+        if($policy->fk_insurance != null)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$policy->fk_insurance)->where('fk_branch',$policy->fk_branch)->first();
+
+            $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+                ->join('Branch','fk_branch','=','Branch.id')
+                ->where('fk_insurance',$policy->fk_insurance)
+                ->orderBy('name')
+                ->whereNull('Branch_assign.deleted_at')->get();
+
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->orderBy('name')
+                ->whereNull('Plans_assign.deleted_at')->get();
+        }
+        else
+        {
+            $assignedBranches = $assignedPlans = null;
+        }
+
+        // dd($policy,$assignedBranches,$assignedPlans);
+        return response()->json(['status'=>true, "data"=>$policy, "branches" => $assignedBranches, "plans" => $assignedPlans]);
 
     }
 
@@ -105,5 +128,37 @@ class ViewPoliciesController extends Controller
         $status->fk_status = $request->status;
         $status->save();
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+    }
+
+    public function getBranches($id)
+    {
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$id)
+            ->orderBy('name')
+            ->whereNull('Branch_assign.deleted_at')->get();
+        // dd($id);
+
+        return response()->json(['status'=>true, "branches" => $assignedBranches]);
+    }
+
+    public function getPlans($insurance, $branch)
+    {
+        if($branch != 0)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$insurance)->where('fk_branch',$branch)->first();
+
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->orderBy('name')
+                ->whereNull('Plans_assign.deleted_at')->get();
+        }
+        else
+        {
+            $assignedPlans = [];
+        }
+
+        return response()->json(['status'=>true, "branches" => $assignedPlans]);
     }
 }

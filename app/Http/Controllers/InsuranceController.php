@@ -62,6 +62,7 @@ class InsuranceController extends Controller
         $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
             ->join('Branch','fk_branch','=','Branch.id')
             ->where('fk_insurance',$id)
+            ->orderBy('name')
             ->whereNull('Branch_assign.deleted_at')->get();
 
         $assbrnch = array();
@@ -73,6 +74,7 @@ class InsuranceController extends Controller
 
         $branches = DB::table('Branch')->select('id','name')
             ->whereNotIn('id',$assbrnch)
+            ->orderBy('name')
             ->whereNull('Branch.deleted_at')->get();
 
         $result = array($assignedBranches,$branches);
@@ -124,7 +126,7 @@ class InsuranceController extends Controller
 
         $result = $this->getBranchesCont($request->insurance);
 
-        return response()->json(["status"=>true, "message"=>"Ramo Asignado", "assigned" => $result[0], "branches" => $result[1]]);
+        return response()->json(["status"=>true, "message"=>"Ramo guardado", "assigned" => $result[0], "branches" => $result[1]]);
     }
 
     public function getPlansCont($branch, $insurance)
@@ -134,6 +136,7 @@ class InsuranceController extends Controller
         $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
             ->join('Plans','fk_plans','=','Plans.id')
             ->where('fk_brnchass',$brnchAss->id)
+            ->orderBy('name')
             ->whereNull('Plans_assign.deleted_at')->get();
 
         $asspln = array();
@@ -145,6 +148,7 @@ class InsuranceController extends Controller
 
         $plans = DB::table('Plans')->select('id','name')
             ->whereNotIn('id',$asspln)
+            ->orderBy('name')
             ->whereNull('Plans.deleted_at')->get();
 
         $result = array($assignedPlans,$plans);
@@ -195,6 +199,6 @@ class InsuranceController extends Controller
 
         $result = $this->getPlansCont($request->branch, $request->insurance);
 
-        return response()->json(["status"=>true, "message"=>"Ramo Asignado", "assigned" => $result[0], "plans" => $result[1]]);
+        return response()->json(["status"=>true, "message"=>"Plan guardado", "assigned" => $result[0], "plans" => $result[1]]);
     }
 }

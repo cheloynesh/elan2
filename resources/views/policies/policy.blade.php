@@ -385,8 +385,22 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="">Conducto de cobro</label>
+                                <select name="selectCharge" id="selectCharge" class="form-select">
+                                    <option hidden selected value="">Selecciona una opción</option>
+                                    @foreach ($charges as $id => $charge)
+                                        <option value='{{ $id }}'>{{ $charge }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="">Aseguradora:</label>
-                                <select name="selectInsurance" id="selectInsurance" class="form-select">
+                                <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamos()">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
                                         <option value='{{ $id }}'>{{ $insurance }}</option>
@@ -394,16 +408,31 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Ramo:</label>
+                                <select name="selectBranch" id="selectBranch" class="form-select" onchange="llenarPlanes()">
+                                    <option selected value="">Selecciona una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Plan</label>
+                                <select name="selectPlan" id="selectPlan" class="form-select">
+                                    <option selected value="">Selecciona una opción</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class = "row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Ramo:</label>
-                                <select name="selectBranch" id="selectBranch" class="form-select">
+                                <label for="">Forma de pago</label>
+                                <select name="pay_frec" id="pay_frec" class="form-select">
                                     <option hidden selected value="">Selecciona una opción</option>
-                                    @foreach ($branches as $id => $branch)
-                                        <option value='{{ $id }}'>{{ $branch }}</option>
+                                    @foreach ($paymentForms as $id => $payment_form)
+                                        <option value='{{ $id }}'>{{ $payment_form }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -416,42 +445,6 @@
                                             <option value='{{ $id }}'>{{ $agent }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Frecuencia de pago</label>
-                                <select class="form-select" aria-label="Default select example" id="pay_frec">
-                                    <option selected hidden value="">Selecciona una opción</option>
-                                    <option value="12">Mensual</option>
-                                    <option value="4">Trimestral</option>
-                                    <option value="2">Semestral</option>
-                                    <option value="1">Anual</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Conducto de cobro</label>
-                                <select name="selectCharge" id="selectCharge" class="form-select">
-                                    <option hidden selected value="">Selecciona una opción</option>
-                                    @foreach ($charges as $id => $charge)
-                                        <option value='{{ $id }}'>{{ $charge }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Forma de pago</label>
-                                <select name="selectPaymentform" id="selectPaymentform" class="form-select">
-                                    <option hidden selected value="">Selecciona una opción</option>
-                                    @foreach ($paymentForms as $id => $payment_form)
-                                        <option value='{{ $id }}'>{{ $payment_form }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                         </div>
                     </div>
                     <div class="row">

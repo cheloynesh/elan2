@@ -151,54 +151,9 @@
                                 <option value="1">Si</option>
                                 <option value="2">No</option>
                             </select>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Aseguradora:</label>
-                                <select name="selectInsurance" id="selectInsurance_edit" class="form-select">
-                                    <option hidden selected value="">Selecciona una opción</option>
-                                    @foreach ($insurances as $id => $insurance)
-                                        <option value='{{ $id }}'>{{ $insurance }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class = "row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Ramo:</label>
-                                <select name="selectBranch" id="selectBranch_edit" class="form-select">
-                                    <option hidden selected value="">Selecciona una opción</option>
-                                    @foreach ($branches as $id => $branch)
-                                        <option value='{{ $id }}'>{{ $branch }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <label for="">Vendida por: </label>
-                            <select class="form-select" id="selectAgent_edit" aria-label="Default select example">
-                                <option selected hidden value="">Selecciona un Agente</option>
-                                @foreach ($agents as $id => $agent)
-                                            <option value='{{ $id }}'>{{ $agent }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Frecuencia de pago</label>
-                                <select class="form-select" aria-label="Default select example" id="pay_frec_edit">
-                                    <option selected hidden value="">Selecciona una opción</option>
-                                    <option value="12">Mensual</option>
-                                    <option value="4">Trimestral</option>
-                                    <option value="2">Semestral</option>
-                                    <option value="1">Anual</option>
-                                </select>
-                            </div>
+                            {{-- <label for="">Renovable</label>
+                             <br>
+                            <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "Si" data-off="No" data-width="100" data-offstyle="secondary"> --}}
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -211,16 +166,57 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Aseguradora:</label>
+                                <select name="selectInsurance" id="selectInsurance_edit" class="form-select" onchange="llenarRamos()">
+                                    <option hidden selected value="">Selecciona una opción</option>
+                                    @foreach ($insurances as $id => $insurance)
+                                        <option value='{{ $id }}'>{{ $insurance }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Ramo:</label>
+                                <select name="selectBranch" id="selectBranch_edit" class="form-select" onchange="llenarPlanes()">
+                                    <option selected value="">Selecciona una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Plan</label>
+                                <select name="selectPlan" id="selectPlan_edit" class="form-select">
+                                    <option selected value="">Selecciona una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Forma de pago</label>
-                                <select name="selectPaymentform" id="selectPaymentform_edit" class="form-select">
+                                <select name="pay_frec" id="pay_frec_edit" class="form-select">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($paymentForms as $id => $payment_form)
                                         <option value='{{ $id }}'>{{ $payment_form }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="">Vendida por: </label>
+                            <select class="form-select" id="selectAgent_edit" aria-label="Default select example">
+                                <option selected hidden value="">Selecciona un Agente</option>
+                                @foreach ($agents as $id => $agent)
+                                            <option value='{{ $id }}'>{{ $agent }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">

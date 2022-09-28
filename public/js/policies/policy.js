@@ -72,6 +72,18 @@ function ocultar(){
 
 }
 
+function actualizarSelect(result, select)
+{
+    var assignPlan = $(select);
+
+    $(select).empty();
+    if(result.length == 0 || result == null) assignPlan.append('<option selected  value="0">Seleccione una opción</option>');
+    else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
+    result.forEach( function(valor, indice, array) {
+        assignPlan.append("<option value='" + valor.id + "'>" + valor.name + "</option>");
+    });
+}
+
 var idClient = 0;
 var initialId = 0;
 var clientType = 0;
@@ -106,12 +118,20 @@ function obtenerid(id){
             $("#pna").val(result.data.pna);
             // prima();
             calculo();
-            $("#selectInsurance").val(result.data.fk_insurance);
             $("#selectCurrency").val(result.data.fk_currency);
             $("#selectCharge").val(result.data.fk_charge);
             $("#selectPaymentform").val(result.data.fk_payment_form);
             $("#selectAgent").val(result.data.fk_agent);
+            $("#selectInsurance").val(result.data.fk_insurance);
+
+            if(result.branches != null)
+            {
+                actualizarSelect(result.branches,"#selectBranch");
+                actualizarSelect(result.plans,"#selectPlan");
+            }
+
             $("#selectBranch").val(result.data.fk_branch);
+            $("#selectPlan1").val(result.data.fk_plan);
         }
     });
 
@@ -170,9 +190,9 @@ function guardarPoliza()
     var currency=$("#selectCurrency").val();
     var insurance=$("#selectInsurance").val();
     var branch =$("#selectBranch").val();
+    var plan =$("#selectPlan").val();
     var agent=$("#selectAgent").val();
     var charge=$("#selectCharge").val();
-    var paymentForm=$("#selectPaymentform").val();
     var initial_date=$("#initial_date").val();
     var end_date=$("#end_date").val();
 
@@ -215,14 +235,14 @@ function guardarPoliza()
         "iva":iva,
         "pna_t":pna_t,
         "renovable":renovable,
-        "pay_frec":pay_frec,
         "pna": pna,
         "currency": currency,
         "insurance": insurance,
         "branch": branch,
+        "plan": plan,
         "agent": agent,
         "charge": charge,
-        "paymentForm": paymentForm,
+        "paymentForm": pay_frec,
         "initial_date":initial_date,
         "end_date":end_date,
         "arrayValues": arrayValues
@@ -468,3 +488,46 @@ var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
+
+function llenarRamos(){
+    var insurance = $("#selectInsurance").val();
+
+    var route = baseUrlPoliza + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch");
+            llenarPlanes();
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function llenarPlanes()
+{
+    var insurance = $("#selectInsurance").val();
+    var branch = $("#selectBranch").val();
+
+    var route = baseUrlPoliza + '/getPlans/'+ insurance + '/' + branch;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectPlan");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}

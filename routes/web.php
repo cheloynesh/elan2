@@ -105,7 +105,10 @@ Route::resource('policies/policy','PoliciesController');
 Route::get('policies/policy/GetInfo/{id}','PoliciesController@GetInfo')->name('policy.GetInfo');
 Route::get('policies/policy/CheckPolicy/{id}','PoliciesController@CheckPolicy')->name('policy.CheckPolicy');
 Route::post('policies/policy/CheckDate',  'PoliciesController@CheckDate')->name('policy.CheckDate');
+Route::get('policies/policy/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
+Route::get('policies/policy/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 // Route::post('policies/policy/savepolicy', 'PoliciesController@savepolicy')->name('policy.savepolicy');
+
 //Ver Polizas
 Route::resource('policies/viewPolicies','ViewPoliciesController');
 Route::get('policies/viewPolicies/ViewReceipts/{id}','ViewPoliciesController@ViewReceipts')->name('viewPolicies.ViewReceipts');
@@ -113,6 +116,8 @@ Route::get('policies/viewPolicies/GetInfo/{id}','ViewPoliciesController@GetInfo'
 Route::post('policies/viewPolicies/paypolicy', 'ViewPoliciesController@paypolicy')->name('viewPolicies.paypolicy');
 Route::post('policies/viewPolicies/cancelpaypolicy', 'ViewPoliciesController@cancelpaypolicy')->name('viewPolicies.cancelpaypolicy');
 Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@updateStatus')->name('viewPolicies.updateStatus');
+Route::get('policies/viewPolicies/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
+Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 
 
 

@@ -13,6 +13,7 @@ use App\Initial;
 use App\Currency;
 use App\Insurance;
 use App\Paymentform;
+use App\Branch_assign;
 use App\Charge;
 use App\Branch;
 use App\Receipts;
@@ -51,7 +52,26 @@ class PoliciesController extends Controller
         ->where('Client.id',$id)
         ->first();
         // dd($client);
-        return response()->json(['status'=>true, "data"=>$client]);
+        if($client->fk_insurance != null)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$client->fk_insurance)->where('fk_branch',$client->fk_branch)->first();
+
+            $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+                ->join('Branch','fk_branch','=','Branch.id')
+                ->where('fk_insurance',$client->fk_insurance)
+                ->whereNull('Branch_assign.deleted_at')->get();
+
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->whereNull('Plans_assign.deleted_at')->get();
+        }
+        else
+        {
+            $assignedBranches = $assignedPlans = null;
+        }
+
+        return response()->json(['status'=>true, "data"=>$client, "branches" => $assignedBranches, "plans" => $assignedPlans]);
     }
     public function CheckPolicy($policy)
     {
@@ -82,12 +102,12 @@ class PoliciesController extends Controller
         $policy->iva = $request->iva;
         $policy->total = $request->pna_t;
         $policy->renovable = $request->renovable;
-        $policy->pay_frec = $request->pay_frec;
 
         $policy->pna = $request->pna;
         $policy->fk_currency = $request->currency;
         $policy->fk_insurance = $request->insurance;
         $policy->fk_branch = $request->branch;
+        $policy->fk_plan = $request->plan;
         $policy->fk_agent = $request->agent;
         $policy->fk_charge = $request->charge;
         $policy->fk_payment_form = $request->paymentForm;
@@ -121,11 +141,11 @@ class PoliciesController extends Controller
     {
         // dd($request->all());
         Policy::where("id",$request->id)
-        ->update(["pna"=>$request->pna,"initial_date"=>$request->initial_date,"end_date"=>$request->enda_date,
+        ->update(["pna"=>$request->pna,"initial_date"=>$request->initial_date,"end_date"=>$request->end_date,
         "fk_currency"=>$request->currency,"fk_insurance"=>$request->insurance,"fk_branch"=>$request->branch,"fk_agent"=>$request->agent,
         "fk_charge"=>$request->charge,"fk_payment_form"=>$request->paymentForm,"expended_exp"=>$request->expended,"exp_impute"=>$request->exp_imp,
         "financ_exp"=>$request->financ_exp,"financ_impute"=>$request->financ_imp,"other_exp"=>$request->other_exp,
-        "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"pay_frec"=>$request->pay_frec,"iva"=>$request->iva,
+        "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"iva"=>$request->iva,
         "total"=>$request->pna_t]);
 
         $receipts_edit = Receipts::where("fk_policy",$request->id)->get();
@@ -160,6 +180,38 @@ class PoliciesController extends Controller
         $policy->delete();
         return response()->json(['status'=>true, "message"=>"Poliza eliminada"]);
 
+    }
+
+    public function getBranches($id)
+    {
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$id)
+            ->orderBy('name')
+            ->whereNull('Branch_assign.deleted_at')->get();
+        // dd($id);
+
+        return response()->json(['status'=>true, "branches" => $assignedBranches]);
+    }
+
+    public function getPlans($insurance, $branch)
+    {
+        if($branch != 0)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$insurance)->where('fk_branch',$branch)->first();
+
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->orderBy('name')
+                ->whereNull('Plans_assign.deleted_at')->get();
+        }
+        else
+        {
+            $assignedPlans = [];
+        }
+
+        return response()->json(['status'=>true, "branches" => $assignedPlans]);
     }
 
 }
