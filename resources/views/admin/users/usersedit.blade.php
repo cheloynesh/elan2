@@ -65,46 +65,54 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="" style="display: none" id="etiqueta1">Clave de agente</label>
-                                        <input type="text" id="code1" name="code1" class="form-control" style="display: none;">
-                                        <br>
-                                        <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
+                            <div id="claveAgente1" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="" id="etiqueta">Clave de Agente</label>
+                                            <input type="text" id="code1" name="code1" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="" style="display: none" id="etiqueta3edit">Aseguradora</label>
-                                        <input type="text" id="insurance1" name="insurance1" class="form-control" style="display: none;">
-                                        <br>
-                                        <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()" style="display: none;">Agregar</button>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="" id="etiqueta3">Aseguradora</label>
+                                            <select name="insurance1" id="insurance1" class="form-select">
+                                                <option hidden selected value="">Selecciona una opción</option>
+                                                @foreach ($insurances as $id => $insurance)
+                                                    <option value='{{ $id }}'>{{ $insurance }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="" style="display: none" id="etiqueta2edit">SubPerfil</label>
-                                        <select name="selectSubProfile" id="selectSubProfileedit" class="form-select" class="form-control" style="display: none;">
-                                            <option hidden selected value="">Selecciona una opción</option>
-                                            <option value="1">Nuevo</option>
-                                            <option value="2">En crecimiento</option>
-                                            <option value="3">Consolidado</option>
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="" id="etiqueta2">SubPerfil</label>
+                                            <select name="selectSubProfile" id="selectSubProfileedit" class="form-select" class="form-control">
+                                                <option hidden selected value="">Selecciona una opción</option>
+                                                <option value="1">Nuevo</option>
+                                                <option value="2">En crecimiento</option>
+                                                <option value="3">Consolidado</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                    <div class="col-md-3 align-self-end">
+                                        <div class="form-group">
+                                            <button type="button" id="agregarcol1" class="btn btn-primary" onclick="agregarcodigo1()">Agregar</button>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-                            {{-- inicio tabla --}}
-                            <div class="table-responsive">
-                                <table class="table table-stripped table-hover text-center" id="tbcodes1" style="display: none">
-                                    <thead>
-                                        <tr>
+                                {{-- inicio tabla --}}
+                                <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                                    <table class="table table-stripped table-hover text-center" id="tbcodes1">
+                                        <thead>
                                             <th class="text-center">Clave de agente</th>
                                             <th class="text-center">Aseguradora</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody-codigo1"></tbody>
-                                </table>
+                                            <th class="text-center">Opciones</th>
+                                        </thead>
+                                        <tbody id="tbody-codigo"></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 

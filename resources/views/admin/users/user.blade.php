@@ -80,33 +80,30 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div id="claveAgente" style="display: none">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="" style="display: none" id="etiqueta">Clave de Agente</label>
-                                                <input type="text" id="code" name="code" class="form-control" style="display: none;">
-                                                <br>
-                                                <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
+                                                <label for="" id="etiqueta">Clave de Agente</label>
+                                                <input type="text" id="code" name="code" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="" style="display: none" id="etiqueta3">Aseguradora</label>
-                                                <select name="insurance" id="insurance" class="form-select" style="display: none;">
+                                                <label for="" id="etiqueta3">Aseguradora</label>
+                                                <select name="insurance" id="insurance" class="form-select">
                                                     <option hidden selected value="">Selecciona una opción</option>
                                                     @foreach ($insurances as $id => $insurance)
                                                         <option value='{{ $id }}'>{{ $insurance }}</option>
                                                     @endforeach
                                                 </select>
-                                                <br>
-                                                <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()" style="display: none;">Agregar</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="" style="display: none" id="etiqueta2">SubPerfil</label>
-                                                <select name="selectSubProfile" id="selectSubProfile" class="form-select" class="form-control" style="display: none;">
+                                                <label for="" id="etiqueta2">SubPerfil</label>
+                                                <select name="selectSubProfile" id="selectSubProfile" class="form-select" class="form-control">
                                                     <option hidden selected value="">Selecciona una opción</option>
                                                     <option value="1">Nuevo</option>
                                                     <option value="2">En crecimiento</option>
@@ -114,15 +111,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-3 align-self-end">
+                                            <div class="form-group">
+                                                <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()">Agregar</button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     {{-- inicio tabla --}}
-                                    <div class="table-responsive">
-                                        <table class="table table-stripped table-hover text-center" id="tbcodes" style="display: none">
+                                    <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                                        <table class="table table-stripped table-hover text-center" id="tbcodes">
                                             <thead>
-                                                <tr>
-                                                    <th class="text-center">Clave de agente</th>
-                                                    <th class="text-center">Aseguradora</th>
-                                                </tr>
+                                                <th class="text-center">Clave de agente</th>
+                                                <th class="text-center">Aseguradora</th>
+                                                <th class="text-center">Opciones</th>
                                             </thead>
                                             <tbody id="tbody-codigo"></tbody>
                                         </table>
@@ -149,7 +151,7 @@
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
-            <table class=" table-striped table-hover text-center" id="tbUsers">
+            <table class="table table-striped table-hover text-center" id="tbUsers">
                 <thead>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>

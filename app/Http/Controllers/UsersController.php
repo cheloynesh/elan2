@@ -8,13 +8,14 @@ use App\Profile;
 use App\Permission;
 use App\AgentCode;
 use App\Insurance;
+use DB;
 
 class UsersController extends Controller
 {
     public function index(){
         $users = User::get();
         $profiles = Profile::pluck('name','id');
-        $insurances = Insurance::pluck('name','name');
+        $insurances = Insurance::pluck('name','id');
         $profile = User::findProfile();
         $perm = Permission::permView($profile,3);
         $perm_btn =Permission::permBtns($profile,3);
@@ -33,8 +34,11 @@ class UsersController extends Controller
     public function GetInfo($id)
     {
         $user = User::where('id',$id)->with('agent_codes')->first();
-        // dd($user);
-        return response()->json(['status'=>true, "data"=>$user]);
+        $codes = DB::table('Agent')->select('*')
+            ->join('Insurance','fk_insurance','=','Insurance.id')
+            ->where('fk_user','=',$id)
+            ->whereNull('Agent.deleted_at')->get();
+        return response()->json(['status'=>true, "data"=>$user, "codes"=>$codes]);
 
     }
 
@@ -52,16 +56,13 @@ class UsersController extends Controller
         $user->save();
         if($request->codes != null)
         {
-            if($request->insurrance != null)
+            foreach($request->codes as $code)
             {
-                foreach($request->codes as $code)
-                {
-                    $agentCode = new AgentCode;
-                    $agentCode->fk_user = $user->id;
-                    $agentCode->code = $code["code"];
-                    $agentCode->fk_insurance = $code['insurance'];
-                    $agentCode->save();
-                }
+                $agentCode = new AgentCode;
+                $agentCode->fk_user = $user->id;
+                $agentCode->code = $code["code"];
+                $agentCode->fk_insurance = $code['insurance'];
+                $agentCode->save();
             }
 
         }
@@ -87,7 +88,6 @@ class UsersController extends Controller
             'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
         }
         $codes_edit = AgentCode::where('fk_user', $request->id)->get();
-        // dd($codes_edit);
         foreach($codes_edit as $codes)
         {
             $codes->delete();
@@ -99,6 +99,7 @@ class UsersController extends Controller
                 $agentCode = new AgentCode;
                 $agentCode->fk_user = $request->id;
                 $agentCode->code = $codigos["code"];
+                $agentCode->fk_insurance = $codigos["insurance"];
                 $agentCode->save();
             }
         }
