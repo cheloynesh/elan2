@@ -142,7 +142,7 @@ class PoliciesController extends Controller
         // dd($request->all());
         Policy::where("id",$request->id)
         ->update(["pna"=>$request->pna,"initial_date"=>$request->initial_date,"end_date"=>$request->end_date,
-        "fk_currency"=>$request->currency,"fk_insurance"=>$request->insurance,"fk_branch"=>$request->branch,"fk_agent"=>$request->agent,
+        "fk_currency"=>$request->currency,"fk_insurance"=>$request->insurance,"fk_branch"=>$request->branch,"fk_plan"=>$request->plan,"fk_agent"=>$request->agent,
         "fk_charge"=>$request->charge,"fk_payment_form"=>$request->paymentForm,"expended_exp"=>$request->expended,"exp_impute"=>$request->exp_imp,
         "financ_exp"=>$request->financ_exp,"financ_impute"=>$request->financ_imp,"other_exp"=>$request->other_exp,
         "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"iva"=>$request->iva,
