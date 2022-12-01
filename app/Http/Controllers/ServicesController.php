@@ -9,6 +9,12 @@ use App\Permission;
 use App\Service;
 use App\Branch;
 use App\Insurance;
+use App\Paymentform;
+use App\Charge;
+use App\Currency;
+use App\Policy;
+use App\Client;
+use App\Branch_assign;
 use DB;
 
 class ServicesController extends Controller
@@ -24,7 +30,8 @@ class ServicesController extends Controller
         ->join('users','users.id','=','Services.fk_agent')
         ->whereNull('Services.deleted_at')->get();
         // dd($initials);
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
+        $clients = Client::get();
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->orderBy('name')->pluck('name','id');
         $insurances = Insurance::pluck('name','id');
         $branches = Branch::pluck('name','id');
         $cmbStatus = Status::select('id','name')
@@ -33,6 +40,10 @@ class ServicesController extends Controller
         $profile = User::findProfile();
         $perm = Permission::permView($profile,16);
         $perm_btn =Permission::permBtns($profile,16);
+        $currencies = Currency::pluck('name','id');
+        $insurances = Insurance::pluck('name','id');
+        $paymentForms = Paymentform::pluck('name','id');
+        $charges = Charge::pluck('name','id');
         if($perm==0)
         {
             return redirect()->route('home');
@@ -40,7 +51,8 @@ class ServicesController extends Controller
         else
         {
             return view('processes.OT.services.service',
-            compact('services','agents','insurances','branches','perm_btn','cmbStatus'));
+            compact('services','agents','insurances','branches','perm_btn','currencies','insurances','paymentForms',
+            'charges','cmbStatus','clients'));
         }
     }
     public function GetInfo($id)
@@ -107,5 +119,51 @@ class ServicesController extends Controller
         $service = Service::where('id',$id)->first();
         // dd($service);
         return response()->json(['status'=>true, "data"=>$service]);
+    }
+    public function GetPolicyInfo($id)
+    {
+        $policyNumber = DB::table('Services')->select('policy','fk_insurance')->where('id',$id)->first();
+        $policy = Policy::where('policy',$policyNumber->policy)->first();
+        if($policy != null)
+        {
+            $brnchAss = Branch_assign::select('id')->where('fk_insurance',$policy->fk_insurance)->where('fk_branch',$policy->fk_branch)->first();
+            $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+                ->join('Branch','fk_branch','=','Branch.id')
+                ->where('fk_insurance',$policy->fk_insurance)
+                ->orderBy('name')
+                ->whereNull('Branch_assign.deleted_at')->get();
+            $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+                ->join('Plans','fk_plans','=','Plans.id')
+                ->where('fk_brnchass',$brnchAss->id)
+                ->orderBy('name')
+                ->whereNull('Plans_assign.deleted_at')->get();
+            $service = null;
+            $client = DB::table('Client')->select('*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))
+                ->where('id',$policy->fk_client)->first();
+        }
+        else
+        {
+            $service = Service::where('id',$id)->first();
+            $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+                ->join('Branch','fk_branch','=','Branch.id')
+                ->where('fk_insurance',$policyNumber->fk_insurance)
+                ->orderBy('name')
+                ->whereNull('Branch_assign.deleted_at')->get();
+            $assignedPlans = null;
+            $client = null;
+        }
+        // dd($policy);
+        return response()->json(['status'=>true, "data"=>$policy, "branches" => $assignedBranches, "plans" => $assignedPlans, "service" => $service, "client" => $client]);
+    }
+    public function getBranches($id)
+    {
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$id)
+            ->orderBy('name')
+            ->whereNull('Branch_assign.deleted_at')->get();
+        // dd($id);
+
+        return response()->json(['status'=>true, "branches" => $assignedBranches]);
     }
 }

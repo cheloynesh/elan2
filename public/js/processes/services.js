@@ -1,6 +1,6 @@
 var ruta = window.location;
 var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
+var baseUrlService = getUrl .protocol + "//" + getUrl.host + getUrl.pathname;
 
 $(document).ready( function () {
     $('#tbProf thead th').each( function () {
@@ -75,6 +75,9 @@ $(document).ready( function () {
 //     });
 
 // } );
+
+
+
 function guardarServicio()
 {
     var agent = $("#selectAgent").val();
@@ -121,7 +124,7 @@ function editarServicio(id)
 {
     idupdate=id;
 
-    var route = baseUrl + '/GetInfo/'+ id;
+    var route = baseUrlService + '/GetInfo/'+ id;
 
     jQuery.ajax({
         url:route,
@@ -136,7 +139,7 @@ function editarServicio(id)
            $("#selectDownload1").val(result.data.download);
            $("#type1").val(result.data.type);
            $("#folio1").val(result.data.folio);
-           $("#name1").val(result.data.name);
+           $("#name2").val(result.data.name);
            $("#selectRecord1").val(result.data.record);
            $("#selectInsurance1").val(result.data.fk_insurance);
            $("#selectBranch1").val(result.data.fk_branch);
@@ -157,7 +160,7 @@ function actualizarServicio()
     var download = $("#selectDownload1").val();
     var type = $("#type1").val();
     var folio = $("#folio1").val();
-    var name = $("#name1").val();
+    var name = $("#name2").val();
     var record = $("#selectRecord1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
@@ -222,7 +225,7 @@ var id_service = 0;
 function opcionesEstatus(serviceId,statusId)
 {
     id_service=serviceId;
-    var route = baseUrl+'/GetinfoStatus/'+id_service;
+    var route = baseUrlService+'/GetinfoStatus/'+id_service;
     jQuery.ajax({
         url:route,
         type:'get',
@@ -237,28 +240,114 @@ function opcionesEstatus(serviceId,statusId)
 
 function actualizarEstatus()
 {
+    // alert("entre a services");
     var status = $("#selectStatus").val();
     var commentary = $("#commentary").val();
-    var route = baseUrl+"/updateStatus";
-    console.log(route);
-    var data = {
-        'id':id_service,
-        "_token": $("meta[name='csrf-token']").attr("content"),
-        'status':status,
-        'commentary':commentary
-    };
-    jQuery.ajax({
-        url:route,
-        type:'post',
-        data:data,
-        dataType:'json',
-        success:function(result)
-        {
-            alertify.success(result.message);
-            $("#myEstatusModal").modal('hide');
-            window.location.reload(true);
-        }
-    })
+
+    if(status == 8)
+    {
+        var route = baseUrlService + "/GetPolicyInfo/" + id_service;
+        var data = {
+            "_token": $("meta[name='csrf-token']").attr("content")
+        };
+        jQuery.ajax({
+            url:route,
+            type:'get',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                serviceFlag = 1;
+                if(result.data == null)
+                {
+                    idPolicy = 0;
+                    policyNumber = result.service.policy;
+                }
+                else
+                {
+                    idPolicy = result.data.id;
+
+                    // alert(result.data.fk_client);
+                    clientType = result.client.status;
+                    idClient = result.data.fk_client;
+                    if(clientType == 0)
+                    {
+                        idupdate=result.data.fk_client;
+                        fisica.style.display = ""
+                        moral.style.display = "none"
+                        editarCliente(result.data.fk_client);
+                    }
+                    else
+                    {
+                        idupdateE=result.data.fk_client;
+                        fisica.style.display = "none"
+                        moral.style.display = ""
+                        editarEmpresa(result.data.fk_client);
+                    }
+                    $("#client_edit").val(result.client.name);
+
+                    $("#pna_edit").val(result.data.pna);
+                    $("#expedition_edit").val(result.data.expended_exp);
+                    $("#exp_impute_edit").val(result.data.exp_impute);
+
+                    $("#financ_exp_edit").val(result.data.financ_exp);
+                    $("#financ_impute_edit").val(result.data.financ_impute);
+                    $("#other_exp_edit").val(result.data.other_exp);
+
+                    $("#other_impute_edit").val(result.data.other_impute);
+                    $("#iva_edit").val(result.data.iva);
+                    // $("#ivapor_edit").val(result.data.);
+
+                    $("#prima_t_edit").val(result.data.total);
+                    $("#selectCurrency_edit").val(result.data.fk_currency);
+                    $("#renovable_edit").val(result.data.renovable);
+
+
+                    $("#selectInsurance_edit").val(result.data.fk_insurance);
+
+                    actualizarSelect(result.branches,"#selectBranch_edit");
+                    actualizarSelect(result.plans,"#selectPlan_edit");
+
+                    $("#selectBranch_edit").val(result.data.fk_branch);
+                    $("#selectPlan_edit").val(result.data.fk_plan);
+
+                    $("#selectAgent_edit").val(result.data.fk_agent);
+
+                    $("#pay_frec_edit").val(result.data.fk_payment_form);
+                    $("#selectCharge_edit").val(result.data.fk_charge);
+
+                    $("#initial_date_edit").val(result.data.initial_date);
+                    $("#end_date_edit").val(result.data.end_date);
+
+                    $("#myModalEdit").modal("show");
+                    mostrartabla();
+                }
+                $("#myModalEdit").modal("show");
+            }
+        })
+    }
+    else
+    {
+        var route = baseUrlService+"/updateStatus";
+        var data = {
+            'id':id_service,
+            "_token": $("meta[name='csrf-token']").attr("content"),
+            'status':status,
+            'commentary':commentary
+        };
+        jQuery.ajax({
+            url:route,
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                alertify.success(result.message);
+                $("#myEstatusModal").modal('hide');
+                window.location.reload(true);
+            }
+        })
+    }
 }
 function cerrarmodal()
 {
@@ -266,3 +355,24 @@ function cerrarmodal()
     $("#comentary").val("");
 
 }
+
+function llenarRamosService(){
+    var insurance = $("#selectInsurance").val();
+
+    var route = baseUrlService + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+

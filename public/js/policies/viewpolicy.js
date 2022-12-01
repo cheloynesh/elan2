@@ -1,6 +1,6 @@
 var rutaPolizaView = window.location;
 var getUrlPolizaView = window.location;
-var baseUrlPolizaView = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + getUrlPolizaView.pathname;
+var baseUrlPolizaView = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/viewPolicies";
 $(document).ready( function () {
     $('#tbPoliza').DataTable({
         language : {
@@ -62,6 +62,34 @@ $(document).ready( function () {
         iDisplayLength: -1
     });
 } );
+$(document).ready( function () {
+    $('#srcClient').DataTable({
+        language : {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+              "sFirst":    "Primero",
+              "sLast":     "Último",
+              "sNext":     "Siguiente",
+              "sPrevious": "Anterior"
+            },
+            "oAria": {
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    });
+} );
 
 $(document).ready( function () {
     $('#tablerecords_edit').DataTable({
@@ -116,6 +144,9 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 var idPolicy = 0;
 var button = "";
+var policyNumber = 0;
+var serviceFlag = 0;
+
 function verRecibos(id){
     // alert(id);
     idPolicy=id;
@@ -170,7 +201,7 @@ function cerrarAuth()
 }
 function guardarAuth()
 {
-    var route = baseUrlPolizaView+'/paypolicy';
+    var route = baseUrlPolizaView + '/paypolicy';
     var auth = $("#auth").val();
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -191,7 +222,7 @@ function guardarAuth()
 }
 function cancelAuth(id)
 {
-    var route = baseUrlPolizaView+'/cancelpaypolicy';
+    var route = baseUrlPolizaView + '/cancelpaypolicy';
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
         "id":id,
@@ -212,10 +243,11 @@ function cancelAuth(id)
         },
         function(){});
 }
-
+idClient = 0;
+clientType = 0;
 function editarPoliza(id)
 {
-    var route = baseUrlPolizaView+ '/GetInfo/' +id;
+    var route = baseUrlPolizaView + '/GetInfo/' +id;
     idPolicy=id;
     jQuery.ajax({
         url:route,
@@ -224,6 +256,23 @@ function editarPoliza(id)
         success:function(result){
             // console.log(result.data.initial_date);
             // console.log(result.data.initial_date);
+            clientType = result.data.status;
+            idClient = result.data.fk_client;
+            if(clientType == 0)
+            {
+                idupdate=id;
+                fisica.style.display = ""
+                moral.style.display = "none"
+                editarCliente(result.data.fk_client);
+            }
+            else
+            {
+                idupdateE=id;
+                fisica.style.display = "none"
+                moral.style.display = ""
+                editarEmpresa(result.data.fk_client);
+            }
+
             $("#pna_edit").val(result.data.pna);
             $("#expedition_edit").val(result.data.expended_exp);
             $("#exp_impute_edit").val(result.data.exp_impute);
@@ -256,6 +305,7 @@ function editarPoliza(id)
 
             $("#initial_date_edit").val(result.data.initial_date);
             $("#end_date_edit").val(result.data.end_date);
+            $("#client_edit").val(result.data.name);
 
             $("#myModalEdit").modal("show");
             mostrartabla();
@@ -269,8 +319,46 @@ function cancelareditar(){
 }
 var arrayValues = [];
 
+function aceptarPoliza()
+{
+    if(idPolicy == 0)
+    {
+        guardarPoliza();
+    }
+    else
+    {
+        actualizarpoliza();
+    }
+
+    if(serviceFlag == 1)
+    {
+        var commentary = $("#commentary").val();
+        var route = baseUrlService+"/updateStatus";
+        var data = {
+            'id':id_service,
+            "_token": $("meta[name='csrf-token']").attr("content"),
+            'status':8,
+            'commentary':commentary
+        };
+        jQuery.ajax({
+            url:route,
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                alertify.success(result.message);
+                $("#myEstatusModal").modal('hide');
+            }
+        })
+    }
+    window.location.reload(true);
+
+}
+
 function actualizarpoliza()
 {
+    // console.log(idPolicy);
     var pna = $("#pna_edit").val();
     var expended_exp = $("#expedition_edit").val();
     var exp_impute = $("#exp_impute_edit").val();
@@ -288,9 +376,9 @@ function actualizarpoliza()
     var fk_agent = $("#selectAgent_edit").val();
     var fk_charge = $("#selectCharge_edit").val();
     var fk_payment_form = $("#pay_frec_edit").val();
-
     var initial_date = $("#initial_date_edit").val();
     var end_date = $("#end_date_edit").val();
+
 // console.log(idPolicy);
     var data = {
         "id":idPolicy,
@@ -315,11 +403,12 @@ function actualizarpoliza()
         "paymentForm": fk_payment_form,
         "initial_date":initial_date,
         "end_date":end_date,
-        "arrayValues":arrayValues
+        "arrayValues":arrayValues,
+        "fk_client":idClient
 
     }
-    console.log(data);
-    var route = "policy/"+idPolicy;
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/" + idPolicy;
+    console.log(route);
 
     jQuery.ajax({
         url:route,
@@ -328,12 +417,133 @@ function actualizarpoliza()
         dataType:'json',
         success:function(result)
         {
+            if(clientType == 0)
+            {
+                // alert("entre a cliente");
+                actualizarCliente(1);
+            }
+            else
+            {
+                // alert("entre a empresa");
+
+                actualizarEmpresa(2);
+            }
             alertify.success(result.message);
             $("#myModalEdit").modal("hide");
-            window.location.reload(true);
+            // window.location.reload(true);
 
         }
     })
+}
+
+function guardarPoliza()
+{
+    // guardardatosClienteInicial();
+    // alert("entre a guardar");
+    var policy = $("#poliza").val();
+    var pna = $("#pna_edit").val();
+    var expended_exp = $("#expedition_edit").val();
+    var exp_impute = $("#exp_impute_edit").val();
+    var financ_exp = $("#financ_exp_edit").val();
+    var financ_impute = $("#financ_impute_edit").val();
+    var other_exp = $("#other_exp_edit").val();
+    var other_impute = $("#other_impute_edit").val();
+    var iva = $("#iva_edit").val();
+    var prima_t = $("#prima_t_edit").val();
+    var fk_currency = $("#selectCurrency_edit").val();
+    var renovable = $("#renovable_edit").val();
+    var fk_insurance = $("#selectInsurance_edit").val();
+    var fk_branch = $("#selectBranch_edit").val();
+    var fk_plan = $("#selectPlan_edit").val();
+    var fk_agent = $("#selectAgent_edit").val();
+    var fk_charge = $("#selectCharge_edit").val();
+    var fk_payment_form = $("#pay_frec_edit").val();
+    var initial_date = $("#initial_date_edit").val();
+    var end_date = $("#end_date_edit").val();
+
+    if(other_exp != ""){
+        other_exp = parseFloat(other_exp);
+    }
+    else{
+        other_exp = 0;
+    }
+    if(financ_exp != ""){
+        financ_exp = parseFloat(financ_exp);
+    }
+    else{
+        financ_exp = 0;
+    }
+    if(pna != ""){
+        pna = parseFloat(pna);
+    }
+    else{
+        pna = 0;
+    }
+    if(expended_exp != ""){
+        expended_exp = parseFloat(expended_exp);
+    }
+    else{
+        expended_exp = 0;
+    }
+
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy";
+    // alert(route);
+    var data = {
+        "id":idClient,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        "policy":policyNumber,
+        "expended":expended_exp,
+        "exp_imp":exp_impute,
+        "financ_exp":financ_exp,
+        "financ_imp":financ_impute,
+        "other_exp":other_exp,
+        "other_imp":other_impute,
+        "iva":iva,
+        "pna_t":prima_t,
+        "renovable":renovable,
+        "pna": pna,
+        "currency": fk_currency,
+        "insurance": fk_insurance,
+        "branch": fk_branch,
+        "plan": fk_plan,
+        "agent": fk_agent,
+        "charge": fk_charge,
+        "paymentForm": fk_payment_form,
+        "initial_date":initial_date,
+        "end_date":end_date,
+        "arrayValues": arrayValues
+    }
+    // alert("aantes de la peticion");
+    jQuery.ajax({
+        url: route,
+        type: "post",
+        data:data,
+        dataType: "json",
+        success:function(result){
+            if(result.status == true)
+            {
+                // GuardarRecibos();>
+                if(clientType == 0)
+                {
+                    // alert("entre a cliente");
+                    actualizarCliente(1);
+                }
+                else
+                {
+                    // alert("entre a empresa");
+
+                    actualizarEmpresa(2);
+                }
+                alertify.success("Poliza Creada");
+                $("#myModalEdit").modal("hide");
+                // window.location.reload(true);
+            }else{
+                alertify.error("No se guardo la poliza, verifique sus datos.");
+
+            }
+
+        }
+    });
 }
 
 function fechafin(){
@@ -536,7 +746,7 @@ function padLeadingZeros(num, size){
 
 function eliminarPoliza(id)
 {
-    var route = "policy/"+id;
+    var route = policies/viewPolicies + "/" + id;
     var data ={
         "id":id,
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -571,8 +781,9 @@ function opcionesEstatus(policyId,statusId)
 }
 function actualizarEstatus()
 {
+    // alert("entre a viewpolicy");
     var status = $("#selectStatus").val();
-    var route = rutaPolizaView+"/updateStatus";
+    var route = rutaPolizaView + "/updateStatus";
     console.log(route);
     var data = {
         'id':id_policy,
@@ -640,4 +851,45 @@ function llenarPlanes()
             alertify.error(errorTrown);
         }
     })
+}
+function buscarclientes(){
+    $("#modalSrcClient").modal("show");
+}
+
+function ocultar(){
+    $("#modalSrcClient").modal("hide");
+}
+
+function obtenerid(id){
+    idClient = id;
+    var routePoliza = baseUrlPolizaView + '/GetInfoClient/'+ id;
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+    jQuery.ajax({
+        url:routePoliza,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            clientType = result.data.status;
+            if(clientType == 0)
+            {
+                // alert(id);
+                idupdate=id;
+                fisica.style.display = ""
+                moral.style.display = "none"
+                editarCliente(id);
+            }
+            else
+            {
+                idupdateE=id;
+                fisica.style.display = "none"
+                moral.style.display = ""
+                editarEmpresa(id);
+            }
+            $("#client_edit").val(result.data.name);
+        }
+    });
+
+    $("#modalSrcClient").modal("hide");
 }

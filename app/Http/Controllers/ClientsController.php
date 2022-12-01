@@ -28,7 +28,7 @@ class ClientsController extends Controller
     public function GetInfo($id)
     {
         $client = Client::where('id',$id)->first();
-        // dd($user);
+        // dd($client);
         return response()->json(['status'=>true, "data"=>$client]);
 
     }

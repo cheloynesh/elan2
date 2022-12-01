@@ -268,6 +268,8 @@ function guardarPoliza()
 
                     actualizarEmpresa(2);
                 }
+                alertify.success("Poliza Actualizada");
+                window.location.reload(true);
             }else{
                 alertify.error("No se guardo la poliza, verifique sus datos.");
 

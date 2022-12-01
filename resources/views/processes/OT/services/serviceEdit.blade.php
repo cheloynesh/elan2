@@ -72,7 +72,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Nombre del Contratante</label>
-                                <input type="text" id="name1" name="name1" class="form-control">
+                                <input type="text" id="name2" name="name2" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">

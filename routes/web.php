@@ -89,16 +89,21 @@ Route::get('processes/OT/Initials/initial/GetInfo/{id}','InitialController@GetIn
 Route::post('processes/OT/Initials/initial/updateStatus', 'InitialController@updateStatus')->name('initial.updateStatus');
 Route::get('processes/OT/Initials/initial/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
 Route::get('processes/OT/Initials/initial/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
+Route::get('processes/OT/Initials/initial/GetinfoStatus/{id}','InitialController@GetinfoStatus')->name('initial.GetinfoStatus');
 
 // Proceso Servicios
 Route::resource('processes/OT/services/service', 'ServicesController');
 Route::get('processes/OT/services/service/GetInfo/{id}','ServicesController@GetInfo')->name('service.GetInfo');
 Route::post('processes/OT/services/service/updateStatus', 'ServicesController@updateStatus')->name('service.updateStatus');
+Route::get('processes/OT/services/service/GetinfoStatus/{id}','ServicesController@GetinfoStatus')->name('service.GetinfoStatus');
+Route::get('processes/OT/services/service/GetPolicyInfo/{id}','ServicesController@GetPolicyInfo')->name('service.GetPolicyInfo');
+Route::get('processes/OT/services/service/getBranches/{insurance}','ServicesController@getBranches')->name('service.getBranches');
 
 // Proceso Reembolsos
 Route::resource('processes/OT/refunds/refunds', 'RefundsController');
 Route::get('processes/OT/refunds/refunds/GetInfo/{id}','RefundsController@GetInfo')->name('refunds.GetInfo');
 Route::post('processes/OT/refunds/refunds/updateStatus', 'RefundsController@updateStatus')->name('refunds.updateStatus');
+Route::get('processes/OT/refunds/refunds/GetinfoStatus/{id}','RefundsController@GetinfoStatus')->name('refunds.GetinfoStatus');
 
 // polizas
 Route::resource('policies/policy','PoliciesController');
@@ -113,6 +118,7 @@ Route::get('policies/policy/getPlans/{insurance}/{branch}','InitialController@ge
 Route::resource('policies/viewPolicies','ViewPoliciesController');
 Route::get('policies/viewPolicies/ViewReceipts/{id}','ViewPoliciesController@ViewReceipts')->name('viewPolicies.ViewReceipts');
 Route::get('policies/viewPolicies/GetInfo/{id}','ViewPoliciesController@GetInfo')->name('viewPolicies.GetInfo');
+Route::get('policies/viewPolicies/GetInfoClient/{id}','ViewPoliciesController@GetInfoClient')->name('viewPolicies.GetInfoClient');
 Route::post('policies/viewPolicies/paypolicy', 'ViewPoliciesController@paypolicy')->name('viewPolicies.paypolicy');
 Route::post('policies/viewPolicies/cancelpaypolicy', 'ViewPoliciesController@cancelpaypolicy')->name('viewPolicies.cancelpaypolicy');
 Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@updateStatus')->name('viewPolicies.updateStatus');

@@ -86,7 +86,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Aseguradora:</label>
-                                    <select name="selectInsurance" id="selectInsurance" class="form-select">
+                                    <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamosService()">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($insurances as $id => $insurance)
                                             <option value='{{ $id }}'>{{ $insurance }}</option>
@@ -98,10 +98,7 @@
                                 <div class="form-group">
                                     <label for="">Ramo:</label>
                                     <select name="selectBranch" id="selectBranch" class="form-select">
-                                        <option hidden selected value="">Selecciona una opción</option>
-                                        @foreach ($branches as $id => $branch)
-                                            <option value='{{ $id }}'>{{ $branch }}</option>
-                                        @endforeach
+                                        <option selected value="">Selecciona una opción</option>
                                     </select>
                                 </div>
                             </div>
@@ -136,6 +133,8 @@
     {{-- fin modal| --}}
     @include('processes.OT.services.serviceEdit')
     @include('processes.OT.status.status')
+    @include('policies.modalPolicies')
+    @include('policies.searchclient')
     {{-- Inicia pantalla de inicio --}}
     <div class="bd-example bd-example-padded-bottom">
         @if ($perm_btn['addition']==1)
@@ -188,5 +187,7 @@
     </div>
 @endsection
 @push('head')
+    <script src="{{URL::asset('js/admin/client.js')}}" ></script>
+    <script src="{{URL::asset('js/policies/viewpolicy.js')}}"></script>
     <script src="{{URL::asset('js/processes/services.js')}}"></script>
 @endpush

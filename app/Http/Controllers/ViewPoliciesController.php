@@ -14,6 +14,7 @@ use App\Paymentform;
 use App\Charge;
 use App\Branch;
 use App\Status;
+use App\Client;
 use App\Branch_assign;
 use DB;
 
@@ -26,6 +27,7 @@ class ViewPoliciesController extends Controller
         // ->join('Client','Client.id','=','Policy.fk_client')->whereNull('Policy.deleted_at')
         // ->get();
         // dd($policy);
+        $clients = Client::get();
         $policy = DB::table('Status')
         ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc')
         ->join('Policy','Policy.fk_status','=','Status.id')
@@ -55,7 +57,7 @@ class ViewPoliciesController extends Controller
         else
         {
             return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms',
-            'charges','branches','cmbStatus'));
+            'charges','branches','cmbStatus','clients'));
         }
     }
 
@@ -71,7 +73,10 @@ class ViewPoliciesController extends Controller
     public function GetInfo($id)
     {
         // dd($id);
-        $policy = Policy::where('id',$id)->first();
+        $policy = DB::table('Policy')->select('*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))
+            ->join('Client','fk_client','=','Client.id')
+            ->where('Policy.id',$id)->first();
+        // dd($policy);
 
         if($policy->fk_insurance != null)
         {
@@ -160,5 +165,10 @@ class ViewPoliciesController extends Controller
         }
 
         return response()->json(['status'=>true, "branches" => $assignedPlans]);
+    }
+    public function GetInfoClient($id)
+    {
+        $client = DB::table('Client')->select('status',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))->where('id',$id)->first();
+        return response()->json(['status'=>true, "data" => $client]);
     }
 }

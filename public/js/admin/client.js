@@ -131,6 +131,7 @@ var idupdate = 0;
 function editarCliente(id)
 {
     idupdate=id;
+
     var route = baseUrl + '/GetInfo/'+id;
     // alert(route);
     jQuery.ajax({
@@ -139,6 +140,7 @@ function editarCliente(id)
         dataType:'json',
         success:function(result)
         {
+            // alert(result.data.name);
             $("#name1").val(result.data.name);
             $("#firstname1").val(result.data.firstname);
             $("#lastname1").val(result.data.lastname);
@@ -233,10 +235,8 @@ function actualizarCliente(policy)
             {
                 alertify.success(result.message);
                 $("#modalEditClient").modal('hide');
-            }else{
-                alertify.success("Poliza Creada");
+                window.location.reload(true);
             }
-            window.location.reload(true);
 
         }
     })
@@ -396,7 +396,7 @@ function actualizarEmpresa(policy_ent)
 
     // var routeE =baseUrl+ "/updateEnterprise";
     // var route = "client/"+idupdate;
-    var route = baseUrl + "/" + idupdate;
+    var route = baseUrl + "/" + idupdateE;
     // alert("entre a empresa");
     var dataE = {
         'id':idupdateE,
@@ -433,10 +433,8 @@ function actualizarEmpresa(policy_ent)
             {
                 alertify.success(result.message);
                 $("#modalEditEnterprise").modal('hide');
-            }else{
-                alertify.success("Poliza creada");
+                window.location.reload(true);
             }
-            window.location.reload(true);
 
         }
     })
