@@ -55,16 +55,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Tipo de Servicio</label>
                                 <input type="text" id="type1" name="type1" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Folio</label>
                                 <input type="text" id="folio1" name="folio1" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Número de Guía</label>
+                                <input type="text" id="guide1" name="guide" class="form-control">
                             </div>
                         </div>
                     </div>

@@ -118,6 +118,7 @@ function guardarInicial(id)
     var paymentForm = $("#selectPaymentform").val();
     var currency = $("#selectCurrency").val();
     var charge = $("#selectCharge").val();
+    var guide = $("#guide").val();
     var route = "initial";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -138,6 +139,7 @@ function guardarInicial(id)
         'pna':pna,
         'paymentForm':paymentForm,
         'currency':currency,
+        'guide':guide,
         'charge':charge
     };
     console.log(data);
@@ -206,6 +208,7 @@ function editarInicial(id)
             $("#selectPaymentform1").val(result.data.fk_payment_form);
             $("#selectCurrency1").val(result.data.fk_currency);
             $("#selectCharge1").val(result.data.fk_charge);
+            $("#guide1").val(result.data.guide);
             $("#myModaledit").modal('show');
         }
     })
@@ -260,6 +263,7 @@ function actualizarInicial()
     var paymentForm = $("#selectPaymentform1").val();
     var currency = $("#selectCurrency1").val();
     var charge = $("#selectCharge1").val();
+    var guide = $("#guide1").val();
 
     var route = "initial/"+idupdate;
     var data = {
@@ -281,6 +285,7 @@ function actualizarInicial()
         'paymentForm':paymentForm,
         'currency':currency,
         'charge':charge,
+        'guide':guide,
     };
     jQuery.ajax({
         url:route,

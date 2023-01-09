@@ -60,6 +60,7 @@ function guardarReembolso()
     var insured = $("#insured").val();
     var sinister = $("#sinister").val();
     var amount = $("#amount").val();
+    var guide = $("#guide").val();
     var payment_form = $("#selectPayment").val();
     var route = "refunds";
     var data = {
@@ -73,6 +74,7 @@ function guardarReembolso()
         'insured':insured,
         'sinister':sinister,
         'amount':amount,
+        'guide':guide,
         'payment_form':payment_form
     };
     jQuery.ajax({
@@ -110,6 +112,7 @@ function editarReembolso(id)
            $("#insured1").val(result.data.insured);
            $("#sinister1").val(result.data.sinister);
            $("#amount1").val(result.data.amount);
+           $("#guide1").val(result.data.guide);
            $("#selectPayment1").val(result.data.payment_form);
            $("#myModaledit").modal('show');
         }
@@ -130,6 +133,7 @@ function actualizarReembolso()
     var insured = $("#insured1").val();
     var sinister = $("#sinister1").val();
     var amount = $("#amount1").val();
+    var guide = $("#guide1").val();
     var payment_form = $("#selectPayment1").val();
     var route = "refunds/"+idupdate;
     var data = {
@@ -144,6 +148,7 @@ function actualizarReembolso()
         'insured':insured,
         'sinister':sinister,
         'amount':amount,
+        'guide':guide,
         'payment_form':payment_form
     };
     jQuery.ajax({

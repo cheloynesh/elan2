@@ -27,7 +27,7 @@ class InitialController extends Controller
         $initials = DB::table("Status")
         ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
         'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
-        'users.name as agent','Initials.created_at as date')
+        'users.name as agent','Initials.created_at as date','folio')
         ->join('Initials','Initials.fk_status','=','Status.id')
         ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
         ->join('Branch','Branch.id','=','Initials.fk_branch')
@@ -105,6 +105,7 @@ class InitialController extends Controller
         $initial->fk_payment_form = $request->paymentForm;
         $initial->fk_currency = $request->currency;
         $initial->fk_charge = $request->charge;
+        $initial->guide = $request->guide;
         $initial->save();
         return response()->json(["status"=>true, "message"=>"Inicial creada"]);
     }
@@ -127,6 +128,7 @@ class InitialController extends Controller
         'pna' => $request->pna,
         'fk_payment_form' => $request->paymentForm,
         'fk_currency' => $request->currency,
+        'guide' => $request->guide,
         'fk_charge' => $request->charge]);
         return response()->json(['status'=>true, 'message'=>"Inicial actualizada"]);
     }

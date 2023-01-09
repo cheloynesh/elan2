@@ -37,16 +37,22 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Folio</label>
                                     <input type="text" id="folio" name="folio" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Contratante</label>
                                     <input type="text" id="contractor" name="contractor" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Número de Guía</label>
+                                    <input type="text" id="guide" name="guide" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +102,12 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="">Monto a Reembolsar</label>
-                                        <input type="text" id="amount" name="amount" class="form-control">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">$</div>
+                                            </div>
+                                            <input type="text" id="amount" name="amount" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -157,10 +168,10 @@
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>
                                 @if ($perm_btn['modify']==1)
-                                    <a href="#|" class="btn btn-warning" onclick="editarReembolso({{$refund->id}})" >Editar</a>
+                                    <a href="#|" class="btn btn-warning" onclick="editarReembolso({{$refund->id}})" ><i class="fa fa-edit"></i></a>
                                 @endif
                                 @if ($perm_btn['erase']==1)
-                                    <a href="#|" class="btn btn-danger" onclick="eliminarReembolso({{$refund->id}})">Eliminar</a>
+                                    <a href="#|" class="btn btn-danger" onclick="eliminarReembolso({{$refund->id}})"><i class="fa fa-trash"></i></a>
                                 @endif
                             </td>
                         @endif

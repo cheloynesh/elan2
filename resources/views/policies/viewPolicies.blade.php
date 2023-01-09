@@ -33,8 +33,8 @@
                         </td>
                         <td>
                             <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})">Ver Recibos</a>
-                            <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" >Editar</a>
-                            <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})">Eliminar</a>
+                            <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></a>
+                            <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach

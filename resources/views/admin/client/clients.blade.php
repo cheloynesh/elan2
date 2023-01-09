@@ -15,7 +15,7 @@
             @endif
         </div>
         <br><br>
-        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbClient">
                 <thead>
                     <th class="text-center">Nombre</th>
@@ -41,13 +41,13 @@
                                 <td>
                                     @if ($perm_btn['modify']==1)
                                         @if ($client->status == 0)
-                                            <a href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" >Editar</a>
+                                            <a href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" ><i class="fa fa-edit"></i></a>
                                         @else
-                                            <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$client->id}})" >Editar</a>
+                                            <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$client->id}})" ><i class="fa fa-edit"></i></a>
                                         @endif
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})">Eliminar</a>
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             @endif

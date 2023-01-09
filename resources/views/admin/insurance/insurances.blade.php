@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                                        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
                                             <table class="table table-striped table-hover text-center" id="tbassignBranches">
                                                 <thead>
                                                     <th class="text-center">Nombre</th>
@@ -158,7 +158,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                                        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
                                             <table class="table table-striped table-hover text-center" id="tbassignPlans">
                                                 <thead>
                                                     <th class="text-center">Nombre</th>
@@ -220,7 +220,7 @@
             @endif
         </div>
         <br><br>
-          <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+          <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbProfInsurance">
                 <thead>
                     <th class="text-center">Nombre</th>
@@ -237,10 +237,10 @@
                                 <td>
                                     @if ($perm_btn['modify']==1)
                                         <a href="#|" class="btn btn-primary" onclick="abrirBranches({{$insurance->id}})" >Asignar Ramo</a>
-                                        <a href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" >Editar</a>
+                                        <a href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" ><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})">Eliminar</a>
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             @endif

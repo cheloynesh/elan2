@@ -76,6 +76,7 @@ class ServicesController extends Controller
         $service->record = $request->record;
         $service->fk_insurance = $request->insurance;
         $service->fk_branch = $request->branch;
+        $service->guide = $request->guide;
         $service->save();
         return response()->json(["status"=>true, "message"=>"Servicio creado"]);
     }
@@ -93,6 +94,7 @@ class ServicesController extends Controller
         'name' => $request->name,
         'record' => $request->record,
         'fk_insurance' => $request->insurance,
+        'guide' => $request->guide,
         'fk_branch' => $request->branch]);
         return response()->json(['status'=>true, 'message'=>"Servicio actualizado"]);
     }

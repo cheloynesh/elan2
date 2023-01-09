@@ -51,16 +51,22 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Tipo de Servicio</label>
                                     <input type="text" id="type" name="type" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Folio</label>
                                     <input type="text" id="folio" name="folio" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Número de Guía</label>
+                                    <input type="text" id="guide" name="guide" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -173,10 +179,10 @@
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>
                                 @if ($perm_btn['modify']==1)
-                                    <a href="#|" class="btn btn-warning" onclick="editarServicio({{$service->id}})" >Editar</a>
+                                    <a href="#|" class="btn btn-warning" onclick="editarServicio({{$service->id}})" ><i class="fa fa-edit"></i></a>
                                 @endif
                                 @if ($perm_btn['erase']==1)
-                                    <a href="#|" class="btn btn-danger" onclick="eliminarServicio({{$service->id}})">Eliminar</a>
+                                    <a href="#|" class="btn btn-danger" onclick="eliminarServicio({{$service->id}})"><i class="fa fa-trash"></i></a>
                                 @endif
                             </td>
                         @endif

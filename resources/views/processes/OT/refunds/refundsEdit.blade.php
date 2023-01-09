@@ -4,7 +4,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title" id="gridModalLabek">Actualziar Reembolso</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="cancelarEditar()">&times;</span></button>
             </div>
 
             <div class="modal-body">
@@ -23,16 +23,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Folio</label>
                                 <input type="text" id="folio1" name="folio1" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Contratante</label>
                                 <input type="text" id="contractor1" name="contractor1" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Número de Guía</label>
+                                <input type="text" id="guide1" name="guide1" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -82,7 +88,12 @@
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Monto a Reembolsar</label>
-                                    <input type="text" id="amount1" name="amount1" class="form-control">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">$</div>
+                                        </div>
+                                        <input type="text" id="amount1" name="amount1" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>

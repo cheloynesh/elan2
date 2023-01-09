@@ -91,6 +91,7 @@ function guardarServicio()
     var record = $("#selectRecord").val();
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
+    var guide = $("#guide").val();
     var route = "service";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -104,7 +105,8 @@ function guardarServicio()
         'name':name,
         'record':record,
         'insurance':insurance,
-        'branch':branch
+        'branch':branch,
+        'guide':guide
     };
     jQuery.ajax({
         url:route,
@@ -143,6 +145,7 @@ function editarServicio(id)
            $("#selectRecord1").val(result.data.record);
            $("#selectInsurance1").val(result.data.fk_insurance);
            $("#selectBranch1").val(result.data.fk_branch);
+           $("#guide1").val(result.data.guide);
            $("#myModaledit").modal('show');
         }
     })
@@ -164,6 +167,7 @@ function actualizarServicio()
     var record = $("#selectRecord1").val();
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
+    var guide = $("#guide1").val();
     var route = "service/"+idupdate;
     var data = {
         'id':idupdate,
@@ -178,7 +182,8 @@ function actualizarServicio()
         'name':name,
         'record':record,
         'insurance':insurance,
-        'branch':branch
+        'branch':branch,
+        'guide':guide
     };
     jQuery.ajax({
         url:route,

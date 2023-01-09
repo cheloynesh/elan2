@@ -4,7 +4,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title" id="gridModalLabek">Actualizar Inicial</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onclick="cancelarEditar()">&times;</span></button>
             </div>
 
             <div class="modal-body">
@@ -78,16 +78,22 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Fecha de promotoria</label>
                                 <input type="date" id="promoter1" name="promoter" class="form-control" placeholder="Fecha de promotoria">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Fecha de Sistema</label>
                                 <input type="date" id="system1" name="system1" class="form-control" placeholder="Fecha de Sistema">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Número de Guía</label>
+                                <input type="text" id="guide1" name="guide1" class="form-control">
                             </div>
                         </div>
                     </div>

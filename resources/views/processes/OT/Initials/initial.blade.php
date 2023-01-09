@@ -102,16 +102,22 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Fecha de promotoria</label>
                                     <input type="date" id="promoter" name="promoter" class="form-control" placeholder="Fecha de Promotoria">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Fecha de Sistema</label>
                                     <input type="date" id="system" name="system" class="form-control" placeholder="Fecha de Sistema">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Número de Guía</label>
+                                    <input type="text" id="guide" name="guide" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -234,6 +240,7 @@
                 <th class="text-center">Agente</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">RFC</th>
+                <th class="text-center">Folio</th>
                 <th class="text-center">Aseguradora</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
@@ -249,6 +256,7 @@
                         <td>{{$initial->agent}}</td>
                         <td>{{$initial->client}} {{$initial->firstname}} {{$initial->lastname}}</td>
                         <td>{{$initial->rfc}}</td>
+                        <td>{{$initial->folio}}</td>
                         <td>{{$initial->insurance}}</td>
                         <td>{{$initial->branch}}</td>
                         <td>
@@ -258,10 +266,10 @@
                         @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                             <td>
                                 @if ($perm_btn['modify']==1)
-                                    <a href="#|" class="btn btn-warning" onclick="editarInicial({{$initial->id}})" >Editar</a>
+                                    <a href="#|" class="btn btn-warning" onclick="editarInicial({{$initial->id}})" ><i class="fa fa-edit"></i></a>
                                 @endif
                                 @if ($perm_btn['erase']==1)
-                                    <a href="#|" class="btn btn-danger" onclick="eliminarInicial({{$initial->id}})">Eliminar</a>
+                                    <a href="#|" class="btn btn-danger" onclick="eliminarInicial({{$initial->id}})"><i class="fa fa-trash"></i></a>
                                 @endif
                             </td>
                         @endif

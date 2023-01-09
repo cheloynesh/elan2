@@ -119,7 +119,7 @@
 
                                     </div>
                                     {{-- inicio tabla --}}
-                                    <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+                                    <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
                                         <table class="table table-stripped table-hover text-center" id="tbcodes">
                                             <thead>
                                                 <th class="text-center">Clave de agente</th>
@@ -150,7 +150,7 @@
             @endif
         </div>
         <br><br>
-          <div class="table-responsive" style="margin-bottom: 10px; max-width: 1200px; margin: auto;">
+          <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
             <table class="table table-striped table-hover text-center" id="tbUsers">
                 <thead>
                     <th class="text-center">Nombre</th>
@@ -168,10 +168,10 @@
                             @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                                 <td>
                                     @if ($perm_btn['modify']==1)
-                                        <a href="#|" class="btn btn-warning" onclick="editarUsuario({{$user->id}})" >Editar</a>
+                                        <a href="#|" class="btn btn-warning" onclick="editarUsuario({{$user->id}})" ><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarUsuario({{$user->id}})">Eliminar</a>
+                                        <a href="#|" class="btn btn-danger" onclick="eliminarUsuario({{$user->id}})"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             @endif

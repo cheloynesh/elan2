@@ -20,7 +20,7 @@ class RefundsController extends Controller
         ->join('Refunds','Refunds.fk_status','=','Status.id')
         ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
         ->join('users','users.id','=','Refunds.fk_agent')
-        ->get();
+        ->whereNull('Refunds.deleted_at')->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $insurances = Insurance::pluck('name','id');
@@ -60,6 +60,7 @@ class RefundsController extends Controller
         $refund->sinister = $request->sinister;
         $refund->amount = $request->amount;
         $refund->payment_form = $request->payment_form;
+        $refund->guide = $request->guide;
         $refund->save();
         return response()->json(["status"=>true, "message"=>"Reembolso creado"]);
     }
@@ -77,6 +78,7 @@ class RefundsController extends Controller
         'insured' => $request->insured,
         'sinister' => $request->sinister,
         'amount' => $request->amount,
+        'guide' => $request->guide,
         'payment_form' => $request->payment_form]);
         return response()->json(['status'=>true, 'message'=>"Reembolso actualizado"]);
     }
