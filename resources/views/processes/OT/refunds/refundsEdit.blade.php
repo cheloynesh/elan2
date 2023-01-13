@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Aseguradora:</label>
+                                <label for="">Compañía:</label>
                                 <select name="selectInsurance1" id="selectInsurance1" class="form-select">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)

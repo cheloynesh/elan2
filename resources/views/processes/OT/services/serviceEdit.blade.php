@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Póliza</label>
+                                <label for="">Póliza/Contrato</label>
                                 <input type="text" id="policy1" name="policy1" class="form-control">
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Folio</label>
+                                <label for="">Folio/Id</label>
                                 <input type="text" id="folio1" name="folio1" class="form-control">
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Aseguradora:</label>
+                                <label for="">Compañía:</label>
                                 <select name="selectInsurance1" id="selectInsurance1" class="form-select">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)

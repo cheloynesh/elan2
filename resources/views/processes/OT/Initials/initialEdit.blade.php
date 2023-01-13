@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Aseguradora:</label>
+                                <label for="">Compañía:</label>
                                 <select name="selectInsurance" id="selectInsurance1" class="form-select" onchange="llenarRamos1()">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
@@ -121,7 +121,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Plan</label>
+                                <label for="">Plan/Contrato</label>
                                 <select name="selectPlan" id="selectPlan1" class="form-select">
                                     <option selected value="">Selecciona una opción</option>
                                 </select>
@@ -144,13 +144,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Folio</label>
+                                <label for="">Folio/Id</label>
                                 <input type="text" id="folio1" name="folio" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">PNA</label>
+                                <label for="">PNA/Monto</label>
                                 <input type="text" id="pna1" name="pna" class="form-control">
                             </div>
                         </div>

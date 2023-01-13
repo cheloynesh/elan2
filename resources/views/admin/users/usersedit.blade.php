@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="" id="etiqueta3">Aseguradora</label>
+                                            <label for="" id="etiqueta3">Compañía</label>
                                             <select name="insurance1" id="insurance1" class="form-select">
                                                 <option hidden selected value="">Selecciona una opción</option>
                                                 @foreach ($insurances as $id => $insurance)
@@ -107,7 +107,7 @@
                                     <table class="table table-stripped table-hover text-center" id="tbcodes1">
                                         <thead>
                                             <th class="text-center">Clave de agente</th>
-                                            <th class="text-center">Aseguradora</th>
+                                            <th class="text-center">Compañía</th>
                                             <th class="text-center">Opciones</th>
                                         </thead>
                                         <tbody id="tbody-codigo"></tbody>

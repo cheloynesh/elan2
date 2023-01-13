@@ -23,7 +23,7 @@ class ServicesController extends Controller
     {
         $services = DB::table("Status")
         ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','folio','type','color',
-        'Insurance.name as insurance','Branch.name as branch', 'users.name as agent')
+        'Insurance.name as insurance','Branch.name as branch', 'users.name as agent', 'policy')
         ->join('Services','Services.fk_status','=','Status.id')
         ->join('Insurance','Insurance.id','=','Services.fk_insurance')
         ->join('Branch','Branch.id','=','Services.fk_branch')

@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Aseguradora:</label>
+                                    <label for="">Compañía:</label>
                                     <select name="selectInsurance" id="selectInsurance" class="form-select">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($insurances as $id => $insurance)
@@ -148,7 +148,7 @@
             <thead>
                 <th class="text-center">Agente</th>
                 <th class="text-center">Folio</th>
-                <th class="text-center">Aseguradora</th>
+                <th class="text-center">Compañía</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                     <th class="text-center">Opciones</th>

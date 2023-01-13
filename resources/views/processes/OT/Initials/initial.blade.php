@@ -125,7 +125,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Aseguradora:</label>
+                                    <label for="">Compañía:</label>
                                     <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamos()">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($insurances as $id => $insurance)
@@ -144,7 +144,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Plan</label>
+                                    <label for="">Plan/Contrato</label>
                                     <select name="selectPlan" id="selectPlan" class="form-select">
                                         <option selected value="">Selecciona una opción</option>
                                     </select>
@@ -166,13 +166,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Folio</label>
+                                    <label for="">Folio/Id</label>
                                     <input type="text" id="folio" name="folio" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">PNA</label>
+                                    <label for="">PNA/Monto</label>
                                     <input type="text" id="pna" name="pna" class="form-control">
                                 </div>
                             </div>
@@ -240,8 +240,8 @@
                 <th class="text-center">Agente</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">RFC</th>
-                <th class="text-center">Folio</th>
-                <th class="text-center">Aseguradora</th>
+                <th class="text-center">Folio/Id</th>
+                <th class="text-center">Compañía</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

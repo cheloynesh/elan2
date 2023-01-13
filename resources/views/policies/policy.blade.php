@@ -399,7 +399,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Aseguradora:</label>
+                                <label for="">Compañía:</label>
                                 <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamos()">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
@@ -418,7 +418,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Plan</label>
+                                <label for="">Plan/Contrato</label>
                                 <select name="selectPlan" id="selectPlan" class="form-select">
                                     <option selected value="">Selecciona una opción</option>
                                 </select>

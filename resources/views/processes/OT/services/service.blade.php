@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Póliza</label>
+                                    <label for="">Póliza/Contrato</label>
                                     <input type="text" id="policy" name="policy" class="form-control">
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Folio</label>
+                                    <label for="">Folio/Id</label>
                                     <input type="text" id="folio" name="folio" class="form-control">
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Aseguradora:</label>
+                                    <label for="">Compañía:</label>
                                     <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamosService()">
                                         <option hidden selected value="">Selecciona una opción</option>
                                         @foreach ($insurances as $id => $insurance)
@@ -153,9 +153,10 @@
             <thead>
                 <th class="text-center">Agente</th>
                 <th class="text-center">Cliente</th>
-                <th class="text-center">Folio</th>
+                <th class="text-center">Póliza</th>
+                <th class="text-center">Folio/Id</th>
                 <th class="text-center">Tipo de Servicio</th>
-                <th class="text-center">Aseguradora</th>
+                <th class="text-center">Compañía</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
                 @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
@@ -168,6 +169,7 @@
                     <tr id="{{$service->id}}">
                         <td>{{$service->agent}}</td>
                         <td>{{$service->name}}</td>
+                        <td>{{$service->policy}}</td>
                         <td>{{$service->folio}}</td>
                         <td>{{$service->type}}</td>
                         <td>{{$service->insurance}}</td>

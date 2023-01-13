@@ -1,6 +1,6 @@
 @extends('home')
 <head>
-    <title>Aseguradoras | ELAN</title>
+    <title>Compañías | ELAN</title>
 </head>
 @section('content')
     <div class="text-center"><h1>Catálogo de Aseguradoras</h1></div>
@@ -146,7 +146,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="">Plan</label>
+                                            <label for="">Plan/Contrato</label>
                                             <select name="assignPlan" id="assignPlan" class="form-select"></select>
                                         </div>
                                     </div>
