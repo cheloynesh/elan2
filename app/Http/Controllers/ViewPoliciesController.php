@@ -29,9 +29,10 @@ class ViewPoliciesController extends Controller
         // dd($policy);
         $clients = Client::get();
         $policy = DB::table('Status')
-        ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc')
+        ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
         ->join('Policy','Policy.fk_status','=','Status.id')
         ->join('Client','Client.id','=','Policy.fk_client')
+        ->join('Branch','Branch.id','=','Policy.fk_branch')
         ->whereNull('Policy.deleted_at')
         ->get();
         // dd($policy[0]->color);

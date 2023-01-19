@@ -15,6 +15,8 @@ use App\Currency;
 use App\Policy;
 use App\Client;
 use App\Branch_assign;
+use App\Exports\ExportService;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
 class ServicesController extends Controller
@@ -32,6 +34,8 @@ class ServicesController extends Controller
         // dd($initials);
         $clients = Client::get();
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->orderBy('name')->pluck('name','id');
+        $estatusExc = Status::select('id', 'name')->where("fk_section","16")->pluck('name','id');
+        $branchesExc = Branch::select('id', 'name')->pluck('name','id');
         $insurances = Insurance::pluck('name','id');
         $branches = Branch::pluck('name','id');
         $cmbStatus = Status::select('id','name')
@@ -52,7 +56,7 @@ class ServicesController extends Controller
         {
             return view('processes.OT.services.service',
             compact('services','agents','insurances','branches','perm_btn','currencies','insurances','paymentForms',
-            'charges','cmbStatus','clients'));
+            'charges','cmbStatus','clients','estatusExc','branchesExc'));
         }
     }
     public function GetInfo($id)
@@ -167,5 +171,13 @@ class ServicesController extends Controller
         // dd($id);
 
         return response()->json(['status'=>true, "branches" => $assignedBranches]);
+    }
+    public function ExportService($status,$branch)
+    {
+        // dd("entre");
+        $nombre = "Servicios.xlsx";
+        $sheet = new ExportService($status, $branch);
+        $sheet->setAutoSize(true);
+        return Excel::download($sheet,$nombre);
     }
 }

@@ -14,6 +14,7 @@
             <thead>
                 <th class="text-center">RFC</th>
                 <th class="text-center"># Póliza</th>
+                <th class="text-center">Ramo</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">Inicio Vigencia</th>
                 <th class="text-center">Fin Vigencia</th>
@@ -25,6 +26,7 @@
                     <tr id="{{$policies->id}}">
                         <td>{{$policies->rfc}}</td>
                         <td>{{$policies->policy}}</td>
+                        <td>{{$policies->branch}}</td>
                         <td>{{$policies->name}}</td>
                         <td>{{$policies->initial_date}}</td>
                         <td>{{$policies->end_date}}</td>

@@ -98,6 +98,7 @@ Route::post('processes/OT/services/service/updateStatus', 'ServicesController@up
 Route::get('processes/OT/services/service/GetinfoStatus/{id}','ServicesController@GetinfoStatus')->name('service.GetinfoStatus');
 Route::get('processes/OT/services/service/GetPolicyInfo/{id}','ServicesController@GetPolicyInfo')->name('service.GetPolicyInfo');
 Route::get('processes/OT/services/service/getBranches/{insurance}','ServicesController@getBranches')->name('service.getBranches');
+Route::get('processes/OT/services/service/ExportService/{status}/{branch}','ServicesController@ExportService');
 
 // Proceso Reembolsos
 Route::resource('processes/OT/refunds/refunds', 'RefundsController');

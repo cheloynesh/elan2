@@ -2682,6 +2682,8 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #4a7198;
   border-color: #4a7198;
+  min-height: 38px;
+  min-width: 38px;
 }
 
 .btn-primary:hover {
@@ -2805,6 +2807,8 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #4a7198;
   border-color: #4a7198;
+  min-width: 38px;
+  min-height: 38px;
 }
 
 .btn-info:hover {
@@ -2846,6 +2850,8 @@ fieldset:disabled a.btn {
   color: #212529;
   background-color: #ffed4a;
   border-color: #ffed4a;
+  min-width: 38px;
+  min-height: 38px;
 }
 
 .btn-warning:hover {
@@ -2887,6 +2893,8 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #e3342f;
   border-color: #e3342f;
+  min-width: 38px;
+  min-height: 38px;
 }
 
 .btn-danger:hover {
