@@ -3,10 +3,20 @@
     <title>Polizas | ELAN</title>
 </head>
 @section('content')
-    <div class="text-center"><h1>Polizas</h1></div>
+    <div class="text-center"><h1>Pólizas</h1></div>
     @include('policies.modalPolicies')
     @include('processes.OT.status.status')
     @include('policies.searchclient')
+
+    {{-- <br><br>
+
+    <div class="bd-example bd-example-padded-bottom">
+        @if ($perm_btn['addition']==1)
+            <button type="button" class="btn btn-primary" onclick="actualizarStatusPoliza()">Actualizar</button>
+        @endif
+    </div>
+
+    <br><br> --}}
 
         {{-- Inicia pantalla de inicio --}}
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">

@@ -148,29 +148,33 @@ class PoliciesController extends Controller
         "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"iva"=>$request->iva,
         "total"=>$request->pna_t,"fk_client"=>$request->fk_client]);
 
-        $receipts_edit = Receipts::where("fk_policy",$request->id)->get();
-        foreach($receipts_edit as $receipts)
+        if(intval($request->updateReceipts) == 1)
         {
-            $receipts->delete();
-        }
-        // dd($request->arrayValues);
-        if($request->arrayValues != null)
-        {
-            foreach($request->arrayValues as $values)
+            // dd("entre");
+            $receipts_edit = Receipts::where("fk_policy",$request->id)->get();
+            foreach($receipts_edit as $receipts)
             {
-                $receipts = new Receipts;
-                $receipts->fk_policy = $request->policy;
-                $receipts->pna = $values['pna'];
-                $receipts->expedition = $values['values_exp'];
-                $receipts->financ_exp = $values['values_financ'];
-                $receipts->other_exp = $values['values_other'];
-                $receipts->iva = $values['iva'];
-                $receipts->pna_t = $values['values_total'];
-                $receipts->initial_date = $values['fechaBD'];
-                $receipts->end_date = $values['fechaFin'];
-                $receipts->save();
+                $receipts->delete();
+            }
+            if($request->arrayValues != null)
+            {
+                foreach($request->arrayValues as $values)
+                {
+                    $receipts = new Receipts;
+                    $receipts->fk_policy = $request->policy;
+                    $receipts->pna = $values['pna'];
+                    $receipts->expedition = $values['values_exp'];
+                    $receipts->financ_exp = $values['values_financ'];
+                    $receipts->other_exp = $values['values_other'];
+                    $receipts->iva = $values['iva'];
+                    $receipts->pna_t = $values['values_total'];
+                    $receipts->initial_date = $values['fechaBD'];
+                    $receipts->end_date = $values['fechaFin'];
+                    $receipts->save();
+                }
             }
         }
+        // dd("no entre");
         return response()->json(['status'=>true,"message"=>"Poliza actualizada"]);
     }
 

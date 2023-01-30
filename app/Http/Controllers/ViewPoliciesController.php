@@ -16,6 +16,7 @@ use App\Branch;
 use App\Status;
 use App\Client;
 use App\Branch_assign;
+use DateTime;
 use DB;
 
 class ViewPoliciesController extends Controller
@@ -109,10 +110,12 @@ class ViewPoliciesController extends Controller
         // dd($request->all());
 
         $status = Receipts::where('id',$request->id)->first();
-        // dd($status);
         // dd($request->all());
         $status->status = $request->auth;
         $status->save();
+        $policy = Policy::select('*')->where('id',$status->fk_policy)->first();
+        $this->updateStatusPayment($policy);
+        // dd($policy->policy);
         return response()->json(['status'=>true, "message"=>"Recibo Pagado"]);
 
     }
@@ -171,5 +174,61 @@ class ViewPoliciesController extends Controller
     {
         $client = DB::table('Client')->select('status',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))->where('id',$id)->first();
         return response()->json(['status'=>true, "data" => $client]);
+    }
+    public function updatePolicies()
+    {
+        date_default_timezone_set('America/Mexico_City');
+        $policies = Policy::whereNull('deleted_at')->get();
+        foreach($policies as $policy)
+        {
+            $this->updateStatusPayment($policy);
+            // dd($policy,$receipts);
+        }
+        return response()->json(['status'=>true, "message"=>"Actualizado"]);
+    }
+    public function updateStatusPayment($policy)
+    {
+        // dd($policy->id);
+        $receipts = DB::table('Receipts')->select('*')
+            ->orderBy('initial_date','asc')
+            ->groupBy('fk_policy')
+            ->where('fk_policy',$policy->id)
+            ->whereNull('status')
+            ->whereNull('deleted_at')->first();
+        if($receipts == null)
+        {
+            $today = new DateTime();
+            $endDate = new Datetime($policy->end_date);
+            if($today >= $endDate)
+            {
+                $status = Policy::where('id',$policy->id)->first();
+                $status->fk_status = 18;
+                $status->save();
+            }
+            else
+            {
+                $status = Policy::where('id',$policy->id)->first();
+                $status->fk_status = 15;
+                $status->save();
+            }
+        }
+        else
+        {
+            $today = new DateTime();
+            $endDate = new Datetime($policy->end_date);
+            if($today >= $endDate)
+            {
+                $status = Policy::where('id',$policy->id)->first();
+                $status->fk_status = 18;
+                $status->save();
+            }
+            else
+            {
+                $recptDate = new DateTime($policy->initial_date);
+                $status = Policy::where('id',$policy->id)->first();
+                $status->fk_status = 21;
+                $status->save();
+            }
+        }
     }
 }

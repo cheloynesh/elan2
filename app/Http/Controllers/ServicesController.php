@@ -177,7 +177,6 @@ class ServicesController extends Controller
         // dd("entre");
         $nombre = "Servicios.xlsx";
         $sheet = new ExportService($status, $branch);
-        $sheet->setAutoSize(true);
         return Excel::download($sheet,$nombre);
     }
 }

@@ -125,8 +125,11 @@ Route::post('policies/viewPolicies/cancelpaypolicy', 'ViewPoliciesController@can
 Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@updateStatus')->name('viewPolicies.updateStatus');
 Route::get('policies/viewPolicies/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
 Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
+Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@updatePolicies')->name('viewPolicies.updatePolicies');
 
-
+// cobranza
+Route::resource('policies/collection','CollectionController');
+Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->name('collection.GetInfo');
 
 
 

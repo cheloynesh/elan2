@@ -146,6 +146,7 @@ var idPolicy = 0;
 var button = "";
 var policyNumber = 0;
 var serviceFlag = 0;
+var updatedReceipt = 0;
 
 function verRecibos(id){
     // alert(id);
@@ -215,6 +216,7 @@ function guardarAuth()
         dataType:'json',
         success:function(result){
             alertify.success(result.message);
+            $("#authModal").modal('hide');
             $("#myModalReceipts").modal('hide');
             window.location.reload(true);
         }
@@ -254,6 +256,7 @@ function editarPoliza(id)
         type:'get',
         dataType:'json',
         success:function(result){
+            updatedReceipt = 0;
             // console.log(result.data.initial_date);
             // console.log(result.data.initial_date);
             clientType = result.data.status;
@@ -308,7 +311,6 @@ function editarPoliza(id)
             $("#client_edit").val(result.data.name);
 
             $("#myModalEdit").modal("show");
-            mostrartabla();
         }
     })
 }
@@ -358,7 +360,7 @@ function aceptarPoliza()
 
 function actualizarpoliza()
 {
-    // console.log(idPolicy);
+    console.log(updatedReceipt);
     var pna = $("#pna_edit").val();
     var expended_exp = $("#expedition_edit").val();
     var exp_impute = $("#exp_impute_edit").val();
@@ -404,7 +406,8 @@ function actualizarpoliza()
         "initial_date":initial_date,
         "end_date":end_date,
         "arrayValues":arrayValues,
-        "fk_client":idClient
+        "fk_client":idClient,
+        "updateReceipts":updatedReceipt
 
     }
     var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/" + idPolicy;
@@ -603,6 +606,7 @@ function calculo(){
 
 
 function mostrartabla(){
+    updatedReceipt = 1;
     var pay_frec = parseInt($("#pay_frec_edit").val());
     // var table = $("#tbodyRecords");
     var tablerec = $('#tablerecords_edit').DataTable();
@@ -746,7 +750,7 @@ function padLeadingZeros(num, size){
 
 function eliminarPoliza(id)
 {
-    var route = policies/viewPolicies + "/" + id;
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/" + id;
     var data ={
         "id":id,
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -892,4 +896,22 @@ function obtenerid(id){
     });
 
     $("#modalSrcClient").modal("hide");
+}
+
+function actualizarStatusPoliza()
+{
+    var route = baseUrlPolizaView + '/updatePolicies';
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content")
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+        }
+    })
 }
