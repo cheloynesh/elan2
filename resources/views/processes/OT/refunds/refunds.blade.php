@@ -150,9 +150,7 @@
                 <th class="text-center">Folio</th>
                 <th class="text-center">Compañía</th>
                 <th class="text-center">Estatus</th>
-                @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
-                    <th class="text-center">Opciones</th>
-                @endif
+                <th class="text-center">Opciones</th>
             </thead>
 
             <tbody>
@@ -165,16 +163,12 @@
                             <button class="btn btn-info" style="background-color: #{{$refund->color}}; border-color: #{{$refund->color}}" onclick="opcionesEstatus({{$refund->id}},{{$refund->statId}})">{{$refund->statName}}</button>
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
-                        @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
-                            <td>
-                                @if ($perm_btn['modify']==1)
-                                    <a href="#|" class="btn btn-warning" onclick="editarReembolso({{$refund->id}})" ><i class="fa fa-edit"></i></a>
-                                @endif
-                                @if ($perm_btn['erase']==1)
-                                    <a href="#|" class="btn btn-danger" onclick="eliminarReembolso({{$refund->id}})"><i class="fa fa-trash"></i></a>
-                                @endif
-                            </td>
-                        @endif
+                        <td>
+                            <a href="#|" class="btn btn-warning" onclick="editarReembolso({{$refund->id}})" ><i class="fa fa-edit"></i></a>
+                            @if ($perm_btn['erase']==1)
+                                <a href="#|" class="btn btn-danger" onclick="eliminarReembolso({{$refund->id}})"><i class="fa fa-trash"></i></a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

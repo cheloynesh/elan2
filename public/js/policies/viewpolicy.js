@@ -164,9 +164,9 @@ function verRecibos(id){
             result.data.forEach( function(valor, indice, array){
                 console.log(valor.status);
                 if (valor.status == null ) {
-                    button = '<button href="#|" class="btn btn-danger" onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
+                    button = '<button href="#|" class="btn btn-danger" @if ($perm_btn['+'modify'+']!=1) disabled @endif onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
                 } else {
-                    button = '<button href="#|" class="btn btn-success btn-sm" onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
+                    button = '<button href="#|" class="btn btn-success btn-sm" @if ($perm_btn['+'modify'+']!=1) disabled @endif onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
                 }
                 table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
                     formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
@@ -787,7 +787,7 @@ function actualizarEstatus()
 {
     // alert("entre a viewpolicy");
     var status = $("#selectStatus").val();
-    var route = rutaPolizaView + "/updateStatus";
+    var route = baseUrlPolizaView + "/updateStatus";
     console.log(route);
     var data = {
         'id':id_policy,

@@ -23,14 +23,6 @@ class ServicesController extends Controller
 {
     public function index()
     {
-        $services = DB::table("Status")
-        ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','folio','type','color',
-        'Insurance.name as insurance','Branch.name as branch', 'users.name as agent', 'policy')
-        ->join('Services','Services.fk_status','=','Status.id')
-        ->join('Insurance','Insurance.id','=','Services.fk_insurance')
-        ->join('Branch','Branch.id','=','Services.fk_branch')
-        ->join('users','users.id','=','Services.fk_agent')
-        ->whereNull('Services.deleted_at')->get();
         // dd($initials);
         $clients = Client::get();
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->orderBy('name')->pluck('name','id');
@@ -48,6 +40,30 @@ class ServicesController extends Controller
         $insurances = Insurance::pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $services = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','folio','type','color',
+                'Insurance.name as insurance','Branch.name as branch', 'users.name as agent', 'policy')
+                ->join('Services','Services.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Services.fk_insurance')
+                ->join('Branch','Branch.id','=','Services.fk_branch')
+                ->join('users','users.id','=','Services.fk_agent')
+                ->whereNull('Services.deleted_at')->get();
+        }
+        else
+        {
+            $services = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Services.id as id','Services.name as name','folio','type','color',
+                'Insurance.name as insurance','Branch.name as branch', 'users.name as agent', 'policy')
+                ->join('Services','Services.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Services.fk_insurance')
+                ->join('Branch','Branch.id','=','Services.fk_branch')
+                ->join('users','users.id','=','Services.fk_agent')
+                ->where('fk_agent',$user)
+                ->whereNull('Services.deleted_at')->get();
+        }
         if($perm==0)
         {
             return redirect()->route('home');

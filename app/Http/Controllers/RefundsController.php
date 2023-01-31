@@ -14,13 +14,6 @@ class RefundsController extends Controller
 {
     public function index()
     {
-        $refunds = DB::table("Status")
-        ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
-        'Insurance.name as insurance','users.name as agent')
-        ->join('Refunds','Refunds.fk_status','=','Status.id')
-        ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
-        ->join('users','users.id','=','Refunds.fk_agent')
-        ->whereNull('Refunds.deleted_at')->get();
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $insurances = Insurance::pluck('name','id');
@@ -30,6 +23,28 @@ class RefundsController extends Controller
         $profile = User::findProfile();
         $perm = Permission::permView($profile,17);
         $perm_btn =Permission::permBtns($profile,17);
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $refunds = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
+                'Insurance.name as insurance','users.name as agent')
+                ->join('Refunds','Refunds.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
+                ->join('users','users.id','=','Refunds.fk_agent')
+                ->whereNull('Refunds.deleted_at')->get();
+        }
+        else
+        {
+            $refunds = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
+                'Insurance.name as insurance','users.name as agent')
+                ->join('Refunds','Refunds.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
+                ->join('users','users.id','=','Refunds.fk_agent')
+                ->where('fk_agent',$user)
+                ->whereNull('Refunds.deleted_at')->get();
+        }
         if($perm==0)
         {
             return redirect()->route('home');

@@ -221,9 +221,7 @@
                 <th class="text-center">Compañía</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Estatus</th>
-                @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
-                    <th class="text-center">Opciones</th>
-                @endif
+                <th class="text-center">Opciones</th>
             </thead>
 
             <tbody>
@@ -240,16 +238,12 @@
                             <button class="btn btn-info" style="background-color: #{{$service->color}}; border-color: #{{$service->color}}" onclick="opcionesEstatus({{$service->id}},{{$service->statId}})">{{$service->statName}}</button>
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
-                        @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
-                            <td>
-                                @if ($perm_btn['modify']==1)
-                                    <button href="#|" type="button" class="btn btn-warning" onclick="editarServicio({{$service->id}})" ><i class="fa fa-edit"></i></button>
-                                @endif
-                                @if ($perm_btn['erase']==1)
-                                    <button href="#|" type="button" class="btn btn-danger" onclick="eliminarServicio({{$service->id}})"><i class="fa fa-trash"></i></button>
-                                @endif
-                            </td>
-                        @endif
+                        <td>
+                            <button href="#|" type="button" class="btn btn-warning" onclick="editarServicio({{$service->id}})" ><i class="fa fa-edit"></i></button>
+                            @if ($perm_btn['erase']==1)
+                                <button href="#|" type="button" class="btn btn-danger" onclick="eliminarServicio({{$service->id}})"><i class="fa fa-trash"></i></button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

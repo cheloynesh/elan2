@@ -87,8 +87,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="">Cambiar Cliente</label>
-                                    <button type="button" class="btn btn-primary" onclick="buscarclientes()">Buscar</button>
+                                    @if ($perm_btn['modify']==1)
+                                        <label for="">Cambiar Cliente</label>
+                                        <button type="button" class="btn btn-primary" onclick="buscarclientes()">Buscar</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -531,16 +533,17 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-primary" onclick="mostrartabla()">
-                                            Actualizar Recibos
-                                        </button>
+                            @if ($perm_btn['modify']==1)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary" onclick="mostrartabla()">
+                                                Actualizar Recibos
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -571,7 +574,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="cancelareditar()" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnModalView" onclick="aceptarPoliza()">Actualizar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" class="btn btn-primary" id="btnModalView" onclick="aceptarPoliza()">Actualizar</button>
+                @endif
             </div>
         </div>
     </div>

@@ -29,29 +29,47 @@ class ViewPoliciesController extends Controller
         // ->get();
         // dd($policy);
         $clients = Client::get();
-        $policy = DB::table('Status')
-        ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
-        ->join('Policy','Policy.fk_status','=','Status.id')
-        ->join('Client','Client.id','=','Policy.fk_client')
-        ->join('Branch','Branch.id','=','Policy.fk_branch')
-        ->whereNull('Policy.deleted_at')
-        ->get();
         // dd($policy[0]->color);
-
 
         // CONCAT(isnull(`affiliate_name`,''),'-',isnull(`model`,''),'-',isnull(`ip`,'')
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","20")
         ->pluck('name','id');
+        $user = User::user_id();
         $profile = User::findProfile();
-        $perm = Permission::permView($profile,11);
-        $perm_btn =Permission::permBtns($profile,11);
+        // dd($user);
+        $perm = Permission::permView($profile,20);
+        $perm_btn =Permission::permBtns($profile,20);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
         $insurances = Insurance::pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
+
+        if($profile != 12)
+        {
+            $policy = DB::table('Status')
+                ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
+                ->join('Policy','Policy.fk_status','=','Status.id')
+                ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->whereNull('Policy.deleted_at')
+                ->get();
+        }
+        else
+        {
+            $policy = DB::table('Status')
+                ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
+                ->join('Policy','Policy.fk_status','=','Status.id')
+                ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->where('fk_agent',$user)
+                ->whereNull('Policy.deleted_at')
+                ->get();
+        }
+
+        // dd($perm);
         if($perm==0)
         {
             return redirect()->route('home');
@@ -59,7 +77,7 @@ class ViewPoliciesController extends Controller
         else
         {
             return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms',
-            'charges','branches','cmbStatus','clients'));
+            'charges','branches','cmbStatus','clients','user'));
         }
     }
 
@@ -127,6 +145,8 @@ class ViewPoliciesController extends Controller
         // dd($request->all());
         $status->status = null;
         $status->save();
+        $policy = Policy::select('*')->where('id',$status->fk_policy)->first();
+        $this->updateStatusPayment($policy);
         return response()->json(['status'=>true, "message"=>"Recibo Cancelado"]);
 
     }
@@ -177,7 +197,6 @@ class ViewPoliciesController extends Controller
     }
     public function updatePolicies()
     {
-        date_default_timezone_set('America/Mexico_City');
         $policies = Policy::whereNull('deleted_at')->get();
         foreach($policies as $policy)
         {
@@ -189,6 +208,7 @@ class ViewPoliciesController extends Controller
     public function updateStatusPayment($policy)
     {
         // dd($policy->id);
+        date_default_timezone_set('America/Mexico_City');
         $receipts = DB::table('Receipts')->select('*')
             ->orderBy('initial_date','asc')
             ->groupBy('fk_policy')
@@ -224,10 +244,19 @@ class ViewPoliciesController extends Controller
             }
             else
             {
-                $recptDate = new DateTime($policy->initial_date);
-                $status = Policy::where('id',$policy->id)->first();
-                $status->fk_status = 21;
-                $status->save();
+                $recptDate = new DateTime($receipts->initial_date);
+                if($today >= $recptDate)
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 21;
+                    $status->save();
+                }
+                else
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 15;
+                    $status->save();
+                }
             }
         }
     }

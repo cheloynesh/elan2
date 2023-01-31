@@ -8,15 +8,15 @@
     @include('processes.OT.status.status')
     @include('policies.searchclient')
 
-    {{-- <br><br>
+    @if (intval($user)==2)
+        <br><br>
 
-    <div class="bd-example bd-example-padded-bottom">
-        @if ($perm_btn['addition']==1)
-            <button type="button" class="btn btn-primary" onclick="actualizarStatusPoliza()">Actualizar</button>
-        @endif
-    </div>
+        <div class="bd-example bd-example-padded-bottom">
+                <button type="button" class="btn btn-primary" onclick="actualizarStatusPoliza()">Actualizar</button>
+            </div>
 
-    <br><br> --}}
+        <br><br>
+    @endif
 
         {{-- Inicia pantalla de inicio --}}
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
@@ -46,7 +46,9 @@
                         <td>
                             <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})">Ver Recibos</a>
                             <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></a>
-                            <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></a>
+                            @if ($perm_btn['erase']==1)
+                                <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

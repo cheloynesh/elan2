@@ -196,7 +196,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelarEditar()" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="actualizarInicial()" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="actualizarInicial()" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>

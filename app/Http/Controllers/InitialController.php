@@ -24,17 +24,7 @@ class InitialController extends Controller
     public function index()
     {
         // $initials = Initial::get();
-        $initials = DB::table("Status")
-        ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
-        'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
-        'users.name as agent','Initials.created_at as date','folio')
-        ->join('Initials','Initials.fk_status','=','Status.id')
-        ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
-        ->join('Branch','Branch.id','=','Initials.fk_branch')
-        ->join('users','users.id','=','Initials.fk_agent')
-        ->where('Status.id','<>','4')
-        ->whereNull('Initials.deleted_at')
-        ->get();
+
         // dd($initials);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
@@ -54,6 +44,36 @@ class InitialController extends Controller
         $profile = User::findProfile();
         $perm = Permission::permView($profile,14);
         $perm_btn =Permission::permBtns($profile,14);
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $initials = DB::table("Status")
+                ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
+                'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
+                'users.name as agent','Initials.created_at as date','folio')
+                ->join('Initials','Initials.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
+                ->join('Branch','Branch.id','=','Initials.fk_branch')
+                ->join('users','users.id','=','Initials.fk_agent')
+                ->where('Status.id','<>','4')
+                ->whereNull('Initials.deleted_at')
+                ->get();
+        }
+        else
+        {
+            $initials = DB::table("Status")
+                ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
+                'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
+                'users.name as agent','Initials.created_at as date','folio')
+                ->join('Initials','Initials.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
+                ->join('Branch','Branch.id','=','Initials.fk_branch')
+                ->join('users','users.id','=','Initials.fk_agent')
+                ->where('Status.id','<>','4')
+                ->where('fk_agent',$user)
+                ->whereNull('Initials.deleted_at')
+                ->get();
+        }
         if($perm==0)
         {
             return redirect()->route('home');
