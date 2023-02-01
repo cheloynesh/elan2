@@ -62,10 +62,10 @@
                             @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                                 <td>
                                     @if ($perm_btn['modify']==1)
-                                        <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" ><i class="fa fa-edit"></i></a>
+                                        <button href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" ><i class="fa fa-edit"></i></button>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})"><i class="fa fa-trash"></i></a>
+                                        <button href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})"><i class="fa fa-trash"></i></button>
                                     @endif
                                 </td>
                             @endif

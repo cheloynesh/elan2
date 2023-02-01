@@ -45,9 +45,9 @@
                         </td>
                         <td>
                             <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})">Ver Recibos</a>
-                            <a href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></a>
+                            <button href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></button>
                             @if ($perm_btn['erase']==1)
-                                <a href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></a>
+                                <button href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>

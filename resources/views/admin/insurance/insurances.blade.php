@@ -237,10 +237,10 @@
                                 <td>
                                     @if ($perm_btn['modify']==1)
                                         <a href="#|" class="btn btn-primary" onclick="abrirBranches({{$insurance->id}})" >Asignar Ramo</a>
-                                        <a href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" ><i class="fa fa-edit"></i></a>
+                                        <button href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" ><i class="fa fa-edit"></i></button>
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})"><i class="fa fa-trash"></i></a>
+                                        <button href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})"><i class="fa fa-trash"></i></button>
                                     @endif
                                 </td>
                             @endif

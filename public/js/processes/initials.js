@@ -530,3 +530,40 @@ function llenarPlanes1()
         }
     })
 }
+function abrirFiltro()
+{
+    $("#myModalExport").modal('show');
+}
+
+function cerrarFiltro()
+{
+    $("#myModalExport").modal('hide');
+}
+
+function excel_nuc(){
+    var route = baseUrlInicial + '/ExportInitials/' + $("#selectStatusExc").val() + '/' + $("#selectBranchExc").val();
+    $.ajaxSetup({
+        headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });
+
+    var form = $('<form></form>');
+
+    form.attr("method", "get");
+    form.attr("action", route);
+    form.attr('_token',$("meta[name='csrf-token']").attr("content"));
+    $.each(function(key, value) {
+        var field = $('<input></input>');
+        field.attr("type", "hidden");
+        field.attr("name", key);
+        field.attr("value", value);
+        form.append(field);
+    });
+    var field = $('<input></input>');
+    field.attr("type", "hidden");
+    field.attr("name", "_token");
+    field.attr("value", $("meta[name='csrf-token']").attr("content"));
+    form.append(field);
+    $(document.body).append(form);
+    form.submit();
+}
+

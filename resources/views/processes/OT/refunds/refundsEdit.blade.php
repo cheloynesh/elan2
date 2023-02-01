@@ -43,10 +43,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Compañía:</label>
-                                <select name="selectInsurance1" id="selectInsurance1" class="form-select">
+                                <select name="selectInsurance1" id="selectInsurance1" class="form-select" onchange="llenarRamos1()">
                                     <option hidden selected value="">Selecciona una opción</option>
                                     @foreach ($insurances as $id => $insurance)
                                         <option value='{{ $id }}'>{{ $insurance }}</option>
@@ -54,7 +54,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Ramo:</label>
+                                <select name="selectBranch" id="selectBranch1" class="form-select">
+                                    <option selected value="">Selecciona una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Fecha de Ingreso</label>
                                 <input type="date" id="entry_date1" name="entry_date1" class="form-control" placeholder="Fecha de Sistema">

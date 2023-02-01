@@ -41,13 +41,13 @@
                                 <td>
                                     @if ($perm_btn['modify']==1)
                                         @if ($client->status == 0)
-                                            <a href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" ><i class="fa fa-edit"></i></a>
+                                            <button href="#|" class="btn btn-warning" onclick="editarCliente({{$client->id}})" ><i class="fa fa-edit"></i></button>
                                         @else
-                                            <a href="#|" class="btn btn-warning" onclick="editarEmpresa({{$client->id}})" ><i class="fa fa-edit"></i></a>
+                                            <button href="#|" class="btn btn-warning" onclick="editarEmpresa({{$client->id}})" ><i class="fa fa-edit"></i></button>
                                         @endif
                                     @endif
                                     @if ($perm_btn['erase']==1)
-                                        <a href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})"><i class="fa fa-trash"></i></a>
+                                        <button href="#|" class="btn btn-danger" onclick="eliminarCliente({{$client->id}})"><i class="fa fa-trash"></i></button>
                                     @endif
                                 </td>
                             @endif

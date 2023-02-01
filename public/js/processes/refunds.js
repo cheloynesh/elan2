@@ -49,12 +49,25 @@ $(document).ready( function () {
     });
 } );
 
+function actualizarSelect(result, select)
+{
+    var assignPlan = $(select);
+
+    $(select).empty();
+    if(result.length == 0 || result == null) assignPlan.append('<option selected  value="0">Seleccione una opción</option>');
+    else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
+    result.forEach( function(valor, indice, array) {
+        assignPlan.append("<option value='" + valor.id + "'>" + valor.name + "</option>");
+    });
+}
+
 function guardarReembolso()
 {
     var agent = $("#selectAgent").val();
     var folio = $("#folio").val();
     var contractor = $("#contractor").val();
     var insurance = $("#selectInsurance").val();
+    var branch = $("#selectBranch").val();
     var entry_date = $("#entry_date").val();
     var policy = $("#policy").val();
     var insured = $("#insured").val();
@@ -69,6 +82,7 @@ function guardarReembolso()
         'folio':folio,
         'contractor':contractor,
         'fk_insurance':insurance,
+        'fk_branch':branch,
         'entry_date':entry_date,
         'policy':policy,
         'insured':insured,
@@ -106,7 +120,9 @@ function editarReembolso(id)
            $("#selectAgent1").val(result.data.fk_agent);
            $("#folio1").val(result.data.folio);
            $("#contractor1").val(result.data.contractor);
+           actualizarSelect(result.branches,"#selectBranch1");
            $("#selectInsurance1").val(result.data.fk_insurance);
+           $("#selectBranch1").val(result.data.fk_branch);
            $("#entry_date1").val(result.data.entry_date);
            $("#policy1").val(result.data.policy);
            $("#insured1").val(result.data.insured);
@@ -128,6 +144,7 @@ function actualizarReembolso()
     var folio = $("#folio1").val();
     var contractor = $("#contractor1").val();
     var insurance = $("#selectInsurance1").val();
+    var branch = $("#selectBranch1").val();
     var entry_date = $("#entry_date1").val();
     var policy = $("#policy1").val();
     var insured = $("#insured1").val();
@@ -143,6 +160,7 @@ function actualizarReembolso()
         'folio':folio,
         'contractor':contractor,
         'fk_insurance':insurance,
+        'fk_branch':branch,
         'entry_date':entry_date,
         'policy':policy,
         'insured':insured,
@@ -240,4 +258,80 @@ function cerrarmodal()
     $("#myEstatusModal").modal('hide');
     $("#comentary").val("");
 
+}
+function abrirFiltro()
+{
+    $("#myModalExport").modal('show');
+}
+
+function cerrarFiltro()
+{
+    $("#myModalExport").modal('hide');
+}
+
+function llenarRamos(){
+    var insurance = $("#selectInsurance").val();
+
+    var route = baseUrl + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function llenarRamos1(){
+    var insurance = $("#selectInsurance1").val();
+
+    var route = baseUrl + '/getBranches/'+ insurance;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            actualizarSelect(result.branches,"#selectBranch1");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function excel_nuc(){
+    var route = baseUrl + '/ExportRefunds/' + $("#selectStatusExc").val() + '/' + $("#selectBranchExc").val();
+    $.ajaxSetup({
+        headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+    });
+
+    var form = $('<form></form>');
+
+    form.attr("method", "get");
+    form.attr("action", route);
+    form.attr('_token',$("meta[name='csrf-token']").attr("content"));
+    $.each(function(key, value) {
+        var field = $('<input></input>');
+        field.attr("type", "hidden");
+        field.attr("name", key);
+        field.attr("value", value);
+        form.append(field);
+    });
+    var field = $('<input></input>');
+    field.attr("type", "hidden");
+    field.attr("name", "_token");
+    field.attr("value", $("meta[name='csrf-token']").attr("content"));
+    form.append(field);
+    $(document.body).append(form);
+    form.submit();
 }

@@ -90,6 +90,7 @@ Route::post('processes/OT/Initials/initial/updateStatus', 'InitialController@upd
 Route::get('processes/OT/Initials/initial/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
 Route::get('processes/OT/Initials/initial/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 Route::get('processes/OT/Initials/initial/GetinfoStatus/{id}','InitialController@GetinfoStatus')->name('initial.GetinfoStatus');
+Route::get('processes/OT/Initials/initial/ExportInitials/{status}/{branch}','InitialController@ExportInitials');
 
 // Proceso Servicios
 Route::resource('processes/OT/services/service', 'ServicesController');
@@ -105,7 +106,10 @@ Route::resource('processes/OT/refunds/refunds', 'RefundsController');
 Route::get('processes/OT/refunds/refunds/GetInfo/{id}','RefundsController@GetInfo')->name('refunds.GetInfo');
 Route::post('processes/OT/refunds/refunds/updateStatus', 'RefundsController@updateStatus')->name('refunds.updateStatus');
 Route::get('processes/OT/refunds/refunds/GetinfoStatus/{id}','RefundsController@GetinfoStatus')->name('refunds.GetinfoStatus');
+Route::get('processes/OT/refunds/refunds/getBranches/{insurance}','RefundsController@getBranches')->name('refunds.getBranches');
+Route::get('processes/OT/refunds/refunds/ExportRefunds/{status}/{branch}','RefundsController@ExportRefunds');
 
+// ------------------------------------Polizas--------------------------------------------------
 // polizas
 Route::resource('policies/policy','PoliciesController');
 Route::get('policies/policy/GetInfo/{id}','PoliciesController@GetInfo')->name('policy.GetInfo');

@@ -18,6 +18,8 @@ use App\Branch_assign;
 use DB;
 use Carbon\Carbon;
 use App\Policy;
+use App\Exports\ExportInitial;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InitialController extends Controller
 {
@@ -33,6 +35,8 @@ class InitialController extends Controller
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
         $applications = Application::pluck('name','id');
+        $estatusExc = Status::select('id', 'name')->where("fk_section","14")->pluck('name','id');
+        $branchesExc = Branch::select('id', 'name')->pluck('name','id');
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","14")
         ->pluck('name','id');
@@ -81,7 +85,7 @@ class InitialController extends Controller
         else
         {
             return view('processes.OT.Initials.initial',
-            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus'));
+            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus','estatusExc','branchesExc'));
         }
     }
     public function GetInfo($id)
@@ -244,5 +248,13 @@ class InitialController extends Controller
         }
 
         return response()->json(['status'=>true, "branches" => $assignedPlans]);
+    }
+
+    public function ExportInitials($status,$branch)
+    {
+        // dd("entre");
+        $nombre = "Iniciales.xlsx";
+        $sheet = new ExportInitial($status, $branch);
+        return Excel::download($sheet,$nombre);
     }
 }

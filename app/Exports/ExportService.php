@@ -31,7 +31,8 @@ class ExportService implements FromCollection, WithHeadings
                 ->join('Branch',"Branch.id","=","fk_branch")
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
-                ->join('users',"users.id","=","fk_agent")->get();
+                ->join('users',"users.id","=","fk_agent")
+                ->whereNull("Services.deleted_at")->get();
                 // dd($movimientos);
             }
             else
@@ -41,7 +42,8 @@ class ExportService implements FromCollection, WithHeadings
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
                 ->join('users',"users.id","=","fk_agent")
-                ->where('fk_branch',$this->branch)->get();
+                ->where('fk_branch',$this->branch)
+                ->whereNull("Services.deleted_at")->get();
             }
         }
         else
@@ -53,7 +55,8 @@ class ExportService implements FromCollection, WithHeadings
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
                 ->join('users',"users.id","=","fk_agent")
-                ->where('fk_status',$this->status)->get();
+                ->where('fk_status',$this->status)
+                ->whereNull("Services.deleted_at")->get();
             }
             else
             {
@@ -62,7 +65,8 @@ class ExportService implements FromCollection, WithHeadings
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
                 ->join('users',"users.id","=","fk_agent")
-                ->where('fk_branch',$this->branch)->where('fk_status',$this->status)->get();
+                ->where('fk_branch',$this->branch)->where('fk_status',$this->status)
+                ->whereNull("Services.deleted_at")->get();
             }
         }
 

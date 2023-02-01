@@ -160,8 +160,8 @@
                                         <tr id="{{$profile->id}}">
                                             <td>{{$profile->name}}</td>
                                                 <td>
-                                                        <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
-                                                        <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                                                        <button href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" ><i class="fa fa-edit"></i></button>
+                                                        <button href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})"><i class="fa fa-trash"></i></button>
                                                 </td>
                                         </tr>
                                     @endforeach
@@ -217,8 +217,8 @@
                                     <tr id="{{$profile->id}}">
                                         <td>{{$profile->name}}</td>
                                         <td>
-                                            <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
-                                            <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                                            <button href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" ><i class="fa fa-edit"></i></button>
+                                            <button href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -241,8 +241,8 @@
                                     <tr id="{{$insurance->id}}">
                                         <td>{{$insurance->name}}</td>
                                         <td>
-                                            <a href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" >Editar</a>
-                                            <a href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})">Eliminar</a>
+                                            <button href="#|" class="btn btn-warning" onclick="editarAseguradora({{$insurance->id}})" ><i class="fa fa-edit"></i></button>
+                                            <button href="#|" class="btn btn-danger" onclick="eliminarAseguradora({{$insurance->id}})"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -278,8 +278,8 @@
                 <tr id="{{$profile->id}}">
                     <td>{{$profile->name}}</td>
                     <td>
-                        <a href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" >Editar</a>
-                        <a href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})">Eliminar</a>
+                        <button href="#|" class="btn btn-warning" onclick="editarperfil({{$profile->id}})" ><i class="fa fa-edit"></i></button>
+                        <button href="#|" class="btn btn-danger" onclick="eliminarperfil({{$profile->id}})"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
             @endforeach

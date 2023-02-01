@@ -8,7 +8,11 @@ use App\Status;
 use App\Permission;
 use App\Insurance;
 use App\Refund;
+use App\Branch_assign;
+use App\Branch;
 use DB;
+use App\Exports\ExportRefunds;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RefundsController extends Controller
 {
@@ -24,11 +28,13 @@ class RefundsController extends Controller
         $perm = Permission::permView($profile,17);
         $perm_btn =Permission::permBtns($profile,17);
         $user = User::user_id();
+        $estatusExc = Status::select('id', 'name')->where("fk_section","17")->pluck('name','id');
+        $branchesExc = Branch::select('id', 'name')->pluck('name','id');
         if($profile != 12)
         {
             $refunds = DB::table("Status")
                 ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
-                'Insurance.name as insurance','users.name as agent')
+                'Insurance.name as insurance','users.name as agent','contractor')
                 ->join('Refunds','Refunds.fk_status','=','Status.id')
                 ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
                 ->join('users','users.id','=','Refunds.fk_agent')
@@ -38,7 +44,7 @@ class RefundsController extends Controller
         {
             $refunds = DB::table("Status")
                 ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
-                'Insurance.name as insurance','users.name as agent')
+                'Insurance.name as insurance','users.name as agent','contractor')
                 ->join('Refunds','Refunds.fk_status','=','Status.id')
                 ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
                 ->join('users','users.id','=','Refunds.fk_agent')
@@ -52,14 +58,22 @@ class RefundsController extends Controller
         else
         {
             return view('processes.OT.refunds.refunds',
-            compact('refunds','agents','insurances','perm_btn','cmbStatus'));
+            compact('refunds','agents','insurances','perm_btn','cmbStatus','estatusExc','branchesExc'));
         }
     }
     public function GetInfo($id)
     {
         $refund = Refund::where('id',$id)->first();
+
+        $brnchAss = Branch_assign::select('id')->where('fk_insurance',$refund->fk_insurance)->where('fk_branch',$refund->fk_branch)->first();
+
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$refund->fk_insurance)
+            ->whereNull('Branch_assign.deleted_at')->get();
+
         // dd($service);
-        return response()->json(['status'=>true, "data"=>$refund]);
+        return response()->json(['status'=>true, "data"=>$refund, "branches" => $assignedBranches]);
     }
 
     public function store(Request $request)
@@ -69,6 +83,7 @@ class RefundsController extends Controller
         $refund->folio = $request->folio;
         $refund->contractor = $request->contractor;
         $refund->fk_insurance = $request->fk_insurance;
+        $refund->fk_branch = $request->fk_branch;
         $refund->entry_date = $request->entry_date;
         $refund->policy = $request->policy;
         $refund->insured = $request->insured;
@@ -88,6 +103,7 @@ class RefundsController extends Controller
         'folio' => $request->folio,
         'contractor' => $request->contractor,
         'fk_insurance' => $request->fk_insurance,
+        'fk_branch' => $request->fk_branch,
         'entry_date' => $request->entry_date,
         'policy' => $request->policy,
         'insured' => $request->insured,
@@ -118,5 +134,25 @@ class RefundsController extends Controller
     public function GetinfoStatus($id){
         $refund=Refund::where('id',$id)->first();
         return response()->json(['status'=>true, "data"=>$refund]);
+    }
+
+    public function getBranches($id)
+    {
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$id)
+            ->orderBy('name')
+            ->whereNull('Branch_assign.deleted_at')->get();
+        // dd($id);
+
+        return response()->json(['status'=>true, "branches" => $assignedBranches]);
+    }
+
+    public function ExportRefunds($status,$branch)
+    {
+        // dd("entre");
+        $nombre = "Reembolso.xlsx";
+        $sheet = new ExportRefunds($status, $branch);
+        return Excel::download($sheet,$nombre);
     }
 }
