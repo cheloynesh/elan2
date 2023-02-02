@@ -7,6 +7,56 @@
     @include('policies.modalPolicies')
     @include('processes.OT.status.status')
     @include('policies.searchclient')
+    {{-- modal excel --}}
+    <div id="myModalExport" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="gridModalLabek">Exportar a Excel</h4>
+                    <button type="button" class="close" onclick="cerrarFiltro()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid bd-example-row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Estatus:</label>
+                                    <select name="selectStatusExc" id="selectStatusExc" class="form-select">
+                                        <option hidden selected value = 0>Selecciona una opción</option>
+                                        @foreach ($estatusExc as $id => $estat)
+                                            <option value='{{ $id }}'>{{ $estat }}</option>
+                                        @endforeach
+                                        <option value = 0>Todos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Branch:</label>
+                                    <select name="selectBranchExc" id="selectBranchExc" class="form-select">
+                                        <option hidden selected value = 0>Selecciona una opción</option>
+                                        @foreach ($branchesExc as $id => $brnch)
+                                            <option value='{{ $id }}'>{{ $brnch }}</option>
+                                        @endforeach
+                                        <option value = 0>Todos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secundary" onclick="cerrarFiltro()">Cancelar</button>
+                    <button type="button" onclick="excel_nuc()" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- fin modal| --}}
 
     @if (intval($user)==2)
         <br><br>
@@ -17,7 +67,21 @@
 
         <br><br>
     @endif
-
+    <br><br>
+    <div class="col-lg-12">
+        <div class="row">
+            @if ($perm_btn['modify']==1)
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @if ($perm_btn['addition']==1)
+                            <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-file-excel"></i></button>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+    <br><br>
         {{-- Inicia pantalla de inicio --}}
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbPoliza">

@@ -58,6 +58,7 @@ class ExportInitial implements FromCollection, WithHeadings
                     ->join('Insurance',"Insurance.id","=","fk_insurance")
                     ->join('Status',"Status.id","=","fk_status")
                     ->join('users',"users.id","=","fk_agent")
+                    ->whereNull("Initials.deleted_at")
                     ->where('fk_branch',$this->branch)->get();
             }
         }
@@ -78,6 +79,7 @@ class ExportInitial implements FromCollection, WithHeadings
                     ->join('Insurance',"Insurance.id","=","fk_insurance")
                     ->join('Status',"Status.id","=","fk_status")
                     ->join('users',"users.id","=","fk_agent")
+                    ->whereNull("Initials.deleted_at")
                     ->where('fk_status',$this->status)->get();
             }
             else
@@ -95,6 +97,7 @@ class ExportInitial implements FromCollection, WithHeadings
                     ->join('Insurance',"Insurance.id","=","fk_insurance")
                     ->join('Status',"Status.id","=","fk_status")
                     ->join('users',"users.id","=","fk_agent")
+                    ->whereNull("Initials.deleted_at")
                     ->where('fk_branch',$this->branch)->where('fk_status',$this->status)->get();
             }
         }

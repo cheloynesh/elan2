@@ -130,6 +130,7 @@ Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@update
 Route::get('policies/viewPolicies/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
 Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@updatePolicies')->name('viewPolicies.updatePolicies');
+Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesController@ExportPolicy');
 
 // cobranza
 Route::resource('policies/collection','CollectionController');

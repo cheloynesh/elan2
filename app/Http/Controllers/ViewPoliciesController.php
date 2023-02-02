@@ -18,6 +18,8 @@ use App\Client;
 use App\Branch_assign;
 use DateTime;
 use DB;
+use App\Exports\ExportPolicy;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ViewPoliciesController extends Controller
 {
@@ -46,6 +48,8 @@ class ViewPoliciesController extends Controller
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
+        $estatusExc = Status::select('id', 'name')->where("fk_section","20")->pluck('name','id');
+        $branchesExc = Branch::select('id', 'name')->pluck('name','id');
 
         if($profile != 12)
         {
@@ -77,7 +81,7 @@ class ViewPoliciesController extends Controller
         else
         {
             return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms',
-            'charges','branches','cmbStatus','clients','user'));
+            'charges','branches','cmbStatus','clients','user','estatusExc','branchesExc'));
         }
     }
 
@@ -259,5 +263,13 @@ class ViewPoliciesController extends Controller
                 }
             }
         }
+    }
+
+    public function ExportPolicy($status,$branch)
+    {
+        // dd("entre");
+        $nombre = "Poliza.xlsx";
+        $sheet = new ExportPolicy($status, $branch);
+        return Excel::download($sheet,$nombre);
     }
 }
