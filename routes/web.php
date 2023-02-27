@@ -136,5 +136,9 @@ Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesC
 Route::resource('policies/collection','CollectionController');
 Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->name('collection.GetInfo');
 
+//reportes
+Route::resource('reports/duepay/duepay','DuePayController');
+
+
 
 

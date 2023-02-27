@@ -89,8 +89,10 @@ class ViewPoliciesController extends Controller
     {
         // dd($id);
         $receipts = Receipts::where('fk_policy',$id)->get();
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,20);
         // dd($receipts);
-        return response()->json(['status'=>true, "data"=>$receipts]);
+        return response()->json(['status'=>true, "data"=>$receipts, "permission"=>$perm_btn]);
 
     }
 
