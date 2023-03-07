@@ -132,6 +132,12 @@ function obtenerid(id){
 
             $("#selectBranch").val(result.data.fk_branch);
             $("#selectPlan1").val(result.data.fk_plan);
+
+            // var reg = $("#onoffType").prop('checked');
+            // if(reg)
+            //     $("#onoffType").bootstrapToggle('on');
+            // else
+            //     $("#onoffType").bootstrapToggle('off');
         }
     });
 
@@ -195,6 +201,12 @@ function guardarPoliza()
     var charge=$("#selectCharge").val();
     var initial_date=$("#initial_date").val();
     var end_date=$("#end_date").val();
+    var reg = $("#onoffType").prop('checked');
+    var type = 0;
+    if(reg)
+        type = 1;
+    else
+        type = 2;
 
     if(other_exp != ""){
         other_exp = parseFloat(other_exp);
@@ -245,7 +257,8 @@ function guardarPoliza()
         "paymentForm": pay_frec,
         "initial_date":initial_date,
         "end_date":end_date,
-        "arrayValues": arrayValues
+        "arrayValues": arrayValues,
+        "type":type
     }
     // alert("aantes de la peticion");
     jQuery.ajax({
@@ -532,4 +545,14 @@ function llenarPlanes()
             alertify.error(errorTrown);
         }
     })
+}
+
+function prueba()
+{
+    var reg = $("#onoffType").prop('checked');
+    var type = 0;
+    if(reg)
+        type = 1;
+    else
+        type = 2;
 }

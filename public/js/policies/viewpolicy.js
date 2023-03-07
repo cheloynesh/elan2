@@ -251,6 +251,7 @@ function cancelAuth(id)
         },
         function(){});
 }
+var newclient = 0;
 idClient = 0;
 clientType = 0;
 function editarPoliza(id)
@@ -315,6 +316,11 @@ function editarPoliza(id)
             $("#initial_date_edit").val(result.data.initial_date);
             $("#end_date_edit").val(result.data.end_date);
             $("#client_edit").val(result.data.name);
+
+            if(result.data.type == 1)
+                $("#onoffType").bootstrapToggle('on');
+            else
+                $("#onoffType").bootstrapToggle('off');
 
             $("#myModalEdit").modal("show");
         }
@@ -386,6 +392,12 @@ function actualizarpoliza()
     var fk_payment_form = $("#pay_frec_edit").val();
     var initial_date = $("#initial_date_edit").val();
     var end_date = $("#end_date_edit").val();
+    var reg = $("#onoffType").prop('checked');
+    var type = 0;
+    if(reg)
+        type = 1;
+    else
+        type = 2;
 
 // console.log(idPolicy);
     var data = {
@@ -413,7 +425,8 @@ function actualizarpoliza()
         "end_date":end_date,
         "arrayValues":arrayValues,
         "fk_client":idClient,
-        "updateReceipts":updatedReceipt
+        "updateReceipts":updatedReceipt,
+        "type":type
 
     }
     var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/" + idPolicy;
@@ -469,6 +482,12 @@ function guardarPoliza()
     var fk_payment_form = $("#pay_frec_edit").val();
     var initial_date = $("#initial_date_edit").val();
     var end_date = $("#end_date_edit").val();
+    var reg = $("#onoffType").prop('checked');
+    var type = 0;
+    if(reg)
+        type = 1;
+    else
+        type = 2;
 
     if(other_exp != ""){
         other_exp = parseFloat(other_exp);
@@ -520,7 +539,8 @@ function guardarPoliza()
         "paymentForm": fk_payment_form,
         "initial_date":initial_date,
         "end_date":end_date,
-        "arrayValues": arrayValues
+        "arrayValues": arrayValues,
+        "type":type
     }
     // alert("aantes de la peticion");
     jQuery.ajax({
@@ -531,22 +551,25 @@ function guardarPoliza()
         success:function(result){
             if(result.status == true)
             {
-                // GuardarRecibos();>
-                if(clientType == 0)
+                if(newclient == 1)
                 {
-                    // alert("entre a cliente");
-                    actualizarCliente(1);
-                }
-                else
-                {
-                    // alert("entre a empresa");
-
-                    actualizarEmpresa(2);
+                    // GuardarRecibos();>
+                    if(clientType == 0)
+                    {
+                        // alert("entre a cliente");
+                        actualizarCliente(1);
+                    }
+                    else
+                    {
+                        // alert("entre a empresa");
+                        actualizarEmpresa(2);
+                    }
                 }
                 alertify.success("Poliza Creada");
                 $("#myModalEdit").modal("hide");
                 // window.location.reload(true);
-            }else{
+            }
+            else{
                 alertify.error("No se guardo la poliza, verifique sus datos.");
 
             }

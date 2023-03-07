@@ -28,25 +28,25 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Nombre</label>
-                                <input type="text" id="name1" name="name1" class="form-control" placeholder="Nombre">
+                                <input type="text" id="nameEdit" name="nameEdit" class="form-control" placeholder="Nombre">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Apellido paterno</label>
-                                <input type="text" id="firstname1" name="firstname1" class="form-control" placeholder="Apellido">
+                                <input type="text" id="firstnameEdit" name="firstnameEdit" class="form-control" placeholder="Apellido">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">Apellido materno</label>
-                                <input type="text" id="lastname1" name="lastname1" class="form-control" placeholder="Apellido">
+                                <input type="text" id="lastnameEdit" name="lastnameEdit" class="form-control" placeholder="Apellido">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="">RFC</label>
-                                <input type="text" id="rfc1" name="rfc1" class="form-control" placeholder="RFC">
+                                <input type="text" id="rfcEdit" name="rfcEdit" class="form-control" placeholder="RFC">
                             </div>
                         </div>
                     </div>
@@ -55,13 +55,13 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Razón Social</label>
-                                <input type="text" id="business_name1" name="business_name1" class="form-control" placeholder="Razón Social">
+                                <input type="text" id="business_name1" name="business_nameEdit" class="form-control" placeholder="Razón Social">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">RFC</label>
-                                <input type="text" id="business_rfc1" name="business_rfc1" class="form-control" placeholder="RFC">
+                                <input type="text" id="business_rfc1" name="business_rfcEdit" class="form-control" placeholder="RFC">
                             </div>
                         </div>
                     </div>

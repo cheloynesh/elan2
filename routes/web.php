@@ -91,6 +91,7 @@ Route::get('processes/OT/Initials/initial/getBranches/{insurance}','InitialContr
 Route::get('processes/OT/Initials/initial/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 Route::get('processes/OT/Initials/initial/GetinfoStatus/{id}','InitialController@GetinfoStatus')->name('initial.GetinfoStatus');
 Route::get('processes/OT/Initials/initial/ExportInitials/{status}/{branch}','InitialController@ExportInitials');
+Route::get('processes/OT/Initials/initial/GetPolicyInfo/{id}','InitialController@GetPolicyInfo')->name('initial.GetPolicyInfo');
 
 // Proceso Servicios
 Route::resource('processes/OT/services/service', 'ServicesController');
@@ -130,6 +131,7 @@ Route::post('policies/viewPolicies/updateStatus', 'ViewPoliciesController@update
 Route::get('policies/viewPolicies/getBranches/{insurance}','InitialController@getBranches')->name('initial.getBranches');
 Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@updatePolicies')->name('viewPolicies.updatePolicies');
+Route::get('policies/viewPolicies/updatePoliciesNet/{id}', 'ViewPoliciesController@updatePoliciesNet')->name('viewPolicies.updatePoliciesNet');
 Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesController@ExportPolicy');
 
 // cobranza

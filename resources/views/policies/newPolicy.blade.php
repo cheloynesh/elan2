@@ -1,65 +1,3 @@
-{{-- modal de recibos --}}
-<div id="myModalReceipts" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabek">Recibos de la poliza</h4>
-                <button type="button" class="close" onclick="closereceipts()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body">
-                <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                    <table class="table table-striped table-hover text-center" id="tablerecords">
-                        <thead>
-                            <th class="text-center">Prima Neta</th>
-                            <th class="text-center">Gastos EXP</th>
-                            <th class="text-center">G.Finan</th>
-                            <th class="text-center">Otros</th>
-                            <th class="text-center">IVA</th>
-                            <th class="text-center">Prima Total</th>
-                            <th class="text-center">Fecha Pago </th>
-                            <th class="text-center">Fecha Limite</th>
-                            <th class="text-center">Accion</th>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- termina modal de recibos --}}
-{{-- modal auth --}}
-<div id="authModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabek">Autorizar Movimiento</h4>
-                <button type="button" class="close" onclick="cerrarAuth()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-
-            <div class="modal-body">
-                <div class="container-fluid bd-example-row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="">Fecha de autorización</label>
-                                    <input type="date" id="auth" name="auth" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secundary" onclick="cerrarAuth()">Cancelar</button>
-                <button type="button" onclick="guardarAuth()" class="btn btn-primary">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
 {{-- modal modificar poliza --}}
 <div id="myModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -142,7 +80,7 @@
                                     <div class="form-group">
                                         <label for="">Genero</label>
                                         <select name="gender1" id="gender1" class="form-select">
-                                            <option hidden selected value="">Selecciona una opción</option>
+                                            <option hidden selected value=0>Selecciona una opción</option>
                                             <option value="1">Masculino</option>
                                             <option value="2">Femenino</option>
                                         </select>
@@ -152,7 +90,7 @@
                                     <div class="form-group">
                                         <label for="">Estado Civil</label>
                                         <select name="marital_status1" id="marital_status1" class="form-select">
-                                            <option hidden selected value="">Selecciona una opción</option>
+                                            <option hidden selected value=0>Selecciona una opción</option>
                                             <option value="1">Soltero(a)</option>
                                             <option value="2">Casado(a)</option>
                                             <option value="3">Divorciado(a)</option>
@@ -356,6 +294,24 @@
 
                     <div class="card-body">
                         <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" id="poliza" name="poliza" class="form-control" placeholder="Número de póliza">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" onclick="checkPolicy()">Verificar</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="" id = "disponible" style="color: green; display: none;">Póliza disponible</label>
+                                        <label for="" id = "noDisponible" style="color: red; display: none;">Póliza no disponible</label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -567,8 +523,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary" onclick="mostrartabla()">Actualizar Recibos</button>
-                                            <input id = "onoffType" type="checkbox" data-toggle="toggle" data-on = "Inicial" data-off="Renovación" data-width="150">
+                                            <button type="button" class="btn btn-primary" onclick="mostrartablaInitial()">Actualizar Recibos</button>
+                                            <input id = "onoffType" type="checkbox" data-toggle="toggle" data-on = "Inicial" data-off="Renovación" data-width="150" checked>
                                         </div>
                                     </div>
                                 </div>
@@ -604,212 +560,61 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="cancelareditar()" data-dismiss="modal">Cancelar</button>
                 @if ($perm_btn['modify']==1)
-                    <button type="button" class="btn btn-primary" id="btnModalView" onclick="aceptarPoliza()">Actualizar</button>
+                    <button type="button" class="btn btn-primary" id="btnSavePolicy" onclick="guardarPolizaInicial()" disabled>Guardar</button>
                 @endif
             </div>
         </div>
     </div>
 </div>
 {{-- termina modal modificar poliza --}}
-{{-- modal nueva poliza --}}
-<div id="myModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+{{-- modal search client  --}}
+<div id="modalSrcClient" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h4 class="modal-title" id="gridModalLabel">Editar Poliza</h4>
-                <button type="button" class="close" onclick="cancelareditar()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="gridModalLabek">Buscar Clientes</h4>
+                <button type="button" class="close" onclick="ocultar()"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Prima neta</label>
-                        <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="calculo()">
-                    </div>
-                    <div class="col-md-4">
-                        <label for=""> Expedición</label>
-                        <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Imputar </label>
-                        <select class="form-select" aria-label="Default select example" id="exp_impute">
-                            <option value="1">Primera</option>
-                            <option value="2">Todas</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="">G. Financiamiento</label>
-                        <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="">Imputar </label>
-                        <select class="form-select" aria-label="Default select example" id="financ_impute">
-                            <option value="1">Primera</option>
-                            <option value="2">Todas</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="">Otros</label>
-                        <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="">Imputar</label>
-                        <select class="form-select" aria-label="Default select example" id="other_impute">
-                            <option value="1">Primera</option>
-                            <option value="2">Todas</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">IVA</label>
-                        <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">IVA %</label>
-                        <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Prima Total</label>
-                        <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="">Divisa</label>
-                        <select class="form-select" id="selectCurrency" aria-label="Default select example">
-                            <option selected hidden value="">Selecciona una Divisa</option>
-                            @foreach ($currencies as $id => $currency)
-                                <option value='{{ $id }}'>{{ $currency }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">Renovable: </label>
-                        <select class="form-select" aria-label="Default select example" id="renovable">
-                            <option value="1">Si</option>
-                            <option value="2">No</option>
-                        </select>
-                        {{-- <label for="">Renovable</label>
-                            <br>
-                        <input id = "onoff" type="checkbox" checked data-toggle="toggle" data-on = "Si" data-off="No" data-width="100" data-offstyle="secondary"> --}}
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Conducto de cobro</label>
-                            <select name="selectCharge" id="selectCharge" class="form-select">
-                                <option hidden selected value="">Selecciona una opción</option>
-                                @foreach ($charges as $id => $charge)
-                                    <option value='{{ $id }}'>{{ $charge }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <div class="container-fluid bd-example-row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover text-center" id="srcClient">
+                            <thead>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">RFC</th>
+                                <th class="text-center">Tipo</th>
+                                <th class="text-center">Accion</th>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Compañía:</label>
-                            <select name="selectInsurance" id="selectInsurance" class="form-select" onchange="llenarRamos()">
-                                <option hidden selected value="">Selecciona una opción</option>
-                                @foreach ($insurances as $id => $insurance)
-                                    <option value='{{ $id }}'>{{ $insurance }}</option>
+                            </thead>
+                            <tbody>
+                                @foreach ($clients as $client)
+                                    <tr id="{{$client->id}}">
+                                        <td>
+                                            {{$client->name}} {{$client->firstname}} {{$client->lastname}}
+                                        </td>
+                                        <td>{{$client->rfc}}</td>
+                                        @if ($client->status == 0)
+                                            <td>Física</td>
+                                        @else
+                                            <td>Moral</td>
+                                        @endif
+                                        <td>
+                                            <button type="button" class="btn btn-primary" onclick="obtenerid({{$client->id}})">Seleccionar</button>
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </select>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Ramo:</label>
-                            <select name="selectBranch" id="selectBranch" class="form-select" onchange="llenarPlanes()">
-                                <option selected value="">Selecciona una opción</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Plan/Contrato</label>
-                            <select name="selectPlan" id="selectPlan" class="form-select">
-                                <option selected value="">Selecciona una opción</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Forma de pago</label>
-                            <select name="pay_frec" id="pay_frec" class="form-select">
-                                <option hidden selected value="">Selecciona una opción</option>
-                                @foreach ($paymentForms as $id => $payment_form)
-                                    <option value='{{ $id }}'>{{ $payment_form }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <label for="">Vendida por: </label>
-                        <select class="form-select" id="selectAgent" aria-label="Default select example">
-                            <option selected hidden value="">Selecciona un Agente</option>
-                            @foreach ($agents as $id => $agent)
-                                        <option value='{{ $id }}'>{{ $agent }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Fecha Inicio Vigencia</label>
-                            <input type="date" id="initial_date" name="initial_date" class="form-control" placeholder="Fecha de creación" onchange="fechafin()">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Fecha fin Vigencia</label>
-                            <input type="date" id="end_date" name="end_date" class="form-control" placeholder="Fecha de creación">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-primary" onclick="mostrartabla()">
-                            Actualizar Recibos
-                        </button>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                        <div class="table-responsive" >
-                            <table class="table table-striped table-hover text-center" id="tablerecords">
-                                <thead>
-                                    <th class="text-center">Prima Neta</th>
-                                    <th class="text-center">Gastos EXP</th>
-                                    <th class="text-center">G.Finan</th>
-                                    <th class="text-center">Otros</th>
-                                    <th class="text-center">IVA</th>
-                                    <th class="text-center">Prima Total</th>
-                                    <th class="text-center">F. Pago</th>
-                                    <th class="text-center">F.Limite</th>
-                                </thead>
-                                <tbody id="tbodyRecords"></tbody>
-                            </table>
-                        </div>
                 </div>
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="cancelareditar()" data-dismiss="modal">Cancelar</button>
-                {{-- <button type="button" class="btn btn-primary" id="btnModalView" onclick="actualizarpoliza()">Actualizar</button> --}}
-                <button type="button" class="btn btn-primary" id="btnModalView">Actualizar</button>
+                <button type="button" class="btn btn-primary" onclick="noRegistrado()">No Registrado</button>
             </div>
         </div>
     </div>
 </div>
-{{-- termina modal  --}}
+{{-- termina modal --}}

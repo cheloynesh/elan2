@@ -90,6 +90,7 @@
                 <th class="text-center"># Póliza</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Cliente</th>
+                <th class="text-center">Tipo</th>
                 <th class="text-center">Inicio Vigencia</th>
                 <th class="text-center">Fin Vigencia</th>
                 <th class="text-center">Estatus</th>
@@ -102,6 +103,7 @@
                         <td>{{$policies->policy}}</td>
                         <td>{{$policies->branch}}</td>
                         <td>{{$policies->name}}</td>
+                        <td>@if ($policies->type==1)Inicial @else Renovación @endif</td>
                         <td>{{$policies->initial_date}}</td>
                         <td>{{$policies->end_date}}</td>
                         <td>

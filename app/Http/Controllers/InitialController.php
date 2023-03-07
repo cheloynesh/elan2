@@ -28,6 +28,8 @@ class InitialController extends Controller
         // $initials = Initial::get();
 
         // dd($initials);
+
+        $clients = Client::get();
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
         $insurances = Insurance::pluck('name','id');
@@ -54,7 +56,7 @@ class InitialController extends Controller
             $initials = DB::table("Status")
                 ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
                 'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
-                'users.name as agent','Initials.created_at as date','folio')
+                DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'Initials.created_at as date','folio')
                 ->join('Initials','Initials.fk_status','=','Status.id')
                 ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
                 ->join('Branch','Branch.id','=','Initials.fk_branch')
@@ -68,7 +70,7 @@ class InitialController extends Controller
             $initials = DB::table("Status")
                 ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc', 'Initials.name as client',
                 'Initials.firstname','Initials.lastname','color','Insurance.name as insurance','Branch.name as branch',
-                'users.name as agent','Initials.created_at as date','folio')
+                DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'Initials.created_at as date','folio')
                 ->join('Initials','Initials.fk_status','=','Status.id')
                 ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
                 ->join('Branch','Branch.id','=','Initials.fk_branch')
@@ -85,7 +87,7 @@ class InitialController extends Controller
         else
         {
             return view('processes.OT.Initials.initial',
-            compact('initials','agents','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus','estatusExc','branchesExc'));
+            compact('initials','agents','clients','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus','estatusExc','branchesExc'));
         }
     }
     public function GetInfo($id)
@@ -179,35 +181,6 @@ class InitialController extends Controller
 
         }
         $status->save();
-
-        if($request->status == 4)
-        {
-            $client = new Client;
-            $client->name = $status->name;
-            $client->firstname = $status->firstname;
-            $client->lastname = $status->lastname;
-            $client->birth_date = null;
-            $client->rfc = $status->rfc;
-            $client->curp = null;
-            $client->gender = null;
-            $client->marital_status = null;
-            $client->street = null;
-            $client->e_num = null;
-            $client->i_num = null;
-            $client->pc = null;
-            $client->suburb = null;
-            $client->country = null;
-            $client->state = null;
-            $client->city = null;
-            $client->cellphone = null;
-            $client->email = null;
-            $client->name_contact = null;
-            $client->phone_contact = null;
-            $client->status = $status->type;
-            $client->inicial = $request->id;
-            $client->save();
-            return response()->json(["status"=>true, "message"=>"Cliente Emitido"]);
-        }
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 
@@ -256,5 +229,24 @@ class InitialController extends Controller
         $nombre = "Iniciales.xlsx";
         $sheet = new ExportInitial($status, $branch);
         return Excel::download($sheet,$nombre);
+    }
+    public function GetPolicyInfo($id)
+    {
+        $initial = Initial::where('id',$id)->first();
+        $brnchAss = Branch_assign::select('id')->where('fk_insurance',$initial->fk_insurance)->where('fk_branch',$initial->fk_branch)->first();
+        $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
+            ->join('Branch','fk_branch','=','Branch.id')
+            ->where('fk_insurance',$initial->fk_insurance)
+            ->orderBy('name')
+            ->whereNull('Branch_assign.deleted_at')->get();
+        $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
+            ->join('Plans','fk_plans','=','Plans.id')
+            ->where('fk_brnchass',$brnchAss->id)
+            ->orderBy('name')
+            ->whereNull('Plans_assign.deleted_at')->get();
+        $client = null;
+        $policy = null;
+        // dd($policy);
+        return response()->json(['status'=>true, "data"=>$policy, "branches" => $assignedBranches, "plans" => $assignedPlans, "initial" => $initial, "client" => $client]);
     }
 }

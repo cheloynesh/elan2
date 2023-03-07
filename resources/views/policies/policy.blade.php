@@ -307,11 +307,21 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">Prima neta</label>
-                            <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="calculo()">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="calculo()">
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for=""> Expedición</label>
-                            <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="">Imputar </label>
@@ -326,7 +336,12 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">G. Financiamiento</label>
-                            <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar </label>
@@ -337,7 +352,12 @@
                         </div>
                         <div class="col-md-3">
                             <label for="">Otros</label>
-                            <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
+                            </div>
                         </div>
                         <div class="col-md-3">
                             <label for="">Imputar</label>
@@ -351,15 +371,30 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">IVA</label>
-                            <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="">IVA %</label>
-                            <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <label for="">Prima Total</label>
-                            <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -463,9 +498,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-primary" onclick="mostrartabla()">
-                                Actualizar Recibos
-                            </button>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" onclick="mostrartabla()">Actualizar Recibos</button>
+                                <input id = "onoffType" type="checkbox" data-toggle="toggle" data-on = "Inicial" data-off="Renovación" data-width="150" onchange="prueba()">
+                            </div>
                         </div>
                     </div>
                 </div>

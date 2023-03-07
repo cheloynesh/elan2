@@ -48,23 +48,23 @@
                             </div>
                         </div>
 
-                        <div class = "row" id = "fisica">
+                        <div class = "row" id = "fisicaInitial">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Nombre</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Nombre">
+                                    <input type="text" id="nameEdit" name="nameEdit" class="form-control" placeholder="Nombre">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Apellido paterno</label>
-                                    <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Apellido">
+                                    <input type="text" id="firstnameEdit" name="firstnameEdit" class="form-control" placeholder="Apellido">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Apellido materno</label>
-                                    <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Apellido">
+                                    <input type="text" id="lastnameEdit" name="lastnameEdit" class="form-control" placeholder="Apellido">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
 
-                        <div class = "row" id = "moral" style = "display: none;">
+                        <div class = "row" id = "moralInitial" style = "display: none;">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="">Razón Social</label>
@@ -276,6 +276,7 @@
     {{-- fin modal| --}}
     @include('processes.OT.Initials.initialEdit')
     @include('processes.OT.status.status')
+    @include('policies.newPolicy')
     {{-- Inicia pantalla de inicio --}}
     <div class="col-lg-12">
         <div class="row">
@@ -333,5 +334,7 @@
     </div>
 @endsection
 @push('head')
-    <script src="{{URL::asset('js/processes/initials.js')}}"></script>
+<script src="{{URL::asset('js/admin/client.js')}}" ></script>
+<script src="{{URL::asset('js/policies/viewpolicy.js')}}"></script>
+<script src="{{URL::asset('js/processes/initials.js')}}"></script>
 @endpush

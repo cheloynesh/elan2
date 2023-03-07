@@ -170,6 +170,7 @@ function cancelarEditar()
     $("#modalEditClient").modal('hide');
 
 }
+
 function actualizarCliente(policy)
 {
     // alert(policy);
@@ -223,6 +224,7 @@ function actualizarCliente(policy)
         'email':email,
         'name_contact':"",
         'phone_contact':"",
+        'status':0,
     };
     jQuery.ajax({
         url:route,
@@ -236,6 +238,11 @@ function actualizarCliente(policy)
                 alertify.success(result.message);
                 $("#modalEditClient").modal('hide');
                 window.location.reload(true);
+            }
+            else
+            {
+                idClient = result.id;
+                guardarPoliza();
             }
 
         }
@@ -421,6 +428,7 @@ function actualizarEmpresa(policy_ent)
         'email':email,
         'name_contact':name_contact,
         'phone_contact':phone_contact,
+        'status':1
     };
     jQuery.ajax({
         url:route,
@@ -435,7 +443,11 @@ function actualizarEmpresa(policy_ent)
                 $("#modalEditEnterprise").modal('hide');
                 window.location.reload(true);
             }
-
+            else
+            {
+                idClient = result.id;
+                guardarPoliza();
+            }
         }
     })
 }

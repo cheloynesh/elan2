@@ -211,6 +211,16 @@ class ViewPoliciesController extends Controller
         }
         return response()->json(['status'=>true, "message"=>"Actualizado"]);
     }
+    public function updatePoliciesNet($id)
+    {
+        $policies = Policy::whereNull('deleted_at')->get();
+        foreach($policies as $policy)
+        {
+            $this->updateStatusPayment($policy);
+            // dd($policy,$receipts);
+        }
+        return response()->json(['status'=>true, "message"=>"Actualizado"]);
+    }
     public function updateStatusPayment($policy)
     {
         // dd($policy->id);

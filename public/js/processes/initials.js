@@ -156,12 +156,12 @@ function guardarInicial(id)
         }
     })
 }
-var idupdate = 0;
+var idupdateInitial = 0;
 let tipo = 0;
 
 function editarInicial(id)
 {
-    idupdate=id;
+    idupdateInitial=id;
 
     var fisica = document.getElementById("fisicaedit");
     var moral = document.getElementById("moraledit");
@@ -180,15 +180,15 @@ function editarInicial(id)
             if(result.data.type==0)
             {
                 fisica.style.display="";
-                $("#name1").val(result.data.name);
-                $("#firstname1").val(result.data.firstname);
-                $("#lastname1").val(result.data.lastname);
-                $("#rfc1").val(result.data.rfc);
+                $("#nameEdit").val(result.data.name);
+                $("#firstnameEdit").val(result.data.firstname);
+                $("#lastnameEdit").val(result.data.lastname);
+                $("#rfcEdit").val(result.data.rfc);
             }else{
 
                 moral.style.display="";
-                $("#business_name1").val(result.data.name)
-                $("#business_rfc1").val(result.data.rfc);
+                $("#business_nameEdit").val(result.data.name)
+                $("#business_rfcEdit").val(result.data.rfc);
 
             }
 
@@ -221,10 +221,10 @@ function cancelarEditar()
     var moral = document.getElementById("moraledit");
     if(tipo == 0)
     {
-        $("#name1").val("");
-        $("#firstname1").val("");
-        $("#lastname1").val("");
-        $("#rfc1").val("");
+        $("#nameEdit").val("");
+        $("#firstnameEdit").val("");
+        $("#lastnameEdit").val("");
+        $("#rfcEdit").val("");
         fisica.style.display="none";
     }else{
         $("#business_name1").val("")
@@ -241,10 +241,10 @@ function actualizarInicial()
     if(tipo==0)
     {
         // alert('entre');
-        var name = $("#name1").val();
-        var firstname = $("#firstname1").val();
-        var lastname = $("#lastname1").val();
-        var rfc = $("#rfc1").val();
+        var name = $("#nameEdit").val();
+        var firstname = $("#firstnameEdit").val();
+        var lastname = $("#lastnameEdit").val();
+        var rfc = $("#rfcEdit").val();
 
     }else{
         // alert('entre');
@@ -265,10 +265,10 @@ function actualizarInicial()
     var charge = $("#selectCharge1").val();
     var guide = $("#guide1").val();
 
-    var route = "initial/"+idupdate;
+    var route = "initial/"+idupdateInitial;
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'id':idupdate,
+        'id':idupdateInitial,
         'agent':agent,
         'name':name,
         'firstname':firstname,
@@ -345,32 +345,75 @@ function opcionesEstatus(initialId,statusId,)
         }
     })
 }
+var initialinfo;
 function actualizarEstatus()
 {
     var status = $("#selectStatus").val();
     var sub_status = $("#selectSubEstatus").val();
     var commentary = $("#commentary").val();
-    var route = baseUrlInicial+"/updateStatus";
-    console.log(route);
-    var data = {
-        'id':id_initial,
-        "_token": $("meta[name='csrf-token']").attr("content"),
-        'status':status,
-        "sub_status":sub_status,
-        "commentary":commentary
-    };
-    jQuery.ajax({
-        url:route,
-        type:'post',
-        data:data,
-        dataType:'json',
-        success:function(result)
-        {
-            alertify.success(result.message);
-            $("#myEstatusModal").modal('hide');
-            window.location.reload(true);
-        }
-    })
+    if(status == 4)
+    {
+        var route = baseUrlInicial + "/GetPolicyInfo/" + id_initial;
+        var data = {
+            "_token": $("meta[name='csrf-token']").attr("content")
+        };
+        jQuery.ajax({
+            url:route,
+            type:'get',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                updatedReceipt = 0;
+                policyVerif = 0;
+                serviceFlag = 1;
+                idPolicy = 0;
+                initialinfo = result;
+
+                $("#pna_edit").val(Number(result.initial.pna.replace(/[^0-9.-]+/g,"")));
+                calculo();
+                $("#selectCurrency_edit").val(result.initial.fk_currency);
+                $("#selectInsurance_edit").val(result.initial.fk_insurance);
+
+                actualizarSelect(result.branches,"#selectBranch_edit");
+                actualizarSelect(result.plans,"#selectPlan_edit");
+
+                $("#selectBranch_edit").val(result.initial.fk_branch);
+                $("#selectPlan_edit").val(result.initial.fk_plan);
+
+                $("#selectAgent_edit").val(result.initial.fk_agent);
+
+                $("#pay_frec_edit").val(result.initial.fk_payment_form);
+                $("#selectCharge_edit").val(result.initial.fk_charge);
+
+                $("#myModalEdit").modal("show");
+            }
+        })
+    }
+    else
+    {
+        var route = baseUrlInicial+"/updateStatus";
+
+        var data = {
+            'id':id_initial,
+            "_token": $("meta[name='csrf-token']").attr("content"),
+            'status':status,
+            "sub_status":sub_status,
+            "commentary":commentary
+        };
+        jQuery.ajax({
+            url:route,
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                alertify.success(result.message);
+                $("#myEstatusModal").modal('hide');
+                window.location.reload(true);
+            }
+        })
+    }
 }
 function cerrarmodal()
 {
@@ -382,8 +425,8 @@ function mostrarDiv()
 {
     var onoff = document.getElementById("onoff");
     var checked = onoff.checked;
-    var fisica = document.getElementById("fisica");
-    var moral = document.getElementById("moral");
+    var fisica = document.getElementById("fisicaInitial");
+    var moral = document.getElementById("moralInitial");
     if(checked)
     {
         fisica.style.display = ""
@@ -566,4 +609,273 @@ function excel_nuc(){
     $(document.body).append(form);
     form.submit();
 }
+var policyVerif = 0;
 
+function checkPolicy(){
+    var policy = $("#poliza").val();
+    var routePoliza = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/CheckPolicy/" + policy;
+    var disponible = document.getElementById("disponible");
+    var noDisponible = document.getElementById("noDisponible");
+
+    jQuery.ajax({
+        url:routePoliza,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            if (result == 0)
+            {
+                policyVerif = 1;
+                checkConditions();
+                disponible.style.display = "";
+                noDisponible.style.display = "none";
+            }
+            else
+            {
+                disponible.style.display = "none";
+                noDisponible.style.display = "";
+            }
+        }
+    })
+}
+var updatedReceipt = 0;
+function mostrartablaInitial(){
+    updatedReceipt = 1;
+    checkConditions();
+    var pay_frec = parseInt($("#pay_frec_edit").val());
+    // var table = $("#tbodyRecords");
+    var tablerec = $('#tablerecords_edit').DataTable();
+    var expedition = $("#expedition_edit").val();
+    var exp_impute = parseInt($("#exp_impute_edit").val());
+    var financ_exp = $("#financ_exp_edit").val();
+    var financ_impute = parseInt($("#financ_impute_edit").val());
+    var other_exp = $("#other_exp_edit").val();
+    var other_impute = parseInt($("#other_impute_edit").val());
+    var ivapor = $("#ivapor_edit").val();
+    var pna = parseFloat($("#pna_edit").val())/pay_frec;
+    var fecha_i = $("#initial_date_edit").val();
+    var fecha = fecha_i.split("-");
+    var branch =$("#selectBranch_edit").val();
+    var days = 0;
+
+    fechaDiv = new Date();
+    fechaDiv.setFullYear(fecha[0],parseInt(fecha[1]) - 1,fecha[2]);
+
+    if(ivapor != ""){
+        ivapor = parseFloat(ivapor);
+    }
+    else{
+        ivapor = 0;
+    }
+    if(other_exp != ""){
+        other_exp = parseFloat(other_exp);
+    }
+    else{
+        other_exp = 0;
+    }
+    if(financ_exp != ""){
+        financ_exp = parseFloat(financ_exp);
+    }
+    else{
+        financ_exp = 0;
+    }
+    if(pna != ""){
+        pna = parseFloat(pna);
+    }
+    else{
+        pna = 0;
+    }
+    if(expedition != ""){
+        expedition = parseFloat(expedition);
+    }
+    else{
+        expedition = 0;
+    }
+
+    var values_total = 0;
+    var values_exp = 0;
+    var values_financ = 0;
+    var values_other = 0;
+    var iva = 0;
+    var fechaBD;
+    var fechaInicio;
+    var arrayfill;
+    arrayValues = [];
+    // tablerec.empty();
+    tablerec.clear();
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfo/'+ branch;
+
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            console.log(route);
+            days = result.data.days;
+            console.log(days);
+            for(var x = 0 ; x<pay_frec ; x++)
+            {
+                values_total = 0;
+                if(exp_impute == 1 && x == 0){
+                    values_exp = expedition;
+                    values_total +=  expedition;
+                }
+                else if(exp_impute == 2){
+                    values_exp = expedition/pay_frec;
+                    values_total +=  expedition/pay_frec;
+                }
+                else{
+                    values_exp = 0;
+                }
+
+                if(financ_impute == 1 && x == 0){
+                    values_financ = financ_exp;
+                    values_total +=  financ_exp;
+                }
+                else if(financ_impute == 2){
+                    values_financ = financ_exp/pay_frec;
+                    values_total +=  financ_exp/pay_frec;
+                }
+                else{
+                    values_financ = 0;
+                }
+
+                if(other_impute == 1 && x == 0){
+                    values_other = other_exp;
+                    values_total +=  other_exp;
+                }
+                else if(other_impute == 2){
+                    values_other = other_exp/pay_frec;
+                    values_total +=  other_exp/pay_frec;
+                }
+                else{
+                    values_other = 0;
+                }
+
+                if(x != 0){
+                    fechaDiv.setMonth(fechaDiv.getMonth() + 12/pay_frec);
+                }
+                fechaBD = fechaDiv.getFullYear().toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + (padLeadingZeros(fechaDiv.getDate(),2)).toString();
+                fechaInicio = (padLeadingZeros(fechaDiv.getDate(),2)).toString() + "-" + (padLeadingZeros((fechaDiv.getMonth() + 1),2)).toString() + "-" + fechaDiv.getFullYear().toString();
+                fechaAux = new Date(fechaDiv);
+                fechaAux.setDate(fechaAux.getDate() + days);
+                fechaFin = fechaAux.getFullYear().toString() + "-" + (padLeadingZeros((fechaAux.getMonth() + 1),2)).toString() + "-" + (padLeadingZeros(fechaAux.getDate(),2)).toString();
+
+                values_total += pna;
+                iva = values_total * ivapor;
+                values_total += iva;
+
+                // var str_row = '<tr id = "'+parseFloat(x)+'"><td>"'+pna.toFixed(2)+'"</td><td>"'+values_exp.toFixed(2)+'"</td><td>"'+values_financ.toFixed(2)+'"</td><td>"'+values_other.toFixed(2)+'"</td><td>"'+iva.toFixed(2)+'"</td><td>"'+values_total.toFixed(2)+'"</td><td>"'+fechaInicio+'"</td><td>"'+fechaInicio+'"</td></tr>';
+                // table.append(str_row);
+                tablerec.row.add([formatter.format(pna.toFixed(2)), formatter.format(values_exp.toFixed(2)), formatter.format(values_financ.toFixed(2)), formatter.format(values_other.toFixed(2)),
+                    formatter.format(iva.toFixed(2)), formatter.format(values_total.toFixed(2)),fechaBD,fechaFin]).draw(false);
+                arrayfill = {pna , values_exp, values_financ, values_other, iva, values_total, fechaBD, fechaFin};
+                arrayValues.push(arrayfill);
+
+            }
+        }
+    })
+}
+function checkConditions()
+{
+    if(updatedReceipt == 1 && policyVerif == 1)
+        $("#btnSavePolicy").prop("disabled",false);
+    else
+        $("#btnSavePolicy").prop("disabled",true);
+}
+
+function guardarPolizaInicial()
+{
+    policyNumber = $("#poliza").val();
+    if(idClient == 0)
+    {
+        newclient = 0;
+        if(clientType == 0)
+        {
+            actualizarCliente(1);
+        }
+        else
+        {
+            actualizarEmpresa(2);
+        }
+    }
+    else
+    {
+        newclient = 1;
+        guardarPoliza();
+    }
+    var commentary = $("#commentary").val();
+    var route = baseUrlInicial+"/updateStatus";
+    var data = {
+        'id':id_initial,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'status':4,
+        'commentary':commentary
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success("Póliza emitida");
+            $("#myEstatusModal").modal('hide');
+        }
+    })
+    window.location.reload(true);
+}
+function noRegistrado()
+{
+    idClient = 0;
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+
+    clientType = initialinfo.initial.type;
+    if(initialinfo.initial.type==0)
+    {
+        fisica.style.display="";
+        $("#name1").val(initialinfo.initial.name);
+        $("#firstname1").val(initialinfo.initial.firstname);
+        $("#lastname1").val(initialinfo.initial.lastname);
+        $("#rfc1").val(initialinfo.initial.rfc);
+
+        $("#birth_date1").val("");
+        $("#curp1").val("");
+        $("#gender1").val(0);
+        $("#marital_status1").val(0);
+        $("#street1").val("");
+        $("#e_num1").val("");
+        $("#i_num1").val("");
+        $("#pc1").val("");
+        $("#suburb1").val("");
+        $("#country1").val("");
+        $("#state1").val("");
+        $("#city1").val("");
+        $("#cellphone1").val("");
+        $("#email1").val("");
+    }
+    else{
+
+        moral.style.display="";
+        $("#business_name1").val(initialinfo.initial.name)
+        $("#business_rfc1").val(initialinfo.initial.rfc);
+
+        $("#date1").val("");
+        $("#estreet1").val("");
+        $("#ee_num1").val("");
+        $("#ei_num1").val("");
+        $("#epc1").val("");
+        $("#esuburb1").val("");
+        $("#ecountry1").val("");
+        $("#estate1").val("");
+        $("#ecity1").val("");
+        $("#ecellphone1").val("");
+        $("#eemail1").val("");
+        $("#name_contact1").val("");
+        $("#phone_contact1").val("");
+    }
+    $("#client_edit").val("");
+    $("#modalSrcClient").modal("hide");
+}

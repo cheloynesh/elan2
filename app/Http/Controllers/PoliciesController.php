@@ -114,6 +114,7 @@ class PoliciesController extends Controller
         $policy->fk_payment_form = $request->paymentForm;
         $policy->initial_date = $request->initial_date;
         $policy->end_date = $request->end_date;
+        $policy->type = $request->type;
         $policy->save();
 
         $id = Policy::where('policy',$request->policy)->first();
@@ -148,7 +149,7 @@ class PoliciesController extends Controller
         "fk_charge"=>$request->charge,"fk_payment_form"=>$request->paymentForm,"expended_exp"=>$request->expended,"exp_impute"=>$request->exp_imp,
         "financ_exp"=>$request->financ_exp,"financ_impute"=>$request->financ_imp,"other_exp"=>$request->other_exp,
         "other_impute"=>$request->other_imp,"renovable"=>$request->renovable,"iva"=>$request->iva,
-        "total"=>$request->pna_t,"fk_client"=>$request->fk_client]);
+        "total"=>$request->pna_t,"fk_client"=>$request->fk_client, "type"=>$request->type]);
 
         if(intval($request->updateReceipts) == 1)
         {
