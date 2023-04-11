@@ -27,7 +27,7 @@ class ExportRefunds implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Refunds')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
                 'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
                 'amount','payment_form','guide')
                     ->join('Branch',"Branch.id","=","fk_branch")
@@ -39,7 +39,7 @@ class ExportRefunds implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Refunds')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
                 'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
                 'amount','payment_form','guide')
                     ->join('Branch',"Branch.id","=","fk_branch")
@@ -54,7 +54,7 @@ class ExportRefunds implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Refunds')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
                 'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
                 'amount','payment_form','guide')
                     ->join('Branch',"Branch.id","=","fk_branch")
@@ -66,7 +66,7 @@ class ExportRefunds implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Refunds')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
                 'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
                 'amount','payment_form','guide')
                     ->join('Branch',"Branch.id","=","fk_branch")
@@ -82,6 +82,6 @@ class ExportRefunds implements FromCollection, WithHeadings
     }
     public function headings(): array
     {
-        return ["Agente", "Folio", "Contratante", "Compañía", "Ramo", "Fecha de Ingreso", "Póliza", "Estatus", "Asegurado Afectado", "Número de Siniestro", "Monto a Reembolsar", "Forma de Pago", "Número de Guía"];
+        return ["ID","Agente", "Folio", "Contratante", "Compañía", "Ramo", "Fecha de Ingreso", "Póliza", "Estatus", "Asegurado Afectado", "Número de Siniestro", "Monto a Reembolsar", "Forma de Pago", "Número de Guía"];
     }
 }

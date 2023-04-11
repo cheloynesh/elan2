@@ -19,8 +19,8 @@ class RefundsController extends Controller
     public function index()
     {
         // dd($initials);
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
-        $insurances = Insurance::pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->where("fk_profile","12")->pluck('name','id');
+        $insurances = Insurance::orderBy('name')->pluck('name','id');
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","17")
         ->pluck('name','id');
@@ -69,6 +69,7 @@ class RefundsController extends Controller
 
         $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
             ->join('Branch','fk_branch','=','Branch.id')
+            ->orderBy('name')
             ->where('fk_insurance',$refund->fk_insurance)
             ->whereNull('Branch_assign.deleted_at')->get();
 

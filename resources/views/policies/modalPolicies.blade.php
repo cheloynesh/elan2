@@ -364,7 +364,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">$</div>
                                             </div>
-                                            <input type="text" id="pna_edit" class="form-control" placeholder="Prima neta" onchange="calculo()">
+                                            <input type="text" id="pna_edit" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Prima neta" onchange="calculo()">
                                         </div>
                                     </div>
                                 </div>
@@ -375,7 +375,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">$</div>
                                             </div>
-                                            <input type="text" name="expedition" id="expedition_edit" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
+                                            <input type="text" name="expedition" id="expedition_edit" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
                                         </div>
                                     </div>
                                 </div>
@@ -397,7 +397,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">$</div>
                                             </div>
-                                            <input type="text" name="financ_exp" id="financ_exp_edit" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
+                                            <input type="text" name="financ_exp" id="financ_exp_edit" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
                                         </div>
                                     </div>
                                 </div>
@@ -417,7 +417,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">$</div>
                                             </div>
-                                            <input type="text" name="other_exp" id="other_exp_edit" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
+                                            <input type="text" name="other_exp" id="other_exp_edit" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
                                         </div>
                                     </div>
                                 </div>
@@ -435,12 +435,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">IVA</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">$</div>
-                                            </div>
-                                            <input type="text" name="iva" id="iva_edit" class="form-control" placeholder="IVA" disabled>
-                                        </div>
+                                        <input type="text" name="iva" id="iva_edit" class="form-control" placeholder="IVA" disabled>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -452,12 +447,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Prima Total</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">$</div>
-                                            </div>
-                                            <input type="text" name="prima_t" id="prima_t_edit" class="form-control" placeholder="Prima Total" disabled>
-                                        </div>
+                                        <input type="text" name="prima_t" id="prima_t_edit" class="form-control" placeholder="Prima Total" disabled>
                                     </div>
                                 </div>
                             </div>

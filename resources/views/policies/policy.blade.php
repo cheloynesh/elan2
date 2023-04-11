@@ -311,7 +311,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">$</div>
                                 </div>
-                                <input type="text" id="pna" class="form-control" placeholder="Prima neta" onchange="calculo()">
+                                <input type="text" id="pna" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Prima neta" onchange="calculo()">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -320,7 +320,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">$</div>
                                 </div>
-                                <input type="text" name="expedition" id="expedition" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
+                                <input type="text" name="expedition" id="expedition" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -340,7 +340,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">$</div>
                                 </div>
-                                <input type="text" name="financ_exp" id="financ_exp" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
+                                <input type="text" name="financ_exp" id="financ_exp" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Gastos de Financiamiento" onchange="calculo()">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -356,7 +356,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">$</div>
                                 </div>
-                                <input type="text" name="other_exp" id="other_exp" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
+                                <input type="text" name="other_exp" id="other_exp" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Otros Gastos" onchange="calculo()">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -371,30 +371,15 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="">IVA</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
-                            </div>
+                            <input type="text" name="iva" id="iva" class="form-control" placeholder="IVA" disabled>
                         </div>
                         <div class="col-md-4">
                             <label for="">IVA %</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
-                            </div>
+                            <input type="text" name="ivapor" id="ivapor" value=".16" class="form-control" placeholder="IVA %" onchange="calculo()">
                         </div>
                         <div class="col-md-4">
                             <label for="">Prima Total</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
-                                </div>
-                                <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
-                            </div>
+                            <input type="text" name="prima_t" id="prima_t" class="form-control" placeholder="Prima Total" disabled>
                         </div>
                     </div>
                     <br>
@@ -539,6 +524,7 @@
 
 
     </div>
+    <script src="{{URL::asset('js/currencyformat.js')}}" ></script>
 @endsection
 @push('head')
     <script src="{{URL::asset('js/admin/client.js')}}" ></script>

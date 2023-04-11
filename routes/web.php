@@ -140,6 +140,8 @@ Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->n
 
 //reportes
 Route::resource('reports/duepay/duepay','DuePayController');
+Route::get('reports/duepay/duepay/GetInfo/{id}','DuePayController@GetInfo')->name('duePay.GetInfo');
+Route::get('reports/duepay/duepay/GetInfoFilters/{id}','DuePayController@GetInfoFilters')->name('duePay.GetInfoFilters');
 
 
 

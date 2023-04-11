@@ -28,7 +28,7 @@ class ServicesController extends Controller
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->orderBy('name')->pluck('name','id');
         $estatusExc = Status::select('id', 'name')->where("fk_section","16")->pluck('name','id');
         $branchesExc = Branch::select('id', 'name')->pluck('name','id');
-        $insurances = Insurance::pluck('name','id');
+        $insurances = Insurance::orderBy('name')->pluck('name','id');
         $branches = Branch::pluck('name','id');
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","16")
@@ -37,7 +37,6 @@ class ServicesController extends Controller
         $perm = Permission::permView($profile,16);
         $perm_btn =Permission::permBtns($profile,16);
         $currencies = Currency::pluck('name','id');
-        $insurances = Insurance::pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
         $user = User::user_id();

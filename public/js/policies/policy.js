@@ -181,18 +181,18 @@ function guardarPoliza()
 {
     // guardardatosClienteInicial();
     var policy = $("#poliza").val();
-    var expended = $("#expedition").val();
+    var expended = $("#expedition").val().replace(/[^0-9.]/g, '');
     var exp_imp = $("#exp_impute").val();
-    var financ_exp = $("#financ_exp").val();
+    var financ_exp = $("#financ_exp").val().replace(/[^0-9.]/g, '');
     var financ_imp = $("#financ_impute").val();
-    var other_exp = $("#other_exp").val();
+    var other_exp = $("#other_exp").val().replace(/[^0-9.]/g, '');
     var other_imp = $("#other_impute").val();
-    var iva = $("#iva").val();
-    var pna_t = $("#prima_t").val();
+    var iva = $("#iva").val().replace(/[^0-9.]/g, '');
+    var pna_t = $("#prima_t").val().replace(/[^0-9.]/g, '');
     var renovable = $("#renovable").val();
     var pay_frec = $("#pay_frec").val();
 
-    var pna=$("#pna").val();
+    var pna=$("#pna").val().replace(/[^0-9.]/g, '');
     var currency=$("#selectCurrency").val();
     var insurance=$("#selectInsurance").val();
     var branch =$("#selectBranch").val();
@@ -300,10 +300,10 @@ function guardarPoliza()
 
 function calculo(){
     var ivapor = $("#ivapor").val();
-    var other = $("#other_exp").val();
-    var finan_exp = $("#financ_exp").val();
-    var prima = $("#pna").val();
-    var exp = $("#expedition").val();
+    var other = $("#other_exp").val().replace(/[^0-9.]/g, '');
+    var finan_exp = $("#financ_exp").val().replace(/[^0-9.]/g, '');
+    var prima = $("#pna").val().replace(/[^0-9.]/g, '');
+    var exp = $("#expedition").val().replace(/[^0-9.]/g, '');
 
     if(ivapor != ""){
         ivapor = parseFloat(ivapor);
@@ -339,10 +339,10 @@ function calculo(){
     var temp = other + finan_exp+ prima + exp;
 
     var iva = temp * ivapor;
-    $("#iva").val(parseFloat(iva).toFixed(2));
+    $("#iva").val(formatter.format(parseFloat(iva).toFixed(2)));
 
     temp = temp+ iva;
-    $("#prima_t").val(parseFloat(temp).toFixed(2));
+    $("#prima_t").val(formatter.format(parseFloat(temp).toFixed(2)));
 }
 function fechafin(){
     var fecha_i = $("#initial_date").val();
@@ -359,14 +359,14 @@ function mostrartabla(){
     var pay_frec = parseInt($("#pay_frec").val());
     // var table = $("#tbodyRecords");
     var tablerec = $('#tablerecords').DataTable();
-    var expedition = $("#expedition").val();
+    var expedition = $("#expedition").val().replace(/[^0-9.]/g, '');
     var exp_impute = parseInt($("#exp_impute").val());
-    var financ_exp = $("#financ_exp").val();
+    var financ_exp = $("#financ_exp").val().replace(/[^0-9.]/g, '');
     var financ_impute = parseInt($("#financ_impute").val());
-    var other_exp = $("#other_exp").val();
+    var other_exp = $("#other_exp").val().replace(/[^0-9.]/g, '');
     var other_impute = parseInt($("#other_impute").val());
-    var ivapor = $("#ivapor").val();
-    var pna = parseFloat($("#pna").val())/pay_frec;
+    var ivapor = $("#ivapor").val().replace(/[^0-9.]/g, '');
+    var pna = parseFloat($("#pna").val().replace(/[^0-9.]/g, ''))/pay_frec;
     var fecha_i = $("#initial_date").val();
     var fecha = fecha_i.split("-");
     var branch =$("#selectBranch").val();

@@ -291,19 +291,19 @@ function actualizarEstatus()
                     }
                     $("#client_edit").val(result.client.name);
 
-                    $("#pna_edit").val(result.data.pna);
-                    $("#expedition_edit").val(result.data.expended_exp);
+                    $("#pna_edit").val(parseFloat(result.data.pna).toLocaleString('en-US'));
+                    $("#expedition_edit").val(parseFloat(result.data.expended_exp).toLocaleString('en-US'));
                     $("#exp_impute_edit").val(result.data.exp_impute);
 
-                    $("#financ_exp_edit").val(result.data.financ_exp);
+                    $("#financ_exp_edit").val(parseFloat(result.data.financ_exp).toLocaleString('en-US'));
                     $("#financ_impute_edit").val(result.data.financ_impute);
-                    $("#other_exp_edit").val(result.data.other_exp);
+                    $("#other_exp_edit").val(parseFloat(result.data.other_exp).toLocaleString('en-US'));
 
                     $("#other_impute_edit").val(result.data.other_impute);
-                    $("#iva_edit").val(result.data.iva);
+                    $("#iva_edit").val(formatter.format(result.data.iva));
                     // $("#ivapor_edit").val(result.data.);
 
-                    $("#prima_t_edit").val(result.data.total);
+                    $("#prima_t_edit").val(formatter.format(result.data.total));
                     $("#selectCurrency_edit").val(result.data.fk_currency);
                     $("#renovable_edit").val(result.data.renovable);
 

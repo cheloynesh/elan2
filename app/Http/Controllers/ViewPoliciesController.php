@@ -54,7 +54,7 @@ class ViewPoliciesController extends Controller
         if($profile != 12)
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')

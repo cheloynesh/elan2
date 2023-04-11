@@ -52,19 +52,19 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Nombre</label>
-                                    <input type="text" id="nameEdit" name="nameEdit" class="form-control" placeholder="Nombre">
+                                    <input type="text" id="name" name="nameEdit" class="form-control" placeholder="Nombre">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Apellido paterno</label>
-                                    <input type="text" id="firstnameEdit" name="firstnameEdit" class="form-control" placeholder="Apellido">
+                                    <input type="text" id="firstname" name="firstnameEdit" class="form-control" placeholder="Apellido">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="">Apellido materno</label>
-                                    <input type="text" id="lastnameEdit" name="lastnameEdit" class="form-control" placeholder="Apellido">
+                                    <input type="text" id="lastname" name="lastnameEdit" class="form-control" placeholder="Apellido">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -332,6 +332,7 @@
             </tbody>
         </table>
     </div>
+    <script src="{{URL::asset('js/currencyformat.js')}}" ></script>
 @endsection
 @push('head')
 <script src="{{URL::asset('js/admin/client.js')}}" ></script>

@@ -370,7 +370,7 @@ function actualizarEstatus()
                 idPolicy = 0;
                 initialinfo = result;
 
-                $("#pna_edit").val(Number(result.initial.pna.replace(/[^0-9.-]+/g,"")));
+                $("#pna_edit").val(parseFloat(result.initial.pna).toLocaleString('en-US'));
                 calculo();
                 $("#selectCurrency_edit").val(result.initial.fk_currency);
                 $("#selectInsurance_edit").val(result.initial.fk_insurance);
@@ -645,14 +645,14 @@ function mostrartablaInitial(){
     var pay_frec = parseInt($("#pay_frec_edit").val());
     // var table = $("#tbodyRecords");
     var tablerec = $('#tablerecords_edit').DataTable();
-    var expedition = $("#expedition_edit").val();
+    var expedition = $("#expedition_edit").val().replace(/[^0-9.]/g, '');
     var exp_impute = parseInt($("#exp_impute_edit").val());
-    var financ_exp = $("#financ_exp_edit").val();
+    var financ_exp = $("#financ_exp_edit").val().replace(/[^0-9.]/g, '');
     var financ_impute = parseInt($("#financ_impute_edit").val());
-    var other_exp = $("#other_exp_edit").val();
+    var other_exp = $("#other_exp_edit").val().replace(/[^0-9.]/g, '');
     var other_impute = parseInt($("#other_impute_edit").val());
-    var ivapor = $("#ivapor_edit").val();
-    var pna = parseFloat($("#pna_edit").val())/pay_frec;
+    var ivapor = $("#ivapor_edit").val().replace(/[^0-9.]/g, '');
+    var pna = parseFloat($("#pna_edit").val().replace(/[^0-9.]/g, ''))/pay_frec;
     var fecha_i = $("#initial_date_edit").val();
     var fecha = fecha_i.split("-");
     var branch =$("#selectBranch_edit").val();

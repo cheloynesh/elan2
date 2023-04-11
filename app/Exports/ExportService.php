@@ -27,7 +27,7 @@ class ExportService implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Services')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
+                $movimientos = DB::table('Services')->select('Services.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
                 ->join('Branch',"Branch.id","=","fk_branch")
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
@@ -37,7 +37,7 @@ class ExportService implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Services')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
+                $movimientos = DB::table('Services')->select('Services.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
                 ->join('Branch',"Branch.id","=","fk_branch")
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
@@ -50,7 +50,7 @@ class ExportService implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Services')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
+                $movimientos = DB::table('Services')->select('Services.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
                 ->join('Branch',"Branch.id","=","fk_branch")
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
@@ -60,7 +60,7 @@ class ExportService implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Services')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
+                $movimientos = DB::table('Services')->select('Services.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS agname'),'entry_date','policy','response_date',DB::raw('IF(download = 0, "no","si")'),'type','folio','Services.name','record','Branch.name as bname','Insurance.name as iname','Status.name as sname','guide')
                 ->join('Branch',"Branch.id","=","fk_branch")
                 ->join('Insurance',"Insurance.id","=","fk_insurance")
                 ->join('Status',"Status.id","=","fk_status")
@@ -74,6 +74,6 @@ class ExportService implements FromCollection, WithHeadings
     }
     public function headings(): array
     {
-        return ["Agente", "Fecha de ingreso", "Póliza", "Fecha de Respuesta", "Descargado", "Tipo de Servicio", "Folio", "Nombre del Contratante", "Record", "Ramo", "Compañia", "Estatus", "Número de Guía"];
+        return ["ID","Agente", "Fecha de ingreso", "Póliza", "Fecha de Respuesta", "Descargado", "Tipo de Servicio", "Folio", "Nombre del Contratante", "Record", "Ramo", "Compañia", "Estatus", "Número de Guía"];
     }
 }

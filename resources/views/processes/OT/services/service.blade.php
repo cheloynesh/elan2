@@ -249,7 +249,8 @@
             </tbody>
         </table>
     </div>
-@endsection
+    <script src="{{URL::asset('js/currencyformat.js')}}" ></script>
+    @endsection
 @push('head')
     <script src="{{URL::asset('js/admin/client.js')}}" ></script>
     <script src="{{URL::asset('js/policies/viewpolicy.js')}}"></script>

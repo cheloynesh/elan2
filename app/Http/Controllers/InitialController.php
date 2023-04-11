@@ -30,9 +30,9 @@ class InitialController extends Controller
         // dd($initials);
 
         $clients = Client::get();
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->where("fk_profile","12")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
-        $insurances = Insurance::pluck('name','id');
+        $insurances = Insurance::orderBy('name')->pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
@@ -98,11 +98,13 @@ class InitialController extends Controller
 
         $assignedBranches = DB::table('Branch_assign')->select('fk_branch AS id','name')
             ->join('Branch','fk_branch','=','Branch.id')
+            ->orderBy('name')
             ->where('fk_insurance',$initial->fk_insurance)
             ->whereNull('Branch_assign.deleted_at')->get();
 
         $assignedPlans = DB::table('Plans_assign')->select('fk_plans AS id','name')
             ->join('Plans','fk_plans','=','Plans.id')
+            ->orderBy('name')
             ->where('fk_brnchass',$brnchAss->id)
             ->whereNull('Plans_assign.deleted_at')->get();
 
@@ -138,6 +140,7 @@ class InitialController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $initial = Initial::where('id',$request->id)->
         update(['fk_agent'=>$request->agent,
         'name'=>$request->name,
