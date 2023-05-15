@@ -138,11 +138,14 @@ Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesC
 Route::resource('policies/collection','CollectionController');
 Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->name('collection.GetInfo');
 
-//reportes
+//reporte Pagos pendientes
 Route::resource('reports/duepay/duepay','DuePayController');
 Route::get('reports/duepay/duepay/GetInfo/{id}','DuePayController@GetInfo')->name('duePay.GetInfo');
 Route::get('reports/duepay/duepay/GetInfoFilters/{id}','DuePayController@GetInfoFilters')->name('duePay.GetInfoFilters');
 
-
+//reporte KPI
+Route::resource('reports/kpi/kpi','KpiController');
+Route::get('reports/kpi/kpi/GetInfo/{id}','KpiController@GetInfo')->name('kpi.GetInfo');
+Route::get('reports/kpi/kpi/GetInfoFilters/{id}','KpiController@GetInfoFilters')->name('kpi.GetInfoFilters');
 
 

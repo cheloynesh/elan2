@@ -10,9 +10,11 @@ use App\Insurance;
 use App\Refund;
 use App\Branch_assign;
 use App\Branch;
-use DB;
+use App\Status_History;
 use App\Exports\ExportRefunds;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
+use DateTime;
 
 class RefundsController extends Controller
 {
@@ -93,6 +95,16 @@ class RefundsController extends Controller
         $refund->payment_form = $request->payment_form;
         $refund->guide = $request->guide;
         $refund->save();
+
+        $today = new DateTime();
+        $user = User::user_id();
+        $history = new Status_History;
+        $history->fk_status = 12;
+        $history->fk_user = $user;
+        $history->id_origin = $refund->id;
+        $history->change_date = $today->format('Y-m-d');
+        $history->save();
+
         return response()->json(["status"=>true, "message"=>"Reembolso creado"]);
     }
 
@@ -129,6 +141,21 @@ class RefundsController extends Controller
         $status->fk_status = $request->status;
         $status->commentary=$request->commentary;
         $status->save();
+
+        $user = User::user_id();
+        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        // dd($history);
+        if($history == null)
+        {
+            $today = new DateTime();
+            $history = new Status_History;
+            $history->fk_status = $request->status;
+            $history->fk_user = $user;
+            $history->id_origin = $request->id;
+            $history->change_date = $today->format('Y-m-d');
+            $history->save();
+        }
+
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 

@@ -115,6 +115,7 @@ class PoliciesController extends Controller
         $policy->initial_date = $request->initial_date;
         $policy->end_date = $request->end_date;
         $policy->type = $request->type;
+        $policy->fk_initial = $request->fk_initial;
         $policy->save();
 
         $id = Policy::where('policy',$request->policy)->first();

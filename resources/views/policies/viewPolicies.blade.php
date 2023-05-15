@@ -86,6 +86,7 @@
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbPoliza">
             <thead>
+                <th class="text-center">Agente</th>
                 <th class="text-center">RFC</th>
                 <th class="text-center"># Póliza</th>
                 <th class="text-center">Ramo</th>
@@ -100,10 +101,11 @@
             <tbody>
                 @foreach ($policy as $policies)
                     <tr id="{{$policies->id}}">
+                        <td>{{$policies->agname}}</td>
                         <td>{{$policies->rfc}}</td>
                         <td>{{$policies->policy}}</td>
                         <td>{{$policies->branch}}</td>
-                        <td>{{$policies->name}}</td>
+                        <td>{{$policies->cname}}</td>
                         <td>@if ($policies->type==1)Inicial @else Renovación @endif</td>
                         <td>{{$policies->pnaa}}</td>
                         <td>{{$policies->initial_date}}</td>

@@ -15,9 +15,11 @@ use App\Currency;
 use App\Policy;
 use App\Client;
 use App\Branch_assign;
+use App\Status_History;
 use App\Exports\ExportService;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
+use DateTime;
 
 class ServicesController extends Controller
 {
@@ -97,6 +99,16 @@ class ServicesController extends Controller
         $service->fk_branch = $request->branch;
         $service->guide = $request->guide;
         $service->save();
+
+        $today = new DateTime();
+        $user = User::user_id();
+        $history = new Status_History;
+        $history->fk_status = 7;
+        $history->fk_user = $user;
+        $history->id_origin = $service->id;
+        $history->change_date = $today->format('Y-m-d');
+        $history->save();
+
         return response()->json(["status"=>true, "message"=>"Servicio creado"]);
     }
 
@@ -132,6 +144,21 @@ class ServicesController extends Controller
         // dd($status);
         $status->commentary=$request->commentary;
         $status->save();
+
+        $user = User::user_id();
+        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        // dd($history);
+        if($history == null)
+        {
+            $today = new DateTime();
+            $history = new Status_History;
+            $history->fk_status = $request->status;
+            $history->fk_user = $user;
+            $history->id_origin = $request->id;
+            $history->change_date = $today->format('Y-m-d');
+            $history->save();
+        }
+
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 

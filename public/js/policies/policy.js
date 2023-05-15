@@ -177,7 +177,7 @@ function checkPolicy(){
     })
 }
 
-function guardarPoliza()
+function guardarPoliza(initial)
 {
     // guardardatosClienteInicial();
     var policy = $("#poliza").val();
@@ -258,7 +258,8 @@ function guardarPoliza()
         "initial_date":initial_date,
         "end_date":end_date,
         "arrayValues": arrayValues,
-        "type":type
+        "type":type,
+        "fk_initial":0
     }
     // alert("aantes de la peticion");
     jQuery.ajax({

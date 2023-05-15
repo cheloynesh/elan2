@@ -16,6 +16,7 @@ use App\Branch;
 use App\Status;
 use App\Client;
 use App\Branch_assign;
+use App\Status_History;
 use DateTime;
 use DB;
 use App\Exports\ExportPolicy;
@@ -54,9 +55,10 @@ class ViewPoliciesController extends Controller
         if($profile != 12)
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->whereNull('Policy.deleted_at')
                 ->get();
@@ -64,9 +66,10 @@ class ViewPoliciesController extends Controller
         else
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color','Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'),'Client.rfc','Branch.name AS branch')
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('fk_agent',$user)
                 ->whereNull('Policy.deleted_at')
@@ -162,6 +165,21 @@ class ViewPoliciesController extends Controller
         // dd($status);
         $status->fk_status = $request->status;
         $status->save();
+
+        $user = User::user_id();
+        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        // dd($history);
+        if($history == null)
+        {
+            $today = new DateTime();
+            $history = new Status_History;
+            $history->fk_status = $request->status;
+            $history->fk_user = $user;
+            $history->id_origin = $request->id;
+            $history->change_date = $today->format('Y-m-d');
+            $history->save();
+        }
+
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 
@@ -203,7 +221,7 @@ class ViewPoliciesController extends Controller
     }
     public function updatePolicies()
     {
-        $policies = Policy::whereNull('deleted_at')->get();
+        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->get();
         foreach($policies as $policy)
         {
             $this->updateStatusPayment($policy);
@@ -213,7 +231,8 @@ class ViewPoliciesController extends Controller
     }
     public function updatePoliciesNet($id)
     {
-        $policies = Policy::whereNull('deleted_at')->get();
+        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->get();
+        $today = new DateTime();
         foreach($policies as $policy)
         {
             $this->updateStatusPayment($policy);

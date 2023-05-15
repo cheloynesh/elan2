@@ -242,7 +242,7 @@ function actualizarCliente(policy)
             else
             {
                 idClient = result.id;
-                guardarPoliza();
+                guardarPoliza(0);
             }
 
         }
@@ -446,7 +446,7 @@ function actualizarEmpresa(policy_ent)
             else
             {
                 idClient = result.id;
-                guardarPoliza();
+                guardarPoliza(0);
             }
         }
     })

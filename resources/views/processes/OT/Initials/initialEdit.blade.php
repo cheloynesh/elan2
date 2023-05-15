@@ -55,13 +55,13 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Razón Social</label>
-                                <input type="text" id="business_name1" name="business_nameEdit" class="form-control" placeholder="Razón Social">
+                                <input type="text" id="business_nameEdit" name="business_nameEdit" class="form-control" placeholder="Razón Social">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">RFC</label>
-                                <input type="text" id="business_rfc1" name="business_rfcEdit" class="form-control" placeholder="RFC">
+                                <input type="text" id="business_rfcEdit" name="business_rfcEdit" class="form-control" placeholder="RFC">
                             </div>
                         </div>
                     </div>

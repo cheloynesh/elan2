@@ -248,8 +248,8 @@ function actualizarInicial()
 
     }else{
         // alert('entre');
-        var name = $("#business_name1").val();
-        var rfc = $("#business_rfc1").val();
+        var name = $("#business_nameEdit").val();
+        var rfc = $("#business_rfcEdit").val();
         console.log(name,rfc);
     }
     var promoter = $("#promoter1").val();
@@ -803,7 +803,7 @@ function guardarPolizaInicial()
     else
     {
         newclient = 1;
-        guardarPoliza();
+        guardarPoliza(id_initial);
     }
     var commentary = $("#commentary").val();
     var route = baseUrlInicial+"/updateStatus";

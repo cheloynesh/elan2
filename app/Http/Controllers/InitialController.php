@@ -15,11 +15,13 @@ use App\Branch;
 use App\Application;
 use App\Client;
 use App\Branch_assign;
+use App\Status_History;
 use DB;
 use Carbon\Carbon;
 use App\Policy;
 use App\Exports\ExportInitial;
 use Maatwebsite\Excel\Facades\Excel;
+use DateTime;
 
 class InitialController extends Controller
 {
@@ -62,6 +64,7 @@ class InitialController extends Controller
                 ->join('Branch','Branch.id','=','Initials.fk_branch')
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
+                ->where('Status.id','!=','20')
                 ->whereNull('Initials.deleted_at')
                 ->get();
         }
@@ -76,6 +79,7 @@ class InitialController extends Controller
                 ->join('Branch','Branch.id','=','Initials.fk_branch')
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
+                ->where('Status.id','!=','20')
                 ->where('fk_agent',$user)
                 ->whereNull('Initials.deleted_at')
                 ->get();
@@ -135,6 +139,15 @@ class InitialController extends Controller
         $initial->fk_charge = $request->charge;
         $initial->guide = $request->guide;
         $initial->save();
+
+        $today = new DateTime();
+        $user = User::user_id();
+        $history = new Status_History;
+        $history->fk_status = 1;
+        $history->fk_user = $user;
+        $history->id_origin = $initial->id;
+        $history->change_date = $today->format('Y-m-d');
+        $history->save();
         return response()->json(["status"=>true, "message"=>"Inicial creada"]);
     }
 
@@ -171,6 +184,7 @@ class InitialController extends Controller
 
     public function updateStatus(Request $request)
     {
+        date_default_timezone_set('America/Mexico_City');
         // dd($request->all());
         $status = Initial::where('id',$request->id)->first();
         // dd($status);
@@ -184,6 +198,23 @@ class InitialController extends Controller
 
         }
         $status->save();
+
+        // dd($today);
+        $user = User::user_id();
+        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        // dd($history);
+        if($history == null)
+        {
+            $today = new DateTime();
+            $history = new Status_History;
+            $history->fk_status = $request->status;
+            $history->fk_user = $user;
+            $history->id_origin = $request->id;
+            $history->change_date = $today->format('Y-m-d');
+            $history->save();
+        }
+        // dd($history->change_date);
+
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
     }
 
