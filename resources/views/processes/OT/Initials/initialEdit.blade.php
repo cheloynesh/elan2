@@ -151,7 +151,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">PNA/Monto</label>
-                                <input type="text" id="pna1" name="pna" class="form-control">
+                                <input type="text" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" id="pna1" name="pna" class="form-control">
                             </div>
                         </div>
                     </div>

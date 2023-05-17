@@ -61,6 +61,16 @@ function actualizarSelect(result, select)
     });
 }
 
+function abrirguardarInicial()
+{
+    $("#myModal").modal('show');
+}
+
+function cerrarguardarInicial()
+{
+    $("#myModal").modal('hide');
+}
+
 function guardarInicial(id)
 {
     // alert(id);
@@ -114,7 +124,7 @@ function guardarInicial(id)
     var branch = $("#selectBranch").val();
     var plan = $("#selectPlan").val();
     var application = $("#selectAppli").val();
-    var pna = $("#pna").val();
+    var pna = $("#pna").val().replace(/[^0-9.]/g, '');
     var paymentForm = $("#selectPaymentform").val();
     var currency = $("#selectCurrency").val();
     var charge = $("#selectCharge").val();
@@ -151,8 +161,8 @@ function guardarInicial(id)
         success:function(result)
         {
             alertify.success(result.message);
+            FillTable(result.initials,result.profile,result.permission);
             $("#myModal").modal('hide');
-            window.location.reload(true);
         }
     })
 }
@@ -204,7 +214,7 @@ function editarInicial(id)
             $("#selectInsurance1").val(result.data.fk_insurance);
             $("#selectBranch1").val(result.data.fk_branch);
             $("#selectAppli1").val(result.data.fk_application);
-            $("#pna1").val(result.data.pna);
+            $("#pna1").val(parseFloat(result.data.pna).toLocaleString('en-US'));
             $("#selectPaymentform1").val(result.data.fk_payment_form);
             $("#selectCurrency1").val(result.data.fk_currency);
             $("#selectCharge1").val(result.data.fk_charge);
@@ -259,7 +269,7 @@ function actualizarInicial()
     var branch = $("#selectBranch1").val();
     var plan = $("#selectPlan1").val();
     var application = $("#selectAppli1").val();
-    var pna = $("#pna1").val();
+    var pna = $("#pna1").val().replace(/[^0-9.]/g, '');
     var paymentForm = $("#selectPaymentform1").val();
     var currency = $("#selectCurrency1").val();
     var charge = $("#selectCharge1").val();
@@ -295,8 +305,8 @@ function actualizarInicial()
         success:function(result)
         {
             alertify.success(result.message);
+            FillTable(result.initials,result.profile,result.permission);
             $("#myModaledit").modal('hide');
-            window.location.reload(true);
         }
     })
 }
@@ -317,10 +327,11 @@ function eliminarInicial(id)
                 dataType:'json',
                 success:function(result)
                 {
-                    window.location.reload(true);
+                    FillTable(result.initials,result.profile,result.permission);
+                    // window.location.reload(true);
+                    alertify.success('Eliminado');
                 }
             })
-            alertify.success('Eliminado');
         },
         function(){
             alertify.error('Cancelado');
@@ -409,8 +420,8 @@ function actualizarEstatus()
             success:function(result)
             {
                 alertify.success(result.message);
+                FillTable(result.initials,result.profile,result.permission);
                 $("#myEstatusModal").modal('hide');
-                window.location.reload(true);
             }
         })
     }
@@ -787,9 +798,11 @@ function checkConditions()
 
 function guardarPolizaInicial()
 {
+    // alert("entre a g");
     policyNumber = $("#poliza").val();
     if(idClient == 0)
     {
+        // alert("entre a nuevo cliente");
         newclient = 0;
         if(clientType == 0)
         {
@@ -797,34 +810,16 @@ function guardarPolizaInicial()
         }
         else
         {
-            actualizarEmpresa(2);
+            actualizarEmpresa(1);
         }
     }
     else
     {
+        // alert("entre a cliente registrado");
         newclient = 1;
         guardarPoliza(id_initial);
     }
-    var commentary = $("#commentary").val();
-    var route = baseUrlInicial+"/updateStatus";
-    var data = {
-        'id':id_initial,
-        "_token": $("meta[name='csrf-token']").attr("content"),
-        'status':4,
-        'commentary':commentary
-    };
-    jQuery.ajax({
-        url:route,
-        type:'post',
-        data:data,
-        dataType:'json',
-        success:function(result)
-        {
-            alertify.success("Póliza emitida");
-            $("#myEstatusModal").modal('hide');
-        }
-    })
-    window.location.reload(true);
+    // window.location.reload(true);
 }
 function noRegistrado()
 {
@@ -878,4 +873,24 @@ function noRegistrado()
     }
     $("#client_edit").val("");
     $("#modalSrcClient").modal("hide");
+}
+
+function FillTable(data,profile,permission)
+{
+    var table = $('#tbProf').DataTable();
+    var btnStat = '';
+    var btnEdit = '';
+    var btnTrash = '';
+    table.clear();
+
+    data.forEach( function(valor, indice, array) {
+        btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.name+'</button>';
+        btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarInicial('+valor.id+')" ><i class="fa fa-edit"></i></button>';
+        btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarInicial('+valor.id+')"><i class="fa fa-trash"></i></button>';
+        if(permission["erase"] == 1)
+            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit+" "+btnTrash]).node().id = valor.id;
+        else
+            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit]).node().id = valor.oid;
+    });
+    table.draw(false);
 }

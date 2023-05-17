@@ -233,16 +233,19 @@ function actualizarCliente(policy)
         dataType:'json',
         success:function(result)
         {
-            if(policy == "" || policy== null)
+            // alert(policy);
+            if(policy == "client")
             {
+                // alert("entre a null");
                 alertify.success(result.message);
                 $("#modalEditClient").modal('hide');
                 window.location.reload(true);
             }
-            else
+            else if(policy != 0)
             {
+                // alert ("entre a policy");
                 idClient = result.id;
-                guardarPoliza(0);
+                guardarPoliza(id_initial);
             }
 
         }
@@ -437,16 +440,16 @@ function actualizarEmpresa(policy_ent)
         dataType:'json',
         success:function(result)
         {
-            if(policy_ent == "" || policy_ent == null)
+            if(policy_ent == "client")
             {
                 alertify.success(result.message);
                 $("#modalEditEnterprise").modal('hide');
                 window.location.reload(true);
             }
-            else
+            else if(policy_ent != 0)
             {
                 idClient = result.id;
-                guardarPoliza(0);
+                guardarPoliza(id_initial);
             }
         }
     })

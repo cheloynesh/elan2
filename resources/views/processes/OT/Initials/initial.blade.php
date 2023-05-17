@@ -11,7 +11,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title" id="gridModalLabek">Registro de Iniciales</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" onclick="cerrarguardarInicial()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -173,7 +173,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">PNA/Monto</label>
-                                    <input type="text" id="pna" name="pna" class="form-control">
+                                    <input type="text" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" id="pna" name="pna" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secundary" onclick="cerrarguardarInicial()">Cancelar</button>
                     <button type="button" onclick="guardarInicial()" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
@@ -284,7 +284,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         @if ($perm_btn['addition']==1)
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" title="Nuevo Servicio"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="abrirguardarInicial()" title="Nuevo Servicio"><i class="fas fa-plus"></i></button>
                             <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-file-excel"></i></button>
                         @endif
                     </div>

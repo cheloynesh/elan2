@@ -153,7 +153,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelarEditar()" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="actualizarCliente()" class="btn btn-primary">Guardar</button>
+                <button type="button" onclick="actualizarCliente('client')" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

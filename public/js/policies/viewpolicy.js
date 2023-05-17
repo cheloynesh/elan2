@@ -442,13 +442,13 @@ function actualizarpoliza()
             if(clientType == 0)
             {
                 // alert("entre a cliente");
-                actualizarCliente(1);
+                actualizarCliente(0);
             }
             else
             {
                 // alert("entre a empresa");
 
-                actualizarEmpresa(2);
+                actualizarEmpresa(0);
             }
             alertify.success(result.message);
             $("#myModalEdit").modal("hide");
@@ -558,14 +558,39 @@ function guardarPoliza(initial)
                     if(clientType == 0)
                     {
                         // alert("entre a cliente");
-                        actualizarCliente(1);
+                        actualizarCliente(0);
                     }
                     else
                     {
                         // alert("entre a empresa");
-                        actualizarEmpresa(2);
+                        actualizarEmpresa(0);
                     }
                 }
+
+                if(initial != 0)
+                {
+                    var commentary = $("#commentary").val();
+                    var route = baseUrlInicial+"/updateStatus";
+                    var data = {
+                        'id':id_initial,
+                        "_token": $("meta[name='csrf-token']").attr("content"),
+                        'status':4,
+                        'commentary':commentary
+                    };
+                    jQuery.ajax({
+                        url:route,
+                        type:'post',
+                        data:data,
+                        dataType:'json',
+                        success:function(result)
+                        {
+                            alertify.success("Póliza emitida");
+                            FillTable(result.initials,result.profile,result.permission);
+                            $("#myEstatusModal").modal('hide');
+                        }
+                    })
+                }
+
                 alertify.success("Poliza Creada");
                 $("#myModalEdit").modal("hide");
                 // window.location.reload(true);

@@ -94,6 +94,44 @@ class InitialController extends Controller
             compact('initials','agents','clients','currencies','insurances','paymentForms','charges','branches','applications','perm_btn','cmbStatus','estatusExc','branchesExc'));
         }
     }
+
+    public function ReturnData($profile)
+    {
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $initials = DB::table("Status")
+                ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc',
+                DB::raw('CONCAT(IFNULL(Initials.name, "")," ",IFNULL(Initials.firstname, "")," ",IFNULL(Initials.lastname, "")) AS cname'),'color','Insurance.name as insurance',
+                'Branch.name as branch', DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'Initials.created_at as date','folio')
+                ->join('Initials','Initials.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
+                ->join('Branch','Branch.id','=','Initials.fk_branch')
+                ->join('users','users.id','=','Initials.fk_agent')
+                ->where('Status.id','<>','4')
+                ->where('Status.id','!=','20')
+                ->whereNull('Initials.deleted_at')
+                ->get();
+        }
+        else
+        {
+            $initials = DB::table("Status")
+                ->select('Status.id as statId','Status.name as name','Initials.id as id', 'rfc',
+                DB::raw('CONCAT(IFNULL(Initials.name, "")," ",IFNULL(Initials.firstname, "")," ",IFNULL(Initials.lastname, "")) AS cname'),'color','Insurance.name as insurance',
+                'Branch.name as branch', DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'Initials.created_at as date','folio')
+                ->join('Initials','Initials.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Initials.fk_insurance')
+                ->join('Branch','Branch.id','=','Initials.fk_branch')
+                ->join('users','users.id','=','Initials.fk_agent')
+                ->where('Status.id','<>','4')
+                ->where('Status.id','!=','20')
+                ->where('fk_agent',$user)
+                ->whereNull('Initials.deleted_at')
+                ->get();
+        }
+        return $initials;
+    }
+
     public function GetInfo($id)
     {
         $initial = Initial::where('id',$id)->first();
@@ -148,7 +186,12 @@ class InitialController extends Controller
         $history->id_origin = $initial->id;
         $history->change_date = $today->format('Y-m-d');
         $history->save();
-        return response()->json(["status"=>true, "message"=>"Inicial creada"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $initials = $this->ReturnData($profile);
+
+        return response()->json(["status"=>true, "message"=>"Inicial creada", "initials" => $initials, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function update(Request $request, $id)
@@ -172,14 +215,24 @@ class InitialController extends Controller
         'fk_currency' => $request->currency,
         'guide' => $request->guide,
         'fk_charge' => $request->charge]);
-        return response()->json(['status'=>true, 'message'=>"Inicial actualizada"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $initials = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, 'message'=>"Inicial actualizada", "initials" => $initials, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function destroy($id)
     {
         $initial = Initial::find($id);
         $initial->delete();
-        return response()->json(['status'=>true, "message"=>"Inicial eliminado"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $initials = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Inicial eliminada", "initials" => $initials, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function updateStatus(Request $request)
@@ -215,7 +268,11 @@ class InitialController extends Controller
         }
         // dd($history->change_date);
 
-        return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $initials = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Estatus Actualizado", "initials" => $initials, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function GetinfoStatus($id)

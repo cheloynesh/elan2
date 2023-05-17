@@ -124,7 +124,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelarEmpresa()" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="actualizarEmpresa()" class="btn btn-primary">Guardar</button>
+                <button type="button" onclick="actualizarEmpresa('client')" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

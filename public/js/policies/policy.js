@@ -274,13 +274,13 @@ function guardarPoliza(initial)
                 if(clientType == 0)
                 {
                     // alert("entre a cliente");
-                    actualizarCliente(1);
+                    actualizarCliente(0);
                 }
                 else
                 {
                     // alert("entre a empresa");
 
-                    actualizarEmpresa(2);
+                    actualizarEmpresa(0);
                 }
                 alertify.success("Poliza Actualizada");
                 window.location.reload(true);
