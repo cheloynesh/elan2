@@ -58,7 +58,7 @@
     </div>
     {{-- fin modal| --}}
 
-    @if (intval($user)==2)
+    {{-- @if (intval($user)==2)
         <br><br>
 
         <div class="bd-example bd-example-padded-bottom">
@@ -66,7 +66,7 @@
             </div>
 
         <br><br>
-    @endif
+    @endif --}}
     <br><br>
     <div class="col-lg-12">
         <div class="row">

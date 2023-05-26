@@ -39,7 +39,7 @@ class DuePayController extends Controller
         //     array_push($arrayAux,$id,$agent,$ingresadas->s_ing,'$' . number_format($ingresadas->sum_ing, 2),$emitidas->s_ing,'$' . number_format($emitidas->sum_ing, 2),$polizas->s_ing,'$' . number_format($polizas->sum_ing, 2));
         //     array_push($arrayAgents,$arrayAux);
         // }
-        $arrayAgents = DB::select('call agentscount(?,?,?,?,?)',["%","%","%","%","2023"]);
+        $arrayAgents = DB::select('call agentscount(?,?,?,?,?,?)',["%","%","12","%","%","2023"]);
         // dd($arrayAgents);
         if($perm==0)
         {
@@ -55,17 +55,20 @@ class DuePayController extends Controller
     {
         date_default_timezone_set('America/Mexico_City');
         $today = new DateTime();
-        $inscont = DB::select('call insurancescount(?,?,?,?,?)',["%","%","%","%",$today->format('Y')]);
-        $branchcont = DB::select('call branchescount(?,?,?,?,?)',["%","%","%","%",$today->format('Y')]);
-        $paycont = DB::select('call paycont(?,?,?,?,?)',["%","%","%","%",$today->format('Y')]);
+        $inscont = DB::select('call insurancescount(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
+        $branchcont = DB::select('call branchescount(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
+        $paycont = DB::select('call paycont(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
         $statcont = DB::select('call statcont(?,?,?,?,?)',["%","%","%","%",$today->format('Y')]);
         return response()->json(['status'=>true, "insurances"=>$inscont, "branches" => $branchcont, "pay" => $paycont, "status" => $statcont]);
     }
     public function GetInfoFilters(Request $request)
     {
+        $month = 0;
         date_default_timezone_set('America/Mexico_City');
         $today = new DateTime();
-        $arrayAgents = DB::select('call agentscount(?,?,?,?,?)',[$request->branch,$request->insurance,$request->month,$request->quarter,$today->format('Y')]);
+        if($request->month == '%') $month = 12;
+        else $month = $request->month;
+        $arrayAgents = DB::select('call agentscount(?,?,?,?,?,?)',[$request->branch,$request->insurance,$month,$request->month,$request->quarter,$today->format('Y')]);
         $inscont = DB::select('call insurancescount(?,?,?,?,?)',[$request->branch,$request->insurance,$request->month,$request->quarter,$today->format('Y')]);
         $branchcont = DB::select('call branchescount(?,?,?,?,?)',[$request->branch,$request->insurance,$request->month,$request->quarter,$today->format('Y')]);
         $paycont = DB::select('call paycont(?,?,?,?,?)',[$request->branch,$request->insurance,$request->month,$request->quarter,$today->format('Y')]);

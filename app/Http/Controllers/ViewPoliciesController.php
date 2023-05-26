@@ -88,6 +88,36 @@ class ViewPoliciesController extends Controller
         }
     }
 
+    public function ReturnData($profile)
+    {
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $policy = DB::table('Status')
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->join('Policy','Policy.fk_status','=','Status.id')
+                ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('users','users.id','=','Policy.fk_agent')
+                ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->whereNull('Policy.deleted_at')
+                ->get();
+        }
+        else
+        {
+            $policy = DB::table('Status')
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->join('Policy','Policy.fk_status','=','Status.id')
+                ->join('Client','Client.id','=','Policy.fk_client')
+                ->join('users','users.id','=','Policy.fk_agent')
+                ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->where('fk_agent',$user)
+                ->whereNull('Policy.deleted_at')
+                ->get();
+        }
+        return $policy;
+    }
+
+
     public function ViewReceipts($id)
     {
         // dd($id);
@@ -143,7 +173,12 @@ class ViewPoliciesController extends Controller
         $policy = Policy::select('*')->where('id',$status->fk_policy)->first();
         $this->updateStatusPayment($policy);
         // dd($policy->policy);
-        return response()->json(['status'=>true, "message"=>"Recibo Pagado"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $policies = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Recibo Pagado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
     }
     public function cancelpaypolicy(Request $request){
@@ -156,7 +191,12 @@ class ViewPoliciesController extends Controller
         $status->save();
         $policy = Policy::select('*')->where('id',$status->fk_policy)->first();
         $this->updateStatusPayment($policy);
-        return response()->json(['status'=>true, "message"=>"Recibo Cancelado"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $policies = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Recibo Cancelado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
     }
     public function updateStatus(Request $request)
@@ -180,7 +220,11 @@ class ViewPoliciesController extends Controller
             $history->save();
         }
 
-        return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $policies = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Estatus Actualizado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function getBranches($id)
@@ -218,6 +262,14 @@ class ViewPoliciesController extends Controller
     {
         $client = DB::table('Client')->select('status',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))->where('id',$id)->first();
         return response()->json(['status'=>true, "data" => $client]);
+    }
+    public function GetInfoAll($id)
+    {
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $policies = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
     }
     public function updatePolicies()
     {

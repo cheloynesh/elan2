@@ -357,6 +357,25 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="">Póliza</label>
+                                        <input type="text" id="poliza" name="poliza" class="form-control" placeholder="Número de póliza" onchange="checkPolicyNumber()">
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" onclick="checkPolicyNumber()">Verificar</button>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="" id = "disponible" style="color: green; display: none;">Póliza disponible</label>
+                                        <label for="" id = "noDisponible" style="color: red; display: none;">Póliza no disponible</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Prima neta</label>

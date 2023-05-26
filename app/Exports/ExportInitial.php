@@ -45,7 +45,7 @@ class ExportInitial implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Initials')->select(DB::raw('Initials.id','CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+                $movimientos = DB::table('Initials')->select('Initials.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
                 DB::raw('CONCAT(IFNULL(Initials.name, "")," ",IFNULL(Initials.firstname, "")," ",IFNULL(Initials.lastname, "")) AS initname'),'rfc','insured','promoter_date',
                 'system_date','folio','Insurance.name as iname','Branch.name as bname','Plans.name as plname','Applications.name as apname','Status.name as sname','pna','Payment_form.name as payname',
                 'Currency.name as currname','Charge.name as charname')

@@ -147,6 +147,7 @@ var button = "";
 var policyNumber = 0;
 var serviceFlag = 0;
 var updatedReceipt = 0;
+var policyEdit = 0;
 
 function verRecibos(id){
     // alert(id);
@@ -162,7 +163,7 @@ function verRecibos(id){
             table.clear();
             // array = result.data;
             result.data.forEach( function(valor, indice, array){
-                console.log(valor.status);
+                // console.log(valor.status);
                 if (valor.status == null ) {
                     if(result.permission['modify'])
                         button = '<button href="#|" class="btn btn-danger" onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
@@ -223,8 +224,10 @@ function guardarAuth()
         success:function(result){
             alertify.success(result.message);
             $("#authModal").modal('hide');
-            $("#myModalReceipts").modal('hide');
-            window.location.reload(true);
+            verRecibos(idPolicy);
+            RefreshTable(result.policies,result.profile,result.permission);
+            // $("#myModalReceipts").modal('hide');
+            // window.location.reload(true);
         }
     })
 }
@@ -244,8 +247,10 @@ function cancelAuth(id)
                 dataType:'json',
                 success:function(result){
                     alertify.success(result.message);
-                    $("#myModalReceipts").modal('hide');
-                    window.location.reload(true);
+                    verRecibos(idPolicy);
+                    RefreshTable(result.policies,result.profile,result.permission);
+                    // $("#myModalReceipts").modal('hide');
+                    // window.location.reload(true);
                 }
             })
         },
@@ -256,6 +261,7 @@ idClient = 0;
 clientType = 0;
 function editarPoliza(id)
 {
+    var tablerec = $('#tablerecords_edit').DataTable();
     var route = baseUrlPolizaView + '/GetInfo/' +id;
     idPolicy=id;
     jQuery.ajax({
@@ -283,6 +289,8 @@ function editarPoliza(id)
                 editarEmpresa(result.data.fk_client);
             }
 
+            policyEdit = result.data.policy;
+            $("#poliza").val(result.data.policy);
             $("#pna_edit").val(parseFloat(result.data.pna).toLocaleString('en-US'));
             $("#expedition_edit").val(parseFloat(result.data.expended_exp).toLocaleString('en-US'));
             $("#exp_impute_edit").val(result.data.exp_impute);
@@ -322,6 +330,9 @@ function editarPoliza(id)
             else
                 $("#onoffType").bootstrapToggle('off');
 
+            checkPolicyNumber();
+            tablerec.clear();
+            tablerec.draw(false);
             $("#myModalEdit").modal("show");
         }
     })
@@ -365,14 +376,27 @@ function aceptarPoliza()
                 $("#myEstatusModal").modal('hide');
             }
         })
+        window.location.reload(true);
     }
-    window.location.reload(true);
+    else
+    {
+        var route = baseUrlPolizaView + '/GetInfoAll/' + 1;
+        jQuery.ajax({
+            url:route,
+            type:'get',
+            dataType:'json',
+            success:function(result){
+                RefreshTable(result.policies,result.profile,result.permission);
+            }
+        })
+    }
 
 }
 
 function actualizarpoliza()
 {
-    console.log(updatedReceipt);
+    // console.log(updatedReceipt);
+    var policy = $("#poliza").val();
     var pna = $("#pna_edit").val().replace(/[^0-9.]/g, '');
     var expended_exp = $("#expedition_edit").val().replace(/[^0-9.]/g, '');
     var exp_impute = $("#exp_impute_edit").val();
@@ -404,6 +428,7 @@ function actualizarpoliza()
         "id":idPolicy,
         "_token": $("meta[name='csrf-token']").attr("content"),
         // "policy":policy,
+        "policy":policy,
         "expended":expended_exp,
         "exp_imp":exp_impute,
         "financ_exp":financ_exp,
@@ -430,7 +455,7 @@ function actualizarpoliza()
 
     }
     var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/" + idPolicy;
-    console.log(route);
+    // console.log(route);
 
     jQuery.ajax({
         url:route,
@@ -519,7 +544,7 @@ function guardarPoliza(initial)
     var data = {
         "id":idClient,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        "policy":policyNumber,
+        "policy":policy,
         "expended":expended_exp,
         "exp_imp":exp_impute,
         "financ_exp":financ_exp,
@@ -858,7 +883,8 @@ function actualizarEstatus()
         {
             alertify.success(result.message);
             $("#myEstatusModal").modal('hide');
-            window.location.reload(true);
+            // window.location.reload(true);
+            RefreshTable(result.policies,result.profile,result.permission);
         }
     })
 }
@@ -1005,4 +1031,68 @@ function excel_nuc(){
     form.append(field);
     $(document.body).append(form);
     form.submit();
+}
+
+function checkPolicyNumber(){
+    var policy = $("#poliza").val();
+    var routePoliza = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/policy/CheckPolicy/" + policy;
+    var disponible = document.getElementById("disponible");
+    var noDisponible = document.getElementById("noDisponible");
+
+    if(policy != policyEdit)
+    {
+        jQuery.ajax({
+            url:routePoliza,
+            type:'get',
+            dataType:'json',
+            success:function(result)
+            {
+                if (result == 0)
+                {
+                    // policyVerif = 1;
+                    // checkConditions();
+                    $("#btnModalView").prop("disabled",false);
+                    disponible.style.display = "";
+                    noDisponible.style.display = "none";
+                }
+                else
+                {
+                    $("#btnModalView").prop("disabled",true);
+                    disponible.style.display = "none";
+                    noDisponible.style.display = "";
+                }
+            }
+        })
+    }
+    else
+    {
+        $("#btnModalView").prop("disabled",false);
+        disponible.style.display = "none";
+        noDisponible.style.display = "none";
+    }
+}
+
+function RefreshTable(data,profile,permission)
+{
+    var table = $('#tbPoliza').DataTable();
+    var btnStat = '';
+    var btnRecpt = '';
+    var btnEdit = '';
+    var btnTrash = '';
+    var type = '';
+    table.clear();
+
+    data.forEach( function(valor, indice, array) {
+        btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
+        btnRecpt = '<a href="#|" class="btn btn-primary" onclick="verRecibos('+valor.id+')">Ver Recibos</a>'
+        btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarPoliza('+valor.id+')" ><i class="fa fa-edit"></i></button>';
+        btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarPoliza('+valor.id+')"><i class="fa fa-trash"></i></button>';
+        if(valor.type == 1) type = "Inicial"; else type = "Renovación";
+        // alert(valor.id);
+        if(permission["erase"] == 1)
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]).node().id = valor.id;
+        else
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]).node().id = valor.id;
+    });
+    table.draw(false);
 }

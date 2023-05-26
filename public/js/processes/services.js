@@ -248,88 +248,119 @@ function actualizarEstatus()
     // alert("entre a services");
     var status = $("#selectStatus").val();
     var commentary = $("#commentary").val();
+    var tablerec = $('#tablerecords_edit').DataTable();
 
     if(status == 8)
     {
-        var route = baseUrlService + "/GetPolicyInfo/" + id_service;
-        var data = {
-            "_token": $("meta[name='csrf-token']").attr("content")
-        };
-        jQuery.ajax({
-            url:route,
-            type:'get',
-            data:data,
-            dataType:'json',
-            success:function(result)
-            {
-                serviceFlag = 1;
-                if(result.data == null)
+        alertify.confirm("Póliza","¿Desea actualizar o dar de alta la Póliza?",
+        function()
+        {
+            var route = baseUrlService + "/GetPolicyInfo/" + id_service;
+            var data = {
+                "_token": $("meta[name='csrf-token']").attr("content")
+            };
+            jQuery.ajax({
+                url:route,
+                type:'get',
+                data:data,
+                dataType:'json',
+                success:function(result)
                 {
-                    idPolicy = 0;
-                    policyNumber = result.service.policy;
-                }
-                else
-                {
-                    idPolicy = result.data.id;
-
-                    // alert(result.data.fk_client);
-                    clientType = result.client.status;
-                    idClient = result.data.fk_client;
-                    if(clientType == 0)
+                    serviceFlag = 1;
+                    if(result.data == null)
                     {
-                        idupdate=result.data.fk_client;
-                        fisica.style.display = ""
-                        moral.style.display = "none"
-                        editarCliente(result.data.fk_client);
+                        idPolicy = 0;
+                        policyNumber = result.service.policy;
+                        $("#poliza").val(policyNumber);
                     }
                     else
                     {
-                        idupdateE=result.data.fk_client;
-                        fisica.style.display = "none"
-                        moral.style.display = ""
-                        editarEmpresa(result.data.fk_client);
+                        idPolicy = result.data.id;
+
+                        // alert(result.data.fk_client);
+                        clientType = result.client.status;
+                        idClient = result.data.fk_client;
+                        if(clientType == 0)
+                        {
+                            idupdate=result.data.fk_client;
+                            fisica.style.display = ""
+                            moral.style.display = "none"
+                            editarCliente(result.data.fk_client);
+                        }
+                        else
+                        {
+                            idupdateE=result.data.fk_client;
+                            fisica.style.display = "none"
+                            moral.style.display = ""
+                            editarEmpresa(result.data.fk_client);
+                        }
+                        $("#client_edit").val(result.client.name);
+
+                        $("#poliza").val(result.data.policy);
+                        $("#pna_edit").val(parseFloat(result.data.pna).toLocaleString('en-US'));
+                        $("#expedition_edit").val(parseFloat(result.data.expended_exp).toLocaleString('en-US'));
+                        $("#exp_impute_edit").val(result.data.exp_impute);
+
+                        $("#financ_exp_edit").val(parseFloat(result.data.financ_exp).toLocaleString('en-US'));
+                        $("#financ_impute_edit").val(result.data.financ_impute);
+                        $("#other_exp_edit").val(parseFloat(result.data.other_exp).toLocaleString('en-US'));
+
+                        $("#other_impute_edit").val(result.data.other_impute);
+                        $("#iva_edit").val(formatter.format(result.data.iva));
+                        // $("#ivapor_edit").val(result.data.);
+
+                        $("#prima_t_edit").val(formatter.format(result.data.total));
+                        $("#selectCurrency_edit").val(result.data.fk_currency);
+                        $("#renovable_edit").val(result.data.renovable);
+
+
+                        $("#selectInsurance_edit").val(result.data.fk_insurance);
+
+                        actualizarSelect(result.branches,"#selectBranch_edit");
+                        actualizarSelect(result.plans,"#selectPlan_edit");
+
+                        $("#selectBranch_edit").val(result.data.fk_branch);
+                        $("#selectPlan_edit").val(result.data.fk_plan);
+
+                        $("#selectAgent_edit").val(result.data.fk_agent);
+
+                        $("#pay_frec_edit").val(result.data.fk_payment_form);
+                        $("#selectCharge_edit").val(result.data.fk_charge);
+
+                        $("#initial_date_edit").val(result.data.initial_date);
+                        $("#end_date_edit").val(result.data.end_date);
+
+                        $("#myModalEdit").modal("show");
+                        // mostrartabla();
                     }
-                    $("#client_edit").val(result.client.name);
-
-                    $("#pna_edit").val(parseFloat(result.data.pna).toLocaleString('en-US'));
-                    $("#expedition_edit").val(parseFloat(result.data.expended_exp).toLocaleString('en-US'));
-                    $("#exp_impute_edit").val(result.data.exp_impute);
-
-                    $("#financ_exp_edit").val(parseFloat(result.data.financ_exp).toLocaleString('en-US'));
-                    $("#financ_impute_edit").val(result.data.financ_impute);
-                    $("#other_exp_edit").val(parseFloat(result.data.other_exp).toLocaleString('en-US'));
-
-                    $("#other_impute_edit").val(result.data.other_impute);
-                    $("#iva_edit").val(formatter.format(result.data.iva));
-                    // $("#ivapor_edit").val(result.data.);
-
-                    $("#prima_t_edit").val(formatter.format(result.data.total));
-                    $("#selectCurrency_edit").val(result.data.fk_currency);
-                    $("#renovable_edit").val(result.data.renovable);
-
-
-                    $("#selectInsurance_edit").val(result.data.fk_insurance);
-
-                    actualizarSelect(result.branches,"#selectBranch_edit");
-                    actualizarSelect(result.plans,"#selectPlan_edit");
-
-                    $("#selectBranch_edit").val(result.data.fk_branch);
-                    $("#selectPlan_edit").val(result.data.fk_plan);
-
-                    $("#selectAgent_edit").val(result.data.fk_agent);
-
-                    $("#pay_frec_edit").val(result.data.fk_payment_form);
-                    $("#selectCharge_edit").val(result.data.fk_charge);
-
-                    $("#initial_date_edit").val(result.data.initial_date);
-                    $("#end_date_edit").val(result.data.end_date);
-
+                    tablerec.clear();
+                    tablerec.draw(false);
                     $("#myModalEdit").modal("show");
-                    mostrartabla();
                 }
-                $("#myModalEdit").modal("show");
-            }
-        })
+            })
+        },
+        function()
+        {
+            var route = baseUrlService+"/updateStatus";
+            var data = {
+                'id':id_service,
+                "_token": $("meta[name='csrf-token']").attr("content"),
+                'status':status,
+                'commentary':commentary
+            };
+            jQuery.ajax({
+                url:route,
+                type:'post',
+                data:data,
+                dataType:'json',
+                success:function(result)
+                {
+                    alertify.success(result.message);
+                    $("#myEstatusModal").modal('hide');
+                    window.location.reload(true);
+                }
+            })
+        }).set('labels', {ok:'Si', cancel:'No'});
     }
     else
     {

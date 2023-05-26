@@ -124,6 +124,7 @@ Route::get('policies/policy/getPlans/{insurance}/{branch}','InitialController@ge
 Route::resource('policies/viewPolicies','ViewPoliciesController');
 Route::get('policies/viewPolicies/ViewReceipts/{id}','ViewPoliciesController@ViewReceipts')->name('viewPolicies.ViewReceipts');
 Route::get('policies/viewPolicies/GetInfo/{id}','ViewPoliciesController@GetInfo')->name('viewPolicies.GetInfo');
+Route::get('policies/viewPolicies/GetInfoAll/{id}','ViewPoliciesController@GetInfoAll')->name('viewPolicies.GetInfoAll');
 Route::get('policies/viewPolicies/GetInfoClient/{id}','ViewPoliciesController@GetInfoClient')->name('viewPolicies.GetInfoClient');
 Route::post('policies/viewPolicies/paypolicy', 'ViewPoliciesController@paypolicy')->name('viewPolicies.paypolicy');
 Route::post('policies/viewPolicies/cancelpaypolicy', 'ViewPoliciesController@cancelpaypolicy')->name('viewPolicies.cancelpaypolicy');
