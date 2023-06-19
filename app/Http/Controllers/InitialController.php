@@ -214,6 +214,7 @@ class InitialController extends Controller
         'fk_payment_form' => $request->paymentForm,
         'fk_currency' => $request->currency,
         'guide' => $request->guide,
+        'initial_comm' => $request->initial_comm,
         'fk_charge' => $request->charge]);
 
         $profile = User::findProfile();

@@ -313,7 +313,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <label for="">Referencia</label>
+                                    <input type="text" name="reference" id="reference" class="form-control" placeholder="Referencia">
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Prima neta</label>
                                         <div class="input-group mb-3">
@@ -324,7 +328,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for=""> Expedición</label>
                                         <div class="input-group mb-3">
@@ -335,7 +339,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="">Imputar </label>
                                         <select class="form-select" aria-label="Default select example" id="exp_impute_edit">

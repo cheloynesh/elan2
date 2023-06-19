@@ -309,6 +309,7 @@ function actualizarEstatus()
                         $("#iva_edit").val(formatter.format(result.data.iva));
                         // $("#ivapor_edit").val(result.data.);
 
+                        $("#reference").val(result.data.reference);
                         $("#prima_t_edit").val(formatter.format(result.data.total));
                         $("#selectCurrency_edit").val(result.data.fk_currency);
                         $("#renovable_edit").val(result.data.renovable);

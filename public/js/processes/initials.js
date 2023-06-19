@@ -219,6 +219,7 @@ function editarInicial(id)
             $("#selectCurrency1").val(result.data.fk_currency);
             $("#selectCharge1").val(result.data.fk_charge);
             $("#guide1").val(result.data.guide);
+            $("#initial_comm").val(result.data.initial_comm);
             $("#myModaledit").modal('show');
         }
     })
@@ -274,6 +275,7 @@ function actualizarInicial()
     var currency = $("#selectCurrency1").val();
     var charge = $("#selectCharge1").val();
     var guide = $("#guide1").val();
+    var initial_comm = $("#initial_comm").val();
 
     var route = "initial/"+idupdateInitial;
     var data = {
@@ -296,6 +298,7 @@ function actualizarInicial()
         'currency':currency,
         'charge':charge,
         'guide':guide,
+        'initial_comm':initial_comm,
     };
     jQuery.ajax({
         url:route,

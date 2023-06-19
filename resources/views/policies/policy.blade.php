@@ -305,7 +305,11 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="">Referencia</label>
+                            <input type="text" name="reference" id="reference" class="form-control" placeholder="Referencia">
+                        </div>
+                        <div class="col-md-3">
                             <label for="">Prima neta</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -314,7 +318,7 @@
                                 <input type="text" id="pna" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Prima neta" onchange="calculo()">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for=""> Expedición</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -323,7 +327,7 @@
                                 <input type="text" name="expedition" id="expedition" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Gastos de Expedición" onchange="calculo()">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="">Imputar </label>
                             <select class="form-select" aria-label="Default select example" id="exp_impute">
                                 <option value="1">Primera</option>

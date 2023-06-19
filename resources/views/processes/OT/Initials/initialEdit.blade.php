@@ -191,6 +191,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12" >
+                            <div class="form-group">
+                                <label for="">Comentario: </label>
+                                <textarea name="initial_comm" class="form-control" id="initial_comm" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>

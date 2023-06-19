@@ -303,6 +303,7 @@ function editarPoliza(id)
             $("#iva_edit").val(formatter.format(result.data.iva));
             // $("#ivapor_edit").val(result.data.);
 
+            $("#reference").val(result.data.reference);
             $("#prima_t_edit").val(formatter.format(result.data.total));
             $("#selectCurrency_edit").val(result.data.fk_currency);
             $("#renovable_edit").val(result.data.renovable);
@@ -405,6 +406,7 @@ function actualizarpoliza()
     var other_exp = $("#other_exp_edit").val().replace(/[^0-9.]/g, '');
     var other_impute = $("#other_impute_edit").val();
     var iva = $("#iva_edit").val().replace(/[^0-9.]/g, '');
+    var reference=$("#reference").val();
     var prima_t = $("#prima_t_edit").val().replace(/[^0-9.]/g, '');
     var fk_currency = $("#selectCurrency_edit").val();
     var renovable = $("#renovable_edit").val();
@@ -438,6 +440,7 @@ function actualizarpoliza()
         "iva":iva,
         "pna_t":prima_t,
         "renovable":renovable,
+        "reference":reference,
         "pna": pna,
         "currency": fk_currency,
         "insurance": fk_insurance,
@@ -496,6 +499,8 @@ function guardarPoliza(initial)
     var other_exp = $("#other_exp_edit").val().replace(/[^0-9.]/g, '');
     var other_impute = $("#other_impute_edit").val();
     var iva = $("#iva_edit").val().replace(/[^0-9.]/g, '');
+
+    var reference=$("#reference").val();
     var prima_t = $("#prima_t_edit").val().replace(/[^0-9.]/g, '');
     var fk_currency = $("#selectCurrency_edit").val();
     var renovable = $("#renovable_edit").val();
@@ -554,6 +559,7 @@ function guardarPoliza(initial)
         "iva":iva,
         "pna_t":prima_t,
         "renovable":renovable,
+        "reference":reference,
         "pna": pna,
         "currency": fk_currency,
         "insurance": fk_insurance,

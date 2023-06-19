@@ -192,6 +192,7 @@ function guardarPoliza(initial)
     var renovable = $("#renovable").val();
     var pay_frec = $("#pay_frec").val();
 
+    var reference=$("#reference").val();
     var pna=$("#pna").val().replace(/[^0-9.]/g, '');
     var currency=$("#selectCurrency").val();
     var insurance=$("#selectInsurance").val();
@@ -247,6 +248,7 @@ function guardarPoliza(initial)
         "iva":iva,
         "pna_t":pna_t,
         "renovable":renovable,
+        "reference":reference,
         "pna": pna,
         "currency": currency,
         "insurance": insurance,
