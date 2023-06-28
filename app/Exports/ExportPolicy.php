@@ -22,16 +22,17 @@ class ExportPolicy implements FromCollection, WithHeadings
     }
     public function collection()
     {
+        $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
+        // 'policy','initial_date','end_date','pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname',
+        'rfc','policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
+        'Branch.name as bname','Plans.name as plname',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+        'Charge.name as charname','Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname');
         // dd($this->id);
         if($this->status == 0)
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
-                // 'policy','initial_date','end_date','pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname',
-                'policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname','Plans.name as plname',
-                DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),'Charge.name as charname',
-                'Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname')
+                $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
                     ->join('Plans',"Plans.id","=","fk_plan")
@@ -42,14 +43,10 @@ class ExportPolicy implements FromCollection, WithHeadings
                     ->join('Status',"Status.id","=","fk_status")
                     ->join('users',"users.id","=","fk_agent")
                     ->whereNull("Policy.deleted_at")->get();
-                // dd($movimientos);
             }
             else
             {
-                $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
-                'policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname','Plans.name as plname',
-                DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),'Charge.name as charname',
-                'Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname')
+                $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
                     ->join('Plans',"Plans.id","=","fk_plan")
@@ -67,10 +64,7 @@ class ExportPolicy implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
-                'policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname','Plans.name as plname',
-                DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),'Charge.name as charname',
-                'Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname')
+                $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
                     ->join('Plans',"Plans.id","=","fk_plan")
@@ -85,10 +79,7 @@ class ExportPolicy implements FromCollection, WithHeadings
             }
             else
             {
-                $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
-                'policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname','Plans.name as plname',
-                DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),'Charge.name as charname',
-                'Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname')
+                $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
                     ->join('Plans',"Plans.id","=","fk_plan")
@@ -102,11 +93,12 @@ class ExportPolicy implements FromCollection, WithHeadings
                     ->where('fk_branch',$this->branch)->where('fk_status',$this->status)->get();
             }
         }
+        // dd($movimientos);
 
         return $movimientos;
     }
     public function headings(): array
     {
-        return ["ID","Cliente","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus"];
+        return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus"];
     }
 }

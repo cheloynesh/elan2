@@ -20,7 +20,7 @@ class RefundsController extends Controller
 {
     public function index()
     {
-        // dd($initials);
+        // dd($refunds);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->where("fk_profile","12")->pluck('name','id');
         $insurances = Insurance::orderBy('name')->pluck('name','id');
         $cmbStatus = Status::select('id','name')
@@ -63,6 +63,34 @@ class RefundsController extends Controller
             compact('refunds','agents','insurances','perm_btn','cmbStatus','estatusExc','branchesExc'));
         }
     }
+
+    public function ReturnData($profile)
+    {
+        $user = User::user_id();
+        if($profile != 12)
+        {
+            $refunds = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
+                'Insurance.name as insurance',DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'contractor')
+                ->join('Refunds','Refunds.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
+                ->join('users','users.id','=','Refunds.fk_agent')
+                ->whereNull('Refunds.deleted_at')->get();
+        }
+        else
+        {
+            $refunds = DB::table("Status")
+                ->select('Status.id as statId','Status.name as statName','Refunds.id as id','folio','color',
+                'Insurance.name as insurance',DB::raw('CONCAT(users.name," ",users.firstname) AS agent'),'contractor')
+                ->join('Refunds','Refunds.fk_status','=','Status.id')
+                ->join('Insurance','Insurance.id','=','Refunds.fk_insurance')
+                ->join('users','users.id','=','Refunds.fk_agent')
+                ->where('fk_agent',$user)
+                ->whereNull('Refunds.deleted_at')->get();
+        }
+        return $refunds;
+    }
+
     public function GetInfo($id)
     {
         $refund = Refund::where('id',$id)->first();
@@ -81,6 +109,7 @@ class RefundsController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $refund = new Refund;
         $refund->fk_agent = $request->agent;
         $refund->folio = $request->folio;
@@ -94,6 +123,7 @@ class RefundsController extends Controller
         $refund->amount = $request->amount;
         $refund->payment_form = $request->payment_form;
         $refund->guide = $request->guide;
+        $refund->type = $request->type;
         $refund->save();
 
         $today = new DateTime();
@@ -105,7 +135,11 @@ class RefundsController extends Controller
         $history->change_date = $today->format('Y-m-d');
         $history->save();
 
-        return response()->json(["status"=>true, "message"=>"Reembolso creado"]);
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $refunds = $this->ReturnData($profile);
+
+        return response()->json(["status"=>true, "message"=>"Reembolso creado", "refunds" => $refunds, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function update(Request $request, $id)
@@ -123,15 +157,26 @@ class RefundsController extends Controller
         'sinister' => $request->sinister,
         'amount' => $request->amount,
         'guide' => $request->guide,
-        'payment_form' => $request->payment_form]);
-        return response()->json(['status'=>true, 'message'=>"Reembolso actualizado"]);
+        'payment_form' => $request->payment_form,
+        'type' => $request->type]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $refunds = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, 'message'=>"Reembolso actualizado", "refunds" => $refunds, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function destroy($id)
     {
         $refund = Refund::find($id);
         $refund->delete();
-        return response()->json(['status'=>true, "message"=>"Reembolso eliminado"]);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $refunds = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Reembolso eliminado", "refunds" => $refunds, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function updateStatus(Request $request)
@@ -139,6 +184,7 @@ class RefundsController extends Controller
         $status = Refund::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
+        $status->attend_date=$request->attend_date;
         $status->commentary=$request->commentary;
         $status->save();
 
@@ -156,7 +202,11 @@ class RefundsController extends Controller
             $history->save();
         }
 
-        return response()->json(['status'=>true, "message"=>"Estatus Actualizado"]);
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $refunds = $this->ReturnData($profile);
+
+        return response()->json(['status'=>true, "message"=>"Estatus Actualizado", "refunds" => $refunds, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function GetinfoStatus($id){

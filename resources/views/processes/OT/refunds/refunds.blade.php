@@ -1,6 +1,6 @@
 @extends('home')
 <head>
-    <title>Reembolsos | Elan</title>
+    <title>Siniestros | Elan</title>
 </head>
 <style>
     thead input {
@@ -10,15 +10,15 @@
 }
 </style>
 @section('content')
-    <div class="text-center"><h1>Reembolsos</h1></div>
+    <div class="text-center"><h1>Siniestros</h1></div>
         {{-- modal| --}}
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title" id="gridModalLabek">Registro de Reembolso</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridModalLabek">Registro de Siniestro</h4>
+                    <button type="button" class="close" onclick="cerrar('#myModal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -84,20 +84,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Póliza</label>
                                     <input type="text" id="policy" name="policy" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Asegurado Afectado</label>
                                     <input type="text" id="insured" name="insured" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-group">
@@ -106,37 +104,48 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="">Monto a Reembolsar</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">$</div>
-                                            </div>
-                                            <input type="text" id="amount" name="amount" class="form-control">
-                                        </div>
+                                        <label for="">Tipo de Trámite</label>
+                                        <select name="selectType" id="selectType" class="form-select" onchange="changeType('')">
+                                            <option hidden selected value="0">Selecciona una opción</option>
+                                            <option value="1">Reembolsos</option>
+                                            <option value="2">Prog. Cirugia</option>
+                                            <option value="3">Reconsideración</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="refundDiv">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="">Forma de Pago</label>
-                                        <select name="selectPayment" id="selectPayment" class="form-select">
-                                            <option hidden selected value="">Selecciona una opción</option>
-                                            <option value="Transferencia">Transferencia</option>
-                                            <option value="Cheque">Cheque</option>
-                                        </select>
+                                    <label for="">Monto a Reembolsar</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">$</div>
+                                        </div>
+                                        <input type="text" id="amount" name="amount" class="form-control">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" id="payDiv">
+                                <div class="form-group">
+                                    <label for="">Forma de Pago</label>
+                                    <select name="selectPayment" id="selectPayment" class="form-select">
+                                        <option hidden selected value="0">Selecciona una opción</option>
+                                        <option value="Transferencia">Transferencia</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" onclick="guardarReembolso()" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secundary" onclick="cerrar('#myModal')">Cancelar</button>
+                    <button type="button" onclick="guardarSiniestro()" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
@@ -149,7 +158,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title" id="gridModalLabek">Exportar a Excel</h4>
-                    <button type="button" class="close" onclick="cerrarFiltro()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" onclick="cerrar('#myModalExport')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -185,7 +194,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secundary" onclick="cerrarFiltro()">Cancelar</button>
+                    <button type="button" class="btn btn-secundary" onclick="cerrar('#myModalExport')">Cancelar</button>
                     <button type="button" onclick="excel_nuc()" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
@@ -193,7 +202,6 @@
     </div>
     {{-- fin modal| --}}
     @include('processes.OT.refunds.refundsEdit')
-    @include('processes.OT.status.status')
     {{-- Inicia pantalla de inicio --}}
     <div class="col-lg-12">
         <div class="row">
@@ -201,7 +209,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         @if ($perm_btn['addition']==1)
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" title="Nuevo"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="abrirNuevo()"  title="Nuevo"><i class="fas fa-plus"></i></button>
                             <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-file-excel"></i></button>
                         @endif
                     </div>
@@ -233,9 +241,9 @@
                         </td>
                         {{-- <td>{{$initial->client}}</td> --}}
                         <td>
-                            <button href="#|" class="btn btn-warning" onclick="editarReembolso({{$refund->id}})" ><i class="fa fa-edit"></i></button>
+                            <button href="#|" class="btn btn-warning" onclick="editarSiniestro({{$refund->id}})" ><i class="fa fa-edit"></i></button>
                             @if ($perm_btn['erase']==1)
-                                <button href="#|" class="btn btn-danger" onclick="eliminarReembolso({{$refund->id}})"><i class="fa fa-trash"></i></button>
+                                <button href="#|" class="btn btn-danger" onclick="eliminarSiniestro({{$refund->id}})"><i class="fa fa-trash"></i></button>
                             @endif
                         </td>
                     </tr>

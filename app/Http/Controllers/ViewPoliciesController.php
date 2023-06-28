@@ -55,7 +55,7 @@ class ViewPoliciesController extends Controller
         if($profile != 12)
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(total, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
@@ -66,7 +66,7 @@ class ViewPoliciesController extends Controller
         else
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(total, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
@@ -94,7 +94,7 @@ class ViewPoliciesController extends Controller
         if($profile != 12)
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(total, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
@@ -105,7 +105,7 @@ class ViewPoliciesController extends Controller
         else
         {
             $policy = DB::table('Status')
-                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(pna, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
+                ->select('Status.id as statId','Status.name as statName','color',DB::raw('CONCAT("$", FORMAT(total, 2)) as pnaa'),'Policy.*',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS cname'),'Client.rfc','Branch.name AS branch',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")) AS agname'))
                 ->join('Policy','Policy.fk_status','=','Status.id')
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')

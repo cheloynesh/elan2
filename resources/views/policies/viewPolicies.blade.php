@@ -92,7 +92,7 @@
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">Tipo</th>
-                <th class="text-center">PNA</th>
+                <th class="text-center">Prima Total</th>
                 <th class="text-center">Inicio Vigencia</th>
                 <th class="text-center">Fin Vigencia</th>
                 <th class="text-center">Estatus</th>

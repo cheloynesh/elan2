@@ -61,7 +61,7 @@ function actualizarSelect(result, select)
     });
 }
 
-function guardarReembolso()
+function guardarSiniestro()
 {
     var agent = $("#selectAgent").val();
     var folio = $("#folio").val();
@@ -75,6 +75,7 @@ function guardarReembolso()
     var amount = $("#amount").val();
     var guide = $("#guide").val();
     var payment_form = $("#selectPayment").val();
+    var type = $("#selectType").val();
     var route = "refunds";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -89,7 +90,8 @@ function guardarReembolso()
         'sinister':sinister,
         'amount':amount,
         'guide':guide,
-        'payment_form':payment_form
+        'payment_form':payment_form,
+        'type':type,
     };
     jQuery.ajax({
         url:route,
@@ -100,15 +102,18 @@ function guardarReembolso()
         {
             alertify.success(result.message);
             $("#myModal").modal('hide');
-            window.location.reload(true);
+            FillTable(result.refunds,result.profile,result.permission);
+            // window.location.reload(true);
         }
     })
 }
 var idupdate = 0;
-function editarReembolso(id)
+function editarSiniestro(id)
 {
     idupdate=id;
 
+    var refund = document.getElementById("refundDiv1");
+    var pay = document.getElementById("payDiv1");
     var route = baseUrl + '/GetInfo/'+ id;
 
     jQuery.ajax({
@@ -117,20 +122,32 @@ function editarReembolso(id)
         dataType:'json',
         success:function(result)
         {
-           $("#selectAgent1").val(result.data.fk_agent);
-           $("#folio1").val(result.data.folio);
-           $("#contractor1").val(result.data.contractor);
-           actualizarSelect(result.branches,"#selectBranch1");
-           $("#selectInsurance1").val(result.data.fk_insurance);
-           $("#selectBranch1").val(result.data.fk_branch);
-           $("#entry_date1").val(result.data.entry_date);
-           $("#policy1").val(result.data.policy);
-           $("#insured1").val(result.data.insured);
-           $("#sinister1").val(result.data.sinister);
-           $("#amount1").val(result.data.amount);
-           $("#guide1").val(result.data.guide);
-           $("#selectPayment1").val(result.data.payment_form);
-           $("#myModaledit").modal('show');
+            $("#selectAgent1").val(result.data.fk_agent);
+            $("#folio1").val(result.data.folio);
+            $("#contractor1").val(result.data.contractor);
+            actualizarSelect(result.branches,"#selectBranch1");
+            $("#selectInsurance1").val(result.data.fk_insurance);
+            $("#selectBranch1").val(result.data.fk_branch);
+            $("#entry_date1").val(result.data.entry_date);
+            $("#policy1").val(result.data.policy);
+            $("#insured1").val(result.data.insured);
+            $("#sinister1").val(result.data.sinister);
+            $("#amount1").val(result.data.amount);
+            $("#guide1").val(result.data.guide);
+            $("#selectPayment1").val(result.data.payment_form);
+            $("#selectType1").val(result.data.type);
+
+            if(result.data.type == 0 || result.data.type == 2)
+            {
+                refund.style.display = "none";
+                pay.style.display = "none";
+            }
+            else
+            {
+                refund.style.display = "";
+                pay.style.display = "";
+            }
+            $("#myModaledit").modal('show');
         }
     })
 }
@@ -138,7 +155,7 @@ function cancelarEditar()
 {
     $("#myModaledit").modal('hide');
 }
-function actualizarReembolso()
+function actualizarSiniestro()
 {
     var agent = $("#selectAgent1").val();
     var folio = $("#folio1").val();
@@ -152,6 +169,7 @@ function actualizarReembolso()
     var amount = $("#amount1").val();
     var guide = $("#guide1").val();
     var payment_form = $("#selectPayment1").val();
+    var type = $("#selectType1").val();
     var route = "refunds/"+idupdate;
     var data = {
         'id':idupdate,
@@ -167,7 +185,8 @@ function actualizarReembolso()
         'sinister':sinister,
         'amount':amount,
         'guide':guide,
-        'payment_form':payment_form
+        'payment_form':payment_form,
+        'type':type
     };
     jQuery.ajax({
         url:route,
@@ -178,19 +197,20 @@ function actualizarReembolso()
         {
             alertify.success(result.message);
             $("#myModaledit").modal('hide');
-            window.location.reload(true);
+            FillTable(result.refunds,result.profile,result.permission);
+            // window.location.reload(true);
         }
     })
 }
 
-function eliminarReembolso(id)
+function eliminarSiniestro(id)
 {
     var route = "refunds/"+id;
     var data = {
             'id':id,
             "_token": $("meta[name='csrf-token']").attr("content"),
     };
-    alertify.confirm("Eliminar Reembolso","¿Desea borrar el Reembolso?",
+    alertify.confirm("Eliminar Siniestro","¿Desea borrar el Siniestro?",
         function(){
             jQuery.ajax({
                 url:route,
@@ -199,7 +219,8 @@ function eliminarReembolso(id)
                 dataType:'json',
                 success:function(result)
                 {
-                    window.location.reload(true);
+                    FillTable(result.refunds,result.profile,result.permission);
+                    // window.location.reload(true);
                 }
             })
             alertify.success('Eliminado');
@@ -221,6 +242,7 @@ function opcionesEstatus(serviceId,statusId)
         dataType:'json',
         success:function(result){
             $("#selectStatus").val(statusId);
+            $("#stat_date").val(result.data.attend_date);
             $("#commentary").val(result.data.commentary);
             $("#myEstatusModal").modal('show');
         }
@@ -231,6 +253,7 @@ function opcionesEstatus(serviceId,statusId)
 function actualizarEstatus()
 {
     var status = $("#selectStatus").val();
+    var attend_date = $("#stat_date").val();
     var commentary = $("#commentary").val();
     var route = baseUrl+"/updateStatus";
     console.log(route);
@@ -238,6 +261,7 @@ function actualizarEstatus()
         'id':id_service,
         "_token": $("meta[name='csrf-token']").attr("content"),
         'status':status,
+        "attend_date":attend_date,
         "commentary":commentary
     };
     jQuery.ajax({
@@ -249,7 +273,8 @@ function actualizarEstatus()
         {
             alertify.success(result.message);
             $("#myEstatusModal").modal('hide');
-            window.location.reload(true);
+            FillTable(result.refunds,result.profile,result.permission);
+            // window.location.reload(true);
         }
     })
 }
@@ -264,9 +289,9 @@ function abrirFiltro()
     $("#myModalExport").modal('show');
 }
 
-function cerrarFiltro()
+function cerrar(modal)
 {
-    $("#myModalExport").modal('hide');
+    $(modal).modal('hide');
 }
 
 function llenarRamos(){
@@ -334,4 +359,51 @@ function excel_nuc(){
     form.append(field);
     $(document.body).append(form);
     form.submit();
+}
+
+function changeType(div)
+{
+    var refund = document.getElementById("refundDiv"+div);
+    var pay = document.getElementById("payDiv"+div);
+    var selectType = $("#selectType"+div).val();
+
+    if(selectType == 0 || selectType == 2)
+    {
+        refund.style.display = "none";
+        pay.style.display = "none";
+    }
+    else
+    {
+        refund.style.display = "";
+        pay.style.display = "";
+    }
+}
+function abrirNuevo()
+{
+    var refund = document.getElementById("refundDiv");
+    var pay = document.getElementById("payDiv");
+    $("#selectType").val(0);
+    refund.style.display = "none";
+    pay.style.display = "none";
+    $("#myModal").modal('show');
+}
+function FillTable(data,profile,permission)
+{
+    var table = $('#tbProf').DataTable();
+    var btnStat = '';
+    var btnEdit = '';
+    var btnTrash = '';
+    table.clear();
+
+    data.forEach( function(valor, indice, array) {
+
+        btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
+        btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarSiniestro('+valor.id+')" ><i class="fa fa-edit"></i></button>';
+        btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarSiniestro('+valor.id+')"><i class="fa fa-trash"></i></button>';
+        if(permission["erase"] == 1)
+            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit+" "+btnTrash]).node().id = valor.id;
+        else
+            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit]).node().id = valor.id;
+    });
+    table.draw(false);
 }
