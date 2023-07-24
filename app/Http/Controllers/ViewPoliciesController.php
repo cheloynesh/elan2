@@ -21,6 +21,9 @@ use DateTime;
 use DB;
 use App\Exports\ExportPolicy;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ReceiptsImport;
+use Carbon\Carbon;
+
 
 class ViewPoliciesController extends Controller
 {
@@ -60,6 +63,7 @@ class ViewPoliciesController extends Controller
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->where('Policy.fk_status','!=',16)
                 ->whereNull('Policy.deleted_at')
                 ->get();
         }
@@ -71,6 +75,7 @@ class ViewPoliciesController extends Controller
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
+                ->where('Policy.fk_status','!=',16)
                 ->where('fk_agent',$user)
                 ->whereNull('Policy.deleted_at')
                 ->get();
@@ -88,8 +93,10 @@ class ViewPoliciesController extends Controller
         }
     }
 
-    public function ReturnData($profile)
+    // public function ReturnData($profile)
+    public function ReturnData($profile,$active)
     {
+        if($active == 0) $active = '%';
         $user = User::user_id();
         if($profile != 12)
         {
@@ -99,8 +106,7 @@ class ViewPoliciesController extends Controller
                 ->join('Client','Client.id','=','Policy.fk_client')
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
-                ->whereNull('Policy.deleted_at')
-                ->get();
+                ->whereNull('Policy.deleted_at');
         }
         else
         {
@@ -111,9 +117,18 @@ class ViewPoliciesController extends Controller
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('fk_agent',$user)
-                ->whereNull('Policy.deleted_at')
-                ->get();
+                ->whereNull('Policy.deleted_at');
         }
+
+        if($active == 0)
+        {
+            $policy = $policy->get();
+        }
+        else
+        {
+            $policy = $policy->where('Policy.fk_status','!=',16)->get();
+        }
+
         return $policy;
     }
 
@@ -176,7 +191,7 @@ class ViewPoliciesController extends Controller
 
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,14);
-        $policies = $this->ReturnData($profile);
+        $policies = $this->ReturnData($profile,$request->active);
 
         return response()->json(['status'=>true, "message"=>"Recibo Pagado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
@@ -194,7 +209,7 @@ class ViewPoliciesController extends Controller
 
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,14);
-        $policies = $this->ReturnData($profile);
+        $policies = $this->ReturnData($profile,$request->active);
 
         return response()->json(['status'=>true, "message"=>"Recibo Cancelado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
@@ -222,7 +237,7 @@ class ViewPoliciesController extends Controller
 
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,14);
-        $policies = $this->ReturnData($profile);
+        $policies = $this->ReturnData($profile,$request->active);
 
         return response()->json(['status'=>true, "message"=>"Estatus Actualizado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
     }
@@ -263,11 +278,11 @@ class ViewPoliciesController extends Controller
         $client = DB::table('Client')->select('status',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(firstname, "")," ",IFNULL(lastname, "")) AS name'))->where('id',$id)->first();
         return response()->json(['status'=>true, "data" => $client]);
     }
-    public function GetInfoAll($id)
+    public function GetInfoAll($id, Request $request)
     {
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,14);
-        $policies = $this->ReturnData($profile);
+        $policies = $this->ReturnData($profile,$request->active);
 
         return response()->json(['status'=>true, "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
     }
@@ -354,5 +369,89 @@ class ViewPoliciesController extends Controller
         $nombre = "Poliza.xlsx";
         $sheet = new ExportPolicy($status, $branch);
         return Excel::download($sheet,$nombre);
+    }
+
+    public function GetPolicies($active)
+    {
+        // dd("entre");
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,20);
+        $policies = $this->ReturnData($profile,$active);
+        return response()->json(['status'=>true, "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
+    }
+
+    public function GetP($active)
+    {
+        $policies = DB::table('Policy')->select('id','initial_date','fk_payment_form')
+            ->whereDay('initial_date','=',31)
+            ->where('fk_payment_form','!=',1)
+            ->get();
+        // dd($policies);
+        return response()->json(['status'=>true, "policies" => $policies]);
+    }
+
+    public function updateDate(Request $request)
+    {
+        $receipts = Receipts::where('fk_policy',$request->id)->get();
+        $cont = 0;
+        foreach($receipts as $receipt)
+        {
+            $rcp = Receipts::where('id',$receipt->id)->update(['initial_date'=>$request->dates[$cont]]);
+            $cont += 1;
+        }
+        // dd("terminado");
+        return response()->json(['status'=>true]);
+    }
+
+    public function import(Request $request)
+    {
+        set_time_limit(1000);
+        $file = $request->file('excl');
+        // $file = $request->file;
+        $imp = new ReceiptsImport();
+        $new_balance = 0;
+        $prev_balance = 0;
+        // dd($request);
+        // Excel::import($imp, $file);
+        $array = ($imp)->toArray($file);
+        // dd($array[0][1]);
+        $array2 = array();
+        $arrayNotFound = array();
+        $cont = 0;
+        $goodCont = 0;
+        foreach ($array[0] as $moves)
+        {
+            $moves[1] = $this->transformDate($moves[1]);
+            $moves[2] = $this->transformDate($moves[2]);
+
+            $policy = Policy::select('id')->where('policy',$moves[0])->first();
+
+            if ($policy != null)
+            {
+                $receipt = Receipts::where('fk_policy',$policy->id)->where('initial_date',$moves[2])->update(['status'=>$moves[1]]);
+                $goodCont++;
+            }
+            else
+            {
+                $policy = Policy::select('id')->where('reference',$moves[0])->first();
+
+                if($policy != null)
+                {
+                    $receipt = Receipts::where('fk_policy',$policy->id)->where('initial_date',$moves[2])->update(['status'=>$moves[1]]);
+                    $goodCont++;
+                }
+                else
+                {
+                    array_push($arrayNotFound, $moves[0]);
+                }
+            }
+        }
+
+        return response()->json(['status'=>true, 'message'=>"Datos Subidos", 'notFnd' => $arrayNotFound, 'importados' => $goodCont]);
+    }
+
+    public function transformDate($value)
+    {
+        return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value))->format('Y-m-d');
     }
 }

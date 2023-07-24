@@ -10958,3 +10958,6 @@ a.text-dark:focus {
 }
 
 .modal { overflow-y: auto !important; }
+
+th { font-size: 1em; }
+td { font-size: .9em; }

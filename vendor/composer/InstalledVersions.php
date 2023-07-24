@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4c8cfd60a1ecf6d6b57d86894d5d4e9fc5e0f1f2',
+    'reference' => '5aba71ccdfb8dbfc8e3b0bfab8edf2bd80188070',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -464,7 +464,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4c8cfd60a1ecf6d6b57d86894d5d4e9fc5e0f1f2',
+      'reference' => '5aba71ccdfb8dbfc8e3b0bfab8edf2bd80188070',
     ),
     'laravel/tinker' => 
     array (
@@ -589,12 +589,12 @@ private static $installed = array (
     ),
     'nesbot/carbon' => 
     array (
-      'pretty_version' => '2.46.0',
-      'version' => '2.46.0.0',
+      'pretty_version' => '2.68.1',
+      'version' => '2.68.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2fd2c4a77d58a4e95234c8a61c5df1f157a91bf4',
+      'reference' => '4f991ed2a403c85efbc4f23eb4030063fdbe01da',
     ),
     'nikic/php-parser' => 
     array (

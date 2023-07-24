@@ -134,6 +134,10 @@ Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialControl
 Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@updatePolicies')->name('viewPolicies.updatePolicies');
 Route::get('policies/viewPolicies/updatePoliciesNet/{id}', 'ViewPoliciesController@updatePoliciesNet')->name('viewPolicies.updatePoliciesNet');
 Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesController@ExportPolicy');
+Route::get('policies/viewPolicies/GetPolicies/{active}','ViewPoliciesController@GetPolicies');
+Route::get('policies/viewPolicies/GetP/{active}','ViewPoliciesController@GetP');
+Route::post('policies/viewPolicies/updateDate', 'ViewPoliciesController@updateDate')->name('viewPolicies.updateDate');
+Route::post('policies/viewPolicies/import','ViewPoliciesController@import');
 
 // cobranza
 Route::resource('policies/collection','CollectionController');

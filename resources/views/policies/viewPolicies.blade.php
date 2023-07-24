@@ -57,6 +57,66 @@
         </div>
     </div>
     {{-- fin modal| --}}
+    {{-- modal espera --}}
+    <div id="waitModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="gridModalLabek">Importando Excel</h4>
+                    {{-- <button type="button" onclick="cerrarNuc()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid bd-example-row">
+                        <div class="col-md-12">
+                            <div class="row" id="waitrow">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <img src="{{ URL::asset('img/SpinnerLittle.gif') }}">
+                                        <label> Se están procesando los datos, por favor espere.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="resultrow" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Recibos Actualizados</label>
+                                            <input disabled type="text" id="importados" name="importados" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Pólizas no Encontrados</label>
+                                            <input disabled type="text" id="notFnd" name="notFnd" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <table class="table table-striped table-hover text-center" id="tbnotFnd">
+                                                <thead>
+                                                    <th class="text-center">Pólizas</th>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeBtn" hidden onclick="cerrarWait()" class="btn btn-secundary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- termina modal --}}
 
     {{-- @if (intval($user)==2)
         <br><br>
@@ -67,21 +127,36 @@
 
         <br><br>
     @endif --}}
-    <br><br>
-    <div class="col-lg-12">
-        <div class="row">
-            @if ($perm_btn['modify']==1)
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @if ($perm_btn['addition']==1)
-                            <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-file-excel"></i></button>
-                        @endif
+    <br>
+    <div class="bd-example bd-example-padded-bottom">
+        @if ($perm_btn['addition']==1)
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class = "form-group">
+                            <input type="file" name="excl" id="excl" accept=".xlsx, .xls, .csv" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class = "form-group">
+                            <button class="btn btn-primary" title="Importar de Excel" onclick="importexc()"><i class="fas fa-upload"></i> <i class="fas fa-file-excel"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-download"></i> <i class="fas fa-file-excel"></i></button>
+                            {{-- <button class="btn btn-primary" title="Importar de Excel" onclick="act()">actualizar</button> --}}
+                        </div>
                     </div>
                 </div>
-            @endif
+            </div>
+        @endif
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class = "form-group">
+                        <input class="form-check-input" type="checkbox" onclick="chkActive()" id="chkActive"> Mostrar Cancelados
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <br><br>
         {{-- Inicia pantalla de inicio --}}
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
         <table class="table table-striped table-hover text-center" id="tbPoliza">
