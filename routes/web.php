@@ -137,7 +137,7 @@ Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesC
 Route::get('policies/viewPolicies/GetPolicies/{active}','ViewPoliciesController@GetPolicies');
 Route::get('policies/viewPolicies/GetP/{active}','ViewPoliciesController@GetP');
 Route::post('policies/viewPolicies/updateDate', 'ViewPoliciesController@updateDate')->name('viewPolicies.updateDate');
-Route::post('policies/viewPolicies/import','ViewPoliciesController@import');
+Route::post('policies/viewPolicies/import/{active}','ViewPoliciesController@import');
 
 // cobranza
 Route::resource('policies/collection','CollectionController');

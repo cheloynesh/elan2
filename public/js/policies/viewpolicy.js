@@ -805,6 +805,7 @@ function mostrartabla(){
             console.log(route);
             days = result.data.days;
             console.log(days);
+            var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
             {
                 values_total = 0;
@@ -1240,6 +1241,7 @@ function act()
 
 function importexc()
 {
+    if (document.getElementById('chkActive').checked) active = 0; else active = 1;
     var table = $('#tbnotFnd').DataTable();
     var resultrow = document.getElementById("resultrow");
     var waitrow = document.getElementById("waitrow");
@@ -1268,7 +1270,7 @@ function importexc()
 
     formData.append('_token', $("meta[name='csrf-token']").attr("content"));
 
-    var route = baseUrlPolizaView + '/import';
+    var route = baseUrlPolizaView + '/import/'+active;
 
     jQuery.ajax({
         url:route,
@@ -1291,6 +1293,7 @@ function importexc()
             document.getElementById("closeBtn").hidden = false;
             waitrow.style.display = "none";
             resultrow.style.display = "";
+            RefreshTable(result.policies,result.profile,result.permission);
             // alert("Movimientos importados: " + result.importados + "\nDatos repetidos: " + result.repetidos + "\nNucs no encontrados: " + notFnd.length + "\n" + notFnd.join("\n"));
             // $("#waitModal").modal('hide');
 

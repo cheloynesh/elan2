@@ -728,6 +728,7 @@ function mostrartablaInitial(){
             console.log(route);
             days = result.data.days;
             console.log(days);
+            var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
             {
                 values_total = 0;

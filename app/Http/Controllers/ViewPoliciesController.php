@@ -403,7 +403,7 @@ class ViewPoliciesController extends Controller
         return response()->json(['status'=>true]);
     }
 
-    public function import(Request $request)
+    public function import($active, Request $request)
     {
         set_time_limit(1000);
         $file = $request->file('excl');
@@ -424,11 +424,12 @@ class ViewPoliciesController extends Controller
             $moves[1] = $this->transformDate($moves[1]);
             $moves[2] = $this->transformDate($moves[2]);
 
-            $policy = Policy::select('id')->where('policy',$moves[0])->first();
+            $policy = Policy::select('id','end_date')->where('policy',$moves[0])->first();
 
             if ($policy != null)
             {
                 $receipt = Receipts::where('fk_policy',$policy->id)->where('initial_date',$moves[2])->update(['status'=>$moves[1]]);
+                $this->updateStatusPayment($policy);
                 $goodCont++;
             }
             else
@@ -438,6 +439,7 @@ class ViewPoliciesController extends Controller
                 if($policy != null)
                 {
                     $receipt = Receipts::where('fk_policy',$policy->id)->where('initial_date',$moves[2])->update(['status'=>$moves[1]]);
+                    $this->updateStatusPayment($policy);
                     $goodCont++;
                 }
                 else
@@ -447,7 +449,12 @@ class ViewPoliciesController extends Controller
             }
         }
 
-        return response()->json(['status'=>true, 'message'=>"Datos Subidos", 'notFnd' => $arrayNotFound, 'importados' => $goodCont]);
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,20);
+        $policies = $this->ReturnData($profile,$active);
+
+        // dd($arrayNotFound,$goodCont);
+        return response()->json(['status'=>true, 'message'=>"Datos Subidos", 'notFnd' => $arrayNotFound, 'importados' => $goodCont, "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
     }
 
     public function transformDate($value)

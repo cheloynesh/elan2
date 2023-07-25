@@ -431,6 +431,7 @@ function mostrartabla(){
         success:function(result)
         {
             days = result.data.days;
+            var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
             {
                 values_total = 0;
