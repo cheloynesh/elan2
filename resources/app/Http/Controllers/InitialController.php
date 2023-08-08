@@ -255,7 +255,7 @@ class InitialController extends Controller
 
         // dd($today);
         $user = User::user_id();
-        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        $history = Status_History::where('id_origin',$request->id)->where('fk_status',$request->status)->first();
         // dd($history);
         if($history == null)
         {

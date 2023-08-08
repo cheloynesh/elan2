@@ -147,6 +147,9 @@ Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->n
 Route::resource('reports/duepay/duepay','DuePayController');
 Route::get('reports/duepay/duepay/GetInfo/{id}','DuePayController@GetInfo')->name('duePay.GetInfo');
 Route::get('reports/duepay/duepay/GetInfoFilters/{id}','DuePayController@GetInfoFilters')->name('duePay.GetInfoFilters');
+Route::get('reports/duepay/duepay/ExportInitialsDuePay/{mnth}/{quart}/{brnch}/{insrnc}','DuePayController@ExportInitialsDuePay');
+Route::get('reports/duepay/duepay/ExportEmitNoPay/{mnth}/{quart}/{brnch}/{insrnc}','DuePayController@ExportEmitNoPay');
+Route::get('reports/duepay/duepay/ExportEmitPay/{mnth}/{quart}/{brnch}/{insrnc}','DuePayController@ExportEmitPay');
 
 //reporte KPI
 Route::resource('reports/kpi/kpi','KpiController');

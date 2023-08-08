@@ -65,6 +65,7 @@ class InitialController extends Controller
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
                 ->where('Status.id','!=','20')
+                ->where('Status.id','!=','23')
                 ->whereNull('Initials.deleted_at')
                 ->get();
         }
@@ -80,6 +81,7 @@ class InitialController extends Controller
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
                 ->where('Status.id','!=','20')
+                ->where('Status.id','!=','23')
                 ->where('fk_agent',$user)
                 ->whereNull('Initials.deleted_at')
                 ->get();
@@ -110,6 +112,7 @@ class InitialController extends Controller
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
                 ->where('Status.id','!=','20')
+                ->where('Status.id','!=','23')
                 ->whereNull('Initials.deleted_at')
                 ->get();
         }
@@ -125,6 +128,7 @@ class InitialController extends Controller
                 ->join('users','users.id','=','Initials.fk_agent')
                 ->where('Status.id','<>','4')
                 ->where('Status.id','!=','20')
+                ->where('Status.id','!=','23')
                 ->where('fk_agent',$user)
                 ->whereNull('Initials.deleted_at')
                 ->get();
@@ -255,7 +259,7 @@ class InitialController extends Controller
 
         // dd($today);
         $user = User::user_id();
-        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        $history = Status_History::where('id_origin',$request->id)->where('fk_status',$request->status)->first();
         // dd($history);
         if($history == null)
         {
@@ -320,6 +324,7 @@ class InitialController extends Controller
         // dd("entre");
         $nombre = "Iniciales.xlsx";
         $sheet = new ExportInitial($status, $branch);
+        // dd($sheet);
         return Excel::download($sheet,$nombre);
     }
     public function GetPolicyInfo($id)

@@ -305,11 +305,136 @@ function GetFilters()
         {
             table.clear();
             result.data.forEach( function(valor, indice, array) {
-                table.row.add([valor.AgentName,valor.CountIng,valor.SumIng,valor.CountEmit,valor.SumEmit,valor.CountPoliz,valor.SumPoliz]).node().id = valor.AgentId;
+                table.row.add([valor.AgentName,valor.CountAll,valor.SumAll,valor.CountEmit,valor.SumEmit,valor.CountPoliz,valor.SumPoliz]).node().id = valor.AgentId;
             });
             table.draw(false);
             updateCharts(result.insurances, result.branches, result.status, result.pay);
         }
     })
+}
+function exclInitials(id)
+{
+    alertify.confirm("Descargar Excel","¿Desea descargar el excel con las solicitudes ingresadas?",
+        function(){
+            var month = $("#month").val();
+            var quarter = $("#selectQuarter").val();
+            var branch = $("#selectBranch").val();
+            var insurance = $("#selectInsurance").val();
+            if(month == '%') month = 12; else month = month;
+            if(quarter == '%') quarter = "a"; else quarter = quarter;
+            if(branch == '%') branch = "a"; else branch = branch;
+            if(insurance == '%') insurance = "a"; else insurance = insurance;
+
+            var route = baseUrl + '/ExportInitialsDuePay/' + month + '/' + quarter + '/' + branch + '/' + insurance;
+            $.ajaxSetup({
+                headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+            });
+
+            var form = $('<form></form>');
+
+            form.attr("method", "get");
+            form.attr("action", route);
+            form.attr('_token',$("meta[name='csrf-token']").attr("content"));
+            $.each(function(key, value) {
+                var field = $('<input></input>');
+                field.attr("type", "hidden");
+                field.attr("name", key);
+                field.attr("value", value);
+                form.append(field);
+            });
+            var field = $('<input></input>');
+            field.attr("type", "hidden");
+            field.attr("name", "_token");
+            field.attr("value", $("meta[name='csrf-token']").attr("content"));
+            form.append(field);
+            $(document.body).append(form);
+            form.submit();
+        },
+        function(){
+    });
+}
+
+function exclEmitNoPay(id)
+{
+    alertify.confirm("Descargar Excel","¿Desea descargar el excel con las pólizas no pagadas?",
+        function(){
+            var month = $("#month").val();
+            var quarter = $("#selectQuarter").val();
+            var branch = $("#selectBranch").val();
+            var insurance = $("#selectInsurance").val();
+            if(month == '%') month = 12; else month = month;
+            if(quarter == '%') quarter = "a"; else quarter = quarter;
+            if(branch == '%') branch = "a"; else branch = branch;
+            if(insurance == '%') insurance = "a"; else insurance = insurance;
+
+            var route = baseUrl + '/ExportEmitNoPay/' + month + '/' + quarter + '/' + branch + '/' + insurance;
+            $.ajaxSetup({
+                headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+            });
+
+            var form = $('<form></form>');
+
+            form.attr("method", "get");
+            form.attr("action", route);
+            form.attr('_token',$("meta[name='csrf-token']").attr("content"));
+            $.each(function(key, value) {
+                var field = $('<input></input>');
+                field.attr("type", "hidden");
+                field.attr("name", key);
+                field.attr("value", value);
+                form.append(field);
+            });
+            var field = $('<input></input>');
+            field.attr("type", "hidden");
+            field.attr("name", "_token");
+            field.attr("value", $("meta[name='csrf-token']").attr("content"));
+            form.append(field);
+            $(document.body).append(form);
+            form.submit();
+        },
+        function(){
+    });
+}
+
+function exclEmitPay(id)
+{
+    alertify.confirm("Descargar Excel","¿Desea descargar el excel con las pólizas pagadas?",
+        function(){
+            var month = $("#month").val();
+            var quarter = $("#selectQuarter").val();
+            var branch = $("#selectBranch").val();
+            var insurance = $("#selectInsurance").val();
+            if(month == '%') month = "a"; else month = month;
+            if(quarter == '%') quarter = "a"; else quarter = quarter;
+            if(branch == '%') branch = "a"; else branch = branch;
+            if(insurance == '%') insurance = "a"; else insurance = insurance;
+
+            var route = baseUrl + '/ExportEmitPay/' + month + '/' + quarter + '/' + branch + '/' + insurance;
+            $.ajaxSetup({
+                headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+            });
+
+            var form = $('<form></form>');
+
+            form.attr("method", "get");
+            form.attr("action", route);
+            form.attr('_token',$("meta[name='csrf-token']").attr("content"));
+            $.each(function(key, value) {
+                var field = $('<input></input>');
+                field.attr("type", "hidden");
+                field.attr("name", key);
+                field.attr("value", value);
+                form.append(field);
+            });
+            var field = $('<input></input>');
+            field.attr("type", "hidden");
+            field.attr("name", "_token");
+            field.attr("value", $("meta[name='csrf-token']").attr("content"));
+            form.append(field);
+            $(document.body).append(form);
+            form.submit();
+        },
+        function(){
+    });
 }
 

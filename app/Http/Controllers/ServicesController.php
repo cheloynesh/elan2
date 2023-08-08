@@ -126,7 +126,8 @@ class ServicesController extends Controller
         'record' => $request->record,
         'fk_insurance' => $request->insurance,
         'guide' => $request->guide,
-        'fk_branch' => $request->branch]);
+        'fk_branch' => $request->branch,
+        'service_comm' => $request->service_comm]);
         return response()->json(['status'=>true, 'message'=>"Servicio actualizado"]);
     }
 
@@ -146,7 +147,7 @@ class ServicesController extends Controller
         $status->save();
 
         $user = User::user_id();
-        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        $history = Status_History::where('id_origin',$request->id)->where('fk_status',$request->status)->first();
         // dd($history);
         if($history == null)
         {

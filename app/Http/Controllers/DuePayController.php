@@ -10,6 +10,11 @@ use App\Insurance;
 use App\Profile;
 use DB;
 use DateTime;
+use App\Exports\ExportInitial;
+use App\Exports\ExportInitialsDuePay;
+use App\Exports\ExportEmitNoPay;
+use App\Exports\ExportEmitPay;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DuePayController extends Controller
 {
@@ -58,7 +63,7 @@ class DuePayController extends Controller
         $inscont = DB::select('call insurancescount(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
         $branchcont = DB::select('call branchescount(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
         $paycont = DB::select('call paycont(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
-        $statcont = DB::select('call statcont(?,?,?,?,?)',["%","%","%","%",$today->format('Y')]);
+        $statcont = DB::select('call statcont(?,?,?,?,?)',["%","%","12","%",$today->format('Y')]);
         return response()->json(['status'=>true, "insurances"=>$inscont, "branches" => $branchcont, "pay" => $paycont, "status" => $statcont]);
     }
     public function GetInfoFilters(Request $request)
@@ -75,5 +80,30 @@ class DuePayController extends Controller
         $statcont = DB::select('call statcont(?,?,?,?,?)',[$request->branch,$request->insurance,$request->month,$request->quarter,$today->format('Y')]);
         // dd($request->all());
         return response()->json(['status'=>true, "data"=>$arrayAgents, "insurances"=>$inscont, "branches" => $branchcont, "pay" => $paycont, "status" => $statcont]);
+    }
+
+    public function ExportInitialsDuePay($mnth,$quart,$brnch,$insrnc)
+    {
+        // dd("entre");
+        $nombre = "SolicitudesIngresadas.xlsx";
+        // $sheet = new ExportInitialsDuePay();
+        $sheet = new ExportInitialsDuePay($mnth,$quart,$brnch,$insrnc);
+        return Excel::download($sheet,$nombre);
+    }
+    public function ExportEmitNoPay($mnth,$quart,$brnch,$insrnc)
+    {
+        // dd("entre");
+        $nombre = "EmitidasNoPagadas.xlsx";
+        // $sheet = new ExportInitialsDuePay();
+        $sheet = new ExportEmitNoPay($mnth,$quart,$brnch,$insrnc);
+        return Excel::download($sheet,$nombre);
+    }
+    public function ExportEmitPay($mnth,$quart,$brnch,$insrnc)
+    {
+        // dd("entre");
+        $nombre = "EmitidasPagadas.xlsx";
+        // $sheet = new ExportInitialsDuePay();
+        $sheet = new ExportEmitPay($mnth,$quart,$brnch,$insrnc);
+        return Excel::download($sheet,$nombre);
     }
 }

@@ -136,6 +136,7 @@ function editarSiniestro(id)
             $("#guide1").val(result.data.guide);
             $("#selectPayment1").val(result.data.payment_form);
             $("#selectType1").val(result.data.type);
+            $("#refund_comm").val(result.data.refund_comm);
 
             if(result.data.type == 0 || result.data.type == 2)
             {
@@ -170,6 +171,7 @@ function actualizarSiniestro()
     var guide = $("#guide1").val();
     var payment_form = $("#selectPayment1").val();
     var type = $("#selectType1").val();
+    var refund_comm = $("#refund_comm").val();
     var route = "refunds/"+idupdate;
     var data = {
         'id':idupdate,
@@ -186,7 +188,8 @@ function actualizarSiniestro()
         'amount':amount,
         'guide':guide,
         'payment_form':payment_form,
-        'type':type
+        'type':type,
+        'refund_comm':refund_comm
     };
     jQuery.ajax({
         url:route,

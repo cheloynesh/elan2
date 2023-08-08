@@ -96,17 +96,17 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label id="conting" style="font-weight: bold; font-size : 20px"></label>
+                    <button type="button" class="btn btn-link" onclick="exclInitials()"><label id="conting" style="font-weight: bold; font-size : 20px"></label></button>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label id="contenit" style="font-weight: bold; font-size : 20px"></label>
+                    <button type="button" class="btn btn-link" onclick="exclEmitNoPay()"><label id="contenit" style="font-weight: bold; font-size : 20px"></label></button>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label id="contpay" style="font-weight: bold; font-size : 20px"></label>
+                    <button type="button" class="btn btn-link" onclick="exclEmitPay()"><label id="contpay" style="font-weight: bold; font-size : 20px"></label></button>
                 </div>
             </div>
         </div>
@@ -169,8 +169,9 @@
                     @foreach ($arrayAgents as $agent)
                         <tr id="{{$agent->AgentId}}">
                             <td>{{$agent->AgentName}}</td>
-                            <td>{{$agent->CountIng}}</td>
-                            <td>{{$agent->SumIng}}</td>
+                            {{-- <td onclick="exclInitials({{$agent->AgentId}})">{{$agent->CountAll}}</td> --}}
+                            <td>{{$agent->CountAll}}</td>
+                            <td>{{$agent->SumAll}}</td>
                             <td>{{$agent->CountEmit}}</td>
                             <td>{{$agent->SumEmit}}</td>
                             <td>{{$agent->CountPoliz}}</td>

@@ -146,6 +146,7 @@ function editarServicio(id)
            $("#selectInsurance1").val(result.data.fk_insurance);
            $("#selectBranch1").val(result.data.fk_branch);
            $("#guide1").val(result.data.guide);
+           $("#service_comm").val(result.data.service_comm);
            $("#myModaledit").modal('show');
         }
     })
@@ -168,6 +169,7 @@ function actualizarServicio()
     var insurance = $("#selectInsurance1").val();
     var branch = $("#selectBranch1").val();
     var guide = $("#guide1").val();
+    var service_comm = $("#service_comm").val();
     var route = "service/"+idupdate;
     var data = {
         'id':idupdate,
@@ -183,7 +185,8 @@ function actualizarServicio()
         'record':record,
         'insurance':insurance,
         'branch':branch,
-        'guide':guide
+        'guide':guide,
+        'service_comm':service_comm
     };
     jQuery.ajax({
         url:route,

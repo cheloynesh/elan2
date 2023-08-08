@@ -158,7 +158,8 @@ class RefundsController extends Controller
         'amount' => $request->amount,
         'guide' => $request->guide,
         'payment_form' => $request->payment_form,
-        'type' => $request->type]);
+        'type' => $request->type,
+        'refund_comm' => $request->refund_comm]);
 
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,14);
@@ -189,7 +190,7 @@ class RefundsController extends Controller
         $status->save();
 
         $user = User::user_id();
-        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        $history = Status_History::where('id_origin',$request->id)->where('fk_status',$request->status)->first();
         // dd($history);
         if($history == null)
         {

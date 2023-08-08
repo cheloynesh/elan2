@@ -64,6 +64,7 @@ class ViewPoliciesController extends Controller
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('Policy.fk_status','!=',16)
+                ->where('Policy.fk_status','!=',22)
                 ->whereNull('Policy.deleted_at')
                 ->get();
         }
@@ -76,6 +77,7 @@ class ViewPoliciesController extends Controller
                 ->join('users','users.id','=','Policy.fk_agent')
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('Policy.fk_status','!=',16)
+                ->where('Policy.fk_status','!=',22)
                 ->where('fk_agent',$user)
                 ->whereNull('Policy.deleted_at')
                 ->get();
@@ -126,7 +128,9 @@ class ViewPoliciesController extends Controller
         }
         else
         {
-            $policy = $policy->where('Policy.fk_status','!=',16)->get();
+            $policy = $policy->where('Policy.fk_status','!=',16)
+                ->where('Policy.fk_status','!=',22)
+                ->get();
         }
 
         return $policy;
@@ -222,7 +226,7 @@ class ViewPoliciesController extends Controller
         $status->save();
 
         $user = User::user_id();
-        $history = Status_History::where('fk_user',$user)->where('id_origin',$request->id)->where('fk_status',$request->status)->first();
+        $history = Status_History::where('id_origin',$request->id)->where('fk_status',$request->status)->first();
         // dd($history);
         if($history == null)
         {
@@ -298,10 +302,11 @@ class ViewPoliciesController extends Controller
     }
     public function updatePoliciesNet($id)
     {
-        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->get();
+        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->where('fk_status','!=',22)->get();
         $today = new DateTime();
         foreach($policies as $policy)
         {
+            // dd($policy);
             $this->updateStatusPayment($policy);
             // dd($policy,$receipts);
         }

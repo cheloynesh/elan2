@@ -22,31 +22,24 @@ class ExportRefunds implements FromCollection, WithHeadings
     }
     public function collection()
     {
+        $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
+        'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister','amount','payment_form','guide',
+        'service_comm')
+            ->join('Branch',"Branch.id","=","fk_branch")
+            ->join('Insurance',"Insurance.id","=","fk_insurance")
+            ->join('Status',"Status.id","=","fk_status")
+            ->join('users',"users.id","=","fk_agent");
         // dd($this->id);
         if($this->status == 0)
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
-                'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
-                'amount','payment_form','guide')
-                    ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Insurance',"Insurance.id","=","fk_insurance")
-                    ->join('Status',"Status.id","=","fk_status")
-                    ->join('users',"users.id","=","fk_agent")
-                    ->whereNull("Refunds.deleted_at")->get();
+                $movimientos = $movimientos->whereNull("Refunds.deleted_at")->get();
                 // dd($movimientos);
             }
             else
             {
-                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
-                'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
-                'amount','payment_form','guide')
-                    ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Insurance',"Insurance.id","=","fk_insurance")
-                    ->join('Status',"Status.id","=","fk_status")
-                    ->join('users',"users.id","=","fk_agent")
-                    ->whereNull("Refunds.deleted_at")
+                $movimientos = $movimientos->whereNull("Refunds.deleted_at")
                     ->where('fk_branch',$this->branch)->get();
             }
         }
@@ -54,26 +47,12 @@ class ExportRefunds implements FromCollection, WithHeadings
         {
             if($this->branch == 0)
             {
-                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
-                'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
-                'amount','payment_form','guide')
-                    ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Insurance',"Insurance.id","=","fk_insurance")
-                    ->join('Status',"Status.id","=","fk_status")
-                    ->join('users',"users.id","=","fk_agent")
-                    ->whereNull("Refunds.deleted_at")
+                $movimientos = $movimientos->whereNull("Refunds.deleted_at")
                     ->where('fk_status',$this->status)->get();
             }
             else
             {
-                $movimientos = DB::table('Refunds')->select('Refunds.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
-                'folio','contractor','Insurance.name as iname','Branch.name as bname','entry_date','policy','Status.name as sname','insured','sinister',
-                'amount','payment_form','guide')
-                    ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Insurance',"Insurance.id","=","fk_insurance")
-                    ->join('Status',"Status.id","=","fk_status")
-                    ->join('users',"users.id","=","fk_agent")
-                    ->whereNull("Refunds.deleted_at")
+                $movimientos = $movimientos->whereNull("Refunds.deleted_at")
                     ->where('fk_branch',$this->branch)->where('fk_status',$this->status)->get();
             }
         }
@@ -82,6 +61,6 @@ class ExportRefunds implements FromCollection, WithHeadings
     }
     public function headings(): array
     {
-        return ["ID","Agente", "Folio", "Contratante", "Compañía", "Ramo", "Fecha de Ingreso", "Póliza", "Estatus", "Asegurado Afectado", "Número de Siniestro", "Monto a Reembolsar", "Forma de Pago", "Número de Guía"];
+        return ["ID","Agente", "Folio", "Contratante", "Compañía", "Ramo", "Fecha de Ingreso", "Póliza", "Estatus", "Asegurado Afectado", "Número de Siniestro", "Monto a Reembolsar", "Forma de Pago", "Número de Guía","Comentario"];
     }
 }

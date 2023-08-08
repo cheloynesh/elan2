@@ -4,7 +4,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title" id="gridModalLabek">Registro de Servicios</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" onclick="cancelarEditar()"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
@@ -113,6 +113,14 @@
                                         <option value='{{ $id }}'>{{ $branch }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" >
+                            <div class="form-group">
+                                <label for="">Comentario: </label>
+                                <textarea name="service_comm" class="form-control" id="service_comm" rows="2"></textarea>
                             </div>
                         </div>
                     </div>
