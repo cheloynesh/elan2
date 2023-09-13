@@ -45,6 +45,10 @@ Route::resource('admin/pruebas/prueba', 'PruebasController');
 Route::resource('admin/users/user', 'UsersController');
 Route::get('admin/users/user/GetInfo/{id}','UsersController@GetInfo')->name('user.GetInfo');
 
+// cambio de contraseña
+Route::get('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
+Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
+
 // clientes
 Route::resource('admin/client/client', 'ClientsController');
 Route::get('admin/client/client/GetInfo/{id}','ClientsController@GetInfo')->name('client.GetInfo');
@@ -143,6 +147,8 @@ Route::post('policies/viewPolicies/import/{active}','ViewPoliciesController@impo
 Route::resource('policies/collection','CollectionController');
 Route::get('policies/collection/GetInfo/{id}','CollectionController@GetInfo')->name('collection.GetInfo');
 
+// ------------------------------------Reportes--------------------------------------------------
+
 //reporte Pagos pendientes
 Route::resource('reports/duepay/duepay','DuePayController');
 Route::get('reports/duepay/duepay/GetInfo/{id}','DuePayController@GetInfo')->name('duePay.GetInfo');
@@ -156,4 +162,10 @@ Route::resource('reports/kpi/kpi','KpiController');
 Route::get('reports/kpi/kpi/GetInfo/{id}','KpiController@GetInfo')->name('kpi.GetInfo');
 Route::get('reports/kpi/kpi/GetInfoFilters/{id}','KpiController@GetInfoFilters')->name('kpi.GetInfoFilters');
 
-
+// ------------------------------------Contrataciones--------------------------------------------------
+Route::resource('hiring/form/form/jobboard','FormController');
+Route::resource('hiring/form/form/socialmedia','FormController');
+Route::resource('hiring/form/form/rda','FormController');
+Route::resource('hiring/form/form/alanta','FormController');
+Route::post('hiring/form/form/{origin}/uploadRequest', 'FormController@uploadRequest')->name('form.uploadRequest');
+Route::get('hiring/form/form/thankyou','FormController@thankyou')->name('form.thankyou');

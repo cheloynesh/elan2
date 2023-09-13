@@ -2,10 +2,10 @@
 @section('content')
 @include('admin.profile.profileedit')
 
-    <div class="text-center"><h1>Catálogo de Perfiles</h1></div>
-    {{-- <div style="max-width: 1200px; margin: auto;"> --}}
+    <div class="text-center"><h1>Pruebas</h1></div>
+    <div style="max-width: 100%; margin: auto;">
         {{-- modal| --}}
-        <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+        {{-- <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
 
@@ -17,26 +17,6 @@
                     <div class="modal-body">
                         <div class="container-fluid bd-example-row">
                             <div class="col-lg-12">
-                                {{-- <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Nombre</label>
-                                            <input type="text" id="name" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Perfil:</label>
-                                            <select name="selectProfile" id="selectProfile" class="form-control"
-                                            onchange="showimp()">
-                                                <option hidden selected>Selecciona una opción</option>
-                                                @foreach ($prof as $id => $prf)
-                                                    <option value='{{ $id }}'>{{ $prf }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -113,7 +93,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- inicio tabla --}}
                                 <div class="table-responsive">
                                     <table class="table table-stripped table-hover text-center" id="tbcodes" style="display: none">
                                         <thead>
@@ -133,12 +112,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
-        <div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+        </div> --}}
+        {{-- <div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
 
@@ -175,22 +150,18 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
+        </div> --}}
         {{-- fin modal| --}}
         {{-- Inicia pantalla de inicio --}}
-        <div class="bd-example bd-example-padded-bottom">
+        {{-- <div class="bd-example bd-example-padded-bottom">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
         </div>
         <div class="bd-example bd-example-padded-bottom">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Prueba tabla</button>
-        </div>
+        </div> --}}
         <br><br>
 
-        <ul class="nav nav-tabs" id="mytab" role="tablist">
+        {{-- <ul class="nav nav-tabs" id="mytab" role="tablist">
             <li class="nav-item">
                 <a class="active nav-link active" id="prueba1-tab" data-toggle="tab" href="#prueba1" role="tab" aria-controls="prueba1"
                  aria-selected="true">Perfil</a>
@@ -252,12 +223,239 @@
                 </div>
             </div>
 
+        </div> --}}
+        <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
+            <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
+                <thead>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Etapa</th>
+                    <th class="text-center">Estatus</th>
+
+                    <th class="text-center">Año</th>
+                    <th class="text-center">Mes</th>
+                    <th class="text-center">Fuente</th>
+                    <th class="text-center">DDN/ELAN</th>
+
+                    <th class="text-center">Teléfono</th>
+                    <th class="text-center">RFC</th>
+                    <th class="text-center">Correo</th>
+                    <th class="text-center">Sexo</th>
+                    <th class="text-center">Edad</th>
+                    <th class="text-center">Ciudad</th>
+                    <th class="text-center">Estudios</th>
+                    <th class="text-center">CV</th>
+
+                    <th class="text-center">1er Entrevista</th>
+                    <th class="text-center">PDA</th>
+                    <th class="text-center">2da Entrevista</th>
+                    <th class="text-center">Encargado</th>
+                    <th class="text-center">Confirmado</th>
+
+                    <th class="text-center">Documentos</th>
+                    <th class="text-center">Induccion</th>
+                    <th class="text-center">Cita Ventas</th>
+                    <th class="text-center">Ventas</th>
+                    <th class="text-center">Inscrito CIA</th>
+                    <th class="text-center">CIA</th>
+                    <th class="text-center">Clave de Arranque</th>
+                    <th class="text-center">Fecha C-Arranque</th>
+
+                    <th class="text-center">C-Cedula</th>
+                    <th class="text-center">Fecha Examamen</th>
+                    <th class="text-center">Examen</th>
+                    <th class="text-center">Cita CNSF</th>
+                    <th class="text-center">Cedula</th>
+
+                    <th class="text-center">Clave de Agente</th>
+                    <th class="text-center">Alta Metlife</th>
+                    <th class="text-center">Graduado Met</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Paola Montserrat Arceo Gómez</td>
+                        <td><button href="#|" class="btn btn-primary" style="background-color: #F36011; border-color: #F36011; font-size: 0.8rem;">Primer Proceso</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">Activo</button></td>
+
+                        <td>2023</td>
+                        <td>Agosto</td>
+                        <td>ELAN</td>
+                        <td>Victor</td>
+
+                        <td>3336267901</td>
+                        <td>AEGA970706CA3</td>
+                        <td>dicarloarceo@gmail.com</td>
+                        <td>M</td>
+                        <td>26</td>
+                        <td>Guadalajara</td>
+                        <td>Licenciatura</td>
+                        <td><a href="#|" class="btn btn-primary">Ver CV</a></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">VICTOR</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-primary" style="font-size: 0.8rem;">-</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><a href="#|" class="btn btn-primary" style="font-size: 0.8rem;">-</a></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                    </tr>
+                    <tr>
+                        <td>Armando Dicarlo Arceo Gómez</td>
+                        <td><button href="#|" class="btn btn-primary" style="background-color: #a8cf8f; border-color: #a8cf8f; font-size: 0.8rem;">Proceso Final</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">Activo</button></td>
+
+                        <td>2023</td>
+                        <td>Agosto</td>
+                        <td>ELAN</td>
+                        <td>Victor</td>
+
+                        <td>3336267901</td>
+                        <td>AEGA970706CA3</td>
+                        <td>dicarloarceo@gmail.com</td>
+                        <td>M</td>
+                        <td>26</td>
+                        <td>Guadalajara</td>
+                        <td>Licenciatura</td>
+                        <td><a href="#|" class="btn btn-primary">Ver CV</a></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">VICTOR</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-primary" style="font-size: 0.8rem;">123456</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+
+                        <td><a href="#|" class="btn btn-primary" style="font-size: 0.8rem;">123456</a></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                    </tr>
+                    <tr>
+                        <td>Liliana Donají Gómez de Dios</td>
+                        <td><button href="#|" class="btn btn-primary" style="background-color: #0991b3; border-color: #0991b3; font-size: 0.8rem;">Cedula</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">Activo</button></td>
+
+                        <td>2023</td>
+                        <td>Agosto</td>
+                        <td>ELAN</td>
+                        <td>Victor</td>
+
+                        <td>3336267901</td>
+                        <td>AEGA970706CA3</td>
+                        <td>dicarloarceo@gmail.com</td>
+                        <td>M</td>
+                        <td>26</td>
+                        <td>Guadalajara</td>
+                        <td>Licenciatura</td>
+                        <td><a href="#|" class="btn btn-primary">Ver CV</a></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">VICTOR</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-primary" style="font-size: 0.8rem;">123456</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><a href="#|" class="btn btn-primary" style="font-size: 0.8rem;">-</a></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                    </tr>
+                    <tr>
+                        <td>María Guadalupe de Dios Cupido</td>
+                        <td><button href="#|" class="btn btn-primary" style="background-color: #f7af07; border-color: #f7af07; font-size: 0.8rem;">Segundo Proceso</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">Activo</button></td>
+
+                        <td>2023</td>
+                        <td>Agosto</td>
+                        <td>ELAN</td>
+                        <td>Victor</td>
+
+                        <td>3336267901</td>
+                        <td>AEGA970706CA3</td>
+                        <td>dicarloarceo@gmail.com</td>
+                        <td>M</td>
+                        <td>26</td>
+                        <td>Guadalajara</td>
+                        <td>Licenciatura</td>
+                        <td><a href="#|" class="btn btn-primary">Ver CV</a></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">VICTOR</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">2023-08-20</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-success" style="font-size: 0.8rem;">SI</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-primary" style="font-size: 0.8rem;">-</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+
+                        <td><a href="#|" class="btn btn-primary" style="font-size: 0.8rem;">-</a></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                        <td><button href="#|" class="btn btn-danger" style="font-size: 0.8rem;">NO</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    {{-- </div> --}}
-@endsection
-@push('head')
+    </div>
+    @endsection
+    @push('head')
     <script src="{{URL::asset('js/admin/prueba.js')}}"></script>
-@endpush
+    @endpush
 
 
 

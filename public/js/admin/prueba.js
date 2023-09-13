@@ -23,7 +23,63 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        }
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'colvisGroup',
+                text: 'Datos de Origen',
+                show: [3, 4, 5, 6],
+                hide: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Datos del Solicitante',
+                show: [7, 8, 9, 10, 11, 12, 13, 14],
+                hide: [3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Primer Proceso',
+                show: [15, 16, 17, 18, 19],
+                hide: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Segundo Proceso',
+                show: [20, 21, 22, 23, 24, 25, 26, 27],
+                hide: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 28, 29, 30, 31, 32, 33, 34, 35]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Cédula',
+                show: [28, 29, 30, 31, 32],
+                hide: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 33, 34, 35]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Proceso Final',
+                show: [33, 34, 35],
+                hide: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Mostrar Todas',
+                show: ':hidden'
+            },
+            {
+                extend: 'colvisGroup',
+                text: 'Ocultar Todas',
+                show: [0, 1, 2],
+                hide: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+            }
+        ],
+        columnDefs: [
+            {
+                target: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+                visible: false
+            }
+        ]
     });
 } );
 
