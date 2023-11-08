@@ -46,8 +46,8 @@ Route::resource('admin/users/user', 'UsersController');
 Route::get('admin/users/user/GetInfo/{id}','UsersController@GetInfo')->name('user.GetInfo');
 
 // cambio de contraseña
-Route::get('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
-Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
+Route::resource('admin/users/changePassword', 'PasswordController');
+Route::post('admin/users/changePassword/change-password', 'PasswordController@changePasswordSave')->name('postChangePassword');
 
 // clientes
 Route::resource('admin/client/client', 'ClientsController');
@@ -163,9 +163,20 @@ Route::get('reports/kpi/kpi/GetInfo/{id}','KpiController@GetInfo')->name('kpi.Ge
 Route::get('reports/kpi/kpi/GetInfoFilters/{id}','KpiController@GetInfoFilters')->name('kpi.GetInfoFilters');
 
 // ------------------------------------Contrataciones--------------------------------------------------
+
+// formulario
 Route::resource('hiring/form/form/jobboard','FormController');
 Route::resource('hiring/form/form/socialmedia','FormController');
 Route::resource('hiring/form/form/rda','FormController');
 Route::resource('hiring/form/form/alanta','FormController');
 Route::post('hiring/form/form/{origin}/uploadRequest', 'FormController@uploadRequest')->name('form.uploadRequest');
 Route::get('hiring/form/form/thankyou','FormController@thankyou')->name('form.thankyou');
+
+// candidatos
+Route::resource('hiring/control/candidates','CandidatesController');
+Route::post('hiring/control/candidates/updateStatus', 'CandidatesController@updateStatus')->name('canditates.updateStatus');
+Route::get('hiring/control/candidates/GetInfo/{id}','CandidatesController@GetInfo')->name('canditates.GetInfo');
+
+// candidatos
+Route::resource('hiring/control/newagent','NewAgentController');
+Route::get('hiring/control/newagent/GetTable/{id}','NewAgentController@GetTable')->name('newagent.GetTable');

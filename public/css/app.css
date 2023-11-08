@@ -2766,6 +2766,8 @@ fieldset:disabled a.btn {
   color: #fff;
   background-color: #38c172;
   border-color: #38c172;
+  min-width: 38px;
+  min-height: 38px;
 }
 
 .btn-success:hover {

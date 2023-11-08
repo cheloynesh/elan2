@@ -1195,9 +1195,9 @@ function RefreshTable(data,profile,permission)
         if(valor.type == 1) type = "Inicial"; else type = "Renovación";
         // alert(valor.id);
         if(permission["erase"] == 1)
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]).node().id = valor.id;
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]).node().id = valor.id;
         else
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]).node().id = valor.id;
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]).node().id = valor.id;
     });
     table.draw(false);
 }

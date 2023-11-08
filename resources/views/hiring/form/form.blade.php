@@ -123,13 +123,13 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="social" id="radio4" value="2" required>
+                                    <input class="form-check-input" type="radio" name="social" id="radio4" value="4" required>
                                     <label class="form-check-label" for="radio4">
                                         4
                                     </label>
                                 </div>
                                 <div class="form-check disabled">
-                                    <input class="form-check-input" type="radio" name="social" id="radio5" value="3" required>
+                                    <input class="form-check-input" type="radio" name="social" id="radio5" value="5" required>
                                     <label class="form-check-label" for="radio5">
                                         5
                                     </label>
@@ -173,7 +173,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="">Escribe un correo electrónico por el que podamos contactarte: *</label>
-                                        <input type="text" id="age" name="age" class="form-control" placeholder="ejemplo@ejemplo.com" required>
+                                        <input type="text" id="mail" name="mail" class="form-control" placeholder="ejemplo@ejemplo.com" required>
                                     </div>
                                 </div>
                             </div>
