@@ -25,6 +25,12 @@
                                             <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Cantidad de Recibos</label>
+                                            <input type="text" id="receipts" name="receipts" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

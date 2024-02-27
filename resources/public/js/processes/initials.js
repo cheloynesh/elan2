@@ -481,7 +481,6 @@ function Subestatus()
         // alert(id_status);
     }else{
         document.getElementById("sub_status").hidden=true;
-        document.getElementById("commentary").disabled=false;
 
         // alert("todo bien");
     }

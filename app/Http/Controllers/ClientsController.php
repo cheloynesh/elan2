@@ -64,6 +64,7 @@ class ClientsController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->id);
         if($request->id == 0)
         {
             $client = new Client;

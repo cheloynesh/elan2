@@ -14,7 +14,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Nombre</label>
-                                    <input type="text" id="name1" name="name" class="form-control">
+                                    <input type="text" id="name1" name="name1" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Cantidad de Recibos</label>
+                                    <input type="text" id="receipts1" name="receipts1" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -191,7 +191,7 @@
                             <button class="btn btn-info" style="background-color: #{{$policies->color}}; border-color: #{{$policies->color}}" onclick="opcionesEstatus({{$policies->id}},{{$policies->statId}})">{{$policies->statName}}</button>
                         </td>
                         <td>
-                            <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})">Ver Recibos</a>
+                            <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})"><i class="fas fa-eye"></i><i class="fas fa-dollar-sign"></i></a>
                             <button href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></button>
                             @if ($perm_btn['erase']==1)
                                 <button href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></button>

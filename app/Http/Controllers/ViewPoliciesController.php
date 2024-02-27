@@ -46,7 +46,7 @@ class ViewPoliciesController extends Controller
         // dd($user);
         $perm = Permission::permView($profile,20);
         $perm_btn =Permission::permBtns($profile,20);
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->whereIn("fk_profile",[12,2])->pluck('name','id');
         $currencies = Currency::pluck('name','id');
         $insurances = Insurance::pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
@@ -65,6 +65,7 @@ class ViewPoliciesController extends Controller
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
+                ->where('Policy.fk_status','!=',24)
                 ->whereNull('Policy.deleted_at')
                 ->get();
         }
@@ -78,6 +79,7 @@ class ViewPoliciesController extends Controller
                 ->join('Branch','Branch.id','=','Policy.fk_branch')
                 ->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
+                ->where('Policy.fk_status','!=',24)
                 ->where('fk_agent',$user)
                 ->whereNull('Policy.deleted_at')
                 ->get();
@@ -130,6 +132,7 @@ class ViewPoliciesController extends Controller
         {
             $policy = $policy->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
+                ->where('Policy.fk_status','!=',24)
                 ->get();
         }
 
@@ -218,11 +221,20 @@ class ViewPoliciesController extends Controller
         return response()->json(['status'=>true, "message"=>"Recibo Cancelado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
     }
+
+    public function GetinfoStatus($id)
+    {
+        $policy = Policy::where('id',$id)->first();
+        // dd($initial->commentary);
+        return response()->json(['status'=>true, "data"=>$policy]);
+    }
+
     public function updateStatus(Request $request)
     {
         $status = Policy::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
+        $status->commentary = $request->commentary;
         $status->save();
 
         $user = User::user_id();
@@ -312,6 +324,38 @@ class ViewPoliciesController extends Controller
         }
         return response()->json(['status'=>true, "message"=>"Actualizado"]);
     }
+    public function updatePoliciesTrvl($id)
+    {
+        $policies = DB::table('Policy')->select('Policy.id as id','Policy.expended_exp','Policy.total','Policy.pna','Policy.financ_exp','Policy.other_exp','Policy.iva','Policy.total','Receipts.initial_date','Receipts.end_date','Receipts.status','policy')
+            ->join('Receipts','fk_policy','=','Policy.id')
+            ->groupBy('Policy.id')
+            ->where('fk_branch',8)
+            ->whereNull('Policy.deleted_at')
+            ->whereNull('Receipts.deleted_at')->get();
+            // dd($policies);
+        foreach($policies as $policy)
+        {
+            // dd($policy);
+            $receipts_edit = Receipts::where("fk_policy",$policy->id)->get();
+            foreach($receipts_edit as $receipts)
+            {
+                $receipts->delete();
+            }
+            $rcp = new Receipts;
+            $rcp->fk_policy = $policy->id;
+            $rcp->pna = $policy->pna;
+            $rcp->expedition = $policy->expended_exp;
+            $rcp->financ_exp = $policy->financ_exp;
+            $rcp->other_exp = $policy->other_exp;
+            $rcp->iva = $policy->iva;
+            $rcp->pna_t = $policy->total;
+            $rcp->initial_date = $policy->initial_date;
+            $rcp->end_date = $policy->end_date;
+            $rcp->status = $policy->status;
+            $rcp->save();
+        }
+        return response()->json(['status'=>true, "message"=>"Actualizado"]);
+    }
     public function updateStatusPayment($policy)
     {
         // dd($policy->id);
@@ -328,9 +372,18 @@ class ViewPoliciesController extends Controller
             $endDate = new Datetime($policy->end_date);
             if($today >= $endDate)
             {
-                $status = Policy::where('id',$policy->id)->first();
-                $status->fk_status = 18;
-                $status->save();
+                if($policy->fk_payment_form == 13)
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 24;
+                    $status->save();
+                }
+                else
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 18;
+                    $status->save();
+                }
             }
             else
             {
@@ -345,9 +398,18 @@ class ViewPoliciesController extends Controller
             $endDate = new Datetime($policy->end_date);
             if($today >= $endDate)
             {
-                $status = Policy::where('id',$policy->id)->first();
-                $status->fk_status = 18;
-                $status->save();
+                if($policy->fk_payment_form == 13)
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 24;
+                    $status->save();
+                }
+                else
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 18;
+                    $status->save();
+                }
             }
             else
             {

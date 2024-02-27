@@ -35,13 +35,14 @@ class PaymentFormsController extends Controller
     {
         $paymentform = new Paymentform;
         $paymentform->name = $request->name;
+        $paymentform->receipts = $request->receipts;
         $paymentform->save();
         return response()->json(["status"=>true, "message"=>"Forma creada"]);
     }
 
     public function update(Request $request, $id)
     {
-        $paymentform = Paymentform::where('id',$request->id)->update(['name'=>$request->name]);
+        $paymentform = Paymentform::where('id',$request->id)->update(['name'=>$request->name, 'receipts'=>$request->receipts ]);
         return response()->json(['status'=>true, 'message'=>"Forma actualizada"]);
     }
 

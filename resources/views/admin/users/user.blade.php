@@ -63,13 +63,19 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Celular</label>
                                             <input type="text" id="cellphone" name="cellphone" class="form-control" placeholder="Celular">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Fecha de nacimiento</label>
+                                            <input type="date" id="b_day" name="b_day" class="form-control" placeholder="Fecha de nacimiento">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Perfil:</label>
                                             <select name="selectProfile" id="selectProfile" class="form-select" onchange="showimp()">

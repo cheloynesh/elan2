@@ -28,12 +28,12 @@
                                 <div class="form group">
                                     <label for="">Sub-Estatus:</label>
                                     <select name="selectSubEstatus" id="selectSubEstatus"class="form-select" onchange="mostrartext()">
-                                        <option hidden selected value="0">Selecciona una opción</option>
-                                            <option value="INFORME MEDICO">INFORME MEDICO</option>
-                                            <option value="EXTRAPRIMA">EXTRAPRIMA</option>
-                                            <option value="DETALLE OCUPACION">DETALLE OCUPACION</option>
-                                            <option value="ERROR DOCUMENTOS">ERROR DOCUMENTOS</option>
-                                            <option value="1">OTROS</option>
+                                        <option hidden selected value=0>Selecciona una opción</option>
+                                            <option value=1>INFORME MEDICO</option>
+                                            <option value=2>EXTRAPRIMA</option>
+                                            <option value=3>DETALLE OCUPACION</option>
+                                            <option value=4>ERROR DOCUMENTOS</option>
+                                            <option value=5>OTROS</option>
                                     </select>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                             <div class="col-md-12" >
                                 <div class="form-group">
                                     <label for="">Comentario: </label>
-                                    <textarea name="commentary" class="form-control" id="commentary" rows="5" disabled></textarea>
+                                    <textarea name="commentary" class="form-control" id="commentary" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>

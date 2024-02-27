@@ -21,7 +21,7 @@ class RefundsController extends Controller
     public function index()
     {
         // dd($refunds);
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->where("fk_profile","12")->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->whereIn("fk_profile",[12,2])->pluck('name','id');
         $insurances = Insurance::orderBy('name')->pluck('name','id');
         $cmbStatus = Status::select('id','name')
         ->where("fk_section","17")

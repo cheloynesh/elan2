@@ -27,7 +27,7 @@ class ServicesController extends Controller
     {
         // dd($initials);
         $clients = Client::get();
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->orderBy('name')->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->whereIn("fk_profile",[12,2])->orderBy('name')->pluck('name','id');
         $estatusExc = Status::select('id', 'name')->where("fk_section","16")->pluck('name','id');
         $branchesExc = Branch::select('id', 'name')->pluck('name','id');
         $insurances = Insurance::orderBy('name')->pluck('name','id');
@@ -98,6 +98,7 @@ class ServicesController extends Controller
         $service->fk_insurance = $request->insurance;
         $service->fk_branch = $request->branch;
         $service->guide = $request->guide;
+        $service->service_comm = $request->service_comm;
         $service->save();
 
         $today = new DateTime();

@@ -26,7 +26,7 @@ class ExportInitial implements FromCollection, WithHeadings
         $movimientos = DB::table('Initials')->select('Initials.id',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
         DB::raw('CONCAT(IFNULL(Initials.name, "")," ",IFNULL(Initials.firstname, "")," ",IFNULL(Initials.lastname, "")) AS initname'),'rfc','insured','promoter_date',
         'system_date','folio','Insurance.name as iname','Branch.name as bname','Plans.name as plname','Applications.name as apname','Status.name as sname','pna','Payment_form.name as payname',
-        'Currency.name as currname','Charge.name as charname','Initials.initial_comm','Initials.guide')
+        'Currency.name as currname','Charge.name as charname','Initials.initial_comm','Initials.guide','Initials.commentary')
             ->join('Branch',"Branch.id","=","fk_branch")
             ->join('Plans',"Plans.id","=","fk_plan")
             ->join('Applications',"Applications.id","=","fk_application")
@@ -69,6 +69,6 @@ class ExportInitial implements FromCollection, WithHeadings
     }
     public function headings(): array
     {
-        return ["ID","Agente", "Cliente", "RFC", "Asegurado", "Fecha de Promotoría", "Fecha de Sistema", "Folio", "Compañía", "Ramo", "Plans", "Tipo de Aplicación", "Estatus", "PNA", "Forma de Pago", "Moneda", "Conducto de Cobro", "Comentario","Guía"];
+        return ["ID","Agente", "Cliente", "RFC", "Asegurado", "Fecha de Promotoría", "Fecha de Sistema", "Folio", "Compañía", "Ramo", "Plans", "Tipo de Aplicación", "Estatus", "PNA", "Forma de Pago", "Moneda", "Conducto de Cobro", "Comentario","Guía","Comentario"];
     }
 }

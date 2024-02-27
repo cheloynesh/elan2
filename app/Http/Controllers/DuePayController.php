@@ -44,7 +44,8 @@ class DuePayController extends Controller
         //     array_push($arrayAux,$id,$agent,$ingresadas->s_ing,'$' . number_format($ingresadas->sum_ing, 2),$emitidas->s_ing,'$' . number_format($emitidas->sum_ing, 2),$polizas->s_ing,'$' . number_format($polizas->sum_ing, 2));
         //     array_push($arrayAgents,$arrayAux);
         // }
-        $arrayAgents = DB::select('call agentscount(?,?,?,?,?,?)',["%","%","12","%","%","2023"]);
+        $today = new DateTime();
+        $arrayAgents = DB::select('call agentscount(?,?,?,?,?,?)',["%","%","12","%","%",$today->format('Y')]);
         // dd($arrayAgents);
         if($perm==0)
         {

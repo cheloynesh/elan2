@@ -73,6 +73,7 @@ Route::get('admin/currency/currencies/GetInfo/{id}','CurrencyController@GetInfo'
 // Ramo
 Route::resource('admin/branch/branches', 'BranchController');
 Route::get('admin/branch/branches/GetInfo/{id}','BranchController@GetInfo')->name('branches.GetInfo');
+Route::get('admin/branch/branches/GetInfoPol/{branch}/{pay}','BranchController@GetInfoPol')->name('branches.GetInfoPol');
 
 // Plan
 Route::resource('admin/plan/plans', 'PlansController');
@@ -137,11 +138,13 @@ Route::get('policies/viewPolicies/getBranches/{insurance}','InitialController@ge
 Route::get('policies/viewPolicies/getPlans/{insurance}/{branch}','InitialController@getPlans')->name('initial.getPlans');
 Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@updatePolicies')->name('viewPolicies.updatePolicies');
 Route::get('policies/viewPolicies/updatePoliciesNet/{id}', 'ViewPoliciesController@updatePoliciesNet')->name('viewPolicies.updatePoliciesNet');
+Route::get('policies/viewPolicies/updatePoliciesTrvl/{id}', 'ViewPoliciesController@updatePoliciesTrvl')->name('viewPolicies.updatePoliciesTrvl');
 Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesController@ExportPolicy');
 Route::get('policies/viewPolicies/GetPolicies/{active}','ViewPoliciesController@GetPolicies');
 Route::get('policies/viewPolicies/GetP/{active}','ViewPoliciesController@GetP');
 Route::post('policies/viewPolicies/updateDate', 'ViewPoliciesController@updateDate')->name('viewPolicies.updateDate');
 Route::post('policies/viewPolicies/import/{active}','ViewPoliciesController@import');
+Route::get('policies/viewPolicies/GetinfoStatus/{id}','ViewPoliciesController@GetinfoStatus')->name('viewPolicies.GetinfoStatus');
 
 // cobranza
 Route::resource('policies/collection','CollectionController');
@@ -175,8 +178,20 @@ Route::get('hiring/form/form/thankyou','FormController@thankyou')->name('form.th
 // candidatos
 Route::resource('hiring/control/candidates','CandidatesController');
 Route::post('hiring/control/candidates/updateStatus', 'CandidatesController@updateStatus')->name('canditates.updateStatus');
+Route::post('hiring/control/candidates/updateCandidate', 'CandidatesController@updateCandidate')->name('canditates.updateCandidate');
 Route::get('hiring/control/candidates/GetInfo/{id}','CandidatesController@GetInfo')->name('canditates.GetInfo');
+Route::get('hiring/control/candidates/GetAll/{id}','CandidatesController@GetAll')->name('canditates.GetAll');
 
-// candidatos
+// nuevo agente
 Route::resource('hiring/control/newagent','NewAgentController');
 Route::get('hiring/control/newagent/GetTable/{id}','NewAgentController@GetTable')->name('newagent.GetTable');
+Route::post('hiring/control/newagent/SaveYesNo', 'NewAgentController@SaveYesNo')->name('newagent.SaveYesNo');
+Route::post('hiring/control/newagent/SaveCharge', 'NewAgentController@SaveCharge')->name('newagent.SaveCharge');
+Route::post('hiring/control/newagent/SaveDate', 'NewAgentController@SaveDate')->name('newagent.SaveDate');
+Route::post('hiring/control/newagent/SaveText', 'NewAgentController@SaveText')->name('newagent.SaveText');
+Route::post('hiring/control/newagent/SaveSales', 'NewAgentController@SaveSales')->name('newagent.SaveSales');
+Route::post('hiring/control/newagent/updateStatus', 'NewAgentController@updateStatus')->name('newagent.updateStatus');
+Route::post('hiring/control/newagent/updateStatusAct', 'NewAgentController@updateStatusAct')->name('newagent.updateStatusAct');
+
+// reporte
+Route::resource('hiring/report/hiringReport','HiringReportController');

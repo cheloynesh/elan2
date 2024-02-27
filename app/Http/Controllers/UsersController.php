@@ -51,6 +51,7 @@ class UsersController extends Controller
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->cellphone = $request->cellphone;
+        $user->b_day = $request->b_day;
         $user->fk_profile = $request->fk_profile;
         $user->subprofile = $request->subProfile;
         $user->save();
@@ -77,14 +78,14 @@ class UsersController extends Controller
         {
             $user = User::where('id',$request->id)
             ->update(['email'=>$request->email,
-            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
+            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname, 'b_day'=>$request->b_day,
             'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
         }
         else
         {
             $user = User::where('id',$request->id)
             ->update(['email'=>$request->email,'password'=>bcrypt($request->password),
-            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname,
+            'name'=>$request->name,'firstname'=>$request->firstname,'lastname'=>$request->lastname, 'b_day'=>$request->b_day,
             'cellphone'=>$request->cellphone,'fk_profile'=>$request->fk_profile,'subprofile'=>$request->subProfile]);
         }
         $codes_edit = AgentCode::where('fk_user', $request->id)->get();

@@ -354,6 +354,15 @@ function opcionesEstatus(initialId,statusId,)
         success:function(result){
             console.log(result);
             $("#selectStatus").val(statusId);
+            if(statusId==3)
+            {
+                document.getElementById("sub_status").hidden=false;
+                document.getElementById("sub_status").style.display = "block";
+            }
+            else
+            {
+                document.getElementById("sub_status").hidden=true;
+            }
             $("#commentary").val(result.data.commentary);
             $("#myEstatusModal").modal('show');
         }
@@ -481,7 +490,6 @@ function Subestatus()
         // alert(id_status);
     }else{
         document.getElementById("sub_status").hidden=true;
-        document.getElementById("commentary").disabled=false;
 
         // alert("todo bien");
     }
@@ -491,16 +499,6 @@ function mostrartext(){
     var id_subestatus= document.getElementById("selectSubEstatus");
     var valor = id_subestatus.value;
     // alert(valor);
-
-    if(valor == "1")
-    {
-        $("#commentary").val(valor);
-        document.getElementById("commentary").disabled=false;
-    }else{
-        $("#commentary").val(valor);
-        document.getElementById("commentary").disabled=true;
-
-    }
 }
 function llenarRamos(){
     var insurance = $("#selectInsurance").val();
@@ -666,7 +664,7 @@ function mostrartablaInitial(){
     var other_exp = $("#other_exp_edit").val().replace(/[^0-9.]/g, '');
     var other_impute = parseInt($("#other_impute_edit").val());
     var ivapor = $("#ivapor_edit").val().replace(/[^0-9.]/g, '');
-    var pna = parseFloat($("#pna_edit").val().replace(/[^0-9.]/g, ''))/pay_frec;
+    var pna = "";
     var fecha_i = $("#initial_date_edit").val();
     var fecha = fecha_i.split("-");
     var branch =$("#selectBranch_edit").val();
@@ -717,7 +715,7 @@ function mostrartablaInitial(){
     arrayValues = [];
     // tablerec.empty();
     tablerec.clear();
-    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfo/'+ branch;
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfoPol/'+ branch + '/' + pay_frec;
 
     jQuery.ajax({
         url:route,
@@ -725,9 +723,15 @@ function mostrartablaInitial(){
         dataType:'json',
         success:function(result)
         {
-            console.log(route);
+            pay_frec = result.pay.receipts;
+            pna = parseFloat($("#pna_edit").val().replace(/[^0-9.]/g, ''))/pay_frec;
+            if(pna != ""){
+                pna = parseFloat(pna);
+            }
+            else{
+                pna = 0;
+            }
             days = result.data.days;
-            console.log(days);
             var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
             {

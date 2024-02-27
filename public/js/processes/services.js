@@ -92,6 +92,7 @@ function guardarServicio()
     var insurance = $("#selectInsurance").val();
     var branch = $("#selectBranch").val();
     var guide = $("#guide").val();
+    var service_comm = $("#service_comm1").val();
     var route = "service";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -106,7 +107,8 @@ function guardarServicio()
         'record':record,
         'insurance':insurance,
         'branch':branch,
-        'guide':guide
+        'guide':guide,
+        'service_comm':service_comm
     };
     jQuery.ajax({
         url:route,

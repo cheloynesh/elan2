@@ -4,7 +4,7 @@
 
             <div class="modal-header">
                 <h4 class="modal-title" id="gridModalLabek">Buscar Clientes</h4>
-                <button type="button" class="close" onclick="ocultar()"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" onclick="ocultar('#modalSrcClient')"><span aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
@@ -39,6 +39,38 @@
                         </table>
                     </div>
                 </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="noRegistrado()">No Registrado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalClientType" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-s" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridModalLabek">Tipo de Cliente</h4>
+                <button type="button" class="close" onclick="ocultar('#modalSrcClient')"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Tipo de Cliente</label>
+                        <select name="type" id="type" class="form-select">
+                            <option selected value="0">Fisica</option>
+                            <option value="1">Moral</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="RegistrarCliente()">Aceptar</button>
             </div>
         </div>
     </div>

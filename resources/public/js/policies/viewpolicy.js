@@ -1156,7 +1156,7 @@ function RefreshTable(data,profile,permission)
 
     data.forEach( function(valor, indice, array) {
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
-        btnRecpt = '<a href="#|" class="btn btn-primary" onclick="verRecibos('+valor.id+')">Ver Recibos</a>'
+        btnRecpt = '<a href="#|" class="btn btn-primary" onclick="verRecibos('+valor.id+')"><i class="fas fa-eye"></i><i class="fas fa-dollar-sign"></i></a>'
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarPoliza('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarPoliza('+valor.id+')"><i class="fa fa-trash"></i></button>';
         if(valor.type == 1) type = "Inicial"; else type = "Renovación";

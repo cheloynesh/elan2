@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Branch;
 use App\Permission;
+use App\Paymentform;
 use App\User;
 
 class BranchController extends Controller
@@ -29,6 +30,13 @@ class BranchController extends Controller
     {
         $branch = Branch::where('id',$id)->first();
         return response()->json(['status'=>true, "data"=>$branch]);
+    }
+
+    public function GetInfoPol($branch,$pay_frec)
+    {
+        $branch = Branch::where('id',$branch)->first();
+        $pay = Paymentform::where('id',$pay_frec)->first();
+        return response()->json(['status'=>true, "data"=>$branch, "pay"=>$pay]);
     }
 
     public function store(Request $request)

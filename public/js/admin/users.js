@@ -70,6 +70,7 @@ function guardarUsuario()
     var lastname = $("#lastname").val();
 
     var cellphone = $("#cellphone").val();
+    var b_day = $("#b_day").val();
     var fk_profile = $("#selectProfile").val();
     var subProfile = $("#selectSubProfile").val();
     var route = "user";
@@ -83,6 +84,7 @@ function guardarUsuario()
         'cellphone':cellphone,
         'fk_profile':fk_profile,
         'subProfile':subProfile,
+        'b_day':b_day,
         'codes':codigos
     };
 
@@ -120,6 +122,7 @@ function editarUsuario(id)
             $("#firstname1").val(result.data.firstname);
             $("#lastname1").val(result.data.lastname);
             $("#cellphone1").val(result.data.cellphone);
+            $("#b_day1").val(result.data.b_day);
             $("#selectProfile1").val(result.data.fk_profile);
             $("#selectSubProfileedit").val(result.data.subprofile);
             // codigos
@@ -157,6 +160,7 @@ function actualizarUsuario()
     var lastname = $("#lastname1").val();
 
     var cellphone = $("#cellphone1").val();
+    var b_day = $("#b_day1").val();
     var fk_profile = $("#selectProfile1").val();
     var subProfile = $("#selectSubProfileedit").val();
     var route = "user/"+idupdate;
@@ -171,6 +175,7 @@ function actualizarUsuario()
         'cellphone':cellphone,
         'fk_profile':fk_profile,
         'subprofile':subProfile,
+        'b_day':b_day,
         'codigoseditar':codigoseditar
     };
     console.log(codigoseditar);

@@ -126,6 +126,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12" >
+                                    <div class="form-group">
+                                        <label for="">Comentario: </label>
+                                        <textarea name="service_comm1" class="form-control" id="service_comm1" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

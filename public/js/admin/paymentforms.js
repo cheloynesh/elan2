@@ -34,10 +34,12 @@ $(document).ready( function () {
 function guardarforma()
 {
     var name = $("#name").val();
+    var receipts = $("#receipts").val();
     var route = "payment_form";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'name':name
+        'name':name,
+        'receipts':receipts
     };
     jQuery.ajax({
         url:route,
@@ -66,6 +68,7 @@ function editarforma(id)
         success:function(result)
         {
             $("#name1").val(result.data.name);
+            $("#receipts1").val(result.data.receipts);
             $("#myModaledit").modal('show');
         }
     })
@@ -78,11 +81,13 @@ function cancelarEditar()
 function actualizarforma(id)
 {
     var name = $("#name1").val();
+    var receipts = $("#receipts1").val();
     var route = "payment_form/"+idupdate;
     var data = {
         'id':idupdate,
         "_token": $("meta[name='csrf-token']").attr("content"),
-        'name':name
+        'name':name,
+        'receipts':receipts
     };
     jQuery.ajax({
         url:route,

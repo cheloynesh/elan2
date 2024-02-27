@@ -67,8 +67,8 @@ $(document).ready( function () {
 function buscarclientes(){
     $("#modalSrcClient").modal("show");
 }
-function ocultar(){
-    $("#modalSrcClient").modal("hide");
+function ocultar(modal){
+    $(modal).modal("hide");
 
 }
 
@@ -87,6 +87,7 @@ function actualizarSelect(result, select)
 var idClient = 0;
 var initialId = 0;
 var clientType = 0;
+var newClient = 0;
 
 function obtenerid(id){
     idClient = id;
@@ -175,6 +176,30 @@ function checkPolicy(){
             }
         }
     })
+}
+
+function guardar()
+{
+    id_initial = 0;
+    if(idClient == 0)
+    {
+        newClient = 1;
+        // alert("entre a nuevo cliente");
+        if(clientType == 0)
+        {
+            actualizarCliente(1);
+        }
+        else
+        {
+            actualizarEmpresa(1);
+        }
+    }
+    else
+    {
+        newClient = 0;
+        // alert("entre a cliente registrado");
+        guardarPoliza(0);
+    }
 }
 
 function guardarPoliza(initial)
@@ -270,9 +295,9 @@ function guardarPoliza(initial)
         data:data,
         dataType: "json",
         success:function(result){
-            if(result.status == true)
+            // GuardarRecibos();>
+            if(newClient == 0)
             {
-                // GuardarRecibos();>
                 if(clientType == 0)
                 {
                     // alert("entre a cliente");
@@ -284,13 +309,9 @@ function guardarPoliza(initial)
 
                     actualizarEmpresa(0);
                 }
-                alertify.success("Poliza Actualizada");
-                window.location.reload(true);
-            }else{
-                alertify.error("No se guardo la poliza, verifique sus datos.");
-
             }
-
+            alertify.success("Poliza Actualizada");
+            window.location.reload(true);
         }
     });
 
@@ -369,7 +390,7 @@ function mostrartabla(){
     var other_exp = $("#other_exp").val().replace(/[^0-9.]/g, '');
     var other_impute = parseInt($("#other_impute").val());
     var ivapor = $("#ivapor").val().replace(/[^0-9.]/g, '');
-    var pna = parseFloat($("#pna").val().replace(/[^0-9.]/g, ''))/pay_frec;
+    var pna = "";
     var fecha_i = $("#initial_date").val();
     var fecha = fecha_i.split("-");
     var branch =$("#selectBranch").val();
@@ -396,12 +417,6 @@ function mostrartabla(){
     else{
         financ_exp = 0;
     }
-    if(pna != ""){
-        pna = parseFloat(pna);
-    }
-    else{
-        pna = 0;
-    }
     if(expedition != ""){
         expedition = parseFloat(expedition);
     }
@@ -422,7 +437,7 @@ function mostrartabla(){
     // tablerec.empty();
     tablerec.clear();
 
-    var route = getUrlPoliza .protocol + "//" + getUrlPoliza.host + '/admin/branch/branches/GetInfo/'+ branch;
+    var route = getUrlPoliza .protocol + "//" + getUrlPoliza.host + '/admin/branch/branches/GetInfoPol/'+ branch + '/' + pay_frec;
 
     jQuery.ajax({
         url:route,
@@ -430,6 +445,14 @@ function mostrartabla(){
         dataType:'json',
         success:function(result)
         {
+            pay_frec = result.pay.receipts;
+            pna = parseFloat($("#pna").val().replace(/[^0-9.]/g, ''))/pay_frec;
+            if(pna != ""){
+                pna = parseFloat(pna);
+            }
+            else{
+                pna = 0;
+            }
             days = result.data.days;
             var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
@@ -559,6 +582,69 @@ function prueba()
         type = 1;
     else
         type = 2;
+}
+
+function noRegistrado()
+{
+    idClient = 0;
+    $("#modalClientType").modal("show");
+}
+
+function RegistrarCliente()
+{
+    var fisica = document.getElementById("fisica");
+    var moral = document.getElementById("moral");
+    var info = document.getElementById("mostrarinfo");
+    clientType = $("#type").val();
+
+    if(clientType == 0)
+    {
+        fisica.style.display="";
+        moral.style.display="none";
+        $("#name1").val("");
+        $("#firstname1").val("");
+        $("#lastname1").val("");
+        $("#rfc1").val("");
+
+        $("#birth_date1").val("");
+        $("#curp1").val("");
+        $("#gender1").val(0);
+        $("#marital_status1").val(0);
+        $("#street1").val("");
+        $("#e_num1").val("");
+        $("#i_num1").val("");
+        $("#pc1").val("");
+        $("#suburb1").val("");
+        $("#country1").val("");
+        $("#state1").val("");
+        $("#city1").val("");
+        $("#cellphone1").val("");
+        $("#email1").val("");
+    }
+    else{
+
+        fisica.style.display="none";
+        moral.style.display="";
+        $("#business_name1").val("")
+        $("#business_rfc1").val("");
+
+        $("#date1").val("");
+        $("#estreet1").val("");
+        $("#ee_num1").val("");
+        $("#ei_num1").val("");
+        $("#epc1").val("");
+        $("#esuburb1").val("");
+        $("#ecountry1").val("");
+        $("#estate1").val("");
+        $("#ecity1").val("");
+        $("#ecellphone1").val("");
+        $("#eemail1").val("");
+        $("#name_contact1").val("");
+        $("#phone_contact1").val("");
+    }
+    info.style.display="";
+    $("#modalClientType").modal("hide");
+    $("#modalSrcClient").modal("hide");
 }
 
 Date.isLeapYear = function (year) {

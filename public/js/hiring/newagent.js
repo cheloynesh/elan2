@@ -154,36 +154,40 @@ function RefreshTable(data,profile,permission)
         dates = valor.application_date.split('-');
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.candId+','+valor.id+')">'+valor.name+'</button>';
 
-        if(valor.active_stat == 1) btnActiveStat = '<button href="#|" class="btn btn-success" onclick="openActiveStat('+valor.active_stat+','+valor.candId+')" >Nuevo</button>';
-        else if(valor.active_stat == 2) btnActiveStat = '<button href="#|" class="btn btn-danger" onclick="openActiveStat('+valor.active_stat+','+valor.candId+')" >Desertor</button>';
-        else btnActiveStat = '<button href="#|" class="btn btn-warning" onclick="openActiveStat('+valor.active_stat+','+valor.candId+')" >En crecimiento</button>';
+        if(valor.active_stat == 1) btnActiveStat = '<button href="#|" class="btn btn-success" onclick="openActiveStat('+valor.candId+','+valor.active_stat+')" >Nuevo</button>';
+        else if(valor.active_stat == 2) btnActiveStat = '<button href="#|" class="btn btn-danger" onclick="openActiveStat('+valor.candId+','+valor.active_stat+')" >Desertor</button>';
+        else btnActiveStat = '<button href="#|" class="btn btn-warning" onclick="openActiveStat('+valor.candId+','+valor.active_stat+')" >En crecimiento</button>';
 
         viewCV = '<a href="'+getUrl.protocol+'//' + getUrl.host + '/files/cv/' + valor.cv + '" id="viewPDF" target="_blank">Ver CV</a>';
 
-        btnFstInt = '<button href="#|" class="btn btn-' + btns[0] + '" onclick="openDate(`'+valor.date_fst_int+'`,'+valor.candId+',0,0)" >'+valor.date_fst_int+'</button>';
-        btnPda = '<button href="#|" class="btn btn-' + btns[1] + '" onclick="openYesNo('+valor.pda+','+valor.candId+',1,1)" >'+sino[valor.pda]+'</button>';
-        btnScndInt = '<button href="#|" class="btn btn-' + btns[2] + '" onclick="openDate(`'+valor.date_sec_int+'`,'+valor.candId+',2,2)" >'+valor.date_sec_int+'</button>';
-        btnCharge = '<button href="#|" class="btn btn-primary" onclick="openCharge(`'+valor.charge+'`,'+valor.candId+',3,`n`)" >'+valor.charge+'</button>';
-        btnConfirmed = '<button href="#|" class="btn btn-' + btns[3] + '" onclick="openYesNo('+valor.confirmed+','+valor.candId+',4,3)" >'+sino[valor.confirmed]+'</button>';
+        btnFstInt = '<button href="#|" class="btn btn-' + btns[0] + '" onclick="openDate(`'+valor.date_fst_int+'`,'+valor.candId+',0,`date_fst_int`)" >'+valor.date_fst_int+'</button>';
+        btnPda = '<button href="#|" class="btn btn-' + btns[1] + '" onclick="openYesNo('+valor.pda+','+valor.candId+',1,`pda`)" >'+sino[valor.pda]+'</button>';
+        btnScndInt = '<button href="#|" class="btn btn-' + btns[2] + '" onclick="openDate(`'+valor.date_sec_int+'`,'+valor.candId+',2,`date_sec_int`)" >'+valor.date_sec_int+'</button>';
+        btnCharge = '<button href="#|" class="btn btn-primary" onclick="openCharge(`'+valor.charge+'`,'+valor.candId+',`n`,`charge`)" >'+valor.charge+'</button>';
+        btnConfirmed = '<button href="#|" class="btn btn-' + btns[3] + '" onclick="openYesNo('+valor.confirmed+','+valor.candId+',3,`confirmed`)" >'+sino[valor.confirmed]+'</button>';
 
-        btnDocs = '<button href="#|" class="btn btn-' + btns[4] + '" onclick="openYesNo('+valor.documents+','+valor.candId+',5,4)" >'+sino[valor.documents]+'</button>';
-        btnInduction = '<button href="#|" class="btn btn-' + btns[5] + '" onclick="openDate(`'+valor.induction+','+valor.candId+'`,6,5)" >'+valor.induction+'</button>';
-        btnDatesSales = '<button href="#|" class="btn btn-' + btns[6] + '" onclick="openYesNo('+valor.sales_dates+','+valor.candId+',7,6)" >'+sino[valor.sales_dates]+'</button>';
-        btnSales = '<button href="#|" class="btn btn-' + btns[7] + '" onclick="openYesNo('+valor.sales+','+valor.candId+',8,7)" >'+sino[valor.sales]+'</button>';
-        btnSigCia = '<button href="#|" class="btn btn-' + btns[8] + '" onclick="openYesNo('+valor.signed_cia+','+valor.candId+',9,8)" >'+sino[valor.signed_cia]+'</button>';
-        btnCia = '<button href="#|" class="btn btn-' + btns[9] + '" onclick="openDate(`'+valor.cia+'`,'+valor.candId+',10,9)" >'+valor.cia+'</button>';
-        btnInitialKey = '<button href="#|" class="btn btn-primary" onclick="openText(`'+valor.initial_key+'`,'+valor.candId+',11,+`n`)" >'+valor.initial_key+'</button>';
-        btnInitialDate = '<button href="#|" class="btn btn-' + btns[10] + '" onclick="openDate(`'+valor.initial_date+'`,'+valor.candId+',12,10)" >'+valor.initial_date+'</button>';
+        btnDocs = '<button href="#|" class="btn btn-' + btns[4] + '" onclick="openYesNo('+valor.documents+','+valor.candId+',4,`documents`)" >'+sino[valor.documents]+'</button>';
+        btnInduction = '<button href="#|" class="btn btn-' + btns[5] + '" onclick="openDate(`'+valor.induction+'`,'+valor.candId+',5,`induction`)" >'+valor.induction+'</button>';
+        btnDatesSales = '<button href="#|" class="btn btn-' + btns[6] + '" onclick="openYesNo(`'+valor.sales_dates+'`,'+valor.candId+',6,`sales_dates`)" >'+sino[valor.sales_dates]+'</button>';
 
-        btnLicenseDate = '<button href="#|" class="btn btn-' + btns[11] + '" onclick="openDate(`'+valor.license_date+'`,'+valor.candId+',13,11)" >'+valor.license_date+'</button>';
-        btnExamDate = '<button href="#|" class="btn btn-' + btns[12] + '" onclick="openDate(`'+valor.exam_date+'`,'+valor.candId+',14,12)" >'+valor.exam_date+'</button>';
-        btnExam = '<button href="#|" class="btn btn-' + btns[13] + '" onclick="openDate(`'+valor.exam+'`,'+valor.candId+',15,13)" >'+valor.exam+'</button>';
-        btnCnsfDate = '<button href="#|" class="btn btn-' + btns[14] + '" onclick="openDate(`'+valor.cnsf_date+'`,'+valor.candId+',16,14)" >'+valor.cnsf_date+'</button>';
-        btnLicense = '<button href="#|" class="btn btn-' + btns[15] + '" onclick="openDate(`'+valor.license+'`,'+valor.candId+',17,15)" >'+valor.license+'</button>';
+        sales = valor.sales.split('-');
+        sale = parseInt(sales[0]) + parseInt(sales[1]) + parseInt(sales[2]) + parseInt(sales[3]);
+        btnSales = '<button href="#|" class="btn btn-' + btns[7] + '" onclick="openSales(`'+valor.sales+'`,'+valor.candId+',7,`sales`)" >'+sale+'</button>';
 
-        btnAgKey = '<button href="#|" class="btn btn-primary" onclick="openText(`'+valor.agent_key+'`,'+valor.candId+',18,`n`)" >'+valor.agent_key+'</button>';
-        btnMetSig = '<button href="#|" class="btn btn-' + btns[16] + '" onclick="openDate(`'+valor.btnMetSig+'`,'+valor.candId+',19,16)" >'+valor.btnMetSig+'</button>';
-        btnMetGrad = '<button href="#|" class="btn btn-' + btns[17] + '" onclick="openYesNo('+valor.met_graduate+','+valor.candId+',20,17)" >'+sino[valor.met_graduate]+'</button>';
+        btnSigCia = '<button href="#|" class="btn btn-' + btns[8] + '" onclick="openYesNo('+valor.signed_cia+','+valor.candId+',8,`signed_cia`)" >'+sino[valor.signed_cia]+'</button>';
+        btnCia = '<button href="#|" class="btn btn-' + btns[9] + '" onclick="openDate(`'+valor.cia+'`,'+valor.candId+',9,`cia`)" >'+valor.cia+'</button>';
+        btnInitialKey = '<button href="#|" class="btn btn-primary" onclick="openText(`'+valor.initial_key+'`,'+valor.candId+',`n`,`initial_key`)" >'+valor.initial_key+'</button>';
+        btnInitialDate = '<button href="#|" class="btn btn-' + btns[10] + '" onclick="openDate(`'+valor.initial_date+'`,'+valor.candId+',10,`initial_date`)" >'+valor.initial_date+'</button>';
+
+        btnLicenseDate = '<button href="#|" class="btn btn-' + btns[11] + '" onclick="openDate(`'+valor.license_date+'`,'+valor.candId+',11,`license_date`)" >'+valor.license_date+'</button>';
+        btnExamDate = '<button href="#|" class="btn btn-' + btns[12] + '" onclick="openDate(`'+valor.exam_date+'`,'+valor.candId+',12,`exam_date`)" >'+valor.exam_date+'</button>';
+        btnExam = '<button href="#|" class="btn btn-' + btns[13] + '" onclick="openDate(`'+valor.exam+'`,'+valor.candId+',13,`exam`)" >'+valor.exam+'</button>';
+        btnCnsfDate = '<button href="#|" class="btn btn-' + btns[14] + '" onclick="openDate(`'+valor.cnsf_date+'`,'+valor.candId+',14,`cnsf_date`)" >'+valor.cnsf_date+'</button>';
+        btnLicense = '<button href="#|" class="btn btn-' + btns[15] + '" onclick="openDate(`'+valor.license+'`,'+valor.candId+',15,`license`)" >'+valor.license+'</button>';
+
+        btnAgKey = '<button href="#|" class="btn btn-primary" onclick="openText(`'+valor.agent_key+'`,'+valor.candId+',`n`,`agent_key`)" >'+valor.agent_key+'</button>';
+        btnMetSig = '<button href="#|" class="btn btn-' + btns[16] + '" onclick="openDate(`'+valor.metlife_sign+'`,'+valor.candId+',16,`metlife_sign`)" >'+valor.metlife_sign+'</button>';
+        btnMetGrad = '<button href="#|" class="btn btn-' + btns[17] + '" onclick="openYesNo('+valor.met_graduate+','+valor.candId+',17,`met_graduate`)" >'+sino[valor.met_graduate]+'</button>';
 
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="openEdit('+valor.candId+')" ><i class="fas fa-eye"></i></button>';
 
@@ -192,7 +196,7 @@ function RefreshTable(data,profile,permission)
             valor.cellphone,valor.rfc,valor.mail,valor.sex,valor.age,valor.city,valor.scholarity,viewCV,
             btnFstInt,btnPda,btnScndInt,btnCharge,btnConfirmed,
             btnDocs,btnInduction,btnDatesSales,btnSales,btnSigCia,btnCia,btnInitialKey,btnInitialDate,
-            btnLicenseDate,btnExamDate,btnExamDate,btnExam,btnCnsfDate,btnLicense,
+            btnLicenseDate,btnExamDate,btnExam,btnCnsfDate,btnLicense,
             btnAgKey,btnMetSig,btnMetGrad]).node().candId = valor.candId;
     });
     table.draw(false);
@@ -203,7 +207,7 @@ function cancelar(modal)
     $(modal).modal('hide');
 }
 
-function openYesNo(valor,id,field,btns)
+function openYesNo(valor,id,btns,field)
 {
     editId = id;
     editField = field;
@@ -214,7 +218,7 @@ function openYesNo(valor,id,field,btns)
     $("#yesnoModal").modal('show');
 }
 
-function openDate(valor,id,field,btns)
+function openDate(valor,id,btns,field)
 {
     editId = id;
     editField = field;
@@ -225,7 +229,7 @@ function openDate(valor,id,field,btns)
     $("#dateModal").modal('show');
 }
 
-function openCharge(valor,id,field,btns)
+function openCharge(valor,id,btns,field)
 {
     editId = id;
     editField = field;
@@ -236,7 +240,7 @@ function openCharge(valor,id,field,btns)
     $("#chargeModal").modal('show');
 }
 
-function openText(valor,id,field,btns)
+function openText(valor,id,btns,field)
 {
     editId = id;
     editField = field;
@@ -245,4 +249,156 @@ function openText(valor,id,field,btns)
     $("#keytext").val(valor);
 
     $("#textModal").modal('show');
+}
+
+function openSales(valor,id,btns,field)
+{
+    editId = id;
+    editField = field;
+    editBtns = btns;
+
+    sales = valor.split('-');
+
+    $("#gmm").val(sales[0]);
+    $("#vida").val(sales[1]);
+    $("#autos").val(sales[2]);
+    $("#viaje").val(sales[3]);
+
+    $("#salesModal").modal('show');
+}
+
+function guardarVentas()
+{
+    var route = baseUrl + '/SaveSales';
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'sales':$("#gmm").val() + '-' + $("#vida").val() + '-' + $("#autos").val() + '-' + $("#viaje").val(),
+        'field':editField,
+        'btns':editBtns,
+        'id':editId,
+        'total':parseInt($("#gmm").val()) + parseInt($("#vida").val()) + parseInt($("#autos").val()) + parseInt($("#viaje").val())
+    };
+    jQuery.ajax({
+        url:route,
+        type:"post",
+        data: data,
+        dataType: 'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#salesModal").modal('hide');
+            RefreshTable(result.data,0,0);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function guardar(saveRoute,saveInput,modal)
+{
+    var route = baseUrl + '/' + saveRoute;
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'input':$(saveInput).val(),
+        'field':editField,
+        'btns':editBtns,
+        'id':editId,
+    };
+    jQuery.ajax({
+        url:route,
+        type:"post",
+        data: data,
+        dataType: 'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $(modal).modal('hide');
+            RefreshTable(result.data,0,0);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function quitarFecha()
+{
+    $("#datepick").val(null)
+}
+
+function opcionesEstatus(id,statusId)
+{
+    idcandidate=id;
+    $("#selectStatus").val(statusId);
+    $("#secEstatusModal").modal('show');
+}
+
+function openActiveStat(id,statusId)
+{
+    idcandidate=id;
+    $("#selectStatusAct").val(statusId);
+    $("#actEstatusModal").modal('show');
+}
+
+function actualizarEstatusAct()
+{
+    var status = $("#selectStatusAct").val();
+    var route = baseUrl + "/updateStatusAct";
+
+        var data = {
+            'id':idcandidate,
+            "_token": $("meta[name='csrf-token']").attr("content"),
+            'status':status
+        };
+        jQuery.ajax({
+            url:route,
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(result)
+            {
+                alertify.success(result.message);
+                RefreshTable(result.candidates,result.profile,result.permission);
+                $("#actEstatusModal").modal('hide');
+                // window.location.reload(true);
+            },
+            error:function(result,error,errorTrown)
+            {
+                alertify.error(errorTrown);
+            }
+        })
+}
+
+function actualizarEstatus()
+{
+    // alert("entre a viewpolicy");
+    // if (document.getElementById('chkActive').checked) active = 0; else active = 1;
+    var status = $("#selectStatus").val();
+    var route = baseUrl + "/updateStatus";
+
+    var data = {
+        'id':idcandidate,
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'status':status
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            RefreshTable(result.candidates,result.profile,result.permission);
+            $("#secEstatusModal").modal('hide');
+            // window.location.reload(true);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }

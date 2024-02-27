@@ -519,7 +519,7 @@
 
                 </div>
                 <div class="card-footer text-center">
-                    <button type="button" onclick="guardarPoliza(0)" id="btn_save" class="btn btn-primary float-right" disabled>Guardar</button>
+                    <button type="button" onclick="guardar()" id="btn_save" class="btn btn-primary float-right" disabled>Guardar</button>
                 </div>
             </div>
         </div>

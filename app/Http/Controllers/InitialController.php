@@ -32,7 +32,7 @@ class InitialController extends Controller
         // dd($initials);
 
         $clients = Client::get();
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->where("fk_profile","12")->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->orderBy('name')->whereIn("fk_profile",[12,2])->pluck('name','id');
         $currencies = Currency::pluck('name','id');
         $insurances = Insurance::orderBy('name')->pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
@@ -247,14 +247,9 @@ class InitialController extends Controller
         $status = Initial::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
-        if($request->sub_status==1)
-        {
-            $status->commentary=$request->commentary;
-
-        }else{
-            $status->commentary=$request->sub_status;
-
-        }
+        $status->commentary=$request->commentary;
+        if($request->sub_status == null) $request->sub_status = 0;
+        $status->sub_stat=$request->sub_status;
         $status->save();
 
         // dd($today);

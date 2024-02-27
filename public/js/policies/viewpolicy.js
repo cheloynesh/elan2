@@ -776,7 +776,7 @@ function mostrartabla(){
     var other_exp = $("#other_exp_edit").val().replace(/[^0-9.]/g, '');
     var other_impute = parseInt($("#other_impute_edit").val());
     var ivapor = $("#ivapor_edit").val().replace(/[^0-9.]/g, '');
-    var pna = parseFloat($("#pna_edit").val().replace(/[^0-9.]/g, ''))/pay_frec;
+    var pna = "";
     var fecha_i = $("#initial_date_edit").val();
     var fecha = fecha_i.split("-");
     var branch =$("#selectBranch_edit").val();
@@ -803,12 +803,6 @@ function mostrartabla(){
     else{
         financ_exp = 0;
     }
-    if(pna != ""){
-        pna = parseFloat(pna);
-    }
-    else{
-        pna = 0;
-    }
     if(expedition != ""){
         expedition = parseFloat(expedition);
     }
@@ -827,7 +821,7 @@ function mostrartabla(){
     arrayValues = [];
     // tablerec.empty();
     tablerec.clear();
-    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfo/'+ branch;
+    var route = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + '/admin/branch/branches/GetInfoPol/'+ branch + '/' + pay_frec;
 
     jQuery.ajax({
         url:route,
@@ -835,9 +829,15 @@ function mostrartabla(){
         dataType:'json',
         success:function(result)
         {
-            console.log(route);
+            pay_frec = result.pay.receipts;
+            pna = parseFloat($("#pna_edit").val().replace(/[^0-9.]/g, ''))/pay_frec;
+            if(pna != ""){
+                pna = parseFloat(pna);
+            }
+            else{
+                pna = 0;
+            }
             days = result.data.days;
-            console.log(days);
             var day = fechaDiv.getDate();
             for(var x = 0 ; x<pay_frec ; x++)
             {
@@ -948,19 +948,30 @@ var id_policy = 0;
 function opcionesEstatus(policyId,statusId)
 {
     id_policy=policyId;
-    $("#selectStatus").val(statusId);
-    $("#myEstatusModal").modal('show');
+    var route = baseUrlPolizaView+'/GetinfoStatus/'+policyId;
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result){
+            $("#selectStatus").val(statusId);
+            $("#commentary").val(result.data.commentary);
+            $("#myEstatusModal").modal('show');
+        }
+    })
 }
 function actualizarEstatus()
 {
     // alert("entre a viewpolicy");
     var status = $("#selectStatus").val();
+    var commentary = $("#commentary").val();
     var route = baseUrlPolizaView + "/updateStatus";
     console.log(route);
     var data = {
         'id':id_policy,
         "_token": $("meta[name='csrf-token']").attr("content"),
         'status':status,
+        "commentary":commentary,
         'active':active
     };
     jQuery.ajax({
@@ -1189,7 +1200,7 @@ function RefreshTable(data,profile,permission)
 
     data.forEach( function(valor, indice, array) {
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
-        btnRecpt = '<a href="#|" class="btn btn-primary" onclick="verRecibos('+valor.id+')">Ver Recibos</a>'
+        btnRecpt = '<a href="#|" class="btn btn-primary" onclick="verRecibos('+valor.id+')"><i class="fas fa-eye"></i><i class="fas fa-dollar-sign"></i></a>'
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarPoliza('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarPoliza('+valor.id+')"><i class="fa fa-trash"></i></button>';
         if(valor.type == 1) type = "Inicial"; else type = "Renovación";
