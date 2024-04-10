@@ -2686,6 +2686,14 @@ fieldset:disabled a.btn {
   min-width: 38px;
 }
 
+.full-width {
+    width: 100%;
+  }
+
+  .half-width {
+    width: 50%;
+  }
+
 .btn-primary:hover {
   color: #fff;
   background-color: #275079;

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('GetInfo/{id}','HomeController@GetInfo')->name('home.GetInfo');
+Route::get('ExportExcl/{type}','HomeController@ExportExcl');
 
 // perfiles
 Route::get('admin/profile/profiles/GetInfo/{id}','ProfilesController@GetInfo')->name('profiles.GetInfo');
