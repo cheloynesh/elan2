@@ -52,11 +52,20 @@ class HomeController extends Controller
     {
         date_default_timezone_set('America/Mexico_City');
         $today = new DateTime();
-        $ppact = DB::select('call hometableIni(?)',[$today->format('Y')]);
-        $today->modify('-1 year');
-        $ppant = DB::select('call hometableIni(?)',[$today->format('Y')]);
-        // dd($ppact, $ppant);
-        return response()->json(['status'=>true, "ppact"=>$ppact, "ppant"=>$ppant]);
+        // $ppact = DB::select('call hometableIni(?)',[$today->format('Y')]);
+        // $today->modify('-1 year');
+        // $ppant = DB::select('call hometableIni(?)',[$today->format('Y')]);
+        $profile = User::findProfile();
+        $perm = Permission::permView($profile,14);
+        $perm_btn =Permission::permBtns($profile,14);
+        $user = User::user_id();
+
+        if($profile != 12)
+            $data = DB::select('call hometableRen(?)',[$today->format('Y')]);
+        else
+            $data = DB::select('call hometableRenAg(?,?)',[$today->format('Y'),$user]);
+            // dd($ppact, $ppant);
+        return response()->json(['status'=>true, "data"=>$data]);
     }
 
     public function ExportExcl($type)

@@ -276,6 +276,116 @@
     </div>
 </div>
 {{-- fin modal --}}
+{{-- modal si no --}}
+<div id="docsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridModalLabek">Editar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancelar('#docsModal')"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid bd-example-row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Selecciona una opción</label>
+                                    <select name="selectYesNoDocs" id="selectYesNoDocs" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
+                                        <option value=0>No</option>
+                                        <option value=1>Si</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="docs_div">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="doc_curp">CURP</label> --}}
+                                        {{-- <input type="text" name="doc_curp" id="doc_curp" class="form-control" placeholder="CURP"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_curp" name="doc_curp">
+                                        <label class="form-check-label" for="doc_curp">CURP</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Domicilio fiscal</label>
+                                        <input type="text" name="doc_fiscadd" id="doc_fiscadd" class="form-control" placeholder="Domicilio fiscal"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_fiscadd" name="doc_fiscadd">
+                                        <label class="form-check-label" for="doc_fiscadd">Domicilio fiscal</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Domicilio</label>
+                                        <input type="text" name="doc_add" id="doc_add" class="form-control" placeholder="Domicilio"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_add" name="doc_add">
+                                        <label class="form-check-label" for="doc_add">Domicilio</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Estado de cuenta</label>
+                                        <input type="text" name="doc_bank" id="doc_bank" class="form-control" placeholder="Estado de cuenta"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_bank" name="doc_bank">
+                                        <label class="form-check-label" for="doc_bank">Estado de cuenta</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Acta de nacimiento</label>
+                                        <input type="text" name="doc_birth" id="doc_birth" class="form-control" placeholder="Acta de nacimiento"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_birth" name="doc_birth">
+                                        <label class="form-check-label" for="doc_birth">Acta de nacimiento</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Constancia</label>
+                                        <input type="text" name="doc_sat" id="doc_sat" class="form-control" placeholder="Constancia"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_sat" name="doc_sat">
+                                        <label class="form-check-label" for="doc_sat">Constancia</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Certificado escolar</label>
+                                        <input type="text" name="doc_school" id="doc_school" class="form-control" placeholder="Certificado escolar"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_school" name="doc_school">
+                                        <label class="form-check-label" for="doc_school">Certificado escolar</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        {{-- <label for="">Identificación</label>
+                                        <input type="text" name="doc_ine" id="doc_ine" class="form-control" placeholder="Identificación"> --}}
+                                        <input class="form-check-input" type="checkbox" id="doc_ine" name="doc_ine">
+                                        <label class="form-check-label" for="doc_ine">Identificación</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="cancelar('#docsModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="guardarDocs()" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- fin modal --}}
 
     <div class="text-center"><h1>Agentes Nuevos</h1></div>
     <div style="max-width: 100%; margin: auto;">

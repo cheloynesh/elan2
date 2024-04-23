@@ -186,12 +186,14 @@ Route::get('hiring/control/candidates/GetAll/{id}','CandidatesController@GetAll'
 
 // nuevo agente
 Route::resource('hiring/control/newagent','NewAgentController');
+Route::get('hiring/control/newagent/GetDocs/{id}','NewAgentController@GetDocs')->name('newagent.GetDocs');
 Route::get('hiring/control/newagent/GetTable/{id}','NewAgentController@GetTable')->name('newagent.GetTable');
 Route::post('hiring/control/newagent/SaveYesNo', 'NewAgentController@SaveYesNo')->name('newagent.SaveYesNo');
 Route::post('hiring/control/newagent/SaveCharge', 'NewAgentController@SaveCharge')->name('newagent.SaveCharge');
 Route::post('hiring/control/newagent/SaveDate', 'NewAgentController@SaveDate')->name('newagent.SaveDate');
 Route::post('hiring/control/newagent/SaveText', 'NewAgentController@SaveText')->name('newagent.SaveText');
 Route::post('hiring/control/newagent/SaveSales', 'NewAgentController@SaveSales')->name('newagent.SaveSales');
+Route::post('hiring/control/newagent/SaveDocs', 'NewAgentController@SaveDocs')->name('newagent.SaveDocs');
 Route::post('hiring/control/newagent/updateStatus', 'NewAgentController@updateStatus')->name('newagent.updateStatus');
 Route::post('hiring/control/newagent/updateStatusAct', 'NewAgentController@updateStatusAct')->name('newagent.updateStatusAct');
 

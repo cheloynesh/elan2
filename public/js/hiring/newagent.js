@@ -166,7 +166,7 @@ function RefreshTable(data,profile,permission)
         btnCharge = '<button href="#|" class="btn btn-primary" onclick="openCharge(`'+valor.charge+'`,'+valor.candId+',`n`,`charge`)" >'+valor.charge+'</button>';
         btnConfirmed = '<button href="#|" class="btn btn-' + btns[3] + '" onclick="openYesNo('+valor.confirmed+','+valor.candId+',3,`confirmed`)" >'+sino[valor.confirmed]+'</button>';
 
-        btnDocs = '<button href="#|" class="btn btn-' + btns[4] + '" onclick="openYesNo('+valor.documents+','+valor.candId+',4,`documents`)" >'+sino[valor.documents]+'</button>';
+        btnDocs = '<button href="#|" class="btn btn-' + btns[4] + '" onclick="openDocs('+valor.documents+','+valor.candId+',4,`documents`)" >'+sino[valor.documents]+'</button>';
         btnInduction = '<button href="#|" class="btn btn-' + btns[5] + '" onclick="openDate(`'+valor.induction+'`,'+valor.candId+',5,`induction`)" >'+valor.induction+'</button>';
         btnDatesSales = '<button href="#|" class="btn btn-' + btns[6] + '" onclick="openYesNo(`'+valor.sales_dates+'`,'+valor.candId+',6,`sales_dates`)" >'+sino[valor.sales_dates]+'</button>';
 
@@ -216,6 +216,47 @@ function openYesNo(valor,id,btns,field)
     $("#selectYesNo").val(valor);
 
     $("#yesnoModal").modal('show');
+}
+
+function openDocs(valor,id,btns,field)
+{
+    editId = id;
+    editField = field;
+    editBtns = btns;
+
+    $("#selectYesNoDocs").val(valor);
+
+    var route = baseUrl + '/GetDocs/'+id;
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            document.getElementById("doc_curp").checked = result.docs.doc_curp;
+            document.getElementById("doc_fiscadd").checked = result.docs.doc_fiscadd;
+            document.getElementById("doc_add").checked = result.docs.doc_add;
+            document.getElementById("doc_bank").checked = result.docs.doc_bank;
+            document.getElementById("doc_birth").checked = result.docs.doc_birth;
+            document.getElementById("doc_sat").checked = result.docs.doc_sat;
+            document.getElementById("doc_school").checked = result.docs.doc_school;
+            document.getElementById("doc_ine").checked = result.docs.doc_ine;
+            // $("#doc_curp").val(result.docs.doc_curp);
+            // $("#doc_fiscadd").val(result.docs.doc_fiscadd);
+            // $("#doc_add").val(result.docs.doc_add);
+            // $("#doc_bank").val(result.docs.doc_bank);
+            // $("#doc_birth").val(result.docs.doc_birth);
+            // $("#doc_sat").val(result.docs.doc_sat);
+            // $("#doc_school").val(result.docs.doc_school);
+            // $("#doc_ine").val(result.docs.doc_ine);
+            $("#docsModal").modal('show');
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+
 }
 
 function openDate(valor,id,btns,field)
@@ -315,6 +356,59 @@ function guardar(saveRoute,saveInput,modal)
         {
             alertify.success(result.message);
             $(modal).modal('hide');
+            RefreshTable(result.data,0,0);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function guardarDocs()
+{
+    var route = baseUrl + '/SaveDocs';
+    var doc_curp = document.getElementById("doc_curp").checked;
+    var doc_fiscadd = document.getElementById("doc_fiscadd").checked;
+    var doc_add = document.getElementById("doc_add").checked;
+    var doc_bank = document.getElementById("doc_bank").checked;
+    var doc_birth = document.getElementById("doc_birth").checked;
+    var doc_sat = document.getElementById("doc_sat").checked;
+    var doc_school = document.getElementById("doc_school").checked;
+    var doc_ine = document.getElementById("doc_ine").checked;
+    // var doc_curp = $("#doc_curp").val();
+    // var doc_fiscadd = $("#doc_fiscadd").val();
+    // var doc_add = $("#doc_add").val();
+    // var doc_bank = $("#doc_bank").val();
+    // var doc_birth = $("#doc_birth").val();
+    // var doc_sat = $("#doc_sat").val();
+    // var doc_school = $("#doc_school").val();
+    // var doc_ine = $("#doc_ine").val();
+    // alert(doc_curp);
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'input':$("#selectYesNoDocs").val(),
+        'field':editField,
+        'btns':editBtns,
+        'doc_curp':doc_curp,
+        'doc_fiscadd':doc_fiscadd,
+        'doc_add':doc_add,
+        'doc_bank':doc_bank,
+        'doc_birth':doc_birth,
+        'doc_sat':doc_sat,
+        'doc_school':doc_school,
+        'doc_ine':doc_ine,
+        'id':editId,
+    };
+    jQuery.ajax({
+        url:route,
+        type:"post",
+        data: data,
+        dataType: 'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#docsModal").modal('hide');
             RefreshTable(result.data,0,0);
         },
         error:function(result,error,errorTrown)

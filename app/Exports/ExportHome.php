@@ -61,7 +61,7 @@ class ExportHome implements FromCollection, WithHeadings
     public function headings(): array
     {
         if($this->type != 5)
-            return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Fecha del Recibo"];
+            return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Comentario"];
         else
             return ["ID","Agente", "Fecha de ingreso", "Póliza", "Fecha de Respuesta", "Descargado", "Tipo de Servicio", "Folio", "Nombre del Contratante", "Record", "Ramo", "Compañia", "Estatus", "Número de Guía","Comentario"];
     }

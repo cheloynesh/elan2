@@ -79,14 +79,14 @@
 
 
 
-                {{-- <br>
+                <br>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <canvas id="insuranceChart" height="100"></canvas>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
         </div>

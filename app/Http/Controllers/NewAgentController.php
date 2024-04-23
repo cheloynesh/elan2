@@ -55,6 +55,22 @@ class NewAgentController extends Controller
         return response()->json(['status'=>true, 'message'=>"Actualizado", "data"=>$candidates]);
     }
 
+    public function SaveDocs(Request $request)
+    {
+        $profile = Candidates::where('id',$request->id)->first();
+        $btns = explode("-", $profile->btn_colors);
+        if(intval($request->input) == 0) $btns[intval($request->btns)] = "danger"; else $btns[intval($request->btns)] = "success";
+        $btn = join("-",$btns);
+        $prof = Candidates::where('id',$request->id)->update([$request->field => $request->input,'btn_colors' => $btn,
+        'doc_curp' => $request->doc_curp === 'true'? 1: 0, 'doc_fiscadd' => $request->doc_fiscadd === 'true'? 1: 0, 'doc_add' => $request->doc_add === 'true'? 1: 0, 'doc_bank' => $request->doc_bank === 'true'? 1: 0,
+        'doc_birth' => $request->doc_birth === 'true'? 1: 0, 'doc_sat' => $request->doc_sat === 'true'? 1: 0, 'doc_school' => $request->doc_school === 'true'? 1: 0, 'doc_ine' => $request->doc_ine === 'true'? 1: 0]);
+
+        $this->checkStatus($profile,$request->field,$request->input);
+
+        $candidates = DB::select('call newAgentTable(1)');
+        return response()->json(['status'=>true, 'message'=>"Actualizado", "data"=>$candidates]);
+    }
+
     public function SaveCharge(Request $request)
     {
         $prof = Candidates::where('id',$request->id)->update([$request->field => $request->input]);
@@ -95,6 +111,12 @@ class NewAgentController extends Controller
         $this->checkStatus($profile,$request->field,$request->total);
         $candidates = DB::select('call newAgentTable(1)');
         return response()->json(['status'=>true, 'message'=>"Actualizado", "data"=>$candidates]);
+    }
+
+    public function GetDocs(Request $request)
+    {
+        $prof = Candidates::select('doc_curp', 'doc_fiscadd', 'doc_add', 'doc_bank', 'doc_birth', 'doc_sat', 'doc_school', 'doc_ine')->where('id',$request->id)->first();
+        return response()->json(['status'=>true, "docs"=>$prof]);
     }
 
     public function checkStatus($agent,$status,$input)
