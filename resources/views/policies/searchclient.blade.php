@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="container-fluid bd-example-row">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover text-center" id="srcClient">
+                        <table class="table table-striped table-hover text-center" style="width:100%" id="srcClient">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">RFC</th>

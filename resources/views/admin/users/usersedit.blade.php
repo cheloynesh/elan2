@@ -110,7 +110,7 @@
                                 </div>
                                 {{-- inicio tabla --}}
                                 <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                                    <table class="table table-stripped table-hover text-center" id="tbcodes1">
+                                    <table class="table table-striped table-hover text-center" style="width:100%" id="tbcodes1">
                                         <thead>
                                             <th class="text-center">Clave de agente</th>
                                             <th class="text-center">Compañía</th>

@@ -246,7 +246,7 @@ function refreshTable(tableName, cods, func)
         table.clear();
         cods.forEach( function(valor, indice, array) {
             btnTrash = '<button type="button" class="btn btn-danger" onclick="'+func+'('+valor.code+','+valor.insurance+')"><i class="fa fa-trash mr-2"></i></button>';
-            table.row.add([valor.code,valor.insuranceName,btnTrash]).node().id = valor.id;
+            table.row.add([valor.code,valor.insuranceName,btnTrash]);
         });
 
         table.draw(false);

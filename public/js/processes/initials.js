@@ -896,9 +896,9 @@ function FillTable(data,profile,permission)
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarInicial('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarInicial('+valor.id+')"><i class="fa fa-trash"></i></button>';
         if(permission["erase"] == 1)
-            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit+" "+btnTrash]).node().id = valor.id;
+            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit]).node().id = valor.oid;
+            table.row.add([valor.agent,valor.cname,valor.rfc,valor.folio,valor.insurance,valor.branch,btnStat,btnEdit]);
     });
     table.draw(false);
 }

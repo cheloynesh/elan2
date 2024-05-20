@@ -404,9 +404,9 @@ function FillTable(data,profile,permission)
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarSiniestro('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarSiniestro('+valor.id+')"><i class="fa fa-trash"></i></button>';
         if(permission["erase"] == 1)
-            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit+" "+btnTrash]).node().id = valor.id;
+            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit]).node().id = valor.id;
+            table.row.add([valor.agent,valor.contractor,valor.folio,valor.insurance,btnStat,btnEdit]);
     });
     table.draw(false);
 }

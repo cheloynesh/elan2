@@ -199,3 +199,7 @@ Route::post('hiring/control/newagent/updateStatusAct', 'NewAgentController@updat
 
 // reporte
 Route::resource('hiring/report/hiringReport','HiringReportController');
+
+
+// mails
+Route::get('/mailtest','MailController@MailSender')->name('mailing.MailSender');

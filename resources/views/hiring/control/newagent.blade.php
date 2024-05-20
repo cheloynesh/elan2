@@ -386,6 +386,42 @@
     </div>
 </div>
 {{-- fin modal --}}
+{{-- modal si no --}}
+<div id="examModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridModalLabek">Editar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancelar('#examModal')"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid bd-example-row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Selecciona una opción</label>
+                                    <select name="selectExam" id="selectExam" class="form-select">
+                                        <option hidden selected value="">Selecciona una opción</option>
+                                        <option value=0>Incompleto</option>
+                                        <option value=1>Aprobado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="cancelar('#examModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="guardar('SaveYesNo','#selectExam','#examModal')" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- fin modal --}}
 
     <div class="text-center"><h1>Agentes Nuevos</h1></div>
     <div style="max-width: 100%; margin: auto;">

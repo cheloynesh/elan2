@@ -16,7 +16,7 @@
         </div>
         <br><br>
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbClient">
+            <table class="table table-striped table-hover text-center" style="width:100%" id="tbClient">
                 <thead>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">RFC</th>

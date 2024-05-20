@@ -305,7 +305,7 @@ function GetFilters()
         {
             table.clear();
             result.data.forEach( function(valor, indice, array) {
-                table.row.add([valor.AgentName,valor.CountAll,valor.SumAll,valor.CountEmit,valor.SumEmit,valor.CountPoliz,valor.SumPoliz]).node().id = valor.AgentId;
+                table.row.add([valor.AgentName,valor.CountAll,valor.SumAll,valor.CountEmit,valor.SumEmit,valor.CountPoliz,valor.SumPoliz]);
             });
             table.draw(false);
             updateCharts(result.insurances, result.branches, result.status, result.pay);

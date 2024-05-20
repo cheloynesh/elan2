@@ -96,7 +96,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <table class="table table-striped table-hover text-center" id="tbnotFnd">
+                                            <table class="table table-striped table-hover text-center" style="width:100%" id="tbnotFnd">
                                                 <thead>
                                                     <th class="text-center">Pólizas</th>
                                                 </thead>
@@ -159,7 +159,7 @@
     </div>
         {{-- Inicia pantalla de inicio --}}
     <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-        <table class="table table-striped table-hover text-center" id="tbPoliza">
+        <table class="table table-striped table-hover text-center" style="width:100%" id="tbPoliza">
             <thead>
                 <th class="text-center">Agente</th>
                 <th class="text-center">RFC</th>

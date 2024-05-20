@@ -39,7 +39,7 @@
         {{-- Inicia pantalla de inicio --}}
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbProfreceipt">
+            <table class="table table-striped table-hover text-center" style="width:100%" id="tbProfreceipt">
                 <thead>
                     <th class="text-center">RFC</th>
                     <th class="text-center">Cliente</th>

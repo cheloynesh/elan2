@@ -533,7 +533,7 @@
                     <div class="card-body">
                         <div class="row">
                                 <div class="table-responsive" >
-                                    <table class="table table-striped table-hover text-center" id="tablerecords_edit">
+                                    <table class="table table-striped table-hover text-center" style="width:100%" id="tablerecords_edit">
                                         <thead>
                                             <th class="text-center">Prima Neta</th>
                                             <th class="text-center">Gastos EXP</th>
@@ -574,7 +574,7 @@
             <div class="modal-body">
                 <div class="container-fluid bd-example-row">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover text-center" id="srcClient">
+                        <table class="table table-striped table-hover text-center" style="width:100%" id="srcClient">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">RFC</th>

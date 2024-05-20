@@ -124,7 +124,7 @@
 
                     <div class="modal-body">
                         <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                            <table class="table table-striped table-hover text-center" id="tbProf">
+                            <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
                                 <thead>
                                     <th class="text-center">Nombre</th>
                                         <th class="text-center">Opciones</th>
@@ -177,7 +177,7 @@
             <div class="tab-pane active " id="prueba1" role="tabpanel" aria-labelledby="prueba1-tab">
                 <div class="container-fluid">
                     <div class="table-responsive" style="margin-bottom: 10px">
-                        <table class="table table-striped table-hover text-center" id="tbProf">
+                        <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Opciones</th>
@@ -201,7 +201,7 @@
             <div class="tab-pane " id="pruebas2" role="tabpanel" aria-labelledby="prueba2">
                 <div class="container-fluid">
                     <div class="table-responsive" style="margin-bottom: 10px">
-                        <table class="table table-striped table-hover text-center" id="tbProf">
+                        <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
                             <thead>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Opciones</th>
@@ -465,7 +465,7 @@
 {{-- tabla --}}
 
 {{-- <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-    <table class="table table-striped table-hover text-center" id="tbProf">
+    <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
         <thead>
             <th class="text-center">Nombre</th>
             <th class="text-center">Opciones</th>

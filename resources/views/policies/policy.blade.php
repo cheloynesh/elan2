@@ -502,7 +502,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive" >
-                        <table class="table table-striped table-hover text-center" id="tablerecords">
+                        <table class="table table-striped table-hover text-center" style="width:100%" id="tablerecords">
                             <thead>
                                 <th class="text-center">Prima Neta</th>
                                 <th class="text-center">Gastos EXP</th>

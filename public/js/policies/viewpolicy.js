@@ -212,7 +212,7 @@ function verRecibos(id){
                 }
                 table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
                     formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
-                    valor.initial_date, valor.end_date, button]).node().id = valor.id;
+                    valor.initial_date, valor.end_date, button]);
 
             });
             table.draw(false);
@@ -1206,9 +1206,9 @@ function RefreshTable(data,profile,permission)
         if(valor.type == 1) type = "Inicial"; else type = "Renovación";
         // alert(valor.id);
         if(permission["erase"] == 1)
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]).node().id = valor.id;
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]).node().id = valor.id;
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]);
     });
     table.draw(false);
 }
@@ -1331,7 +1331,7 @@ function importexc()
             $("#notFnd").val(notFnd.length);
             table.clear();
             notFnd.forEach( function(valor, indice, array) {
-                table.row.add([valor]).node().id = valor;
+                table.row.add([valor]);
             });
             table.draw(false);
             document.getElementById("closeBtn").hidden = false;

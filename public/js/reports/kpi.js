@@ -222,10 +222,10 @@ function GetFilters()
         {
             table.clear();
 
-            table.row.add(["Cobro Venta Inicial",result.pay[0].CountIngr,result.pay[0].CountEmit,result.pay[0].Porc]).node().id = 1;
-            table.row.add(["Iniciales",result.initials[0].CountIngr,result.initials[0].CountEmit,result.initials[0].Porc]).node().id = 1;
-            table.row.add(["Servicios",result.services[0].CountIngr,result.services[0].CountEmit,result.services[0].Porc]).node().id = 1;
-            table.row.add(["Siniestros",result.sinister[0].CountIngr,result.sinister[0].CountEmit,result.sinister[0].Porc]).node().id = 1;
+            table.row.add(["Cobro Venta Inicial",result.pay[0].CountIngr,result.pay[0].CountEmit,result.pay[0].Porc]);
+            table.row.add(["Iniciales",result.initials[0].CountIngr,result.initials[0].CountEmit,result.initials[0].Porc]);
+            table.row.add(["Servicios",result.services[0].CountIngr,result.services[0].CountEmit,result.services[0].Porc]);
+            table.row.add(["Siniestros",result.sinister[0].CountIngr,result.sinister[0].CountEmit,result.sinister[0].Porc]);
 
             table.draw(false);
             updateCharts(result.services, result.initials, result.sinister, result.pay);

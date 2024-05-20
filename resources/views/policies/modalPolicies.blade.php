@@ -10,7 +10,7 @@
 
             <div class="modal-body">
                 <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                    <table class="table table-striped table-hover text-center" id="tablerecords">
+                    <table class="table table-striped table-hover text-center" style="width:100%" id="tablerecords">
                         <thead>
                             <th class="text-center">Prima Neta</th>
                             <th class="text-center">Gastos EXP</th>
@@ -596,7 +596,7 @@
                     <div class="card-body">
                         <div class="row">
                                 <div class="table-responsive" >
-                                    <table class="table table-striped table-hover text-center" id="tablerecords_edit">
+                                    <table class="table table-striped table-hover text-center" style="width:100%" id="tablerecords_edit">
                                         <thead>
                                             <th class="text-center">Prima Neta</th>
                                             <th class="text-center">Gastos EXP</th>
@@ -801,7 +801,7 @@
                 <br>
                 <div class="row">
                         <div class="table-responsive" >
-                            <table class="table table-striped table-hover text-center" id="tablerecords">
+                            <table class="table table-striped table-hover text-center" style="width:100%" id="tablerecords">
                                 <thead>
                                     <th class="text-center">Prima Neta</th>
                                     <th class="text-center">Gastos EXP</th>

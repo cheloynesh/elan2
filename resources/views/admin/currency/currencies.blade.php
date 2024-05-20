@@ -44,7 +44,7 @@
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbProf">
+            <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
                 <thead>
                     <th class="text-center">Nombre</th>
                     @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

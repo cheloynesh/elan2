@@ -67,11 +67,13 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                                            <table class="table table-striped table-hover text-center" id="tbassignBranches">
+                                            <table class="table table-striped table-hover text-center" style="width:100%" id="tbassignBranches">
                                                 <thead>
                                                     <th class="text-center">Nombre</th>
                                                     <th class="text-center">Opciones</th>
                                                 </thead>
+                                                <tbody class="text-center">
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -159,7 +161,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                                            <table class="table table-striped table-hover text-center" id="tbassignPlans">
+                                            <table class="table table-striped table-hover text-center" style="width:100%" id="tbassignPlans">
                                                 <thead>
                                                     <th class="text-center">Nombre</th>
                                                     <th class="text-center">Opciones</th>

@@ -83,7 +83,14 @@ $(document).ready( function () {
                 target: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
                 visible: false
             }
-        ]
+        ],
+        fixedColumns: {
+            start: 1
+        },
+        paging: false,
+        scrollCollapse: true,
+        scrollX: true,
+        scrollY: 500
     });
 } );
 
@@ -112,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function RefreshTable(data,profile,permission)
 {
     var sino = ["No","Si"]
+    var exm = ["Incompleto","Aprobado"]
 
     var table = $('#tbProf').DataTable();
     var btnStat = '';
@@ -181,8 +189,8 @@ function RefreshTable(data,profile,permission)
 
         btnLicenseDate = '<button href="#|" class="btn btn-' + btns[11] + '" onclick="openDate(`'+valor.license_date+'`,'+valor.candId+',11,`license_date`)" >'+valor.license_date+'</button>';
         btnExamDate = '<button href="#|" class="btn btn-' + btns[12] + '" onclick="openDate(`'+valor.exam_date+'`,'+valor.candId+',12,`exam_date`)" >'+valor.exam_date+'</button>';
-        btnExam = '<button href="#|" class="btn btn-' + btns[13] + '" onclick="openDate(`'+valor.exam+'`,'+valor.candId+',13,`exam`)" >'+valor.exam+'</button>';
-        btnCnsfDate = '<button href="#|" class="btn btn-' + btns[14] + '" onclick="openDate(`'+valor.cnsf_date+'`,'+valor.candId+',14,`cnsf_date`)" >'+valor.cnsf_date+'</button>';
+        btnExam = '<button href="#|" class="btn btn-' + btns[13] + '" onclick="openExam(`'+valor.exam+'`,'+valor.candId+',13,`exam`)" >'+exm[valor.exam]+'</button>';
+        btnCnsfDate = '<button href="#|" class="btn btn-' + btns[14] + '" onclick="openYesNo(`'+valor.cnsf_date+'`,'+valor.candId+',14,`cnsf_date`)" >'+sino[valor.cnsf_date]+'</button>';
         btnLicense = '<button href="#|" class="btn btn-' + btns[15] + '" onclick="openDate(`'+valor.license+'`,'+valor.candId+',15,`license`)" >'+valor.license+'</button>';
 
         btnAgKey = '<button href="#|" class="btn btn-primary" onclick="openText(`'+valor.agent_key+'`,'+valor.candId+',`n`,`agent_key`)" >'+valor.agent_key+'</button>';
@@ -197,7 +205,7 @@ function RefreshTable(data,profile,permission)
             btnFstInt,btnPda,btnScndInt,btnCharge,btnConfirmed,
             btnDocs,btnInduction,btnDatesSales,btnSales,btnSigCia,btnCia,btnInitialKey,btnInitialDate,
             btnLicenseDate,btnExamDate,btnExam,btnCnsfDate,btnLicense,
-            btnAgKey,btnMetSig,btnMetGrad]).node().candId = valor.candId;
+            btnAgKey,btnMetSig,btnMetGrad]);
     });
     table.draw(false);
 }
@@ -216,6 +224,17 @@ function openYesNo(valor,id,btns,field)
     $("#selectYesNo").val(valor);
 
     $("#yesnoModal").modal('show');
+}
+
+function openExam(valor,id,btns,field)
+{
+    editId = id;
+    editField = field;
+    editBtns = btns;
+
+    $("#selectExam").val(valor);
+
+    $("#examModal").modal('show');
 }
 
 function openDocs(valor,id,btns,field)

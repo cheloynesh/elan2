@@ -125,15 +125,19 @@
 
                                     </div>
                                     {{-- inicio tabla --}}
-                                    <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                                        <table class="table table-stripped table-hover text-center" id="tbcodes">
-                                            <thead>
-                                                <th class="text-center">Clave de agente</th>
-                                                <th class="text-center">Compañía</th>
-                                                <th class="text-center">Opciones</th>
-                                            </thead>
-                                            <tbody id="tbody-codigo"></tbody>
-                                        </table>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
+                                                <table class="table table-striped table-hover text-center" style="width:100%" id="tbcodes">
+                                                    <thead>
+                                                        <th class="text-center">Clave de agente</th>
+                                                        <th class="text-center">Compañía</th>
+                                                        <th class="text-center">Opciones</th>
+                                                    </thead>
+                                                    <tbody id="tbody-codigo"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -157,7 +161,7 @@
         </div>
         <br><br>
           <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-            <table class="table table-striped table-hover text-center" id="tbUsers">
+            <table class="table table-striped table-hover text-center" style="width:100%" id="tbUsers">
                 <thead>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
