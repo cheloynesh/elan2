@@ -155,10 +155,10 @@ class NewAgentController extends Controller
                 if($agent->second_status < 40 && $input != null) $stat = 40;
                 break;
             case 'exam':
-                if($agent->second_status < 41 && $input != null) $stat = 41;
+                if($agent->second_status < 41 && intval($input) != 0) $stat = 41;
                 break;
             case 'cnsf_date':
-                if($agent->second_status < 42 && $input != null) $stat = 42;
+                if($agent->second_status < 42 && intval($input) != 0) $stat = 42;
                 break;
             case 'license':
                 if($agent->second_status < 43 && $input != null) $stat = 43;
