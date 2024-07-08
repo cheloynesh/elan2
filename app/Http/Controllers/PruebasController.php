@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prueba;
 use App\Insurance;
+use App\Initial;
+use App\Imports\InitialsImport;
 
 class PruebasController extends Controller
 {
@@ -42,5 +44,30 @@ class PruebasController extends Controller
         $profile = Prueba::find($id);
         $profile->delete();
         return response()->json(['status'=>true, "message"=>"Perfil eliminado"]);
+    }
+
+    public function import($active, Request $request)
+    {
+        // dd("entre");
+        set_time_limit(1000);
+        $file = $request->file('excl');
+        // $file = $request->file;
+        $imp = new InitialsImport();
+        $new_balance = 0;
+        $prev_balance = 0;
+        // dd($request);
+        // Excel::import($imp, $file);
+        $array = ($imp)->toArray($file);
+        // dd($array[0][1]);
+        $array2 = array();
+        $arrayNotFound = array();
+        $cont = 0;
+        $goodCont = 0;
+        foreach ($array[0] as $moves)
+        {
+            $initial = Initial::where('id',$moves[0])->update(['guide' => $moves[1]]);
+        }
+
+        return response()->json(['status'=>true, 'message'=>"Datos Subidos"]);
     }
 }

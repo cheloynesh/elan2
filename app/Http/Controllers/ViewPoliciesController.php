@@ -314,7 +314,7 @@ class ViewPoliciesController extends Controller
     }
     public function updatePoliciesNet($id)
     {
-        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->where('fk_status','!=',22)->get();
+        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->where('fk_status','!=',22)->where('fk_status','!=',24)->get();
         $today = new DateTime();
         foreach($policies as $policy)
         {

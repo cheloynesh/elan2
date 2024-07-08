@@ -224,6 +224,22 @@
             </div>
 
         </div> --}}
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class = "form-group">
+                        <input type="file" name="excl" id="excl" accept=".xlsx, .xls, .csv" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class = "form-group">
+                        <button class="btn btn-primary" title="Importar de Excel" onclick="importexc()"><i class="fas fa-upload"></i> <i class="fas fa-file-excel"></i></button>
+                        <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-download"></i> <i class="fas fa-file-excel"></i></button>
+                        {{-- <button class="btn btn-primary" title="Importar de Excel" onclick="act()">actualizar</button> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
             <table class="table table-striped table-hover text-center" style="width:100%" id="tbProf">
                 <thead>
