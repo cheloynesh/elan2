@@ -40,7 +40,12 @@ class AgentMail extends Mailable
         date_default_timezone_set('America/Mexico_City');
         $today = new DateTime();
         $bdays = DB::select('call bdayMail(?,?)',[$today->format('m'), $today->format('d')]);
+        $receiptMail = DB::select('call receiptMail(?,?,?)',[$today->format('d'), $today->format('m'), $today->format('Y')]);
+        $renovMail = DB::select('call renovMail(?,?)',[$today->format('m'), $today->format('d')]);
+        $pendMail = DB::select('call pendMail()');
+        $vencMail = DB::select('call vencMail()');
+        // dd($receiptMail, $renovMail, $pendMail, $vencMail);
 
-        return $this->subject('Correo informativo ELAN')->view('mail.agentmail', compact('idview','bdays'));
+        return $this->subject('Correo informativo ELAN')->view('mail.agentmail', compact('idview','bdays','receiptMail','renovMail','pendMail','vencMail'));
     }
 }
