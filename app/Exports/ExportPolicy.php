@@ -24,7 +24,7 @@ class ExportPolicy implements FromCollection, WithHeadings
     {
         $movimientos = DB::table('Policy')->select('Policy.id',DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
         // 'policy','initial_date','end_date','pna','Currency.name as currname','Insurance.name as iname','Branch.name as bname',
-        'rfc','policy','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
+        'rfc','policy','reference','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
         'Branch.name as bname','Plans.name as plname',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
         'Charge.name as charname','Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname',"commentary");
         // dd($this->id);
@@ -99,6 +99,6 @@ class ExportPolicy implements FromCollection, WithHeadings
     }
     public function headings(): array
     {
-        return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Comentario"];
+        return ["ID","Cliente","RFC","Póliza","Referencia","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Comentario"];
     }
 }

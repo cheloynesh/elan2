@@ -43,6 +43,7 @@ Route::post('admin/insurance/insurances/saveNewPlan', 'InsuranceController@saveN
 Route::get('admin/pruebas/prueba/GetInfo/{id}','PruebasController@GetInfo')->name('prueba.GetInfo');
 Route::resource('admin/pruebas/prueba', 'PruebasController');
 Route::post('admin/pruebas/prueba/import/{active}','PruebasController@import');
+Route::post('admin/pruebas/prueba/importServ/{active}','PruebasController@importServ');
 
 // usuarios
 Route::resource('admin/users/user', 'UsersController');

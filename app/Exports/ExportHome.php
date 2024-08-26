@@ -34,7 +34,7 @@ class ExportHome implements FromCollection, WithHeadings
     }
     public function collection()
     {
-        if($this->prof != 12)
+        if($this->prof != 12 && $this->prof != 16)
             switch($this->type)
             {
                 case 1: $polizas = DB::select('call exclHomeEmit(?,?)',[intval($this->today->format('m')),$this->today->format('Y')]); break;

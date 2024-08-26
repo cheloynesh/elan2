@@ -40,7 +40,7 @@ class HomeController extends Controller
         $perm_btn =Permission::permBtns($profile,14);
         $user = User::user_id();
 
-        if($profile != 12)
+        if($profile != 12 && $profile != 16)
             $data = DB::select('call homescreen(?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d')]);
         else
             $data = DB::select('call homescreenAg(?,?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d'),$user]);
@@ -60,7 +60,7 @@ class HomeController extends Controller
         $perm_btn =Permission::permBtns($profile,14);
         $user = User::user_id();
 
-        if($profile != 12)
+        if($profile != 12 && $profile != 16)
             $data = DB::select('call hometableRen(?)',[$today->format('Y')]);
         else
             $data = DB::select('call hometableRenAg(?,?)',[$today->format('Y'),$user]);

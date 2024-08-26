@@ -261,14 +261,14 @@
                             <td>
                                 <button class="btn btn-info" style="background-color: #{{$candidate->color}}; border-color: #{{$candidate->color}}" onclick="opcionesEstatus({{$candidate->candId}},{{$candidate->id}})">{{$candidate->name}}</button>
                             </td>
-                            @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
-                                <td>
+                            <td>
+                                <button href="#|" class="btn btn-success" onclick="verCandidato({{$candidate->candId}})"><i class="fas fa-eye"></i></button>
+                                @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                                     @if ($perm_btn['modify']==1)
-                                        <button href="#|" class="btn btn-success" onclick="verCandidato({{$candidate->candId}})"><i class="fas fa-eye"></i></button>
                                         <button href="#|" class="btn btn-warning" onclick="editarCandidato({{$candidate->candId}},0)"><i class="fa fa-edit"></i></button>
                                     @endif
-                                </td>
-                            @endif
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

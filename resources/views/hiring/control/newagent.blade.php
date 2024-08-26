@@ -34,7 +34,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#yesnoModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardar('SaveYesNo','#selectYesNo','#yesnoModal')" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardar('SaveYesNo','#selectYesNo','#yesnoModal')" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -70,7 +72,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#chargeModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardar('SaveCharge','#selectCharge','#chargeModal')" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardar('SaveCharge','#selectCharge','#chargeModal')" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -108,7 +112,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#dateModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardar('SaveDate','#datepick','#dateModal')" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardar('SaveDate','#datepick','#dateModal')" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -140,7 +146,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#textModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardar('SaveText','#keytext','#textModal')" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardar('SaveText','#keytext','#textModal')" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -192,7 +200,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#salesModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardarVentas()" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardarVentas()" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -380,7 +390,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#docsModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardarDocs()" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardarDocs()" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
@@ -416,7 +428,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cancelar('#examModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                <button type="button" onclick="guardar('SaveYesNo','#selectExam','#examModal')" class="btn btn-primary">Guardar</button>
+                @if ($perm_btn['modify']==1)
+                    <button type="button" onclick="guardar('SaveYesNo','#selectExam','#examModal')" class="btn btn-primary">Guardar</button>
+                @endif
             </div>
         </div>
     </div>
