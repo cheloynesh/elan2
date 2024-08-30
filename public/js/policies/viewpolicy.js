@@ -2,6 +2,10 @@ var rutaPolizaView = window.location;
 var getUrlPolizaView = window.location;
 var baseUrlPolizaView = getUrlPolizaView .protocol + "//" + getUrlPolizaView.host + "/policies/viewPolicies";
 $(document).ready( function () {
+    $('#tbPoliza thead th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+    } );
     $('#tbPoliza').DataTable({
         language : {
             "sProcessing":     "Procesando...",
@@ -26,6 +30,20 @@ $(document).ready( function () {
               "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
+        },
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+
+                $( 'input', this.header() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
         }
     });
 } );
@@ -1206,9 +1224,9 @@ function RefreshTable(data,profile,permission)
         if(valor.type == 1) type = "Inicial"; else type = "Renovación";
         // alert(valor.id);
         if(permission["erase"] == 1)
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]);
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.payname,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt+ " " + btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]);
+            table.row.add([valor.agname,valor.rfc,valor.policy,valor.reference,valor.payname,valor.branch,valor.cname,type,valor.pnaa,valor.initial_date,valor.end_date,btnStat,btnRecpt + " " + btnEdit]);
     });
     table.draw(false);
 }

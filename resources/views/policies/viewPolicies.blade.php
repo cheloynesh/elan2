@@ -165,6 +165,7 @@
                 <th class="text-center">RFC</th>
                 <th class="text-center"># Póliza</th>
                 <th class="text-center">Referencia</th>
+                <th class="text-center">Forma de Pago</th>
                 <th class="text-center">Ramo</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">Tipo</th>
@@ -181,6 +182,7 @@
                         <td>{{$policies->rfc}}</td>
                         <td>{{$policies->policy}}</td>
                         <td>{{$policies->reference}}</td>
+                        <td>{{$policies->payname}}</td>
                         <td>{{$policies->branch}}</td>
                         <td>{{$policies->cname}}</td>
                         <td>@if ($policies->type==1)Inicial @else Renovación @endif</td>
