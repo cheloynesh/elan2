@@ -56,12 +56,16 @@ class ExportHome implements FromCollection, WithHeadings
                 case 6: $polizas = DB::select('call exclHomeIniPayAg(?,?,?)',[intval($this->today->format('m')),$this->today->format('Y'),$this->ag]); break;
                 case 7: $polizas = DB::select('call exclHomeRenPayAg(?,?,?)',[intval($this->today->format('m')),$this->today->format('Y'),$this->ag]); break;
             }
+        // dd($polizas);
+
         return new Collection($polizas);
     }
     public function headings(): array
     {
-        if($this->type != 5)
+        if($this->type != 5 && $this->type != 3)
             return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Comentario"];
+        else if($this->type == 3)
+            return ["ID","Cliente","RFC","Póliza","Inicio de Vigencia","Fin de Vigencia","Tipo","PNA","Moneda","Aseguradora","Ramo","Plan","Agente","Conducto de Cobro","Forma de Pago","Expedicion","Financiamiento","Otros","IVA","Total","Estatus","Comentario","Fecha de Recibo"];
         else
             return ["ID","Agente", "Fecha de ingreso", "Póliza", "Fecha de Respuesta", "Descargado", "Tipo de Servicio", "Folio", "Nombre del Contratante", "Record", "Ramo", "Compañia", "Estatus", "Número de Guía","Comentario"];
     }
