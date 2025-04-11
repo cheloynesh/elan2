@@ -141,6 +141,7 @@
                         <div class = "form-group">
                             <button class="btn btn-primary" title="Importar de Excel" onclick="importexc()"><i class="fas fa-upload"></i> <i class="fas fa-file-excel"></i></button>
                             <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-download"></i> <i class="fas fa-file-excel"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="downloadReceipts()" title="Exportar recibos"><i class="fas fa-download"></i> <i class="fas fa-receipt"></i></button>
                             {{-- <button class="btn btn-primary" title="Importar de Excel" onclick="act()">actualizar</button> --}}
                         </div>
                     </div>

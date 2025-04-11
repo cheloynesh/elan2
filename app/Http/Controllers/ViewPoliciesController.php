@@ -20,6 +20,7 @@ use App\Status_History;
 use DateTime;
 use DB;
 use App\Exports\ExportPolicy;
+use App\Exports\ExportReceipts;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ReceiptsImport;
 use Carbon\Carbon;
@@ -67,6 +68,7 @@ class ViewPoliciesController extends Controller
                 ->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
                 ->where('Policy.fk_status','!=',24)
+                ->where('Policy.fk_status','!=',47)
                 ->whereNull('Policy.deleted_at')
                 ->get();
         }
@@ -82,6 +84,7 @@ class ViewPoliciesController extends Controller
                 ->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
                 ->where('Policy.fk_status','!=',24)
+                ->where('Policy.fk_status','!=',47)
                 ->where('fk_agent',$user)
                 ->whereNull('Policy.deleted_at')
                 ->get();
@@ -137,6 +140,7 @@ class ViewPoliciesController extends Controller
             $policy = $policy->where('Policy.fk_status','!=',16)
                 ->where('Policy.fk_status','!=',22)
                 ->where('Policy.fk_status','!=',24)
+                ->where('Policy.fk_status','!=',47)
                 ->get();
         }
 
@@ -318,7 +322,7 @@ class ViewPoliciesController extends Controller
     }
     public function updatePoliciesNet($id)
     {
-        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->where('fk_status','!=',22)->where('fk_status','!=',24)->get();
+        $policies = Policy::whereNull('deleted_at')->where('fk_status','!=',16)->where('fk_status','!=',22)->where('fk_status','!=',24)->where('fk_status','!=',47)->get();
         $today = new DateTime();
         foreach($policies as $policy)
         {
@@ -439,6 +443,14 @@ class ViewPoliciesController extends Controller
         // dd("entre");
         $nombre = "Poliza.xlsx";
         $sheet = new ExportPolicy($status, $branch);
+        return Excel::download($sheet,$nombre);
+    }
+
+    public function ExportReceipts($id)
+    {
+        // dd("entre");
+        $nombre = "Recibos.xlsx";
+        $sheet = new ExportReceipts();
         return Excel::download($sheet,$nombre);
     }
 

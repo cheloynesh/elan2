@@ -44,6 +44,9 @@ Route::get('admin/pruebas/prueba/GetInfo/{id}','PruebasController@GetInfo')->nam
 Route::resource('admin/pruebas/prueba', 'PruebasController');
 Route::post('admin/pruebas/prueba/import/{active}','PruebasController@import');
 Route::post('admin/pruebas/prueba/importServ/{active}','PruebasController@importServ');
+Route::post('admin/pruebas/prueba/importHub/{active}','PruebasController@importHub');
+Route::get('admin/pruebas/prueba/GetHubspot/{id}','PruebasController@GetHubspot');
+// Route::post('admin/pruebas/prueba/HubSpotChange','PruebasController@HubSpotChange');
 
 // usuarios
 Route::resource('admin/users/user', 'UsersController');
@@ -144,6 +147,7 @@ Route::post('policies/viewPolicies/updatePolicies', 'ViewPoliciesController@upda
 Route::get('policies/viewPolicies/updatePoliciesNet/{id}', 'ViewPoliciesController@updatePoliciesNet')->name('viewPolicies.updatePoliciesNet');
 Route::get('policies/viewPolicies/updatePoliciesTrvl/{id}', 'ViewPoliciesController@updatePoliciesTrvl')->name('viewPolicies.updatePoliciesTrvl');
 Route::get('policies/viewPolicies/ExportPolicy/{status}/{branch}','ViewPoliciesController@ExportPolicy');
+Route::get('policies/viewPolicies/ExportReceipts/{id}','ViewPoliciesController@ExportReceipts');
 Route::get('policies/viewPolicies/GetPolicies/{active}','ViewPoliciesController@GetPolicies');
 Route::get('policies/viewPolicies/GetP/{active}','ViewPoliciesController@GetP');
 Route::post('policies/viewPolicies/updateDate', 'ViewPoliciesController@updateDate')->name('viewPolicies.updateDate');

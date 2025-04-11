@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '5aba71ccdfb8dbfc8e3b0bfab8edf2bd80188070',
+    'reference' => '715eab44a17947979647f4dd3b146ad625910cdc',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -237,6 +237,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '8c3d0a3f6af734494ad8f6fbbee0ba92422859f3',
+    ),
+    'hubspot/api-client' => 
+    array (
+      'pretty_version' => '12.0.0',
+      'version' => '12.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6659a2f85b5d2a01c890a5e5ce840c09e220c5e3',
     ),
     'illuminate/auth' => 
     array (
@@ -464,7 +473,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '5aba71ccdfb8dbfc8e3b0bfab8edf2bd80188070',
+      'reference' => '715eab44a17947979647f4dd3b146ad625910cdc',
     ),
     'laravel/tinker' => 
     array (

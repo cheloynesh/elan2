@@ -27,9 +27,9 @@ class ExportPolicy implements FromCollection, WithHeadings
         'Branch.name as bname','Plans.name as plname',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
         'Charge.name as charname','Payment_form.name as payname','expended_exp','financ_exp','other_exp','iva','total','Status.name as sname',"commentary",DB::raw('if(renovable = 1, "Si","No") as renovable'));
         // $movimientos = DB::table('Policy')->select('Policy.id','Client.name',DB::raw('CONCAT(IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'),
-        // 'rfc','policy','reference','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
+        // 'rfc','Client.email','Client.cellphone','policy','reference','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
         // 'Branch.name as bname','Plans.name as plname',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
-        // 'Charge.name as charname','Payment_form.name as payname','expended_exp','exp_impute','financ_exp','financ_impute','other_exp','other_impute','iva','total','Status.name as sname',"commentary",DB::raw('if(renovable = 1, "Si","No") as renovable'),'users.email');
+        // 'Charge.name as charname','Payment_form.name as payname','expended_exp','exp_impute','financ_exp','financ_impute','other_exp','other_impute','iva','total','Status.name as sname',"commentary",DB::raw('if(renovable = 1, "Si","No") as renovable'),'users.email as CorreoAg');
         // dd($this->id);
         if($this->status == 0)
         {
@@ -38,7 +38,7 @@ class ExportPolicy implements FromCollection, WithHeadings
                 $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Plans',"Plans.id","=","fk_plan")
+                    ->leftJoin('Plans',"Plans.id","=","fk_plan")
                     ->join('Payment_form',"Payment_form.id","=","fk_payment_form")
                     ->join('Currency',"Currency.id","=","fk_currency")
                     ->join('Charge',"Charge.id","=","fk_charge")
@@ -52,7 +52,7 @@ class ExportPolicy implements FromCollection, WithHeadings
                 $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Plans',"Plans.id","=","fk_plan")
+                    ->leftJoin('Plans',"Plans.id","=","fk_plan")
                     ->join('Payment_form',"Payment_form.id","=","fk_payment_form")
                     ->join('Currency',"Currency.id","=","fk_currency")
                     ->join('Charge',"Charge.id","=","fk_charge")
@@ -70,7 +70,7 @@ class ExportPolicy implements FromCollection, WithHeadings
                 $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Plans',"Plans.id","=","fk_plan")
+                    ->leftJoin('Plans',"Plans.id","=","fk_plan")
                     ->join('Payment_form',"Payment_form.id","=","fk_payment_form")
                     ->join('Currency',"Currency.id","=","fk_currency")
                     ->join('Charge',"Charge.id","=","fk_charge")
@@ -85,7 +85,7 @@ class ExportPolicy implements FromCollection, WithHeadings
                 $movimientos = $movimientos
                     ->join('Client',"Client.id","=","fk_client")
                     ->join('Branch',"Branch.id","=","fk_branch")
-                    ->join('Plans',"Plans.id","=","fk_plan")
+                    ->leftJoin('Plans',"Plans.id","=","fk_plan")
                     ->join('Payment_form',"Payment_form.id","=","fk_payment_form")
                     ->join('Currency',"Currency.id","=","fk_currency")
                     ->join('Charge',"Charge.id","=","fk_charge")
