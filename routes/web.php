@@ -46,6 +46,8 @@ Route::post('admin/pruebas/prueba/import/{active}','PruebasController@import');
 Route::post('admin/pruebas/prueba/importServ/{active}','PruebasController@importServ');
 Route::post('admin/pruebas/prueba/importHub/{active}','PruebasController@importHub');
 Route::get('admin/pruebas/prueba/GetHubspot/{id}','PruebasController@GetHubspot');
+Route::get('admin/pruebas/prueba/HubSpotCreateInvoice/{id}','PruebasController@HubSpotCreateInvoice')->name('prueba.HubSpotCreateInvoice');
+Route::get('admin/pruebas/prueba/getInvoiceCompanyAssociationTypeId/{id}','PruebasController@getInvoiceCompanyAssociationTypeId')->name('prueba.getInvoiceCompanyAssociationTypeId');
 // Route::post('admin/pruebas/prueba/HubSpotChange','PruebasController@HubSpotChange');
 
 // usuarios

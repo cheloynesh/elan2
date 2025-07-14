@@ -195,7 +195,9 @@
                         </td>
                         <td>
                             <a href="#|" class="btn btn-primary" onclick="verRecibos({{$policies->id}})"><i class="fas fa-eye"></i><i class="fas fa-dollar-sign"></i></a>
-                            <button href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></button>
+                            @if ($perm_btn['modify']==1)
+                                <button href="#|" class="btn btn-warning" onclick="editarPoliza({{$policies->id}})" ><i class="fa fa-edit"></i></button>
+                            @endif
                             @if ($perm_btn['erase']==1)
                                 <button href="#|" class="btn btn-danger" onclick="eliminarPoliza({{$policies->id}})"><i class="fa fa-trash"></i></button>
                             @endif
