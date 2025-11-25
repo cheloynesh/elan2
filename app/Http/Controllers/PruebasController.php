@@ -25,6 +25,8 @@ use HubSpot\Client\Crm\Invoices\Model\PublicAssociationsForObject;
 use HubSpot\Client\Crm\Invoices\Model\PublicObjectId;
 use HubSpot\Client\Crm\Invoices\Model\SimplePublicObjectInputForCreate;
 
+use Carbon\Carbon;
+
 class PruebasController extends Controller
 {
     public function index(){
@@ -113,6 +115,64 @@ class PruebasController extends Controller
         return response()->json(['status'=>true, 'message'=>"Datos Subidos"]);
     }
 
+    public function importPoliz($active, Request $request)
+    {
+        // dd("entre");
+        set_time_limit(1000);
+        $file = $request->file('excl');
+        // $file = $request->file;
+        $imp = new ServiceImport();
+        $new_balance = 0;
+        $prev_balance = 0;
+        // dd($request);
+        // Excel::import($imp, $file);
+        $array = ($imp)->toArray($file);
+        // dd($array[0][1]);
+        $array2 = array();
+        $arrayNotFound = array();
+        $cont = 0;
+        $goodCont = 0;
+        foreach ($array[0] as $moves)
+        {
+            // $moves[18] = $this->transformDate($moves[18]);
+            // $moves[19] = $this->transformDate($moves[19]);
+            // $initial = Policy::where('id',$moves[0])->update([
+            //     'reference' => $moves[1],
+            //     'pna' => $moves[2],
+            //     'expended_exp' => $moves[3],
+            //     'exp_impute' => $moves[4],
+            //     'financ_exp' => $moves[5],
+            //     'financ_impute' => $moves[6],
+            //     'other_exp' => $moves[7],
+            //     'other_impute' => $moves[8],
+            //     'iva' => $moves[9],
+            //     'total' => $moves[10],
+            //     'fk_insurance' => $moves[11],
+            //     'fk_branch' => $moves[12],
+            //     'fk_plan' => $moves[13],
+            //     'renovable' => $moves[14],
+            //     'fk_currency' => $moves[15],
+            //     'fk_charge' => $moves[16],
+            //     'fk_payment_form' => $moves[17],
+            //     'initial_date' => $moves[18],
+            //     'end_date' => $moves[19],
+            //     'rcp_update' => 1,
+            // ]);
+
+            $initial = Policy::where('id',$moves[0])->update([
+                'fk_agent' => $moves[2],
+                'fk_client' => $moves[3],
+            ]);
+        }
+
+        return response()->json(['status'=>true, 'message'=>"Datos Subidos"]);
+    }
+
+    public function transformDate($value)
+    {
+        return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value))->format('Y-m-d');
+    }
+
     public function importHub($active, Request $request)
     {
         // dd("entre");
@@ -130,7 +190,7 @@ class PruebasController extends Controller
         $arrayNotFound = array();
         $cont = 0;
         $goodCont = 0;
-        $token = 'tkn';
+        $token = env('HUBSPOT_TOKEN');
         foreach ($array[0] as $moves)
         {
             // dump($moves[0],$moves[1],$moves[2],$moves[3]);
@@ -162,7 +222,7 @@ class PruebasController extends Controller
 
     public function GetHubspot($id)
     {
-        $client = Factory::createWithAccessToken('tkn');
+        $token = Factory::createWithAccessToken(env('HUBSPOT_TOKEN'));
 
         // try {
         //     $apiResponse = $client->crm()->contacts()->basicApi()->getPage(100, false);
@@ -170,17 +230,39 @@ class PruebasController extends Controller
         // } catch (ApiException $e) {
         //     echo "Exception when calling basic_api->get_page: ", $e->getMessage();
         // }
-        try {
-            // $apiResponse = $client->crm()->deals()->basicApi()->getPage(10, false);
-            $apiResponse = $client->crm()->deals()->basicApi()->getPage(10, '0', ['poliza','dealname'], false);
-            Log::info('Webhook recibido:', $apiResponse->getResults());
-            Log::info('------------------------------------------------------------');
-            dd($apiResponse->getResults());
-        } catch (ApiException $e) {
-            echo "Exception when calling basic_api->get_page: ", $e->getMessage();
-        }
+        // try {
+        //     // $apiResponse = $client->crm()->deals()->basicApi()->getPage(10, false);
+        //     $apiResponse = $client->crm()->deals()->basicApi()->getPage(10, '0', ['poliza','dealname'], false);
+        //     dd($apiResponse->getResults());
+        // } catch (ApiException $e) {
+        //     echo "Exception when calling basic_api->get_page: ", $e->getMessage();
+        // }
         // dd($profile);
         // return response()->json(['status'=>true, "data"=>$profile]);
+
+        $url = "https://api.hubapi.com/crm/v3/objects/deals/search";
+
+        $payload = [
+            "filterGroups" => [[
+                "filters" => [[
+                    "propertyName" => "poliza",
+                    "operator" => "EQ",
+                    "value" => "1074161"
+                ]]
+            ]],
+            "properties" => ["dealname", "poliza", "pipeline", "dealstage"],
+            "limit" => 10
+        ];
+
+        $response = $token->crm()->deals()->searchApi()->doSearch($payload);
+
+        dd($response);
+
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            dd("❌ Error al buscar deals", $response->status(), $response->json());
+        }
     }
     public function HubSpotChange(Request $request)
     {
@@ -190,7 +272,7 @@ class PruebasController extends Controller
 
     public function HubSpotCreateInvoice($number,$date,$empresaId,$newLineItemAmount)
     {
-        $token = 'tkn';
+        $token = env('HUBSPOT_TOKEN');
         // $empresaId = '34931261783';
         $contactId = '115804290053';
         $lineItemId = '31763898235'; // Replace with your actual line item ID
@@ -318,7 +400,7 @@ class PruebasController extends Controller
 
     public function getInvoiceCompanyAssociationTypeId($invoiceId,$date,$pay)
     {
-        $token = 'tkn';
+        $token = env('HUBSPOT_TOKEN');
         // $invoiceId = 443063158392;
 
         $data = [
@@ -394,7 +476,7 @@ class PruebasController extends Controller
         //     dd('Error al obtener pagos', $response->status(), $response->json());
         // }
 
-        // $client = Factory::createWithAccessToken('tkn');
+        // $client = Factory::createWithAccessToken(env('HUBSPOT_TOKEN'));
 
         // try {
         //     $apiResponse = $client

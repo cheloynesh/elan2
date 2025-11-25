@@ -30,7 +30,7 @@ class ExportPolicy implements FromCollection, WithHeadings
         // 'rfc','Client.email','Client.cellphone','policy','reference','initial_date','end_date',DB::raw('if(type = 1, "Inicial","Renovación") as potype'),'pna','Currency.name as currname','Insurance.name as iname',
         // 'Branch.name as bname','Plans.name as plname',DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS agname'),
         // 'Charge.name as charname','Payment_form.name as payname','expended_exp','exp_impute','financ_exp','financ_impute','other_exp','other_impute','iva','total','Status.name as sname',"commentary",DB::raw('if(renovable = 1, "Si","No") as renovable'),'users.email as CorreoAg');
-        // dd($this->id);
+
         if($this->status == 0)
         {
             if($this->branch == 0)

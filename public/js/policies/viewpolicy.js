@@ -73,6 +73,7 @@ $(document).ready( function () {
               "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
+        order: [[6, 'asc']],
         aLengthMenu: [
             [25, 50, 100, 200, -1],
             [25, 50, 100, 200, "All"]
@@ -217,20 +218,32 @@ function verRecibos(id){
             // array = result.data;
             result.data.forEach( function(valor, indice, array){
                 // console.log(valor.status);
+                btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarRecibo('+valor.id+')" ><i class="fa fa-edit"></i></button>';
+                btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarRecibo('+valor.id+')"><i class="fa fa-trash"></i></button>';
                 if (valor.status == null ) {
                     if(result.permission['modify'])
-                        button = '<button href="#|" class="btn btn-danger" onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
+                        button = '<button href="#|" class="btn btn-danger" onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></i></button>';
                     else
-                        button = '<button href="#|" class="btn btn-danger" @if($perm_btn['+'"modify"'+']!=1) disabled @endif onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></button>';
+                        button = '<button href="#|" class="btn btn-danger" @if($perm_btn['+'"modify"'+']!=1) disabled @endif onclick="payrecord('+valor.id+')" ><i class="fas fa-piggy-bank"></i></button>';
                 } else {
                     if(result.permission['modify'])
                         button = '<button href="#|" class="btn btn-success btn-sm" onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
                     else
                         button = '<button href="#|" class="btn btn-success btn-sm" @if($perm_btn['+'"modify"'+']!=1) disabled @endif onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
                 }
-                table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
-                    formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
-                    valor.initial_date, valor.end_date, button]);
+                if(result.policy.rcp_update == 0)
+                {
+                    table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
+                        formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
+                        valor.initial_date, valor.end_date, button]);
+                }
+                else
+                {
+                    table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
+                        formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
+                        valor.initial_date, valor.end_date, button + " " + btnEdit + " " + btnTrash]);
+                    console.log(button + " " + btnEdit + " " + btnTrash);
+                }
 
             });
             table.draw(false);
@@ -242,6 +255,126 @@ function verRecibos(id){
     })
     $("#myModalReceipts").modal("show");
 
+}
+
+function cerrarRcp()
+{
+    $("#myModalReceipts").modal("hide");
+}
+
+function editarRecibo(id)
+{
+    var route = baseUrlPolizaView + '/GetInfoRcp/' +id;
+    idMovimiento = id;
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result){
+            $("#pnarcp").val(parseFloat(result.receipt.pna).toLocaleString('en-US'));
+            $("#exprcp").val(parseFloat(result.receipt.expedition).toLocaleString('en-US'));
+            $("#finanrcp").val(parseFloat(result.receipt.financ_exp).toLocaleString('en-US'));
+            $("#otherrcp").val(parseFloat(result.receipt.other_exp).toLocaleString('en-US'));
+            $("#ivarcp").val(parseFloat(result.receipt.iva).toLocaleString('en-US'));
+            $("#totalrcp").val(parseFloat(result.receipt.pna_t).toLocaleString('en-US'));
+            $("#initialrcp").val(result.receipt.initial_date);
+            $("#finalrcp").val(result.receipt.end_date);
+            $("#editRcpModal").modal("show");
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function calculoRcp()
+{
+    var pna = parseFloat($("#pnarcp").val().replace(/[^0-9.]/g, ''));
+    var expended_exp = parseFloat($("#exprcp").val().replace(/[^0-9.]/g, ''));
+    var financ_exp = parseFloat($("#finanrcp").val().replace(/[^0-9.]/g, ''));
+    var other_exp = parseFloat($("#otherrcp").val().replace(/[^0-9.]/g, ''));
+    var ivapor = parseFloat($("#ivaporrcp").val().replace(/[^0-9.]/g, ''));
+
+    iva = (pna + expended_exp + financ_exp + other_exp)*ivapor;
+    total = (pna + expended_exp + financ_exp + other_exp) + iva;
+
+    $("#ivarcp").val(parseFloat(iva).toLocaleString('en-US'));
+    $("#totalrcp").val(parseFloat(total).toLocaleString('en-US'));
+}
+
+function guardarRcp()
+{
+    var route = baseUrlPolizaView + '/saveRcp';
+    var pna = $("#pnarcp").val().replace(/[^0-9.]/g, '');
+    var expedition = $("#exprcp").val().replace(/[^0-9.]/g, '');
+    var financ_exp = $("#finanrcp").val().replace(/[^0-9.]/g, '');
+    var other_exp = $("#otherrcp").val().replace(/[^0-9.]/g, '');
+    var iva = $("#ivarcp").val().replace(/[^0-9.]/g, '');
+    var pna_t = $("#totalrcp").val().replace(/[^0-9.]/g, '');
+    var initial_date = $("#initialrcp").val();
+    var end_date = $("#finalrcp").val();
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        "id":idMovimiento,
+        "pna":pna,
+        "expedition":expedition,
+        "financ_exp":financ_exp,
+        "financ_exp":financ_exp,
+        "other_exp":other_exp,
+        "iva":iva,
+        "pna_t":pna_t,
+        "initial_date":initial_date,
+        "end_date":end_date,
+    }
+    jQuery.ajax({
+        url:route,
+        data: data,
+        type:'post',
+        dataType:'json',
+        success:function(result){
+            alertify.success(result.message);
+            $("#editRcpModal").modal('hide');
+            verRecibos(idPolicy);
+            // $("#myModalReceipts").modal('hide');
+            // window.location.reload(true);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function eliminarRecibo(id)
+{
+    var route = baseUrlPolizaView + '/deleteRcp';
+    var data = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        "id":id,
+    }
+    alertify.confirm("Eliminar Recibo","¿Desea borrar el recibo?",
+    function(){
+        jQuery.ajax({
+            url:route,
+            data: data,
+            type:'post',
+            dataType:'json',
+            success:function(result){
+                alertify.success(result.message);
+                $("#editRcpModal").modal('hide');
+                verRecibos(idPolicy);
+                // $("#myModalReceipts").modal('hide');
+                // window.location.reload(true);
+            },
+            error:function(result,error,errorTrown)
+            {
+                alertify.error(errorTrown);
+            }
+        })
+    },
+    function(){
+    });
 }
 
 function closereceipts(){

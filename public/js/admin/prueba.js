@@ -325,3 +325,47 @@ function importexcHub()
         }
     })
 }
+
+function importexcPoliz()
+{
+    var formData = new FormData();
+    var files = $('input[type=file]');
+    for (var i = 0; i < files.length; i++) {
+        if (files[i].value == "" || files[i].value == null)
+        {
+            // console.log(files.length);
+            // return false;
+        }
+        else
+        {
+            formData.append(files[i].name, files[i].files[0]);
+        }
+    }
+    // console.log("entre");
+    var formSerializeArray = $("#Form").serializeArray();
+    for (var i = 0; i < formSerializeArray.length; i++) {
+        formData.append(formSerializeArray[i].name, formSerializeArray[i].value)
+    }
+
+    formData.append('_token', $("meta[name='csrf-token']").attr("content"));
+
+    var route = baseUrl + '/importPoliz/1';
+
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:formData,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success:function(result)
+        {
+            alertify.success(result.message);
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+            $("#waitModal").modal('hide');
+        }
+    })
+}

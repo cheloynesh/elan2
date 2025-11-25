@@ -13,7 +13,7 @@ use DB;
 class UsersController extends Controller
 {
     public function index(){
-        $users = User::get();
+        $users = DB::select('call getUsers()');
         $profiles = Profile::pluck('name','id');
         $insurances = Insurance::pluck('name','id');
         $profile = User::findProfile();

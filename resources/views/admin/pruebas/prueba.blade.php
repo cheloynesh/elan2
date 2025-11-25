@@ -236,6 +236,7 @@
                         <button class="btn btn-primary" title="Importar de Iniciales" onclick="importexc()"><i class="fas fa-upload"></i>Ini <i class="fas fa-file-excel"></i></button>
                         <button class="btn btn-primary" title="Importar de Servicios" onclick="importexcServ()"><i class="fas fa-upload"></i>Serv <i class="fas fa-file-excel"></i></button>
                         <button class="btn btn-primary" title="Importar de Servicios" onclick="importexcHub()"><i class="fas fa-upload"></i>Hub <i class="fas fa-file-excel"></i></button>
+                        <button class="btn btn-primary" title="Importar de Servicios" onclick="importexcPoliz()"><i class="fas fa-upload"></i>Poliz <i class="fas fa-file-excel"></i></button>
                         {{-- <button class="btn btn-primary" title="Importar de Excel" onclick="act()">actualizar</button> --}}
                     </div>
                 </div>

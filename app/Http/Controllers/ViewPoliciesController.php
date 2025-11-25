@@ -151,11 +151,12 @@ class ViewPoliciesController extends Controller
     public function ViewReceipts($id)
     {
         // dd($id);
+        $policy = Policy::where('id',$id)->first();
         $receipts = Receipts::where('fk_policy',$id)->get();
         $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,20);
         // dd($receipts);
-        return response()->json(['status'=>true, "data"=>$receipts, "permission"=>$perm_btn]);
+        return response()->json(['status'=>true, "data"=>$receipts, "permission"=>$perm_btn, "policy"=>$policy]);
 
     }
 
@@ -193,6 +194,52 @@ class ViewPoliciesController extends Controller
 
     }
 
+    public function GetInfoRcp($id)
+    {
+        // dd($id);
+        $receipt = Receipts::where('id',$id)->first();
+
+        // dd($policy,$assignedBranches,$assignedPlans);
+        return response()->json(['status'=>true, "receipt"=>$receipt]);
+
+    }
+
+    public function saveRcp(Request $request){
+        // dd($request->all());
+
+        $status = Receipts::where('id',$request->id)->first();
+        // dd($request->all());
+        $status->pna = $request->pna;
+        $status->expedition = $request->expedition;
+        $status->financ_exp = $request->financ_exp;
+        $status->other_exp = $request->other_exp;
+        $status->iva = $request->iva;
+        $status->pna_t = $request->pna_t;
+        $status->initial_date = $request->initial_date;
+        $status->end_date = $request->end_date;
+        $status->save();
+        $policy = Policy::select('*')->where('id',$status->fk_policy)->first();
+        $this->updateStatusPayment($policy);
+        // dd($policy->policy);
+
+        $profile = User::findProfile();
+        $perm_btn =Permission::permBtns($profile,14);
+        $policies = $this->ReturnData($profile,$request->active);
+
+        return response()->json(['status'=>true, "message"=>"Recibo Editado"]);
+
+    }
+
+    public function deleteRcp(Request $request){
+        // dd($request->all());
+
+        $receipt = Receipts::find($request->id);
+        $receipt->delete();
+
+        return response()->json(['status'=>true, "message"=>"Recibo Borrado"]);
+
+    }
+
     public function paypolicy(Request $request){
         // dd($request->all());
 
@@ -211,6 +258,7 @@ class ViewPoliciesController extends Controller
         return response()->json(['status'=>true, "message"=>"Recibo Pagado", "policies" => $policies, "profile" => $profile, "permission" => $perm_btn]);
 
     }
+
     public function cancelpaypolicy(Request $request){
         // dd($request->all());
 
