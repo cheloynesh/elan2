@@ -13,6 +13,7 @@ use App\Insurance;
 use App\Paymentform;
 use App\Charge;
 use App\Branch;
+use App\Plan;
 use App\Status;
 use App\Client;
 use App\Branch_assign;
@@ -20,7 +21,9 @@ use App\Status_History;
 use DateTime;
 use DB;
 use App\Exports\ExportPolicy;
+use App\Exports\ExportPolicies;
 use App\Exports\ExportReceipts;
+use App\Exports\ExportReceiptsVP;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ReceiptsImport;
 use Carbon\Carbon;
@@ -47,14 +50,15 @@ class ViewPoliciesController extends Controller
         // dd($user);
         $perm = Permission::permView($profile,20);
         $perm_btn =Permission::permBtns($profile,20);
-        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->whereIn("fk_profile",[12,2])->pluck('name','id');
+        $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->whereIn("fk_profile",[12,2])->orderBy("name")->pluck('name','id');
         $currencies = Currency::pluck('name','id');
-        $insurances = Insurance::pluck('name','id');
+        $insurances = Insurance::orderBy("name")->pluck('name','id');
         $paymentForms = Paymentform::pluck('name','id');
         $charges = Charge::pluck('name','id');
         $branches = Branch::pluck('name','id');
         $estatusExc = Status::select('id', 'name')->where("fk_section","20")->pluck('name','id');
-        $branchesExc = Branch::select('id', 'name')->pluck('name','id');
+        $branchesExc = Branch::select('id', 'name')->orderBy("name")->pluck('name','id');
+        $plansExc = Plan::select('id', 'name')->orderBy("name")->pluck('name','id');
 
         if($profile != 12)
         {
@@ -98,7 +102,7 @@ class ViewPoliciesController extends Controller
         else
         {
             return view('policies.viewPolicies', compact('perm_btn','policy','agents','currencies','insurances','paymentForms',
-            'charges','branches','cmbStatus','clients','user','estatusExc','branchesExc'));
+            'charges','branches','cmbStatus','clients','user','estatusExc','branchesExc','plansExc'));
         }
     }
 
@@ -437,7 +441,7 @@ class ViewPoliciesController extends Controller
                 else
                 {
                     $status = Policy::where('id',$policy->id)->first();
-                    $status->fk_status = 18;
+                    $status->fk_status = 49;
                     $status->save();
                 }
             }
@@ -463,17 +467,24 @@ class ViewPoliciesController extends Controller
                 else
                 {
                     $status = Policy::where('id',$policy->id)->first();
-                    $status->fk_status = 18;
+                    $status->fk_status = 48;
                     $status->save();
                 }
             }
             else
             {
                 $recptDate = new DateTime($receipts->initial_date);
-                if($today >= $recptDate)
+                $recptEndDate = new DateTime($receipts->end_date);
+                if($today >= $recptDate && $today <= $recptEndDate)
                 {
                     $status = Policy::where('id',$policy->id)->first();
                     $status->fk_status = 21;
+                    $status->save();
+                }
+                else if($today > $recptEndDate)
+                {
+                    $status = Policy::where('id',$policy->id)->first();
+                    $status->fk_status = 48;
                     $status->save();
                 }
                 else
@@ -499,6 +510,23 @@ class ViewPoliciesController extends Controller
         // dd("entre");
         $nombre = "Recibos.xlsx";
         $sheet = new ExportReceipts();
+        return Excel::download($sheet,$nombre);
+    }
+
+    public function ExportPolicies(Request $request)
+    {
+        // dd($request->all());
+        $nombre = "Pólizas.xlsx";
+        $sheet = new ExportPolicies($request->all());
+        return Excel::download($sheet,$nombre);
+    }
+
+    public function ExportReceiptsVP(Request $request)
+    {
+        set_time_limit(1000);
+        // dd("entre");
+        $nombre = "Recibos.xlsx";
+        $sheet = new ExportReceiptsVP($request->all());
         return Excel::download($sheet,$nombre);
     }
 

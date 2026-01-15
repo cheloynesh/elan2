@@ -57,6 +57,263 @@
         </div>
     </div>
     {{-- fin modal| --}}
+    {{-- modal export --}}
+    <div id="myModalExportAdvanced" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Exportar pólizas a Excel</h4>
+                    <button type="button" class="close" onclick="cerrarReporte('myModalExportAdvanced')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <!-- AGENTE -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Agente</label>
+                                    <select id="selectAgentExc" name="selectAgentExc[]" class="form-select select2" multiple>
+                                        @foreach($agents as $id => $agent)
+                                            <option value="{{ $id }}">{{ $agent }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- TIPO -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select id="selectTypeExc" name="selectTypeExc[]" class="form-select select2" multiple>
+                                        <option value="1">Inicial</option>
+                                        <option value="2">Renovación</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ASEGURADORA / RAMO -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Aseguradora</label>
+                                    <select id="selectInsuranceExc" name="selectInsuranceExc[]" class="form-select select2" multiple>
+                                        @foreach($insurances as $id => $insurance)
+                                            <option value="{{ $id }}">{{ $insurance }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ramo</label>
+                                    <select id="selectBranchExcP" name="selectBranchExcP[]" class="form-select select2" multiple>
+                                        @foreach($branchesExc as $id => $branch)
+                                            <option value="{{ $id }}">{{ $branch }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PLAN / ESTATUS -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Plan</label>
+                                    <select id="selectPlanExc" name="selectPlanExc[]" class="form-select select2" multiple>
+                                        @foreach($plansExc as $id => $plan)
+                                            <option value="{{ $id }}">{{ $plan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Estatus</label>
+                                    <select id="selectStatusExcP" name="selectStatusExcP[]" class="form-select select2" multiple>
+                                        @foreach($estatusExc as $id => $estat)
+                                            <option value="{{ $id }}">{{ $estat }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Inicio de vigencia</label>
+
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="vigencia_inicio_desde">
+                                        <span class="input-group-text">-</span>
+                                        <input type="date" class="form-control" id="vigencia_inicio_hasta">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Fin de vigencia</label>
+
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="vigencia_fin_desde">
+                                        <span class="input-group-text">-</span>
+                                        <input type="date" class="form-control" id="vigencia_fin_hasta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarReporte('myModalExportAdvanced')">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="excel_nuc_advanced()">Exportar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- fin modal| --}}
+    {{-- modal export --}}
+    <div id="myModalExportRcp" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Exportar pólizas a Excel</h4>
+                    <button type="button" class="close" onclick="cerrarReporte('myModalExportRcp')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <!-- AGENTE -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Agente</label>
+                                    <select id="selectAgentExcR" name="selectAgentExcR[]" class="form-select select2" multiple>
+                                        @foreach($agents as $id => $agent)
+                                            <option value="{{ $id }}">{{ $agent }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- TIPO -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select id="selectTypeExcR" name="selectTypeExcR[]" class="form-select select2" multiple>
+                                        <option value="1">Inicial</option>
+                                        <option value="2">Renovación</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ASEGURADORA / RAMO -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Aseguradora</label>
+                                    <select id="selectInsuranceExcR" name="selectInsuranceExcR[]" class="form-select select2" multiple>
+                                        @foreach($insurances as $id => $insurance)
+                                            <option value="{{ $id }}">{{ $insurance }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ramo</label>
+                                    <select id="selectBranchExcR" name="selectBranchExcR[]" class="form-select select2" multiple>
+                                        @foreach($branchesExc as $id => $branch)
+                                            <option value="{{ $id }}">{{ $branch }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PLAN / ESTATUS -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Plan</label>
+                                    <select id="selectPlanExcR" name="selectPlanExcR[]" class="form-select select2" multiple>
+                                        @foreach($plansExc as $id => $plan)
+                                            <option value="{{ $id }}">{{ $plan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Estatus</label>
+                                    <select id="selectStatusExcR" name="selectStatusExcR[]" class="form-select select2" multiple>
+                                        @foreach($estatusExc as $id => $estat)
+                                            <option value="{{ $id }}">{{ $estat }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FECHAS PRIMER RECIBO -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Inicio de vigencia recibo</label>
+
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="recibo_inicio_desde">
+                                        <span class="input-group-text">-</span>
+                                        <input type="date" class="form-control" id="recibo_inicio_hasta">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Fecha de pago recibo</label>
+
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="recibo_pago_desde">
+                                        <span class="input-group-text">-</span>
+                                        <input type="date" class="form-control" id="recibo_pago_hasta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarReporte('myModalExportRcp')">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="excel_receipt_advanced()">Exportar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- fin modal| --}}
     {{-- modal espera --}}
     <div id="waitModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -140,8 +397,10 @@
                     <div class="col-lg-6">
                         <div class = "form-group">
                             <button class="btn btn-primary" title="Importar de Excel" onclick="importexc()"><i class="fas fa-upload"></i> <i class="fas fa-file-excel"></i></button>
-                            <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-download"></i> <i class="fas fa-file-excel"></i></button>
-                            <button type="button" class="btn btn-primary" onclick="downloadReceipts()" title="Exportar recibos"><i class="fas fa-download"></i> <i class="fas fa-receipt"></i></button>
+                            {{-- <button type="button" class="btn btn-primary" onclick="abrirFiltro()" title="Exportar a Excel"><i class="fas fa-download"></i> <i class="fas fa-file-excel"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="downloadReceipts()" title="Exportar recibos"><i class="fas fa-download"></i> <i class="fas fa-receipt"></i></button> --}}
+                            <button type="button" class="btn btn-primary" onclick="abrirReporte('myModalExportAdvanced')" title="Exportar pólizas"><i class="fas fa-download"></i> <i class="fas fa-file-archive"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="abrirReporte('myModalExportRcp')" title="Exportar recibos"><i class="fas fa-download"></i> <i class="fas fa-dollar-sign"></i></button>
                             {{-- <button class="btn btn-primary" title="Importar de Excel" onclick="act()">actualizar</button> --}}
                         </div>
                     </div>
@@ -208,6 +467,16 @@
         </table>
     </div>
     <script src="{{URL::asset('js/currencyformat.js')}}" ></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2({
+                width: '100%',
+                closeOnSelect: false,
+                placeholder: 'Selecciona una o más opciones',
+                allowClear: true
+            });
+        });
+    </script>
 @endsection
 @push('head')
     <script src="{{URL::asset('js/admin/client.js')}}" ></script>

@@ -119,6 +119,29 @@ class WebhookController extends Controller
                             $initial = Policy::where('policy',$deal->getProperties()['poliza'])->update(['end_date' => $fecha->toDateString()]);
                             $receiptflag = 1;
                             break;
+                        case "dealstage":
+                            $cancelada = [
+                                '256428973',
+                                '1212773209',
+                                '261767681',
+                                '268048653',
+                                '952035181',
+                                '973117547',
+                            ];
+
+                            $otros = [
+                                '1217253252',
+                                '1214529107',
+                            ];
+
+                            $terminada = [
+                                '1212759697',
+                            ];
+
+                            if(in_array($data['propertyValue'], $cancelada, true)) $initial = Policy::where('policy',$deal->getProperties()['poliza'])->update(['fk_status' => 16]);
+                            else if(in_array($data['propertyValue'], $otros, true)) $initial = Policy::where('policy',$deal->getProperties()['poliza'])->update(['fk_status' => 47]);
+                            else if(in_array($data['propertyValue'], $terminada, true)) $initial = Policy::where('policy',$deal->getProperties()['poliza'])->update(['fk_status' => 24]);
+                            break;
                     }
 
                     if($receiptflag == 1)
@@ -182,7 +205,7 @@ class WebhookController extends Controller
                                 $client->city = $hclient['city'];
                                 $client->cellphone = $hclient['cellphone'];
                                 $client->email = $hclient['email'];
-                                $client->status = $hclient['status'] == "Física" ? 2 : 1;
+                                $client->status = $hclient['status'] == "Física" ? 0 : 1;
                                 $client->save();
                                 $fk_client = $client->id;
                                 Log::info('Cliente creado:', [$client]);
@@ -268,7 +291,7 @@ class WebhookController extends Controller
                             $client->city = $hclient['city'];
                             $client->cellphone = $hclient['cellphone'];
                             $client->email = $hclient['email'];
-                            $client->status = $hclient['status'] == "Física" ? 2 : 1;
+                            $client->status = $hclient['status'] == "Física" ? 0 : 1;
                             $client->save();
                             $fk_client = $client->id;
                             Log::info('Cliente creado:', [$client]);

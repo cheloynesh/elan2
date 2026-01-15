@@ -87,6 +87,60 @@
                         </div>
                     </div>
                 </div>
+
+                <br>
+                <hr class="section-divider">
+
+                <div class="row mt-4">
+                    <div class="col-lg-12 text-center">
+                        <h1 class="section-title">Accede a nuestros diversos servicios desde los siguientes enlaces:</h1>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-4 text-center">
+                        <a href="https://contenido.elan.mx/formulario-de-servicio" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/Servicios.png') }}" class="service-img" alt="Servicios">
+                        </a>
+                        <h4 class="img-title">Servicios</h4>
+                    </div>
+
+                    <div class="col-lg-4 text-center">
+                        <a href="https://contenido.elan.mx/formulario-de-emisiones" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/Emisiones.png') }}" class="service-img" alt="Emisiones">
+                        </a>
+                        <h4 class="img-title">Emisiones</h4>
+                    </div>
+
+                    <div class="col-lg-4 text-center">
+                        <a href="https://contenido.elan.mx/formulario-de-cotizacion" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/Cotizaciones.png') }}" class="service-img" alt="Cotizaciones">
+                        </a>
+                        <h4 class="img-title">Cotizaciones</h4>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-4 text-center">
+                        <a href="https://app.hubspot.com" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/ElanHub.png') }}" class="service-img" alt="Elan Hub">
+                        </a>
+                        <h4 class="img-title">Elan Hub</h4>
+                    </div>
+
+                    <div class="col-lg-4 text-center">
+                        <a href="https://soporte.elan.mx/tickets-view?offset=0" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/Tickets.png') }}" class="service-img" alt="Portal de tickets">
+                        </a>
+                        <h4 class="img-title">Portal de tickets</h4>
+                    </div>
+
+                    <div class="col-lg-4 text-center">
+                        <a href="https://contenido.elan.mx/enlaces-de-pago" target="_blank" rel="noopener noreferrer">
+                            <img src="{{ URL::asset('img/Enlaces.png') }}" class="service-img" alt="Enlaces">
+                        </a>
+                        <h4 class="img-title">Enlaces de pago</h4>
+                    </div>
+                </div>
             </div>
         </div>
         </div>

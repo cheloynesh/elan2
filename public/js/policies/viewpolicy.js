@@ -231,19 +231,15 @@ function verRecibos(id){
                     else
                         button = '<button href="#|" class="btn btn-success btn-sm" @if($perm_btn['+'"modify"'+']!=1) disabled @endif onclick="cancelAuth('+valor.id+')" >'+valor.status+'</button>';
                 }
-                if(result.policy.rcp_update == 0)
+
+                if(result.policy.rcp_update != 0 && result.permission['modify'])
                 {
-                    table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
-                        formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
-                        valor.initial_date, valor.end_date, button]);
+                    button += " " + btnEdit + " " + btnTrash;
                 }
-                else
-                {
-                    table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
-                        formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
-                        valor.initial_date, valor.end_date, button + " " + btnEdit + " " + btnTrash]);
-                    console.log(button + " " + btnEdit + " " + btnTrash);
-                }
+
+                table.row.add([formatter.format(valor.pna), formatter.format(valor.expedition), formatter.format(valor.financ_exp),
+                    formatter.format(valor.other_exp), formatter.format(valor.iva), formatter.format(valor.pna_t),
+                    valor.initial_date, valor.end_date, button]);
 
             });
             table.draw(false);
@@ -1264,9 +1260,19 @@ function abrirFiltro()
     $("#myModalExport").modal('show');
 }
 
+function abrirReporte(modal)
+{
+    $("#"+modal).modal('show');
+}
+
 function cerrarFiltro()
 {
     $("#myModalExport").modal('hide');
+}
+
+function cerrarReporte(modal)
+{
+    $("#"+modal).modal('hide');
 }
 
 function excel_nuc(){
@@ -1555,4 +1561,100 @@ function downloadReceipts(){
     form.append(field);
     $(document.body).append(form);
     form.submit();
+}
+
+function excel_nuc_advanced() {
+    let form = $('<form>', {
+        method: 'POST',
+        action: baseUrlPolizaView + '/ExportPolicies'
+    });
+
+    // CSRF
+    form.append(
+        $('<input>', {
+            type: 'hidden',
+            name: '_token',
+            value: $('meta[name="csrf-token"]').attr('content')
+        })
+    );
+
+    // SELECT MULTIPLE
+    appendArray(form, 'agents[]', $('#selectAgentExc').val());
+    appendArray(form, 'types[]', $('#selectTypeExc').val());
+    appendArray(form, 'insurances[]', $('#selectInsuranceExc').val());
+    appendArray(form, 'branches[]', $('#selectBranchExcP').val());
+    appendArray(form, 'plans[]', $('#selectPlanExc').val());
+    appendArray(form, 'status[]', $('#selectStatusExcP').val());
+
+    // RANGOS DE FECHAS
+    appendInput(form, 'vigencia_inicio_desde', $('#vigencia_inicio_desde').val());
+    appendInput(form, 'vigencia_inicio_hasta', $('#vigencia_inicio_hasta').val());
+    appendInput(form, 'vigencia_fin_desde', $('#vigencia_fin_desde').val());
+    appendInput(form, 'vigencia_fin_hasta', $('#vigencia_fin_hasta').val());
+
+    $('body').append(form);
+    console.log(form);
+    form.submit();
+}
+
+function excel_receipt_advanced() {
+    let form = $('<form>', {
+        method: 'POST',
+        action: baseUrlPolizaView + '/ExportReceiptsVP'
+    });
+
+    // CSRF
+    form.append(
+        $('<input>', {
+            type: 'hidden',
+            name: '_token',
+            value: $('meta[name="csrf-token"]').attr('content')
+        })
+    );
+
+    // SELECT MULTIPLE
+    appendArray(form, 'agents[]', $('#selectAgentExcR').val());
+    appendArray(form, 'types[]', $('#selectTypeExcR').val());
+    appendArray(form, 'insurances[]', $('#selectInsuranceExcR').val());
+    appendArray(form, 'branches[]', $('#selectBranchExcR').val());
+    appendArray(form, 'plans[]', $('#selectPlanExcR').val());
+    appendArray(form, 'status[]', $('#selectStatusExcR').val());
+
+    // RANGOS DE FECHAS
+    appendInput(form, 'recibo_inicio_desde', $('#recibo_inicio_desde').val());
+    appendInput(form, 'recibo_inicio_hasta', $('#recibo_inicio_hasta').val());
+    appendInput(form, 'recibo_pago_desde', $('#recibo_pago_desde').val());
+    appendInput(form, 'recibo_pago_hasta', $('#recibo_pago_hasta').val());
+
+    $('body').append(form);
+    console.log(form);
+    form.submit();
+}
+
+// Helpers
+function appendInput(form, name, value) {
+    if (value) {
+        form.append(
+            $('<input>', { type: 'hidden', name, value })
+        );
+    }
+}
+
+function appendArray(form, name, values) {
+
+    if (!values) return;
+
+    if (!Array.isArray(values)) {
+        values = [values];
+    }
+
+    values = values.filter(v => v && v !== '0');
+
+    if (!values.length) return;
+
+    values.forEach(val => {
+        form.append(
+            $('<input>', { type: 'hidden', name, value: val })
+        );
+    });
 }
